@@ -27,7 +27,7 @@ A modern, mobile-friendly tutoring site for K–12, college, and test prep stude
 
 ## 📍 Live Website
 
-➡️ https://hoyeneyi.github.io/NextGen-Tutoring/about.html
+➡️ https://hoyeneyi.github.io/NextGen-Tutoring/index.html
 
 ---
 
