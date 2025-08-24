@@ -13,10 +13,10 @@ A modern, mobile-friendly tutoring site for K–12, college, and test prep stude
 
 ## 📁 Pages
 
-| Page        | Description                         |
-|-------------|-------------------------------------|
+| Page         | Description                                                     |
+| ------------ | --------------------------------------------------------------- |
 | `index.html` | Main landing page with services, specials, contact, and booking |
-| `about.html` | About Hafeez and tutoring philosophy |
+| `about.html` | About Hafeez and tutoring philosophy                            |
 
 ## 🛠 Tech Stack
 
@@ -33,5 +33,5 @@ A modern, mobile-friendly tutoring site for K–12, college, and test prep stude
 
 ## 👋 Contact
 
-- Email: [hoyeneyi@umich.edu](mailto:hoyeneyi@umich.edu)
+- Email: [nextgentutoringco@gmail.com](mailto:nextgentutoringco@gmail.com)
 - Phone: [734-552-5832](tel:7345525832)
