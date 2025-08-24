@@ -1,0 +1,60 @@
+<!-- components/header.html -->
+<nav class="bg-white shadow-md fixed top-0 w-full z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/pages/index.html" class="text-xl font-bold text-cyan-700">NextGen Tutoring</a>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex space-x-6 text-cyan-600 font-medium">
+      <a href="/pages/index.html" class="nav-link hover:text-cyan-800 transition" data-page="index">Home</a>
+      <a href="/pages/lessons.html" class="nav-link hover:text-cyan-800 transition" data-page="lessons">Lessons</a>
+      <a href="/pages/about.html" class="nav-link hover:text-cyan-800 transition" data-page="about">About</a>
+      <a href="/pages/contact.html" class="nav-link hover:text-cyan-800 transition" data-page="contact">Contact</a>
+      <a href="/pages/login.html" class="nav-link hover:text-cyan-800 transition" data-page="login">Login</a>
+      <a href="/pages/signup.html" class="nav-link hover:text-cyan-800 transition" data-page="signup">Sign Up</a>
+    </div>
+
+    <!-- Book Now CTA -->
+    <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" rel="noopener noreferrer"
+       class="hidden md:inline-block bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">
+       Book Now
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="md:hidden text-cyan-600 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-menu" class="md:hidden hidden px-6 pb-4 space-y-3">
+    <a href="/pages/index.html" class="nav-link block text-cyan-600 hover:text-cyan-800" data-page="index">Home</a>
+    <a href="/pages/lessons.html" class="nav-link block text-cyan-600 hover:text-cyan-800" data-page="lessons">Lessons</a>
+    <a href="/pages/about.html" class="nav-link block text-cyan-600 hover:text-cyan-800" data-page="about">About</a>
+    <a href="/pages/contact.html" class="nav-link block text-cyan-600 hover:text-cyan-800" data-page="contact">Contact</a>
+    <a href="/pages/login.html" class="nav-link block text-cyan-600 hover:text-cyan-800" data-page="login">Login</a>
+    <a href="/pages/signup.html" class="nav-link block text-cyan-600 hover:text-cyan-800" data-page="signup">Sign Up</a>
+    <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" rel="noopener noreferrer"
+       class="block bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-2 rounded-md text-sm font-semibold text-center">
+       Book Now
+    </a>
+  </div>
+</nav>
+
+<!-- Nav Logic Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const currentPage = location.pathname.split("/").pop().replace(".html", "") || "index";
+    document.querySelectorAll(".nav-link").forEach(link => {
+      const page = link.dataset.page;
+      if (page === currentPage) {
+        link.classList.add("font-semibold", "text-cyan-700");
+      }
+    });
+
+    const btn = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+    btn.addEventListener("click", () => menu.classList.toggle("hidden"));
+  });
+</script>

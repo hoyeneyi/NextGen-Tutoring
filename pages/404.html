@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Page Not Found | NextGen Tutoring</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Load Header & Footer -->
+  <script src="scripts/loadHeader.js" defer></script>
+  <script src="scripts/loadFooter.js" defer></script>
+
+  <!-- Toast -->
+  <script type="module" src="scripts/toast.js"></script>
+
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col" data-page="404">
+
+  <!-- Header -->
+  <header></header>
+
+  <!-- Main 404 Content -->
+  <main class="flex-grow flex flex-col items-center justify-center text-center px-6 py-20">
+    <h1 class="text-[8rem] font-bold text-cyan-600 leading-none">404</h1>
+    <h2 class="text-3xl font-semibold mt-4 mb-2">Oops! Page Not Found</h2>
+    <p class="text-slate-500 mb-6 max-w-md">The page you're looking for might have been moved, deleted, or doesn't exist.</p>
+    <a href="index.html" class="bg-cyan-600 text-white px-6 py-3 rounded-lg hover:bg-cyan-700 transition font-medium">← Back to Home</a>
+  </main>
+
+  <!-- Footer -->
+  <footer></footer>
+
+  <!-- Toast Element -->
+  <div id="toast" class="hidden"></div>
+</body>
+</html>

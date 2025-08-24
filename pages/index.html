@@ -10,13 +10,12 @@
   <meta property="og:description" content="Empowering students to master academics with clarity and confidence.">
   <meta property="og:image" content="assets/images/logo-trans.png">
   <meta name="twitter:card" content="summary_large_image">
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Schema Markup for SEO -->
+  <!-- Schema Markup -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -33,14 +32,9 @@
   </script>
 
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    /* Floating Book Button */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Space Grotesk', sans-serif; }
     .floating-book-button {
       position: fixed;
       bottom: 20px;
@@ -51,44 +45,27 @@
       border-radius: 30px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       z-index: 999;
-      text-decoration: none;
       font-weight: bold;
       transition: background-color 0.3s ease;
+      text-decoration: none;
     }
-    .floating-book-button:hover {
-      background-color: #06b6d4;
-    }
-
-    @media (max-width: 768px) {
-      .card-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .card {
-        width: 90%;
-        margin-bottom: 1rem;
-      }
-    }
+    .floating-book-button:hover { background-color: #06b6d4; }
   </style>
 </head>
-<body>
 
-  <!-- Navbar -->
-  <nav class="bg-white shadow fixed top-0 left-0 w-full z-50">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-      <span class="text-xl font-bold text-cyan-600">NextGen Tutoring</span>
-      <a href="#contact" class="text-cyan-600 font-medium hover:underline">Contact</a>
-    </div>
-  </nav>
+<body class="bg-white text-slate-800" data-page="index">
+
+  <!-- Auto-load external header -->
+  <header></header>
 
   <!-- Hero -->
-  <header class="pt-28 pb-16 bg-white/50 shadow-inner">
+  <section class="pt-28 pb-16 bg-white/50 shadow-inner">
     <div class="max-w-4xl mx-auto text-center px-6" data-aos="fade-down">
       <img src="assets/images/logo-trans.png" alt="NextGen Tutoring logo" class="w-24 mx-auto mb-4" loading="lazy" />
       <h1 class="text-5xl font-bold text-cyan-600 drop-shadow-sm">NextGen Tutoring</h1>
       <p class="text-slate-600 italic mt-3">Empowering students to master academics with clarity and confidence.</p>
     </div>
-  </header>
+  </section>
 
   <!-- Intro -->
   <section class="max-w-6xl mx-auto px-6 py-12 text-center" data-aos="fade-up">
@@ -102,9 +79,9 @@
     </div>
   </section>
 
-  <!-- Cards -->
+  <!-- Services -->
   <section class="max-w-5xl mx-auto px-6 py-12 grid gap-6 md:grid-cols-3">
-    <div class="bg-white shadow-md rounded-lg p-6 border border-slate-200 hover:shadow-xl hover:scale-105 transition" data-aos="fade-up" data-aos-delay="0">
+    <div class="bg-white shadow-md rounded-lg p-6 border border-slate-200 hover:shadow-xl hover:scale-105 transition" data-aos="fade-up">
       <h2 class="text-xl font-semibold text-cyan-700 mb-2">Services</h2>
       <ul class="list-disc list-inside text-slate-800 space-y-1">
         <li>K–12 and College Tutoring</li>
@@ -172,20 +149,44 @@
     <strong>Deposits are non-refundable.</strong>
   </div>
 
+  <!-- Floating Buttons -->
   <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="floating-book-button">Book Now</a>
-
-  <!-- Mobile Buttons -->
   <a href="#" aria-label="Back to top" role="button" class="fixed bottom-4 left-4 z-50 bg-white border border-cyan-600 text-cyan-700 font-bold px-3 py-2 rounded-full shadow-lg md:hidden hover:bg-cyan-100 transition">↑</a>
-  <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="fixed bottom-4 right-4 z-50 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold px-4 py-3 rounded-full shadow-lg md:hidden transition">Book Now</a>
 
-  <!-- Footer -->
-  <footer class="bg-gradient-to-br from-white via-cyan-50 to-cyan-100 text-center py-6 text-slate-500 text-sm">
-    &copy; 2025 NextGen Tutoring. All rights reserved.
-  </footer>
+  <!-- Auto-load external footer -->
+  <footer></footer>
 
+  <!-- Scripts -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (window.location.protocol === "file:") return;
+
+      fetch("header.html")
+        .then(res => res.text())
+        .then(html => {
+          document.querySelector("header").innerHTML = html;
+          // Highlight active nav link
+          const current = document.body.getAttribute("data-page");
+          if (current) {
+            document.querySelectorAll("nav a").forEach(link => {
+              if (link.href.includes(current)) {
+                link.classList.add("text-cyan-800", "font-bold");
+              }
+            });
+          }
+        })
+        .catch(console.error);
+
+      fetch("footer.html")
+        .then(res => res.text())
+        .then(html => document.querySelector("footer").innerHTML = html)
+        .catch(console.error);
+    });
+  </script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>AOS.init();</script>
   <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" /></noscript>
+
 </body>
 </html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | NextGen Tutoring</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <meta name="description" content="Access your personalized tutoring dashboard with lessons, assignments, and progress tracking." />
+  <meta name="keywords" content="student dashboard, tutoring progress, assignments, NextGen Tutoring, Hafeez" />
+
+  <meta property="og:title" content="Dashboard | NextGen Tutoring" />
+  <meta property="og:description" content="Access your personalized tutoring dashboard with lessons, assignments, and progress tracking." />
+  <meta property="og:image" content="assets/images/logo-trans.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Scripts -->
+  <script type="module" src="scripts/dashboard.js"></script>
+  <script src="scripts/loadHeader.js" defer></script>
+
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#f0fbff] via-white to-[#f7fcfd] text-slate-900" data-page="dashboard">
+
+  <!-- Header -->
+  <header></header>
+
+  <!-- Main Dashboard -->
+  <main class="pt-28 px-6 max-w-7xl mx-auto">
+    <section>
+      <h1 class="text-3xl md:text-4xl font-bold mb-2 text-cyan-700">
+        Welcome back, <span id="userName">Student</span> 👋
+      </h1>
+      <p class="text-slate-500 mb-8 text-sm md:text-base">
+        Let’s make today a productive learning day.
+      </p>
+    </section>
+
+    <!-- Dashboard Features -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Book a Session -->
+      <div class="bg-white shadow-lg border border-cyan-100 rounded-xl p-6 hover:shadow-xl transition">
+        <h2 class="text-xl font-semibold text-cyan-700 mb-2">📅 Book a Session</h2>
+        <p class="text-sm text-slate-600 mb-4">Need extra help? Schedule a 1-on-1 session with Hafeez.</p>
+        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="text-cyan-600 font-medium hover:underline">
+          Book Now →
+        </a>
+      </div>
+
+      <!-- Assignments -->
+      <div class="bg-white shadow-lg border border-cyan-100 rounded-xl p-6 hover:shadow-xl transition">
+        <h2 class="text-xl font-semibold text-cyan-700 mb-2">📝 Assignments</h2>
+        <p class="text-sm text-slate-600 mb-4">Review your homework, practice problems, and challenge sets.</p>
+        <a href="lessons.html" class="text-cyan-600 font-medium hover:underline">
+          View Assignments →
+        </a>
+      </div>
+
+      <!-- Progress Tracker -->
+      <div class="bg-white shadow-lg border border-cyan-100 rounded-xl p-6 hover:shadow-xl transition">
+        <h2 class="text-xl font-semibold text-cyan-700 mb-2">📊 Progress Tracker</h2>
+        <p class="text-sm text-slate-600 mb-4">Check your performance, quiz scores, and improvement charts.</p>
+        <a href="#" class="text-cyan-600 font-medium hover:underline cursor-not-allowed opacity-60" title="Coming Soon">
+          Coming Soon →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-slate-500 text-sm mt-12">
+    &copy; 2025 NextGen Tutoring. All rights reserved. <br/>
+    <a href="about.html" class="text-cyan-600 hover:underline">About</a> |
+    <a href="contact.html" class="text-cyan-600 hover:underline">Contact</a>
+  </footer>
+</body>
+</html>
