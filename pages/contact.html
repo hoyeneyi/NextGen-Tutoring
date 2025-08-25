@@ -110,3 +110,115 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | NextGen Tutoring</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Contact NextGen Tutoring to ask questions or book a tutoring session directly with Hafeez." />
+  <meta name="keywords" content="contact, tutoring help, math tutor, nextgen tutoring, hafeez" />
+  <meta property="og:title" content="Contact NextGen Tutoring" />
+  <meta property="og:description" content="Get in touch with Hafeez at NextGen Tutoring. Ask questions or schedule a session." />
+  <meta property="og:image" content="assets/images/logo-trans.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .floating-book-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #0891b2;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .floating-book-button:hover {
+      background-color: #0e7490;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#e0f7f9] via-white to-[#f5fbfc] text-slate-900" data-page="contact">
+
+  <!-- Header injected -->
+  <header></header>
+
+  <main class="max-w-3xl mx-auto px-6 pt-36 pb-20">
+    <h1 class="text-4xl font-bold text-cyan-700 mb-6">Contact Us</h1>
+    <p class="text-slate-700 mb-10 text-lg">
+      Have a question or need more info? I'd love to hear from you. Reach out directly or book a session to get started.
+    </p>
+
+    <div class="bg-white border border-cyan-100 rounded-lg shadow p-6 mb-8">
+      <p class="mb-3 text-lg">
+        <strong>Email:</strong>
+        <a href="mailto:nextgentutoringco@gmail.com" class="text-cyan-600 hover:underline">nextgentutoringco@gmail.com</a>
+      </p>
+      <p class="text-lg"><strong>Phone:</strong> 734-552-5832</p>
+    </div>
+
+    <div class="text-center">
+      <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez"
+         target="_blank"
+         class="inline-block bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-lg text-md font-semibold transition">
+        Book a Session
+      </a>
+    </div>
+  </main>
+
+  <!-- Floating CTA -->
+  <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="floating-book-button">Book Now</a>
+
+  <!-- Footer injected -->
+  <footer></footer>
+
+  <!-- Load header and footer -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("header.html")
+        .then(res => res.text())
+        .then(html => {
+          document.querySelector("header").innerHTML = html;
+
+          const current = document.body.getAttribute("data-page");
+          if (current) {
+            document.querySelectorAll("nav a").forEach(link => {
+              if (link.href.includes(current)) {
+                link.classList.add("text-cyan-800", "font-bold");
+              }
+            });
+          }
+
+          const btn = document.getElementById("mobile-menu-button");
+          const menu = document.getElementById("mobile-menu");
+          if (btn && menu) {
+            btn.addEventListener("click", () => {
+              menu.classList.toggle("hidden");
+            });
+          }
+        });
+
+      fetch("footer.html")
+        .then(res => res.text())
+        .then(html => {
+          document.querySelector("footer").innerHTML = html;
+        });
+    });
+  </script>
+
+</body>
+</html>
