@@ -3,290 +3,482 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Hafeez | NextGen Tutoring</title>
+  <title>About — NextGen Tutoring</title>
+  <meta name="description" content="Learn about NextGen Tutoring, our mission to serve the Metro Detroit community, and the story behind why Hafeez Oyeneyin started it all." />
+  <meta property="og:title" content="About — NextGen Tutoring" />
+  <meta property="og:description" content="Our story, our mission, our community. NextGen Tutoring is building something bigger than tutoring sessions." />
+  <meta property="og:image" content="../assets/images/logo-trans.png" />
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
 
-  <!-- Meta Info -->
-  <meta name="description" content="Meet Hafeez – founder of NextGen Tutoring and a passionate academic coach helping students from K–12 to college level.">
-  <meta name="keywords" content="Hafeez, NextGen Tutoring, tutor, math tutor, AI, computer engineering, SAT prep, academic coaching">
-  <meta property="og:title" content="About Hafeez – NextGen Tutoring">
-  <meta property="og:description" content="Founder of NextGen Tutoring. Hafeez specializes in helping students master academics with clarity and confidence.">
-  <meta property="og:image" content="assets/images/hafeez-profile.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <!-- Styles & Fonts -->
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Core Scripts -->
-  <script type="module" src="scripts/loadHeader.js" defer></script>
-  <script type="module" src="scripts/loadFooter.js" defer></script>
-  <script type="module" src="scripts/toast.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/main.css" />
 
   <style>
-    body {
-      font-family: 'Space Grotesk', sans-serif;
+    :root {
+      --navy:        #112240;
+      --navy-mid:    #1a3a5c;
+      --navy-light:  #1e4976;
+      --navy-dark:   #0a1628;
+      --gold:        #C9A84C;
+      --gold-light:  #E8C97A;
+      --gold-pale:   #FBF3DC;
+      --white:       #FFFFFF;
+      --off-white:   #F8F6F0;
+      --text-dark:   #0B1F3A;
+      --text-mid:    #3A4A60;
+      --text-light:  #7A8A9E;
+      --font-display:'Playfair Display', Georgia, serif;
+      --font-body:   'DM Sans', sans-serif;
     }
 
-    .floating-book-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #0891b2;
-      color: white;
-      padding: 12px 18px;
-      border-radius: 30px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 999;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--font-body); background:var(--off-white); color:var(--text-dark); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
 
-    .floating-book-button:hover {
-      background-color: #0e7490;
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .sr.sr-left  { transform:translateX(-28px); }
+    .sr.sr-right { transform:translateX(28px); }
+    .sr.visible  { opacity:1; transform:translateY(0) translateX(0); }
+    .sr-d1 { transition-delay:0.1s; }
+    .sr-d2 { transition-delay:0.2s; }
+    .sr-d3 { transition-delay:0.3s; }
+    .sr-d4 { transition-delay:0.4s; }
+    @media (prefers-reduced-motion:reduce) { .sr { opacity:1; transform:none; transition:none; } }
+
+    /* ── NAVBAR ── */
+    .navbar { position:fixed; top:0; left:0; right:0; z-index:100; height:72px; padding:0 2rem; display:flex; align-items:center; justify-content:space-between; background:rgba(17,34,64,0.96); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(201,168,76,0.18); }
+    .nav-logo { text-decoration:none; }
+    .nav-logo-text { font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--white); }
+    .nav-logo-accent { color:var(--gold); }
+    .nav-links { display:flex; align-items:center; gap:2rem; list-style:none; }
+    .nav-links a { font-size:0.78rem; font-weight:500; color:rgba(255,255,255,0.7); text-decoration:none; letter-spacing:0.07em; text-transform:uppercase; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+    .nav-cta { background:var(--gold) !important; color:var(--navy) !important; padding:0.5rem 1.25rem !important; border-radius:4px !important; font-weight:600 !important; transition:background 0.2s, transform 0.2s !important; }
+    .nav-cta:hover { background:var(--gold-light) !important; transform:translateY(-1px); color:var(--navy) !important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--white); border-radius:2px; }
+    .mob-nav { display:none; position:fixed; top:72px; left:0; right:0; background:var(--navy); border-top:1px solid rgba(201,168,76,0.2); padding:1.5rem 2rem; z-index:99; flex-direction:column; gap:1.25rem; }
+    .mob-nav.open { display:flex; }
+    .mob-nav a { font-size:1rem; font-weight:500; color:rgba(255,255,255,0.8); text-decoration:none; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.07); transition:color 0.2s; }
+    .mob-nav a:hover { color:var(--gold); }
+    .mob-nav .mob-book { background:var(--gold); color:var(--navy); text-align:center; padding:0.85rem; border-radius:6px; font-weight:600; margin-top:0.5rem; border:none; }
+
+    /* ── PAGE HERO ── */
+    .page-hero { background:var(--navy); padding:9rem 2rem 5rem; position:relative; overflow:hidden; }
+    .page-hero-bg { position:absolute; inset:0; pointer-events:none; background-image: radial-gradient(circle at 15% 60%, rgba(201,168,76,0.07) 0%, transparent 45%), radial-gradient(circle at 85% 20%, rgba(201,168,76,0.04) 0%, transparent 40%), repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201,168,76,0.015) 60px, rgba(201,168,76,0.015) 61px); }
+    .page-hero-inner { max-width:1100px; margin:0 auto; }
+    .page-hero-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); color:var(--gold); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:0.35rem 0.85rem; border-radius:100px; margin-bottom:1.5rem; animation:heroUp 0.6s ease 0.2s both; }
+    .page-hero-tag::before { content:''; width:6px; height:6px; background:var(--gold); border-radius:50%; }
+    .page-hero-h1 { font-family:var(--font-display); font-size:clamp(2.4rem,5vw,3.8rem); font-weight:900; color:var(--white); line-height:1.1; margin-bottom:1.25rem; animation:heroUp 0.7s ease 0.35s both; }
+    .page-hero-h1 span { color:var(--gold); }
+    .page-hero-sub { font-size:1.05rem; font-weight:300; color:rgba(255,255,255,0.6); line-height:1.8; max-width:560px; animation:heroUp 0.7s ease 0.5s both; }
+
+    /* ── SHARED ── */
+    .sec { padding:6rem 2rem; }
+    .sec-inner { max-width:1100px; margin:0 auto; }
+    .sec-tag { display:block; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:0.75rem; }
+    .sec-h2 { font-family:var(--font-display); font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:700; color:var(--navy); line-height:1.15; margin-bottom:0.75rem; }
+    .sec-h2-white { color:var(--white); }
+
+    .btn { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-weight:600; font-size:0.95rem; padding:0.875rem 1.75rem; border-radius:6px; border:none; text-decoration:none; cursor:pointer; transition:all 0.22s; white-space:nowrap; }
+    .btn-gold { background:var(--gold); color:var(--navy); box-shadow:0 4px 20px rgba(201,168,76,0.3); }
+    .btn-gold:hover { background:var(--gold-light); transform:translateY(-2px); }
+    .btn-dark { background:var(--navy); color:var(--white); }
+    .btn-dark:hover { background:var(--navy-light); transform:translateY(-2px); }
+    .btn-navy-outline { background:transparent; color:var(--navy); border:1px solid rgba(11,31,58,0.2); }
+    .btn-navy-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* ── STORY ── */
+    .story-sec { background:var(--white); padding:6rem 2rem; }
+    .story-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .story-img-wrap { position:relative; }
+    .story-img-frame { width:100%; aspect-ratio:4/5; border-radius:12px; overflow:hidden; border:2px solid rgba(201,168,76,0.25); background:var(--navy-light); display:flex; align-items:center; justify-content:center; }
+    .story-img-frame img { width:100%; height:100%; object-fit:cover; }
+    .story-img-fallback { font-size:5rem; opacity:0.3; }
+    .story-img-accent { position:absolute; bottom:-18px; right:-18px; width:100px; height:100px; background:var(--gold); border-radius:8px; opacity:0.12; z-index:-1; }
+    .story-img-badge { position:absolute; bottom:20px; left:-20px; background:var(--gold); color:var(--navy); font-family:var(--font-display); font-size:0.9rem; font-weight:700; padding:0.85rem 1.25rem; border-radius:10px; box-shadow:0 8px 24px rgba(201,168,76,0.35); }
+    .story-img-badge span { display:block; font-family:var(--font-body); font-size:0.72rem; font-weight:500; opacity:0.7; margin-top:2px; }
+    .story-body { font-size:1rem; color:var(--text-mid); line-height:1.85; margin-bottom:1.25rem; }
+    .story-body strong { color:var(--navy); font-weight:600; }
+    .story-sig { margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(11,31,58,0.08); }
+    .story-sig-name { font-family:var(--font-display); font-size:1.1rem; color:var(--navy); font-weight:700; }
+    .story-sig-role { font-size:0.78rem; color:var(--gold); text-transform:uppercase; letter-spacing:0.08em; margin-top:3px; }
+
+    /* ── MISSION ── */
+    .mission-sec { background:var(--navy); padding:6rem 2rem; }
+    .mission-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+    .mission-text-block { font-size:1rem; color:rgba(255,255,255,0.6); line-height:1.85; margin-bottom:1.25rem; }
+    .mission-text-block strong { color:var(--gold-light); font-weight:600; }
+    .mission-quote { background:rgba(201,168,76,0.08); border-left:3px solid var(--gold); border-radius:0 8px 8px 0; padding:1.5rem 1.75rem; margin:2rem 0; }
+    .mission-quote-text { font-family:var(--font-display); font-size:1.15rem; color:var(--white); font-style:italic; line-height:1.6; }
+
+    /* quality stats — no numbers */
+    .quality-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:2rem; }
+    .quality-card { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.15); border-radius:10px; padding:1.5rem; }
+    .quality-card-icon { font-size:1.5rem; margin-bottom:0.75rem; }
+    .quality-card-title { font-family:var(--font-display); font-size:0.95rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
+    .quality-card-desc { font-size:0.8rem; color:rgba(255,255,255,0.4); line-height:1.55; }
+
+    .beliefs-card { background:rgba(255,255,255,0.03); border:1px solid rgba(201,168,76,0.12); border-radius:12px; padding:1.75rem; }
+    .beliefs-title { font-family:var(--font-display); font-size:1rem; color:var(--white); font-weight:700; margin-bottom:1rem; }
+    .belief-item { display:flex; align-items:flex-start; gap:10px; margin-bottom:0.75rem; }
+    .belief-item:last-child { margin-bottom:0; }
+    .belief-check { color:var(--gold); font-size:1rem; flex-shrink:0; margin-top:1px; }
+    .belief-text { font-size:0.875rem; color:rgba(255,255,255,0.6); line-height:1.6; }
+
+    /* ── VALUES ── */
+    .values-sec { background:var(--off-white); padding:6rem 2rem; }
+    .values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:3rem; }
+    .value-card { background:var(--white); border:1px solid rgba(11,31,58,0.07); border-radius:12px; padding:2rem; transition:transform 0.25s, box-shadow 0.25s, border-color 0.25s; position:relative; overflow:hidden; }
+    .value-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:var(--gold); transform:scaleX(0); transition:transform 0.3s ease; }
+    .value-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(11,31,58,0.08); border-color:rgba(201,168,76,0.25); }
+    .value-card:hover::after { transform:scaleX(1); }
+    .value-icon { font-size:2rem; margin-bottom:1rem; }
+    .value-title { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--navy); margin-bottom:0.5rem; }
+    .value-desc { font-size:0.875rem; color:var(--text-mid); line-height:1.7; }
+
+    /* ── VISION STATEMENT ── */
+    .vision-sec { background:var(--white); padding:6rem 2rem; }
+    .vision-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .vision-text { font-size:1rem; color:var(--text-mid); line-height:1.85; margin-bottom:1.25rem; }
+    .vision-text strong { color:var(--navy); font-weight:600; }
+    .vision-pillars { display:flex; flex-direction:column; gap:1rem; margin-top:2rem; }
+    .vision-pillar { display:flex; align-items:center; gap:1rem; background:var(--off-white); border:1px solid rgba(11,31,58,0.06); border-radius:10px; padding:1.25rem; transition:border-color 0.2s, box-shadow 0.2s; }
+    .vision-pillar:hover { border-color:rgba(201,168,76,0.3); box-shadow:0 4px 16px rgba(11,31,58,0.06); }
+    .vision-pillar-icon { width:44px; height:44px; background:var(--gold-pale); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex-shrink:0; }
+    .vision-pillar-title { font-weight:600; color:var(--navy); font-size:0.9rem; margin-bottom:0.2rem; }
+    .vision-pillar-desc { font-size:0.8rem; color:var(--text-light); line-height:1.5; }
+    .vision-right-text { font-family:var(--font-display); font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:1.25rem; }
+    .vision-right-text span { color:var(--gold); }
+    .vision-right-p { font-size:0.95rem; color:var(--text-mid); line-height:1.8; margin-bottom:1.75rem; }
+
+    /* ── CTA ── */
+    .cta-sec { background:var(--gold); padding:5rem 2rem; text-align:center; }
+    .cta-inner { max-width:680px; margin:0 auto; }
+    .cta-h2 { font-family:var(--font-display); font-size:clamp(1.8rem,3.5vw,2.5rem); font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:1rem; }
+    .cta-p { font-size:1rem; color:rgba(11,31,58,0.65); line-height:1.75; margin-bottom:2rem; }
+
+    /* ── FOOTER ── */
+    .footer { background:var(--navy-dark); padding:3.5rem 2rem 2rem; border-top:1px solid rgba(201,168,76,0.12); }
+    .footer-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; padding-bottom:2.5rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .f-brand { font-family:var(--font-display); font-size:1.2rem; color:var(--white); font-weight:700; margin-bottom:0.75rem; }
+    .f-brand span { color:var(--gold); }
+    .f-desc { font-size:0.85rem; color:rgba(255,255,255,0.3); line-height:1.7; max-width:260px; margin-bottom:1.25rem; }
+    .f-socials { display:flex; gap:0.65rem; }
+    .f-social { width:36px; height:36px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.4); text-decoration:none; font-size:0.78rem; font-weight:700; transition:all 0.2s; }
+    .f-social:hover { background:rgba(201,168,76,0.1); border-color:var(--gold); color:var(--gold); }
+    .f-col-title { font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:1.25rem; }
+    .f-links { display:flex; flex-direction:column; gap:0.6rem; }
+    .f-links a { font-size:0.875rem; color:rgba(255,255,255,0.35); text-decoration:none; transition:color 0.2s; }
+    .f-links a:hover { color:var(--white); }
+    .footer-bottom { max-width:1100px; margin:1.5rem auto 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .f-copy { font-size:0.78rem; color:rgba(255,255,255,0.2); }
+
+    @keyframes heroUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width:768px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .story-inner { grid-template-columns:1fr; gap:3rem; }
+      .story-img-wrap { max-width:340px; margin:0 auto; }
+      .mission-inner { grid-template-columns:1fr; gap:3rem; }
+      .quality-grid { grid-template-columns:1fr 1fr; }
+      .vision-inner { grid-template-columns:1fr; gap:3rem; }
+      .footer-inner { grid-template-columns:1fr; gap:2rem; }
+      .footer-bottom { flex-direction:column; text-align:center; }
     }
   </style>
 </head>
+<body>
 
-<body class="bg-gradient-to-br from-[#e0f7f9] via-white to-[#f5fbfc] text-slate-900" data-page="about">
-  <!-- Header will be injected -->
-  <header></header>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-logo-text">Next<span class="nav-logo-accent">Gen</span> Tutoring</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+      <li><a href="login.html">Sign In</a></li>
+      <li><a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="nav-cta">Book a Session</a></li>
+    </ul>
+    <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
 
-  <main class="pt-32 pb-20">
-    <!-- Hero -->
-    <header class="text-center pb-10">
-      <h1 class="text-4xl font-bold text-cyan-700">About Me</h1>
-      <p class="mt-2 italic text-slate-600">Meet Hafeez – Your Dedicated Academic Coach</p>
-    </header>
+  <div class="mob-nav" id="mobNav">
+    <a href="about.html">About</a>
+    <a href="../index.html#services">Services</a>
+    <a href="../index.html#pricing">Pricing</a>
+    <a href="../index.html#contact">Contact</a>
+    <a href="login.html">Sign In</a>
+    <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="mob-book">Book a Session</a>
+  </div>
 
-    <!-- Bio Section -->
-    <section class="max-w-6xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-10 items-center">
-      <img src="assets/images/hafeez-profile.jpg" alt="Hafeez - Personal Tutor" class="w-full rounded-xl shadow-lg">
-      <div>
-        <h2 class="text-2xl font-semibold text-cyan-700 mb-3">Who I Am</h2>
-        <p class="text-slate-700 leading-relaxed">
-          My name is Hafeez — founder of NextGen Tutoring, educator, and lifelong learner. I hold a Bachelor’s degree in Computer Engineering and a Master’s in Artificial Intelligence, but my passion lies in helping students truly understand what they’re learning and gain confidence in their abilities.
-          <br><br>
-          I've worked with a wide range of students — from 3rd graders learning multiplication to college students tackling calculus and logic. I specialize in math, but I’m equally comfortable guiding students through science, grammar, and standardized test prep.
-          <br><br>
-          What sets my sessions apart is that I treat tutoring as more than just academic help. I focus on building study habits, critical thinking, and real self-belief. I tailor every session based on the student’s needs — breaking down complex topics into simple, engaging lessons that stick.
-        </p>
-      </div>
-    </section>
-
-    <!-- Credentials -->
-    <section class="bg-white py-12 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-2xl font-bold text-cyan-700 mb-6">Credentials</h2>
-        <div class="grid md:grid-cols-2 gap-6 text-left text-slate-800">
-          <div>
-            <p>🎓 <strong>Bachelor of Science in Computer Engineering</strong><br>University of Michigan</p>
-            <p class="mt-2">📍 <strong>Experience:</strong> K–12, College, and Adult Learners</p>
-          </div>
-          <div>
-            <p>🎓 <strong>Master of Science in Artificial Intelligence</strong><br>University of Michigan</p>
-            <p class="mt-2">🌟 <strong>Specialties:</strong> Math, Science, Grammar, Test Prep (SAT/ACT/GED)</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Philosophy -->
-    <section class="bg-slate-50 py-12 px-6">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-2xl font-bold text-cyan-700 mb-4">My Teaching Philosophy</h2>
-        <p class="text-slate-700 text-lg leading-relaxed">
-          I believe every student is capable of greatness with the right support. I don’t just teach formulas — I teach students how to learn, how to stay confident under pressure, and how to approach challenges with clarity and purpose. Education is about more than grades — it’s about transformation.
-        </p>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-12 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-2xl font-bold text-cyan-700 mb-6">Student & Parent Feedback</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          <blockquote class="bg-cyan-50 rounded-lg shadow p-5 text-slate-800 italic border border-cyan-100">
-            “Nadia took a big test and got a 4.0! THANK YOU AGAIN… I’ll be happy to be a reference!”
-            <br><span class="block mt-2 font-bold text-sm text-cyan-600">– 5th Grade Parent</span>
-          </blockquote>
-          <blockquote class="bg-cyan-50 rounded-lg shadow p-5 text-slate-800 italic border border-cyan-100">
-            “I look forward to every session. I’ve been feeling more confident than ever.”
-            <br><span class="block mt-2 font-bold text-sm text-cyan-600">– College Student</span>
-          </blockquote>
-        </div>
-      </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="py-12 text-center">
-      <h2 class="text-xl font-semibold text-slate-800">Let’s Build Success — One Session at a Time</h2>
-      <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="mt-4 inline-block bg-cyan-600 text-white font-semibold px-6 py-3 rounded-full shadow hover:bg-cyan-500 transition">Book Your First Session</a>
-    </section>
-
-    <!-- Booking Policy -->
-    <div class="mt-8 bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded-lg text-sm shadow-sm max-w-4xl mx-auto">
-      <strong>Booking Policy:</strong><br>
-      A <strong>$10 deposit</strong> is required via <strong>Apple Pay</strong> or <strong>Zelle</strong> to confirm your session. If payment is not received within 24 hours of booking, the appointment will be cancelled.<br><br>
-      <em>Apple Pay:</em> 734-552-5832<br>
-      <em>Zelle:</em> 734-552-5832 / hoyeneyi@umich.edu<br>
-      <strong>Deposits are non-refundable.</strong>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-inner">
+      <div class="page-hero-tag">Our Story &amp; Mission</div>
+      <h1 class="page-hero-h1">We are building something<br/><span>bigger than tutoring.</span></h1>
+      <p class="page-hero-sub">NextGen Tutoring was born from a simple belief — every student deserves access to someone who genuinely believes in them. This is who we are, why we exist, and where we are going.</p>
     </div>
-  </main>
+  </section>
 
-  <!-- Floating Book Button -->
-  <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="floating-book-button">Book Now</a>
-
-  <!-- Footer will be injected -->
-  <footer></footer>
-
-  <!-- Toast Placeholder -->
-  <div id="toast" class="hidden"></div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Hafeez | NextGen Tutoring</title>
-
-  <!-- Meta Info -->
-  <meta name="description" content="Meet Hafeez – founder of NextGen Tutoring and a passionate academic coach helping students from K–12 to college level.">
-  <meta name="keywords" content="Hafeez, NextGen Tutoring, tutor, math tutor, AI, computer engineering, SAT prep, academic coaching">
-  <meta property="og:title" content="About Hafeez – NextGen Tutoring">
-  <meta property="og:description" content="Founder of NextGen Tutoring. Hafeez specializes in helping students master academics with clarity and confidence.">
-  <meta property="og:image" content="assets/images/hafeez-profile.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <!-- Styles & Fonts -->
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Core Scripts -->
-  <script type="module" src="scripts/loadHeader.js" defer></script>
-  <script type="module" src="scripts/loadFooter.js" defer></script>
-  <script type="module" src="scripts/toast.js" defer></script>
-
-  <style>
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .floating-book-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #0891b2;
-      color: white;
-      padding: 12px 18px;
-      border-radius: 30px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 999;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    .floating-book-button:hover {
-      background-color: #0e7490;
-    }
-  </style>
-</head>
-
-<body class="bg-gradient-to-br from-[#e0f7f9] via-white to-[#f5fbfc] text-slate-900" data-page="about">
-  <!-- Header will be injected -->
-  <header></header>
-
-  <main class="pt-32 pb-20">
-    <!-- Hero -->
-    <header class="text-center pb-10">
-      <h1 class="text-4xl font-bold text-cyan-700">About Me</h1>
-      <p class="mt-2 italic text-slate-600">Meet Hafeez – Your Dedicated Academic Coach</p>
-    </header>
-
-    <!-- Bio Section -->
-    <section class="max-w-6xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-10 items-center">
-      <img src="assets/images/hafeez-profile.jpg" alt="Hafeez - Personal Tutor" class="w-full rounded-xl shadow-lg">
-      <div>
-        <h2 class="text-2xl font-semibold text-cyan-700 mb-3">Who I Am</h2>
-        <p class="text-slate-700 leading-relaxed">
-          My name is Hafeez — founder of NextGen Tutoring, educator, and lifelong learner. I hold a Bachelor’s degree in Computer Engineering and a Master’s in Artificial Intelligence, but my passion lies in helping students truly understand what they’re learning and gain confidence in their abilities.
-          <br><br>
-          I've worked with a wide range of students — from 3rd graders learning multiplication to college students tackling calculus and logic. I specialize in math, but I’m equally comfortable guiding students through science, grammar, and standardized test prep.
-          <br><br>
-          What sets my sessions apart is that I treat tutoring as more than just academic help. I focus on building study habits, critical thinking, and real self-belief. I tailor every session based on the student’s needs — breaking down complex topics into simple, engaging lessons that stick.
-        </p>
-      </div>
-    </section>
-
-    <!-- Credentials -->
-    <section class="bg-white py-12 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-2xl font-bold text-cyan-700 mb-6">Credentials</h2>
-        <div class="grid md:grid-cols-2 gap-6 text-left text-slate-800">
-          <div>
-            <p>🎓 <strong>Bachelor of Science in Computer Engineering</strong><br>University of Michigan</p>
-            <p class="mt-2">📍 <strong>Experience:</strong> K–12, College, and Adult Learners</p>
-          </div>
-          <div>
-            <p>🎓 <strong>Master of Science in Artificial Intelligence</strong><br>University of Michigan</p>
-            <p class="mt-2">🌟 <strong>Specialties:</strong> Math, Science, Grammar, Test Prep (SAT/ACT/GED)</p>
-          </div>
+  <!-- STORY -->
+  <section class="story-sec">
+    <div class="story-inner">
+      <div class="story-img-wrap sr sr-left">
+        <div class="story-img-frame">
+          <img src="../assets/images/hafeez-profile.jpg" alt="Hafeez Oyeneyin — Founder of NextGen Tutoring" onerror="this.style.display='none';document.getElementById('fallback').style.display='flex';" />
+          <div id="fallback" class="story-img-fallback" style="display:none;">👨🏾‍🏫</div>
+        </div>
+        <div class="story-img-accent"></div>
+        <div class="story-img-badge">
+          Hafeez Oyeneyin
+          <span>Founder &amp; Lead Tutor</span>
         </div>
       </div>
-    </section>
-
-    <!-- Philosophy -->
-    <section class="bg-slate-50 py-12 px-6">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-2xl font-bold text-cyan-700 mb-4">My Teaching Philosophy</h2>
-        <p class="text-slate-700 text-lg leading-relaxed">
-          I believe every student is capable of greatness with the right support. I don’t just teach formulas — I teach students how to learn, how to stay confident under pressure, and how to approach challenges with clarity and purpose. Education is about more than grades — it’s about transformation.
-        </p>
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-12 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-2xl font-bold text-cyan-700 mb-6">Student & Parent Feedback</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          <blockquote class="bg-cyan-50 rounded-lg shadow p-5 text-slate-800 italic border border-cyan-100">
-            “Nadia took a big test and got a 4.0! THANK YOU AGAIN… I’ll be happy to be a reference!”
-            <br><span class="block mt-2 font-bold text-sm text-cyan-600">– 5th Grade Parent</span>
-          </blockquote>
-          <blockquote class="bg-cyan-50 rounded-lg shadow p-5 text-slate-800 italic border border-cyan-100">
-            “I look forward to every session. I’ve been feeling more confident than ever.”
-            <br><span class="block mt-2 font-bold text-sm text-cyan-600">– College Student</span>
-          </blockquote>
+      <div class="sr sr-right">
+        <span class="sec-tag">The Story</span>
+        <h2 class="sec-h2">It started with two students<br/>and a belief in second chances.</h2>
+        <p class="story-body">During college, my professor pulled me aside and asked me to tutor two struggling high school students — to sit with them, mentor them, and help them find their way. I said yes without hesitation.</p>
+        <p class="story-body">What happened over the next few months changed my life. I watched two young people who were on the verge of giving up <strong>rediscover their confidence, push through every obstacle, and get back on track.</strong></p>
+        <p class="story-body">That's when I realized something I can't un-see: <strong>the difference between a student who makes it and one who doesn't often comes down to one thing — someone who believes in them.</strong> Not a system. Not a program. A person.</p>
+        <p class="story-body">NextGen Tutoring exists to be that person for every student who needs it.</p>
+        <div class="story-sig">
+          <div class="story-sig-name">Hafeez Oyeneyin</div>
+          <div class="story-sig-role">Founder, NextGen Tutoring</div>
         </div>
       </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="py-12 text-center">
-      <h2 class="text-xl font-semibold text-slate-800">Let’s Build Success — One Session at a Time</h2>
-      <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="mt-4 inline-block bg-cyan-600 text-white font-semibold px-6 py-3 rounded-full shadow hover:bg-cyan-500 transition">Book Your First Session</a>
-    </section>
-
-    <!-- Booking Policy -->
-    <div class="mt-8 bg-yellow-50 border border-yellow-300 text-yellow-800 p-4 rounded-lg text-sm shadow-sm max-w-4xl mx-auto">
-      <strong>Booking Policy:</strong><br>
-      A <strong>$10 deposit</strong> is required via <strong>Apple Pay</strong> or <strong>Zelle</strong> to confirm your session. If payment is not received within 24 hours of booking, the appointment will be cancelled.<br><br>
-      <em>Apple Pay:</em> 734-552-5832<br>
-      <em>Zelle:</em> 734-552-5832 / nextgentutoringco@gmail.com<br>
-      <strong>Deposits are non-refundable.</strong>
     </div>
-  </main>
+  </section>
 
-  <!-- Floating Book Button -->
-  <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="floating-book-button">Book Now</a>
+  <!-- MISSION -->
+  <section class="mission-sec">
+    <div class="mission-inner">
+      <div class="sr">
+        <span class="sec-tag">Our Mission</span>
+        <h2 class="sec-h2 sec-h2-white">In too many communities, the students who need the most support get the least of it.</h2>
+        <div class="mission-quote">
+          <p class="mission-quote-text">"We see it every day in Metro Detroit. Brilliant kids falling behind not because they aren't capable — but because nobody sat with them, explained it differently, and told them they could do it."</p>
+        </div>
+        <p class="mission-text-block">NextGen Tutoring was built for those kids. <strong>We are from this community. We understand this community.</strong> And we are committed to building something that serves this community for generations.</p>
+        <p class="mission-text-block">Today that looks like personalized tutoring sessions. Tomorrow it looks like learning centers, free digital resources, and programs that reach every student who needs them — <strong>regardless of what they can afford.</strong></p>
+        <p class="mission-text-block" style="color:rgba(255,255,255,0.75); font-style:italic;">This is bigger than tutoring. This is about what our community's next generation becomes.</p>
+      </div>
+      <div class="sr sr-d2">
+        <div class="quality-grid">
+          <div class="quality-card">
+            <div class="quality-card-icon">📍</div>
+            <div class="quality-card-title">Metro Detroit Based</div>
+            <div class="quality-card-desc">We know this community because we are from it.</div>
+          </div>
+          <div class="quality-card">
+            <div class="quality-card-icon">🎓</div>
+            <div class="quality-card-title">PreK through College</div>
+            <div class="quality-card-desc">Every grade level, every subject, every student.</div>
+          </div>
+          <div class="quality-card">
+            <div class="quality-card-icon">💻</div>
+            <div class="quality-card-title">Virtual &amp; In-Person</div>
+            <div class="quality-card-desc">We meet students exactly where they are.</div>
+          </div>
+          <div class="quality-card">
+            <div class="quality-card-icon">🎯</div>
+            <div class="quality-card-title">Always Personalized</div>
+            <div class="quality-card-desc">No two sessions are the same. Ever.</div>
+          </div>
+        </div>
+        <div class="beliefs-card">
+          <div class="beliefs-title">What We Believe</div>
+          <div class="belief-item"><span class="belief-check">✓</span><span class="belief-text">Every student is capable — they just need the right support.</span></div>
+          <div class="belief-item"><span class="belief-check">✓</span><span class="belief-text">Education is the most powerful tool for changing a community.</span></div>
+          <div class="belief-item"><span class="belief-check">✓</span><span class="belief-text">Quality academic support should not be a luxury.</span></div>
+          <div class="belief-item"><span class="belief-check">✓</span><span class="belief-text">One breakthrough can change the entire trajectory of a student's life.</span></div>
+          <div class="belief-item"><span class="belief-check">✓</span><span class="belief-text">The next generation deserves mentors who look like them and come from where they come from.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Footer will be injected -->
-  <footer></footer>
+  <!-- VALUES -->
+  <section class="values-sec">
+    <div class="sec-inner">
+      <div class="sr">
+        <span class="sec-tag">What Drives Us</span>
+        <h2 class="sec-h2">The values behind<br/>every session.</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card sr sr-d1">
+          <div class="value-icon">🤝</div>
+          <h3 class="value-title">Genuine Care</h3>
+          <p class="value-desc">We don't just teach subjects — we invest in students as people. Every session is built on the belief that the student in front of us matters beyond their grade.</p>
+        </div>
+        <div class="value-card sr sr-d2">
+          <div class="value-icon">🎯</div>
+          <h3 class="value-title">Personalization</h3>
+          <p class="value-desc">No two students learn the same way. We meet every student exactly where they are and build from there — no scripts, no one-size-fits-all approach.</p>
+        </div>
+        <div class="value-card sr sr-d3">
+          <div class="value-icon">🏆</div>
+          <h3 class="value-title">Excellence</h3>
+          <p class="value-desc">We hold ourselves and our students to a high standard — not to create pressure, but because we know what they're capable of when someone believes in them.</p>
+        </div>
+        <div class="value-card sr sr-d1">
+          <div class="value-icon">🌍</div>
+          <h3 class="value-title">Community</h3>
+          <p class="value-desc">We are from Metro Detroit. We serve Metro Detroit. And we are building with Metro Detroit in mind — today and for every generation that comes after.</p>
+        </div>
+        <div class="value-card sr sr-d2">
+          <div class="value-icon">📈</div>
+          <h3 class="value-title">Growth</h3>
+          <p class="value-desc">We are always learning, improving, and building. NextGen Tutoring today is just the beginning of what we are committed to becoming.</p>
+        </div>
+        <div class="value-card sr sr-d3">
+          <div class="value-icon">🙏</div>
+          <h3 class="value-title">Faith &amp; Purpose</h3>
+          <p class="value-desc">Everything we do is grounded in a belief that we are called to serve — that building up the next generation is not just a business, it's a purpose.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Toast Placeholder -->
-  <div id="toast" class="hidden"></div>
+  <!-- VISION -->
+  <section class="vision-sec">
+    <div class="vision-inner">
+      <div class="sr">
+        <span class="sec-tag">Where We Are Going</span>
+        <div class="vision-right-text">Building beyond<br/>individual sessions.</div>
+        <p class="vision-right-p">We are building toward something bigger — learning centers, a digital platform, and community programs that make quality education accessible to every student regardless of their zip code or financial situation.</p>
+        <p class="vision-right-p" style="margin-top:-0.75rem;">The tutoring sessions you invest in today are the foundation of everything we are building for this community tomorrow.</p>
+        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="btn btn-gold" style="margin-top:1.75rem;">
+          Be Part of It — Book a Session
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="sr sr-d2">
+        <div class="vision-pillars">
+          <div class="vision-pillar">
+            <div class="vision-pillar-icon">📚</div>
+            <div>
+              <div class="vision-pillar-title">Learning Centers</div>
+              <div class="vision-pillar-desc">Physical spaces where students can come to learn, be mentored, and access resources — built for and by our community.</div>
+            </div>
+          </div>
+          <div class="vision-pillar">
+            <div class="vision-pillar-icon">💻</div>
+            <div>
+              <div class="vision-pillar-title">Digital Learning Platform</div>
+              <div class="vision-pillar-desc">An IXL and Khan Academy-style platform built specifically for the students and communities we serve.</div>
+            </div>
+          </div>
+          <div class="vision-pillar">
+            <div class="vision-pillar-icon">📖</div>
+            <div>
+              <div class="vision-pillar-title">Workbooks &amp; Curriculum</div>
+              <div class="vision-pillar-desc">Physical and digital curriculum materials that students can use independently to reinforce learning between sessions.</div>
+            </div>
+          </div>
+          <div class="vision-pillar">
+            <div class="vision-pillar-icon">🤲</div>
+            <div>
+              <div class="vision-pillar-title">Non-Profit &amp; Free Access</div>
+              <div class="vision-pillar-desc">A non-profit arm providing free resources and programs to students who need it most — because quality education should never be a privilege.</div>
+            </div>
+          </div>
+          <div class="vision-pillar">
+            <div class="vision-pillar-icon">🖥️</div>
+            <div>
+              <div class="vision-pillar-title">Tech &amp; AI Education</div>
+              <div class="vision-pillar-desc">Introducing the next generation to technology and AI — equipping students with the skills that will define tomorrow's world.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-sec">
+    <div class="cta-inner sr">
+      <span class="sec-tag" style="text-align:center; display:block; color:rgba(11,31,58,0.5);">Join the Movement</span>
+      <h2 class="cta-h2">Every student who books a session<br/>is part of building something bigger.</h2>
+      <p class="cta-p">Your investment in your student today helps us build the resources, programs, and centers that will serve the next generation of students in our community.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="btn btn-dark">
+          Book a Session
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="../index.html#contact" class="btn btn-navy-outline">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="f-brand">Next<span>Gen</span> Tutoring</div>
+        <p class="f-desc">Empowering students to master academics with clarity and confidence. Metro Detroit &amp; Virtual.</p>
+        <div class="f-socials">
+          <a href="https://instagram.com/nextgentutoringco" target="_blank" class="f-social" aria-label="Instagram">ig</a>
+          <a href="https://tiktok.com/@nextgentutoringco" target="_blank" class="f-social" aria-label="TikTok">tk</a>
+          <a href="https://facebook.com/nextgentutoring" target="_blank" class="f-social" aria-label="Facebook">fb</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-col-title">Navigation</div>
+        <ul class="f-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="../index.html#services">Services</a></li>
+          <li><a href="../index.html#pricing">Pricing</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+          <li><a href="login.html">Student Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-col-title">Contact</div>
+        <ul class="f-links">
+          <li><a href="mailto:nextgentutoringco@gmail.com">nextgentutoringco@gmail.com</a></li>
+          <li><a href="tel:7345525832">734-552-5832</a></li>
+          <li><a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank">Book a Session</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="f-copy">© 2026 NextGen Tutoring. All rights reserved.</div>
+      <div class="f-copy">Built with purpose. Designed for impact.</div>
+    </div>
+  </footer>
+
+  <script>
+    const ham = document.getElementById('ham');
+    const mob = document.getElementById('mobNav');
+    ham.addEventListener('click', () => mob.classList.toggle('open'));
+    mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+
+    const srEls = document.querySelectorAll('.sr');
+    function isInView(el) { const r = el.getBoundingClientRect(); return r.top < window.innerHeight - 60 && r.bottom > 0; }
+    function revealEl(el) { el.classList.add('visible'); }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { revealEl(e.target); io.unobserve(e.target); } });
+      }, { threshold:0, rootMargin:'0px 0px -60px 0px' });
+      srEls.forEach(el => io.observe(el));
+    } else {
+      window.addEventListener('scroll', () => srEls.forEach(el => { if (isInView(el)) revealEl(el); }), { passive:true });
+    }
+    window.addEventListener('load', () => srEls.forEach(el => { if (isInView(el)) revealEl(el); }));
+    setTimeout(() => srEls.forEach(revealEl), 2000);
+  </script>
+
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" /></noscript>
 </body>
 </html>

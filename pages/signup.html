@@ -2,49 +2,519 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Sign Up - NextGen Tutoring</title>
-  <script type="module" src="scripts/auth.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="scripts/loadHeader.js" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — NextGen Tutoring</title>
+  <meta name="description" content="Sign in to your NextGen Tutoring student dashboard to access lessons, assignments, and book sessions." />
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <style>
-    body { font-family: 'Space Grotesk', sans-serif; }
+    :root {
+      --navy:        #112240;
+      --navy-mid:    #1a3a5c;
+      --navy-light:  #1e4976;
+      --navy-dark:   #0a1628;
+      --gold:        #C9A84C;
+      --gold-light:  #E8C97A;
+      --gold-pale:   #FBF3DC;
+      --white:       #FFFFFF;
+      --off-white:   #F8F6F0;
+      --text-dark:   #0B1F3A;
+      --text-mid:    #3A4A60;
+      --text-light:  #7A8A9E;
+      --error:       #c0392b;
+      --success:     #1A5C38;
+      --font-display:'Playfair Display', Georgia, serif;
+      --font-body:   'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--font-body); background:var(--navy); color:var(--white); min-height:100vh; display:flex; flex-direction:column; -webkit-font-smoothing:antialiased; }
+
+    /* ── BACKGROUND ── */
+    .page-bg {
+      position: fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(201,168,76,0.07) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(201,168,76,0.04) 0%, transparent 40%),
+        repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201,168,76,0.015) 60px, rgba(201,168,76,0.015) 61px);
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: relative; z-index:10;
+      height: 72px; padding:0 2rem;
+      display: flex; align-items:center; justify-content:space-between;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .nav-logo { text-decoration:none; }
+    .nav-logo-text { font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--white); }
+    .nav-logo-accent { color:var(--gold); }
+    .nav-back { font-size:0.82rem; color:rgba(255,255,255,0.5); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color 0.2s; }
+    .nav-back:hover { color:var(--gold); }
+    .nav-back svg { width:16px; height:16px; }
+
+    /* ── MAIN LAYOUT ── */
+    .main { flex:1; display:flex; align-items:center; justify-content:center; padding:3rem 1.5rem; position:relative; z-index:1; }
+
+    /* ── AUTH CARD ── */
+    .auth-card {
+      width: 100%; max-width:440px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 16px;
+      padding: 2.5rem;
+      animation: cardIn 0.5s ease both;
+    }
+
+    @keyframes cardIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 2rem;
+      gap: 4px;
+    }
+    .tab-btn {
+      flex: 1; padding:0.6rem; border:none; border-radius:6px;
+      font-family:var(--font-body); font-size:0.875rem; font-weight:600;
+      cursor:pointer; transition:all 0.2s;
+      background:transparent; color:rgba(255,255,255,0.45);
+    }
+    .tab-btn.active { background:var(--gold); color:var(--navy); }
+
+    /* ── PANEL ── */
+    .panel { display:none; }
+    .panel.active { display:block; }
+
+    .panel-title { font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
+    .panel-sub { font-size:0.875rem; color:rgba(255,255,255,0.4); margin-bottom:1.75rem; line-height:1.55; }
+
+    /* ── FORM ── */
+    .fg { margin-bottom:1.1rem; }
+    .fl { display:block; font-size:0.75rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:0.5rem; }
+    .fi {
+      width:100%; background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1); border-radius:6px;
+      padding:0.85rem 1rem; font-family:var(--font-body); font-size:0.9rem;
+      color:var(--white); outline:none; transition:border-color 0.2s, background 0.2s;
+    }
+    .fi::placeholder { color:rgba(255,255,255,0.2); }
+    .fi:focus { border-color:var(--gold); background:rgba(255,255,255,0.07); }
+    .fi.error { border-color:var(--error); }
+
+    /* password wrapper */
+    .pw-wrap { position:relative; }
+    .pw-toggle { position:absolute; right:1rem; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(255,255,255,0.35); cursor:pointer; font-size:0.8rem; font-family:var(--font-body); transition:color 0.2s; }
+    .pw-toggle:hover { color:var(--gold); }
+
+    /* remember me + forgot */
+    .form-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
+    .remember-label { display:flex; align-items:center; gap:8px; font-size:0.82rem; color:rgba(255,255,255,0.45); cursor:pointer; }
+    .remember-label input[type="checkbox"] { width:16px; height:16px; accent-color:var(--gold); cursor:pointer; }
+    .forgot-link { font-size:0.82rem; color:var(--gold); text-decoration:none; transition:color 0.2s; }
+    .forgot-link:hover { color:var(--gold-light); }
+
+    /* submit button */
+    .submit-btn {
+      width:100%; background:var(--gold); color:var(--navy);
+      font-weight:700; font-size:0.95rem; padding:1rem;
+      border:none; border-radius:6px; cursor:pointer;
+      font-family:var(--font-body); transition:background 0.2s, transform 0.2s;
+      margin-top:0.25rem;
+    }
+    .submit-btn:hover { background:var(--gold-light); transform:translateY(-1px); }
+    .submit-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+    /* divider */
+    .divider { text-align:center; font-size:0.78rem; color:rgba(255,255,255,0.2); margin:1.25rem 0; position:relative; }
+    .divider::before, .divider::after { content:''; position:absolute; top:50%; width:calc(50% - 24px); height:1px; background:rgba(255,255,255,0.08); }
+    .divider::before { left:0; }
+    .divider::after { right:0; }
+
+    /* switch panel */
+    .switch-text { text-align:center; font-size:0.85rem; color:rgba(255,255,255,0.35); margin-top:1.25rem; }
+    .switch-link { color:var(--gold); font-weight:600; text-decoration:none; cursor:pointer; transition:color 0.2s; background:none; border:none; font-family:var(--font-body); font-size:0.85rem; }
+    .switch-link:hover { color:var(--gold-light); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
+      padding:0.85rem 1.5rem; border-radius:8px;
+      font-size:0.875rem; font-weight:500; color:var(--white);
+      z-index:999; box-shadow:0 8px 24px rgba(0,0,0,0.2);
+      white-space:nowrap; opacity:0; pointer-events:none;
+      transition:opacity 0.3s;
+    }
+    .toast.show { opacity:1; pointer-events:auto; }
+    .toast.success { background:var(--success); }
+    .toast.error   { background:var(--error); }
+    .toast.info    { background:var(--navy-mid); border:1px solid rgba(201,168,76,0.25); }
+
+    /* ── PASSWORD STRENGTH ── */
+    .pw-strength { display:flex; gap:4px; margin-top:6px; }
+    .pw-bar { flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,0.1); transition:background 0.3s; }
+    .pw-bar.weak   { background:#c0392b; }
+    .pw-bar.fair   { background:#e67e22; }
+    .pw-bar.good   { background:#f1c40f; }
+    .pw-bar.strong { background:var(--success); }
+    .pw-hint { font-size:0.72rem; color:rgba(255,255,255,0.3); margin-top:4px; }
+
+    /* ── FOOTER ── */
+    .page-footer { position:relative; z-index:1; text-align:center; padding:1.5rem; border-top:1px solid rgba(255,255,255,0.05); }
+    .page-footer a { font-size:0.78rem; color:rgba(255,255,255,0.25); text-decoration:none; margin:0 0.75rem; transition:color 0.2s; }
+    .page-footer a:hover { color:var(--gold); }
+
+    /* ── TERMS CHECKBOX ── */
+    .terms-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:1.25rem; }
+    .terms-row input[type="checkbox"] { width:16px; height:16px; accent-color:var(--gold); cursor:pointer; margin-top:2px; flex-shrink:0; }
+    .terms-row label { font-size:0.82rem; color:rgba(255,255,255,0.4); line-height:1.5; cursor:pointer; }
+    .terms-row label a { color:var(--gold); text-decoration:none; }
+
+    @media (max-width:480px) {
+      .auth-card { padding:1.75rem; }
+      .navbar { padding:0 1.25rem; }
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-[#e0f7f9] via-white to-[#f5fbfc] text-slate-900" data-page="signup">
+<body>
 
-  <!-- Auto-injected header -->
-  <header></header>
+  <div class="page-bg"></div>
 
-  <!-- Main Content -->
-  <main class="flex items-center justify-center min-h-screen pt-28 px-4 bg-gradient-to-br from-white via-cyan-50 to-cyan-100">
-    <div class="w-full max-w-sm border border-cyan-200 rounded-xl p-6 shadow-md bg-white">
-      <h2 class="text-2xl font-bold text-cyan-700 mb-6 text-center">Sign Up</h2>
-      <div class="space-y-4">
-        <input type="text" id="name" placeholder="Full Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400">
-        <input type="email" id="email" placeholder="Email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400">
-        <input type="password" id="password" placeholder="Password" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-logo-text">Next<span class="nav-logo-accent">Gen</span> Tutoring</span>
+    </a>
+    <a href="../index.html" class="nav-back">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to site
+    </a>
+  </nav>
 
-        <button id="signupBtn" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-md font-semibold">Sign Up</button>
-        <button id="loginRedirect" class="w-full border border-cyan-600 text-cyan-600 py-2 rounded-md font-semibold hover:bg-cyan-50">Already have an account? Login</button>
+  <!-- MAIN -->
+  <main class="main">
+    <div class="auth-card">
+
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" id="loginTab" onclick="switchTab('login')">Sign In</button>
+        <button class="tab-btn" id="signupTab" onclick="switchTab('signup')">Create Account</button>
       </div>
 
-      <p class="text-center text-xs text-slate-500 mt-4">
-        Need help? <a href="contact.html" class="text-cyan-600 hover:underline">Contact support</a>
-      </p>
+      <!-- LOGIN PANEL -->
+      <div class="panel active" id="loginPanel">
+        <h1 class="panel-title">Welcome back.</h1>
+        <p class="panel-sub">Sign in to access your dashboard, lessons, and sessions.</p>
 
-      <!-- Toast Notification -->
-      <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-cyan-600 text-white px-6 py-3 rounded-md shadow-md hidden z-50"></div>
+        <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+          <div class="fg">
+            <label class="fl" for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" class="fi" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+          <div class="fg">
+            <label class="fl" for="loginPassword">Password</label>
+            <div class="pw-wrap">
+              <input type="password" id="loginPassword" class="fi" placeholder="Your password" required autocomplete="current-password" />
+              <button type="button" class="pw-toggle" onclick="togglePw('loginPassword', this)">Show</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="remember-label">
+              <input type="checkbox" id="rememberMe" />
+              Remember me
+            </label>
+            <a href="#" class="forgot-link" onclick="showForgot(event)">Forgot password?</a>
+          </div>
+          <button type="submit" class="submit-btn" id="loginBtn">Sign In</button>
+        </form>
+
+        <div class="switch-text">
+          Don't have an account?
+          <button class="switch-link" onclick="switchTab('signup')">Create one free</button>
+        </div>
+      </div>
+
+      <!-- SIGNUP PANEL -->
+      <div class="panel" id="signupPanel">
+        <h1 class="panel-title">Get started.</h1>
+        <p class="panel-sub">Create your free account to access lessons and book sessions.</p>
+
+        <form id="signupForm" onsubmit="handleSignup(event)" novalidate>
+          <div class="fg">
+            <label class="fl" for="signupName">Full Name</label>
+            <input type="text" id="signupName" class="fi" placeholder="Your full name" required autocomplete="name" />
+          </div>
+          <div class="fg">
+            <label class="fl" for="signupEmail">Email Address</label>
+            <input type="email" id="signupEmail" class="fi" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+          <div class="fg">
+            <label class="fl" for="signupPassword">Password</label>
+            <div class="pw-wrap">
+              <input type="password" id="signupPassword" class="fi" placeholder="Create a password" required autocomplete="new-password" oninput="checkStrength(this.value)" />
+              <button type="button" class="pw-toggle" onclick="togglePw('signupPassword', this)">Show</button>
+            </div>
+            <div class="pw-strength">
+              <div class="pw-bar" id="bar1"></div>
+              <div class="pw-bar" id="bar2"></div>
+              <div class="pw-bar" id="bar3"></div>
+              <div class="pw-bar" id="bar4"></div>
+            </div>
+            <div class="pw-hint" id="pwHint">Minimum 8 characters</div>
+          </div>
+          <div class="terms-row">
+            <input type="checkbox" id="termsCheck" required />
+            <label for="termsCheck">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+          </div>
+          <button type="submit" class="submit-btn" id="signupBtn">Create Account</button>
+        </form>
+
+        <div class="switch-text">
+          Already have an account?
+          <button class="switch-link" onclick="switchTab('login')">Sign in</button>
+        </div>
+      </div>
+
+      <!-- FORGOT PASSWORD PANEL -->
+      <div class="panel" id="forgotPanel">
+        <h1 class="panel-title">Reset password.</h1>
+        <p class="panel-sub">Enter your email and we'll send you a reset link.</p>
+
+        <form id="forgotForm" onsubmit="handleForgot(event)" novalidate>
+          <div class="fg">
+            <label class="fl" for="forgotEmail">Email Address</label>
+            <input type="email" id="forgotEmail" class="fi" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+          <button type="submit" class="submit-btn" id="forgotBtn">Send Reset Link</button>
+        </form>
+
+        <div class="switch-text">
+          Remember your password?
+          <button class="switch-link" onclick="switchTab('login')">Back to sign in</button>
+        </div>
+      </div>
+
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="text-center py-6 text-slate-500 text-sm">
-    &copy; 2025 NextGen Tutoring. All rights reserved. <br/>
-    <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" class="text-cyan-600 hover:underline">Book a Session</a> |
-    <a href="contact.html" class="text-cyan-600 hover:underline">Contact</a> |
-    <a href="about.html" class="text-cyan-600 hover:underline">About</a>
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <a href="../index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="mailto:nextgentutoringco@gmail.com">Support</a>
   </footer>
 
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      sendPasswordResetEmail,
+      setPersistence,
+      browserLocalPersistence,
+      browserSessionPersistence,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
+      authDomain: "nextgen-tutoring.firebaseapp.com",
+      projectId: "nextgen-tutoring",
+      storageBucket: "nextgen-tutoring.appspot.com",
+      messagingSenderId: "1064020614361",
+      appId: "1:1064020614361:web:4a88beaf6765b23c59f2c8"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    // Redirect if already logged in
+    onAuthStateChanged(auth, user => {
+      if (user) window.location.href = 'dashboard.html';
+    });
+
+    // ── LOGIN ──
+    window.handleLogin = async function(e) {
+      e.preventDefault();
+      const email    = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const remember = document.getElementById('rememberMe').checked;
+      const btn      = document.getElementById('loginBtn');
+
+      if (!email || !password) return showToast('Please fill in all fields.', 'error');
+
+      btn.disabled    = true;
+      btn.textContent = 'Signing in...';
+
+      try {
+        const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
+        await setPersistence(auth, persistence);
+        await signInWithEmailAndPassword(auth, email, password);
+        showToast('Welcome back!', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+      } catch (err) {
+        btn.disabled    = false;
+        btn.textContent = 'Sign In';
+        showToast(friendlyError(err.code), 'error');
+      }
+    };
+
+    // ── SIGNUP ──
+    window.handleSignup = async function(e) {
+      e.preventDefault();
+      const name    = document.getElementById('signupName').value.trim();
+      const email   = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const terms   = document.getElementById('termsCheck').checked;
+      const btn     = document.getElementById('signupBtn');
+
+      if (!name || !email || !password) return showToast('Please fill in all fields.', 'error');
+      if (password.length < 8)          return showToast('Password must be at least 8 characters.', 'error');
+      if (!terms)                        return showToast('Please agree to the terms to continue.', 'error');
+
+      btn.disabled    = true;
+      btn.textContent = 'Creating account...';
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          name, email,
+          createdAt: serverTimestamp(),
+          role: 'student'
+        });
+        showToast('Account created! Welcome to NextGen.', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 1200);
+      } catch (err) {
+        btn.disabled    = false;
+        btn.textContent = 'Create Account';
+        showToast(friendlyError(err.code), 'error');
+      }
+    };
+
+    // ── FORGOT ──
+    window.handleForgot = async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('forgotEmail').value.trim();
+      const btn   = document.getElementById('forgotBtn');
+
+      if (!email) return showToast('Please enter your email address.', 'error');
+
+      btn.disabled    = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showToast('Reset link sent! Check your inbox.', 'success');
+        btn.textContent = 'Link Sent ✓';
+      } catch (err) {
+        btn.disabled    = false;
+        btn.textContent = 'Send Reset Link';
+        showToast(friendlyError(err.code), 'error');
+      }
+    };
+
+    // ── FRIENDLY ERRORS ──
+    function friendlyError(code) {
+      const map = {
+        'auth/invalid-email':         'Please enter a valid email address.',
+        'auth/user-not-found':        'No account found with that email.',
+        'auth/wrong-password':        'Incorrect password. Please try again.',
+        'auth/invalid-credential':    'Incorrect email or password.',
+        'auth/email-already-in-use':  'An account with that email already exists.',
+        'auth/weak-password':         'Password must be at least 6 characters.',
+        'auth/too-many-requests':     'Too many attempts. Please try again later.',
+        'auth/network-request-failed':'Network error. Check your connection.',
+      };
+      return map[code] || 'Something went wrong. Please try again.';
+    }
+  </script>
+
+  <script>
+    /* ── TAB SWITCHING ── */
+    function switchTab(tab) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      if (tab === 'login') {
+        document.getElementById('loginPanel').classList.add('active');
+        document.getElementById('loginTab').classList.add('active');
+        document.title = 'Sign In — NextGen Tutoring';
+      } else if (tab === 'signup') {
+        document.getElementById('signupPanel').classList.add('active');
+        document.getElementById('signupTab').classList.add('active');
+        document.title = 'Create Account — NextGen Tutoring';
+      } else if (tab === 'forgot') {
+        document.getElementById('forgotPanel').classList.add('active');
+        document.title = 'Reset Password — NextGen Tutoring';
+      }
+    }
+
+    function showForgot(e) {
+      e.preventDefault();
+      // Pre-fill forgot email if login email exists
+      const loginEmail = document.getElementById('loginEmail').value.trim();
+      if (loginEmail) document.getElementById('forgotEmail').value = loginEmail;
+      switchTab('forgot');
+    }
+
+    /* ── TOAST ── */
+    let toastTimer;
+    function showToast(msg, type = 'info') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast ${type} show`;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    /* ── PASSWORD TOGGLE ── */
+    function togglePw(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const show  = input.type === 'password';
+      input.type  = show ? 'text' : 'password';
+      btn.textContent = show ? 'Hide' : 'Show';
+    }
+
+    /* ── PASSWORD STRENGTH ── */
+    function checkStrength(val) {
+      const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+      const hint = document.getElementById('pwHint');
+      bars.forEach(b => b.className = 'pw-bar');
+
+      let score = 0;
+      if (val.length >= 8)                          score++;
+      if (/[A-Z]/.test(val) && /[a-z]/.test(val))  score++;
+      if (/[0-9]/.test(val))                        score++;
+      if (/[^A-Za-z0-9]/.test(val))                score++;
+
+      const levels = ['weak', 'fair', 'good', 'strong'];
+      const labels = ['Too short', 'Fair', 'Good', 'Strong'];
+
+      if (val.length === 0) { hint.textContent = 'Minimum 8 characters'; return; }
+      if (val.length < 8)   { bars[0].classList.add('weak'); hint.textContent = 'Too short'; return; }
+
+      for (let i = 0; i < score; i++) bars[i].classList.add(levels[score - 1]);
+      hint.textContent = labels[score - 1] || 'Strong';
+    }
+
+    /* ── CHECK URL PARAM ── */
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('tab') === 'signup') switchTab('signup');
+  </script>
 </body>
 </html>

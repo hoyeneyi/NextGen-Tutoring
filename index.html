@@ -466,9 +466,9 @@
           <a href="pages/about.html" class="btn btn-outline">Learn Our Story</a>
         </div>
         <div class="hero-stats">
-          <div><div class="stat-num">50+</div><div class="stat-label">Students Helped</div></div>
           <div><div class="stat-num">PreK–12</div><div class="stat-label">Grade Levels</div></div>
-          <div><div class="stat-num">100%</div><div class="stat-label">Dedicated</div></div>
+          <div><div class="stat-num">5+</div><div class="stat-label">Subjects Covered</div></div>
+          <div><div class="stat-num">100%</div><div class="stat-label">Personalized</div></div>
         </div>
       </div>
       <div class="hero-card">
@@ -612,7 +612,7 @@
         </div>
       </div>
       <p class="price-note">SAT / ACT prep sessions are $60/session.</p>
-      <p class="price-note" style="margin-top:0.5rem;">Multiple children? We offer family pricing. <a href="mailto:nextgentutoringco@gmail.com">Contact us →</a></p>
+      <p class="price-note" style="margin-top:0.5rem;">Multiple children? We offer family pricing. <a href="/cdn-cgi/l/email-protection#78161d000c1f1d160c0d0c170a11161f1b17381f15191114561b1715">Contact us →</a></p>
     </div>
   </section>
 
@@ -676,7 +676,7 @@
         <div style="margin-top:2rem;">
           <div class="contact-row">
             <div class="contact-icon">📧</div>
-            <div><div class="contact-label">Email</div><a href="mailto:nextgentutoringco@gmail.com" class="contact-val">nextgentutoringco@gmail.com</a></div>
+            <div><div class="contact-label">Email</div><a href="/cdn-cgi/l/email-protection#345a514c4053515a4041405b465d5a53575b745359555d581a575b59" class="contact-val"><span class="__cf_email__" data-cfemail="dbb5bea3afbcbeb5afaeafb4a9b2b5bcb8b49bbcb6bab2b7f5b8b4b6">nextgentutoringco@gmail.com</span></a></div>
           </div>
           <div class="contact-row">
             <div class="contact-icon">📱</div>
@@ -695,7 +695,7 @@
       <div class="cform-wrap sr sr-d2">
         <div class="cform-title">Send us a message</div>
         <div class="cform-sub">We typically respond within a few hours.</div>
-        <form onsubmit="handleContact(event)">
+        <form action="https://formspree.io/f/xojkkpqz" method="POST" onsubmit="handleContact(event)">
           <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" placeholder="Parent or student name" required /></div>
           <div class="fg"><label class="fl">Email Address</label><input type="email" class="fi" placeholder="your@email.com" required /></div>
           <div class="fg">
@@ -743,7 +743,7 @@
       <div>
         <div class="f-col-title">Contact</div>
         <ul class="f-links">
-          <li><a href="mailto:nextgentutoringco@gmail.com">nextgentutoringco@gmail.com</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#046a617c7063616a7071706b766d6a63676b446369656d682a676b69"><span class="__cf_email__" data-cfemail="ddb3b8a5a9bab8b3a9a8a9b2afb4b3babeb29dbab0bcb4b1f3beb2b0">[email&#160;protected]</span></a></li>
           <li><a href="tel:7345525832">734-552-5832</a></li>
           <li><a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank">Book a Session</a></li>
         </ul>
@@ -757,7 +757,7 @@
 
   <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="float-cta" id="floatCta">📅 Book a Session</a>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     /* ── Mobile menu ── */
     const ham = document.getElementById('ham');
     const mob = document.getElementById('mobNav');
@@ -818,10 +818,34 @@
 
     function handleContact(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.textContent = '✓ Message sent! We\'ll be in touch soon.';
-      btn.style.background = '#1A5C38';
-      btn.disabled = true;
+      const form = e.target;
+      const btn  = form.querySelector('button');
+      const data = new FormData(form);
+
+      btn.disabled    = true;
+      btn.textContent = 'Sending...';
+
+      fetch('https://formspree.io/f/xojkkpqz', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(res => {
+        if (res.ok) {
+          btn.textContent = '✓ Message sent! We\'ll be in touch soon.';
+          btn.style.background = '#1A5C38';
+          form.reset();
+        } else {
+          btn.disabled    = false;
+          btn.textContent = 'Send Message →';
+          alert('Something went wrong. Please email us at nextgentutoringco@gmail.com');
+        }
+      })
+      .catch(() => {
+        btn.disabled    = false;
+        btn.textContent = 'Send Message →';
+        alert('Something went wrong. Please email us at nextgentutoringco@gmail.com');
+      });
     }
   </script>
 

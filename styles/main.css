@@ -523,6 +523,14 @@ textarea.form-input {
   cursor: pointer;
 }
 
+.form-input option,
+.form-select option,
+.fi option,
+select option {
+  background: #1a3a5c;
+  color: #ffffff;
+}
+
 .form-error {
   font-size: 0.8rem;
   color: var(--error);
@@ -1038,4 +1046,5 @@ textarea.form-input {
   .auth-card {
     padding: 1.75rem;
   }
+  
 }
