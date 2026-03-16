@@ -11,4 +11,8 @@ document.querySelectorAll('[data-include]').forEach(el => {
       console.error('Include error:', error);
       el.innerHTML = `<p style="color:red;">Error loading content.</p>`;
     });
+  // Append this once in include.js (or a small util) so we can drop inline scripts
+document.querySelectorAll('[data-year]').forEach(el => {
+  el.textContent = new Date().getFullYear();
+})
 });

@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextGen Tutoring — Empowering the Next Generation</title>
+  <meta name="description" content="NextGen Tutoring provides premium K–12 and college academic coaching in Metro Detroit. Math, SAT/ACT prep, science, writing, and more. Book your session today." />
+  <meta name="keywords" content="tutoring, math tutor, SAT prep, ACT prep, K-12 tutoring, Metro Detroit tutor, NextGen Tutoring, Hafeez Oyeneyin" />
+  <meta property="og:title" content="NextGen Tutoring — Empowering the Next Generation" />
+  <meta property="og:description" content="Premium academic coaching for K–12 and college students in Metro Detroit. Clarity, confidence, results." />
+  <meta property="og:image" content="assets/images/logo-trans.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="styles/main.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "NextGen Tutoring",
+    "url": "https://nextgentutoring.org",
+    "logo": "https://nextgentutoring.org/assets/images/logo-trans.png",
+    "telephone": "+1-734-552-5832",
+    "email": "nextgentutoringco@gmail.com",
+    "address": { "@type": "PostalAddress", "addressRegion": "MI", "addressCountry": "US" },
+    "contactPoint": { "@type": "ContactPoint", "telephone": "+1-734-552-5832", "contactType": "Customer Service" }
+  }
+  </script>
+
+  <style>
+    :root {
+      --navy: #112240;
+      --navy-mid: #1a3a5c;
+      --navy-light: #1e4976;
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale: #FBF3DC;
+      --white: #FFFFFF;
+      --off-white: #F8F6F0;
+      --text-dark: #0B1F3A;
+      --text-mid: #3A4A60;
+      --text-light: #7A8A9E;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--off-white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ───────────────────────────── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(11, 31, 58, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-logo-accent {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 4px;
+      font-weight: 600 !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-light) !important;
+      transform: translateY(-1px);
+      color: var(--navy) !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: var(--navy);
+      border-top: 1px solid rgba(201,168,76,0.2);
+      padding: 1.5rem 2rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover { color: var(--gold); }
+
+    .mobile-menu .mob-cta {
+      background: var(--gold);
+      color: var(--navy);
+      text-align: center;
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-weight: 600;
+      border: none;
+      margin-top: 0.5rem;
+    }
+
+    /* ── HERO ─────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 2rem;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201,168,76,0.04) 0%, transparent 40%),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 60px,
+          rgba(201,168,76,0.015) 60px,
+          rgba(201,168,76,0.015) 61px
+        );
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding-top: 70px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.2s forwards;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.35s forwards;
+    }
+
+    .hero-headline .gold { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.5s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.65s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.25);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,168,76,0.05);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.8s forwards;
+    }
+
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    /* Hero right — image card */
+    .hero-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 16px;
+      padding: 2.5rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.6s forwards;
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: '\201C';
+      font-family: var(--font-display);
+      font-size: 6rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: -10px; left: 20px;
+      line-height: 1;
+    }
+
+    .hero-quote {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-quote-author {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-subjects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .subject-pill {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--gold-light);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── SOCIAL PROOF BAR ─────────────────── */
+    .proof-bar {
+      background: var(--gold);
+      padding: 1rem 2rem;
+      overflow: hidden;
+    }
+
+    .proof-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .proof-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    .proof-dot {
+      width: 5px; height: 5px;
+      background: var(--navy);
+      border-radius: 50%;
+      opacity: 0.3;
+    }
+
+    /* ── SECTIONS SHARED ──────────────────── */
+    .section {
+      padding: 6rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ── STORY SECTION ────────────────────── */
+    .story-section {
+      background: var(--navy);
+      padding: 6rem 2rem;
+    }
+
+    .story-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .story-image-wrap {
+      position: relative;
+    }
+
+    .story-image-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(201,168,76,0.3);
+      background: var(--navy-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .story-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-image-placeholder {
+      font-size: 5rem;
+      opacity: 0.3;
+    }
+
+    .story-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 120px;
+      height: 120px;
+      background: var(--gold);
+      border-radius: 8px;
+      opacity: 0.15;
+      z-index: -1;
+    }
+
+    .story-tag { color: var(--gold); }
+
+    .story-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .story-body {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+    }
+
+    .story-body strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .story-signature {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .story-sig-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .story-sig-title {
+      font-size: 0.8rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    /* ── SERVICES ─────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid rgba(11,31,58,0.08);
+      border-radius: 12px;
+      padding: 2.25rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(11,31,58,0.1);
+      border-color: rgba(201,168,76,0.3);
+    }
+
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-card.featured {
+      background: var(--navy);
+      border-color: var(--gold);
+    }
+
+    .service-card.featured::after { background: var(--gold-light); }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      background: var(--gold-pale);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-card.featured .service-icon {
+      background: rgba(201,168,76,0.15);
+    }
+
+    .service-card-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card.featured .service-title { color: var(--white); }
+
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card.featured .service-desc { color: rgba(255,255,255,0.6); }
+
+    .service-price {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .service-card.featured .service-price { color: var(--gold); }
+
+    .service-price-note {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    .service-card.featured .service-price-note { color: rgba(255,255,255,0.4); }
+
+    .service-features {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(11,31,58,0.07);
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .service-card.featured .service-features { border-top-color: rgba(255,255,255,0.1); }
+
+    .service-features li {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .service-card.featured .service-features li { color: rgba(255,255,255,0.6); }
+
+    .service-features li::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── PRICING ──────────────────────────── */
+    .pricing-section {
+      background: var(--off-white);
+      padding: 6rem 2rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid rgba(11,31,58,0.08);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(11,31,58,0.08);
+    }
+
+    .pricing-card.best {
+      background: var(--navy);
+      border-color: var(--gold);
+      position: relative;
+    }
+
+    .best-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 1rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .pricing-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .pricing-card.best .pricing-name { color: var(--gold); }
+
+    .pricing-amount {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .pricing-card.best .pricing-amount { color: var(--white); }
+
+    .pricing-per {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-card.best .pricing-per { color: rgba(255,255,255,0.4); }
+
+    .pricing-desc {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(11,31,58,0.07);
+    }
+
+    .pricing-card.best .pricing-desc {
+      color: rgba(255,255,255,0.55);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+
+    .pricing-cta {
+      display: block;
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+      background: var(--gold-pale);
+      color: var(--navy);
+      border: 1px solid rgba(201,168,76,0.3);
+    }
+
+    .pricing-cta:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .pricing-card.best .pricing-cta {
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+    }
+
+    .pricing-card.best .pricing-cta:hover {
+      background: var(--gold-light);
+    }
+
+    /* ── TESTIMONIALS ─────────────────────── */
+    .testimonials-section {
+      background: var(--white);
+      padding: 6rem 2rem;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .testimonial-card {
+      background: var(--off-white);
+      border: 1px solid rgba(11,31,58,0.06);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(11,31,58,0.08);
+    }
+
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1rem;
+    }
+
+    .star {
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.8;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--navy);
+      font-size: 0.875rem;
+    }
+
+    .testimonial-role {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* ── MISSION BANNER ───────────────────── */
+    .mission-banner {
+      background: var(--gold);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .mission-banner-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .mission-banner-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--navy);
+      opacity: 0.6;
+      margin-bottom: 1rem;
+    }
+
+    .mission-banner-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .mission-banner-text {
+      font-size: 1rem;
+      color: rgba(11,31,58,0.7);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CONTACT SECTION ──────────────────── */
+    .contact-section {
+      background: var(--navy);
+      padding: 6rem 2rem;
+    }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: var(--white);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .contact-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info-icon {
+      width: 40px; height: 40px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-info-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .contact-info-value {
+      font-size: 0.9rem;
+      color: var(--white);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-info-value:hover { color: var(--gold); }
+
+    .contact-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 12px;
+      padding: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .form-input::placeholder { color: rgba(255,255,255,0.25); }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.08);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    /* ── FOOTER ───────────────────────────── */
+    .footer {
+      background: #0a1628;
+      padding: 3rem 2rem 2rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--white);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand-name span { color: var(--gold); }
+
+    .footer-brand-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .footer-social {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .footer-social:hover {
+      background: rgba(201,168,76,0.1);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .footer-col-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer-links a {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ── FLOATING CTA ─────────────────────── */
+    .floating-cta {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 50;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 100px;
+      text-decoration: none;
+      box-shadow: 0 8px 30px rgba(201,168,76,0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .floating-cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201,168,76,0.5);
+    }
+
+    /* ── NEWSLETTER ───────────────────────── */
+    .newsletter-section {
+      background: var(--off-white);
+      padding: 4rem 2rem;
+      border-top: 1px solid rgba(11,31,58,0.06);
+    }
+
+    .newsletter-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .newsletter-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+
+    .newsletter-sub {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      margin-bottom: 1.5rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(11,31,58,0.12);
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--navy);
+      outline: none;
+      background: var(--white);
+      transition: border-color 0.2s;
+    }
+
+    .newsletter-input:focus { border-color: var(--gold); }
+
+    .newsletter-btn {
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.85rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter-btn:hover { background: var(--navy-light); }
+
+    /* ── ANIMATIONS ───────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ───────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+        padding-top: 100px;
+        padding-bottom: 3rem;
+      }
+
+      .hero-sub { margin: 0 auto 2.5rem; }
+      .hero-actions { justify-content: center; }
+      .hero-stats { justify-content: center; }
+
+      .story-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .story-image-wrap { max-width: 340px; margin: 0 auto; }
+
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .proof-bar-inner { gap: 1.25rem; }
+      .proof-dot { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAVBAR ────────────────────────────── -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-text">Next<span class="nav-logo-accent">Gen</span> Tutoring</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="pages/about.html">About</a></li>
+      <li><a href="pages/about.html#services">Services</a></li>
+      <li><a href="pages/lessons.html">Lessons</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="pages/login.html">Sign In</a></li>
+      <li><a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="nav-cta">Book a Session</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="pages/about.html">About</a>
+    <a href="pages/about.html#services">Services</a>
+    <a href="pages/lessons.html">Lessons</a>
+    <a href="#contact">Contact</a>
+    <a href="pages/login.html">Sign In</a>
+    <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="mob-cta">Book a Session</a>
+  </div>
+
+  <!-- ── HERO ──────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-tag">Metro Detroit & Virtual</div>
+        <h1 class="hero-headline">
+          Every student<br/>
+          deserves someone<br/>
+          <span class="gold">in their corner.</span>
+        </h1>
+        <p class="hero-sub">
+          NextGen Tutoring provides premium, personalized academic coaching for K–12 and college students. From math to SAT prep — we build confidence that lasts.
+        </p>
+        <div class="hero-actions">
+          <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="btn-primary">
+            Book a Session
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="pages/about.html" class="btn-secondary">Learn Our Story</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">50+</div>
+            <div class="hero-stat-label">Students Helped</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">PreK–12</div>
+            <div class="hero-stat-label">Grade Levels</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">100%</div>
+            <div class="hero-stat-label">Dedicated</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <p class="hero-quote">
+          "Nadia took a big test, finished early, and received a 4.0. THANK YOU AGAIN. If you need a reference, call me — I'll be happy to spread the news!"
+        </p>
+        <div class="hero-quote-author">— 5th Grade Parent, Metro Detroit</div>
+        <div class="hero-subjects">
+          <span class="subject-pill">Math</span>
+          <span class="subject-pill">SAT / ACT</span>
+          <span class="subject-pill">Science</span>
+          <span class="subject-pill">Writing</span>
+          <span class="subject-pill">Pre-Algebra</span>
+          <span class="subject-pill">Algebra</span>
+          <span class="subject-pill">Geometry</span>
+          <span class="subject-pill">GED Prep</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROOF BAR ──────────────────────────── -->
+  <div class="proof-bar">
+    <div class="proof-bar-inner">
+      <div class="proof-item">✓ K–12 & College</div>
+      <div class="proof-dot"></div>
+      <div class="proof-item">✓ SAT / ACT / GED Prep</div>
+      <div class="proof-dot"></div>
+      <div class="proof-item">✓ Virtual & In-Person</div>
+      <div class="proof-dot"></div>
+      <div class="proof-item">✓ Metro Detroit Based</div>
+      <div class="proof-dot"></div>
+      <div class="proof-item">✓ Personalized Coaching</div>
+    </div>
+  </div>
+
+  <!-- ── STORY SECTION ──────────────────────── -->
+  <section class="story-section">
+    <div class="story-inner">
+      <div class="story-image-wrap reveal">
+        <div class="story-image-frame">
+          <img src="assets/images/hafeez-profile.jpg" alt="Hafeez Oyeneyin — Founder of NextGen Tutoring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="story-image-placeholder" style="display:none;">👨🏾‍🏫</div>
+        </div>
+        <div class="story-accent"></div>
+      </div>
+      <div class="reveal">
+        <div class="section-tag story-tag">Our Story</div>
+        <h2 class="story-title">It started with two students and a professor who believed in me.</h2>
+        <p class="story-body">
+          During college, my professor asked me to tutor two struggling students and help mentor them through to graduation. I said yes. What happened next changed everything — I watched two people who were on the verge of giving up <strong>rediscover their confidence, push through, and graduate.</strong>
+        </p>
+        <p class="story-body">
+          That's when I realized: there are thousands of students out there who don't need a miracle. <strong>They just need someone in their corner.</strong>
+        </p>
+        <p class="story-body">
+          NextGen Tutoring exists for those students — the ones who are one good session away from getting it, one caring mentor away from believing in themselves, one breakthrough away from everything changing.
+        </p>
+        <div class="story-signature">
+          <div>
+            <div class="story-sig-name">Hafeez Oyeneyin</div>
+            <div class="story-sig-title">Founder, NextGen Tutoring</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ───────────────────────────── -->
+  <section class="section" style="background: var(--off-white);">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-tag">What We Offer</div>
+        <h2 class="section-title">Academic coaching<br/>built around your student.</h2>
+        <p class="section-sub">Every session is personalized. No scripts, no cookie-cutter lessons — just focused, effective coaching that meets your student exactly where they are.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">📐</div>
+          <div class="service-card-tag">Core Subjects</div>
+          <h3 class="service-title">Math & Science</h3>
+          <p class="service-desc">From Pre-Algebra through Calculus. Step-by-step problem solving that builds real understanding, not just test answers.</p>
+          <div class="service-price">$50<span style="font-size:1rem;font-weight:400;color:var(--text-light)">/session</span></div>
+          <ul class="service-features">
+            <li>Pre-Algebra, Algebra 1 & 2</li>
+            <li>Geometry & Trigonometry</li>
+            <li>Biology, Chemistry, Physics</li>
+          </ul>
+        </div>
+        <div class="service-card featured reveal">
+          <div class="service-icon">🎯</div>
+          <div class="service-card-tag">Most Popular</div>
+          <h3 class="service-title">SAT / ACT Prep</h3>
+          <p class="service-desc">Targeted test prep that increases scores. We work on strategy, timing, and subject mastery to maximize your performance on test day.</p>
+          <div class="service-price" style="color:var(--gold)">$60<span style="font-size:1rem;font-weight:400;color:rgba(255,255,255,0.35)">/session</span></div>
+          <ul class="service-features">
+            <li>Math & Reading strategies</li>
+            <li>Full practice tests & review</li>
+            <li>Score improvement guarantee</li>
+          </ul>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">✍️</div>
+          <div class="service-card-tag">Language Arts</div>
+          <h3 class="service-title">Writing & Grammar</h3>
+          <p class="service-desc">Build strong writing fundamentals and grammar skills from elementary through college level essays and research papers.</p>
+          <div class="service-price">$50<span style="font-size:1rem;font-weight:400;color:var(--text-light)">/session</span></div>
+          <ul class="service-features">
+            <li>Grammar & sentence structure</li>
+            <li>Essay writing & editing</li>
+            <li>Reading comprehension</li>
+          </ul>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🎓</div>
+          <div class="service-card-tag">GED & College</div>
+          <h3 class="service-title">GED & College Support</h3>
+          <p class="service-desc">GED prep and college-level academic support. Whether catching up or pushing ahead, we help students cross the finish line.</p>
+          <div class="service-price">$50<span style="font-size:1rem;font-weight:400;color:var(--text-light)">/session</span></div>
+          <ul class="service-features">
+            <li>All GED subject areas</li>
+            <li>College math & writing</li>
+            <li>Study skills & planning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ────────────────────────────── -->
+  <section class="pricing-section">
+    <div class="section-inner">
+      <div class="reveal" style="text-align:center; margin-bottom: 0;">
+        <div class="section-tag" style="text-align:center;">Transparent Pricing</div>
+        <h2 class="section-title" style="text-align:center;">Simple, honest pricing.<br/>No surprises.</h2>
+        <p class="section-sub" style="margin: 0 auto 0; text-align:center;">Existing clients keep their current rate. New clients start here.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card reveal">
+          <div class="pricing-name">Single Session</div>
+          <div class="pricing-amount">$50</div>
+          <div class="pricing-per">per session</div>
+          <div class="pricing-desc">Perfect for targeted help, homework support, or trying us out before committing to a package.</div>
+          <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="pricing-cta">Book a Session</a>
+        </div>
+        <div class="pricing-card best reveal">
+          <div class="best-badge">Most Popular</div>
+          <div class="pricing-name">5-Session Pack</div>
+          <div class="pricing-amount">$225</div>
+          <div class="pricing-per">$45/session — save $25</div>
+          <div class="pricing-desc">Ideal for students who need consistent weekly support and want to build real momentum over time.</div>
+          <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="pricing-cta">Get Started</a>
+        </div>
+        <div class="pricing-card reveal">
+          <div class="pricing-name">10-Session Pack</div>
+          <div class="pricing-amount">$400</div>
+          <div class="pricing-per">$40/session — save $100</div>
+          <div class="pricing-desc">Our best value. For students committed to long-term growth, deeper subject mastery, and serious test prep results.</div>
+          <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="pricing-cta">Best Value</a>
+        </div>
+      </div>
+      <p class="reveal" style="text-align:center; margin-top:1.5rem; font-size:0.82rem; color:var(--text-light);">
+        Multiple children in the same family? Contact us for custom family pricing.
+        <a href="/cdn-cgi/l/email-protection#412f24393526242f3534352e33282f26222e01262c20282d6f222e2c" style="color:var(--gold); text-decoration:none; margin-left:4px;">Ask about it →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ───────────────────────── -->
+  <section class="testimonials-section">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-tag">Student & Parent Reviews</div>
+        <h2 class="section-title">Results that speak<br/>for themselves.</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testimonial-text">"Nadia took a big test, finished early, and received a 4.0. THANK YOU AGAIN. If you need a reference, call me — I'll be happy to spread the news!"</p>
+          <div class="testimonial-author">5th Grade Parent</div>
+          <div class="testimonial-role">Metro Detroit</div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testimonial-text">"I look forward to every session. I've been feeling more confident than ever. Hafeez has a way of making difficult concepts actually click."</p>
+          <div class="testimonial-author">College Student</div>
+          <div class="testimonial-role">University of Michigan</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MISSION BANNER ─────────────────────── -->
+  <section class="mission-banner">
+    <div class="mission-banner-inner reveal">
+      <div class="mission-banner-tag">Our Mission</div>
+      <h2 class="mission-banner-title">Building the next generation — one student at a time.</h2>
+      <p class="mission-banner-text">NextGen Tutoring exists to bridge the gap in academic support for students who need it most. Our vision extends beyond individual sessions — toward learning centers, digital platforms, and community-driven education that reaches every student regardless of zip code.</p>
+      <a href="pages/about.html" class="btn-primary" style="background:var(--navy); color:var(--white); box-shadow: 0 4px 20px rgba(11,31,58,0.3);">
+        Learn About Our Vision
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── NEWSLETTER ─────────────────────────── -->
+  <section class="newsletter-section">
+    <div class="newsletter-inner reveal">
+      <div class="section-tag" style="text-align:center;">Stay Connected</div>
+      <h2 class="newsletter-title">Study tips, free resources,<br/>and NextGen updates.</h2>
+      <p class="newsletter-sub">Join our newsletter and get academic tips, free worksheets, and early access to new programs — straight to your inbox.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+        <input type="email" class="newsletter-input" placeholder="Enter your email address" required />
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ────────────────────────────── -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="reveal">
+        <div class="section-tag" style="color:var(--gold)">Get In Touch</div>
+        <h2 class="contact-title">Ready to get started?<br/>Let's talk.</h2>
+        <p class="contact-sub">Whether you have questions about our services, want to discuss your student's needs, or are ready to book — we're here and responsive.</p>
+        <div style="margin-top: 2rem;">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📧</div>
+            <div>
+              <div class="contact-info-label">Email</div>
+              <a href="/cdn-cgi/l/email-protection#29474c515d4e4c475d5c5d465b40474e4a46694e44484045074a4644" class="contact-info-value"><span class="__cf_email__" data-cfemail="c8a6adb0bcafada6bcbdbca7baa1a6afaba788afa5a9a1a4e6aba7a5">[email&#160;protected]</span></a>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📱</div>
+            <div>
+              <div class="contact-info-label">Call or Text</div>
+              <a href="tel:7345525832" class="contact-info-value">734-552-5832</a>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📍</div>
+            <div>
+              <div class="contact-info-label">Location</div>
+              <span class="contact-info-value">Metro Detroit, MI · Virtual Available</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📅</div>
+            <div>
+              <div class="contact-info-label">Book Online</div>
+              <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="contact-info-value">calendly.com/nextgentutoring</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:var(--font-display); font-size:1.2rem; color:var(--white); font-weight:700; margin-bottom:0.35rem;">Send us a message</div>
+          <div style="font-size:0.82rem; color:rgba(255,255,255,0.35);">We typically respond within a few hours.</div>
+        </div>
+        <form id="contactForm" onsubmit="handleContact(event)">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" placeholder="Parent or student name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">I'm interested in</label>
+            <select class="form-input form-select" required>
+              <option value="" disabled selected>Select a service</option>
+              <option>Math Tutoring</option>
+              <option>SAT / ACT Prep</option>
+              <option>Science Tutoring</option>
+              <option>Writing & Grammar</option>
+              <option>GED Prep</option>
+              <option>General / Not Sure Yet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-input" placeholder="Tell us about your student and what you're looking for..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">Next<span>Gen</span> Tutoring</div>
+        <p class="footer-brand-desc">Empowering students to master academics with clarity and confidence. Metro Detroit & Virtual.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/nextgentutoringco" target="_blank" class="footer-social" aria-label="Instagram">ig</a>
+          <a href="https://tiktok.com/@nextgentutoringco" target="_blank" class="footer-social" aria-label="TikTok">tk</a>
+          <a href="https://facebook.com/nextgentutoring" target="_blank" class="footer-social" aria-label="Facebook">fb</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="pages/about.html">About Us</a></li>
+          <li><a href="pages/about.html#services">Services</a></li>
+          <li><a href="pages/lessons.html">Lessons</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="pages/login.html">Student Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="/cdn-cgi/l/email-protection#0e606b767a696b607a7b7a617c6760696d614e69636f6762206d6163"><span class="__cf_email__" data-cfemail="b3ddd6cbc7d4d6ddc7c6c7dcc1daddd4d0dcf3d4ded2dadf9dd0dcde">[email&#160;protected]</span></a></li>
+          <li><a href="tel:7345525832">734-552-5832</a></li>
+          <li><a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank">Book a Session</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 NextGen Tutoring. All rights reserved.</div>
+      <div class="footer-copy">Built with purpose. Designed for impact.</div>
+    </div>
+  </footer>
+
+  <!-- Floating CTA -->
+  <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="floating-cta" id="floatingCta" style="display:none;">
+    📅 Book a Session
+  </a>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    // Scroll reveal — reliable version with fallback
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      reveals.forEach(el => observer.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+    // Safety net — force all reveals visible after 1.5s
+    setTimeout(() => {
+      reveals.forEach(el => el.classList.add('visible'));
+    }, 1500);
+
+    // Floating CTA — show after scrolling past hero
+    const floatingCta = document.getElementById('floatingCta');
+    window.addEventListener('scroll', () => {
+      floatingCta.style.display = window.scrollY > window.innerHeight * 0.8 ? 'flex' : 'none';
+    });
+
+    // Newsletter form
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓ You\'re subscribed!';
+      btn.style.background = '#1A5C38';
+      btn.style.color = 'white';
+      btn.disabled = true;
+    }
+
+    // Contact form
+    function handleContact(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓ Message sent! We\'ll be in touch soon.';
+      btn.style.background = '#1A5C38';
+      btn.disabled = true;
+    }
+  </script>
+
+  <!-- Simple Analytics -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" /></noscript>
+
+</body>
+</html>
