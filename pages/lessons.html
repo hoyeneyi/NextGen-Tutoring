@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lessons | NextGen Tutoring</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Space Grotesk', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-white text-slate-800" data-page="lessons">
+
+  <!-- Header will load here -->
+  <header></header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-6 pt-32 pb-20">
+    <h2 class="text-3xl font-semibold text-cyan-700 mb-10">Subjects</h2>
+
+    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <!-- Algebra 1 -->
+      <a href="assets/lessons/Algebra1/unit1-1.html" class="block bg-white border border-cyan-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-cyan-400 transition">
+        <h3 class="text-xl font-bold text-cyan-700 mb-2">Algebra 1</h3>
+        <p class="text-sm text-slate-700">Master linear equations, functions, inequalities, and more with step-by-step lessons and practice.</p>
+      </a>
+
+      <!-- Geometry -->
+      <div class="block bg-slate-100 border border-slate-200 rounded-xl p-6 text-slate-400 cursor-not-allowed">
+        <h3 class="text-xl font-bold mb-2">Geometry</h3>
+        <p class="text-sm">Coming Soon</p>
+      </div>
+
+      <!-- Algebra 2 -->
+      <div class="block bg-slate-100 border border-slate-200 rounded-xl p-6 text-slate-400 cursor-not-allowed">
+        <h3 class="text-xl font-bold mb-2">Algebra 2</h3>
+        <p class="text-sm">Coming Soon</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer will load here -->
+  <footer></footer>
+
+  <!-- Load shared header and footer + highlight active link -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("header.html")
+        .then(res => res.text())
+        .then(html => {
+          document.querySelector("header").innerHTML = html;
+          const current = document.body.getAttribute("data-page");
+          if (current) {
+            document.querySelectorAll("nav a").forEach(link => {
+              if (link.href.includes(current)) {
+                link.classList.add("text-cyan-800", "font-bold");
+              }
+            });
+          }
+
+          // Mobile menu toggle
+          const btn = document.getElementById("mobile-menu-button");
+          const menu = document.getElementById("mobile-menu");
+          if (btn && menu) {
+            btn.addEventListener("click", () => {
+              menu.classList.toggle("hidden");
+            });
+          }
+        });
+
+      fetch("footer.html")
+        .then(res => res.text())
+        .then(html => {
+          document.querySelector("footer").innerHTML = html;
+        });
+    });
+  </script>
+</body>
+</html>

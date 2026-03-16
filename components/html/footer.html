@@ -1,0 +1,41 @@
+<!-- components/footer.html -->
+<footer role="contentinfo" class="border-t bg-white/80 backdrop-blur-sm dark:bg-slate-900/80">
+  <div class="mx-auto w-full max-w-6xl px-4 py-8">
+    <div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+      <!-- Brand / Copyright -->
+      <p class="text-center text-sm text-slate-600 dark:text-slate-400">
+        &copy; <span data-year aria-label="Current year"></span> NextGen Tutoring. All rights reserved.
+      </p>
+
+      <!-- Footer Nav -->
+      <nav aria-label="Footer" class="text-sm">
+        <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          <li>
+            <a href="/pages/contact.html"
+               class="text-cyan-700 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-500 dark:text-cyan-400">
+              Contact
+            </a>
+          </li>
+          <li>
+            <a href="/pages/about.html"
+               class="text-cyan-700 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-500 dark:text-cyan-400">
+              About
+            </a>
+          </li>
+          <li>
+            <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez"
+               target="_blank" rel="noopener noreferrer"
+               class="text-cyan-700 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-500 dark:text-cyan-400">
+              Book a Session
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- No-JS fallback for the year (optional) -->
+  <noscript>
+    <style>[data-year]::after{content:"2025";}</style>
+  </noscript>
+</footer>
