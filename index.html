@@ -676,7 +676,7 @@
         <div style="margin-top:2rem;">
           <div class="contact-row">
             <div class="contact-icon">📧</div>
-            <div><div class="contact-label">Email</div><a href="/cdn-cgi/l/email-protection#345a514c4053515a4041405b465d5a53575b745359555d581a575b59" class="contact-val"><span class="__cf_email__" data-cfemail="dbb5bea3afbcbeb5afaeafb4a9b2b5bcb8b49bbcb6bab2b7f5b8b4b6">nextgentutoringco@gmail.com</span></a></div>
+            <div><div class="contact-label">Email</div><a href="/cdn-cgi/l/email-protection#345a514c4053515a4041405b465d5a53575b745359555d581a575b59" class="contact-val"><span class="__cf_email__" data-cfemail="dbb5bea3afbcbeb5afaeafb4a9b2b5bcb8b49bbcb6bab2b7f5b8b4b6">[email&#160;protected]</span></a></div>
           </div>
           <div class="contact-row">
             <div class="contact-icon">📱</div>
@@ -696,11 +696,11 @@
         <div class="cform-title">Send us a message</div>
         <div class="cform-sub">We typically respond within a few hours.</div>
         <form action="https://formspree.io/f/xojkkpqz" method="POST" onsubmit="handleContact(event)">
-          <div class="fg"><label class="fl">Your Name</label><input type="text" class="fi" placeholder="Parent or student name" required /></div>
-          <div class="fg"><label class="fl">Email Address</label><input type="email" class="fi" placeholder="your@email.com" required /></div>
+          <div class="fg"><label class="fl">Your Name</label><input type="text" name="name" class="fi" placeholder="Parent or student name" required /></div>
+          <div class="fg"><label class="fl">Email Address</label><input type="email" name="email" class="fi" placeholder="your@email.com" required /></div>
           <div class="fg">
             <label class="fl">I'm interested in</label>
-            <select class="fi fi-select" required>
+            <select name="service" class="fi fi-select" required>
               <option value="" disabled selected>Select a service</option>
               <option>Math Tutoring</option>
               <option>SAT / ACT Prep</option>
@@ -711,7 +711,7 @@
               <option>General / Not Sure Yet</option>
             </select>
           </div>
-          <div class="fg"><label class="fl">Message</label><textarea class="fi" placeholder="Tell us about your student and what you're looking for..."></textarea></div>
+          <div class="fg"><label class="fl">Message</label><textarea name="message" class="fi" placeholder="Tell us about your student and what you're looking for..."></textarea></div>
           <button type="submit" class="fsub">Send Message →</button>
         </form>
       </div>
