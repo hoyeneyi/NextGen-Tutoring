@@ -17,38 +17,22 @@
 
   <style>
     :root {
-      --navy:        #112240;
-      --navy-mid:    #1a3a5c;
-      --navy-light:  #1e4976;
-      --navy-dark:   #0a1628;
-      --gold:        #C9A84C;
-      --gold-light:  #E8C97A;
-      --gold-pale:   #FBF3DC;
-      --white:       #FFFFFF;
-      --off-white:   #F8F6F0;
-      --text-dark:   #0B1F3A;
-      --text-mid:    #3A4A60;
-      --text-light:  #7A8A9E;
-      --font-display:'Playfair Display', Georgia, serif;
-      --font-body:   'DM Sans', sans-serif;
+      --navy:#112240; --navy-mid:#1a3a5c; --navy-light:#1e4976; --navy-dark:#0a1628;
+      --gold:#C9A84C; --gold-light:#E8C97A; --gold-pale:#FBF3DC;
+      --white:#FFFFFF; --off-white:#F8F6F0; --text-dark:#0B1F3A; --text-mid:#3A4A60; --text-light:#7A8A9E;
+      --font-display:'Playfair Display', Georgia, serif; --font-body:'DM Sans', sans-serif;
     }
-
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; }
     body { font-family:var(--font-body); background:var(--off-white); color:var(--text-dark); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
 
-    /* ── SCROLL REVEAL ── */
     .sr { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
-    .sr.sr-left  { transform:translateX(-28px); }
+    .sr.sr-left { transform:translateX(-28px); }
     .sr.sr-right { transform:translateX(28px); }
-    .sr.visible  { opacity:1; transform:translateY(0) translateX(0); }
-    .sr-d1 { transition-delay:0.1s; }
-    .sr-d2 { transition-delay:0.2s; }
-    .sr-d3 { transition-delay:0.3s; }
-    .sr-d4 { transition-delay:0.4s; }
+    .sr.visible { opacity:1; transform:translateY(0) translateX(0); }
+    .sr-d1 { transition-delay:0.1s; } .sr-d2 { transition-delay:0.2s; } .sr-d3 { transition-delay:0.3s; }
     @media (prefers-reduced-motion:reduce) { .sr { opacity:1; transform:none; transition:none; } }
 
-    /* ── NAVBAR ── */
     .navbar { position:fixed; top:0; left:0; right:0; z-index:100; height:72px; padding:0 2rem; display:flex; align-items:center; justify-content:space-between; background:rgba(17,34,64,0.96); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(201,168,76,0.18); }
     .nav-logo { text-decoration:none; }
     .nav-logo-text { font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--white); }
@@ -66,9 +50,8 @@
     .mob-nav a:hover { color:var(--gold); }
     .mob-nav .mob-book { background:var(--gold); color:var(--navy); text-align:center; padding:0.85rem; border-radius:6px; font-weight:600; margin-top:0.5rem; border:none; }
 
-    /* ── PAGE HERO ── */
     .page-hero { background:var(--navy); padding:9rem 2rem 5rem; position:relative; overflow:hidden; }
-    .page-hero-bg { position:absolute; inset:0; pointer-events:none; background-image: radial-gradient(circle at 15% 60%, rgba(201,168,76,0.07) 0%, transparent 45%), radial-gradient(circle at 85% 20%, rgba(201,168,76,0.04) 0%, transparent 40%), repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201,168,76,0.015) 60px, rgba(201,168,76,0.015) 61px); }
+    .page-hero-bg { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(circle at 15% 60%, rgba(201,168,76,0.07) 0%, transparent 45%), radial-gradient(circle at 85% 20%, rgba(201,168,76,0.04) 0%, transparent 40%), repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(201,168,76,0.015) 60px, rgba(201,168,76,0.015) 61px); }
     .page-hero-inner { max-width:1100px; margin:0 auto; }
     .page-hero-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); color:var(--gold); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:0.35rem 0.85rem; border-radius:100px; margin-bottom:1.5rem; animation:heroUp 0.6s ease 0.2s both; }
     .page-hero-tag::before { content:''; width:6px; height:6px; background:var(--gold); border-radius:50%; }
@@ -76,13 +59,11 @@
     .page-hero-h1 span { color:var(--gold); }
     .page-hero-sub { font-size:1.05rem; font-weight:300; color:rgba(255,255,255,0.6); line-height:1.8; max-width:560px; animation:heroUp 0.7s ease 0.5s both; }
 
-    /* ── SHARED ── */
     .sec { padding:6rem 2rem; }
     .sec-inner { max-width:1100px; margin:0 auto; }
     .sec-tag { display:block; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:0.75rem; }
     .sec-h2 { font-family:var(--font-display); font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:700; color:var(--navy); line-height:1.15; margin-bottom:0.75rem; }
     .sec-h2-white { color:var(--white); }
-
     .btn { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-weight:600; font-size:0.95rem; padding:0.875rem 1.75rem; border-radius:6px; border:none; text-decoration:none; cursor:pointer; transition:all 0.22s; white-space:nowrap; }
     .btn-gold { background:var(--gold); color:var(--navy); box-shadow:0 4px 20px rgba(201,168,76,0.3); }
     .btn-gold:hover { background:var(--gold-light); transform:translateY(-2px); }
@@ -91,7 +72,6 @@
     .btn-navy-outline { background:transparent; color:var(--navy); border:1px solid rgba(11,31,58,0.2); }
     .btn-navy-outline:hover { border-color:var(--gold); color:var(--gold); }
 
-    /* ── STORY ── */
     .story-sec { background:var(--white); padding:6rem 2rem; }
     .story-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
     .story-img-wrap { position:relative; }
@@ -107,21 +87,17 @@
     .story-sig-name { font-family:var(--font-display); font-size:1.1rem; color:var(--navy); font-weight:700; }
     .story-sig-role { font-size:0.78rem; color:var(--gold); text-transform:uppercase; letter-spacing:0.08em; margin-top:3px; }
 
-    /* ── MISSION ── */
     .mission-sec { background:var(--navy); padding:6rem 2rem; }
     .mission-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
     .mission-text-block { font-size:1rem; color:rgba(255,255,255,0.6); line-height:1.85; margin-bottom:1.25rem; }
     .mission-text-block strong { color:var(--gold-light); font-weight:600; }
     .mission-quote { background:rgba(201,168,76,0.08); border-left:3px solid var(--gold); border-radius:0 8px 8px 0; padding:1.5rem 1.75rem; margin:2rem 0; }
     .mission-quote-text { font-family:var(--font-display); font-size:1.15rem; color:var(--white); font-style:italic; line-height:1.6; }
-
-    /* quality stats — no numbers */
     .quality-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:2rem; }
     .quality-card { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.15); border-radius:10px; padding:1.5rem; }
-    .quality-card-icon { font-size:1.5rem; margin-bottom:0.75rem; }
+    .quality-card-icon { width:36px; height:36px; margin-bottom:0.75rem; color:var(--gold); }
     .quality-card-title { font-family:var(--font-display); font-size:0.95rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
     .quality-card-desc { font-size:0.8rem; color:rgba(255,255,255,0.4); line-height:1.55; }
-
     .beliefs-card { background:rgba(255,255,255,0.03); border:1px solid rgba(201,168,76,0.12); border-radius:12px; padding:1.75rem; }
     .beliefs-title { font-family:var(--font-display); font-size:1rem; color:var(--white); font-weight:700; margin-bottom:1rem; }
     .belief-item { display:flex; align-items:flex-start; gap:10px; margin-bottom:0.75rem; }
@@ -129,39 +105,35 @@
     .belief-check { color:var(--gold); font-size:1rem; flex-shrink:0; margin-top:1px; }
     .belief-text { font-size:0.875rem; color:rgba(255,255,255,0.6); line-height:1.6; }
 
-    /* ── VALUES ── */
     .values-sec { background:var(--off-white); padding:6rem 2rem; }
     .values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:3rem; }
     .value-card { background:var(--white); border:1px solid rgba(11,31,58,0.07); border-radius:12px; padding:2rem; transition:transform 0.25s, box-shadow 0.25s, border-color 0.25s; position:relative; overflow:hidden; }
     .value-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:var(--gold); transform:scaleX(0); transition:transform 0.3s ease; }
     .value-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(11,31,58,0.08); border-color:rgba(201,168,76,0.25); }
     .value-card:hover::after { transform:scaleX(1); }
-    .value-icon { font-size:2rem; margin-bottom:1rem; }
+    .value-icon { width:44px; height:44px; background:var(--gold-pale); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; color:var(--gold); flex-shrink:0; }
+    .value-icon svg { width:22px; height:22px; }
     .value-title { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--navy); margin-bottom:0.5rem; }
     .value-desc { font-size:0.875rem; color:var(--text-mid); line-height:1.7; }
 
-    /* ── VISION STATEMENT ── */
     .vision-sec { background:var(--white); padding:6rem 2rem; }
     .vision-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
-    .vision-text { font-size:1rem; color:var(--text-mid); line-height:1.85; margin-bottom:1.25rem; }
-    .vision-text strong { color:var(--navy); font-weight:600; }
     .vision-pillars { display:flex; flex-direction:column; gap:1rem; margin-top:2rem; }
     .vision-pillar { display:flex; align-items:center; gap:1rem; background:var(--off-white); border:1px solid rgba(11,31,58,0.06); border-radius:10px; padding:1.25rem; transition:border-color 0.2s, box-shadow 0.2s; }
     .vision-pillar:hover { border-color:rgba(201,168,76,0.3); box-shadow:0 4px 16px rgba(11,31,58,0.06); }
-    .vision-pillar-icon { width:44px; height:44px; background:var(--gold-pale); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex-shrink:0; }
+    .vision-pillar-icon { width:44px; height:44px; background:var(--gold-pale); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--gold); flex-shrink:0; }
+    .vision-pillar-icon svg { width:22px; height:22px; }
     .vision-pillar-title { font-weight:600; color:var(--navy); font-size:0.9rem; margin-bottom:0.2rem; }
     .vision-pillar-desc { font-size:0.8rem; color:var(--text-light); line-height:1.5; }
     .vision-right-text { font-family:var(--font-display); font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:1.25rem; }
     .vision-right-text span { color:var(--gold); }
     .vision-right-p { font-size:0.95rem; color:var(--text-mid); line-height:1.8; margin-bottom:1.75rem; }
 
-    /* ── CTA ── */
     .cta-sec { background:var(--gold); padding:5rem 2rem; text-align:center; }
     .cta-inner { max-width:680px; margin:0 auto; }
     .cta-h2 { font-family:var(--font-display); font-size:clamp(1.8rem,3.5vw,2.5rem); font-weight:700; color:var(--navy); line-height:1.2; margin-bottom:1rem; }
     .cta-p { font-size:1rem; color:rgba(11,31,58,0.65); line-height:1.75; margin-bottom:2rem; }
 
-    /* ── FOOTER ── */
     .footer { background:var(--navy-dark); padding:3.5rem 2rem 2rem; border-top:1px solid rgba(201,168,76,0.12); }
     .footer-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; padding-bottom:2.5rem; border-bottom:1px solid rgba(255,255,255,0.06); }
     .f-brand { font-family:var(--font-display); font-size:1.2rem; color:var(--white); font-weight:700; margin-bottom:0.75rem; }
@@ -180,8 +152,7 @@
     @keyframes heroUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
 
     @media (max-width:768px) {
-      .nav-links { display:none; }
-      .hamburger { display:flex; }
+      .nav-links { display:none; } .hamburger { display:flex; }
       .story-inner { grid-template-columns:1fr; gap:3rem; }
       .story-img-wrap { max-width:340px; margin:0 auto; }
       .mission-inner { grid-template-columns:1fr; gap:3rem; }
@@ -194,7 +165,6 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <a href="../index.html" class="nav-logo">
       <span class="nav-logo-text">Next<span class="nav-logo-accent">Gen</span> Tutoring</span>
@@ -219,7 +189,6 @@
     <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="mob-book">Book a Session</a>
   </div>
 
-  <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="page-hero-bg"></div>
     <div class="page-hero-inner">
@@ -229,7 +198,6 @@
     </div>
   </section>
 
-  <!-- STORY -->
   <section class="story-sec">
     <div class="story-inner">
       <div class="story-img-wrap sr sr-left">
@@ -238,10 +206,7 @@
           <div id="fallback" class="story-img-fallback" style="display:none;">👨🏾‍🏫</div>
         </div>
         <div class="story-img-accent"></div>
-        <div class="story-img-badge">
-          Hafeez Oyeneyin
-          <span>Founder &amp; Lead Tutor</span>
-        </div>
+        <div class="story-img-badge">Hafeez Oyeneyin<span>Founder &amp; Lead Tutor</span></div>
       </div>
       <div class="sr sr-right">
         <span class="sec-tag">The Story</span>
@@ -258,7 +223,6 @@
     </div>
   </section>
 
-  <!-- MISSION -->
   <section class="mission-sec">
     <div class="mission-inner">
       <div class="sr">
@@ -273,26 +237,10 @@
       </div>
       <div class="sr sr-d2">
         <div class="quality-grid">
-          <div class="quality-card">
-            <div class="quality-card-icon">📍</div>
-            <div class="quality-card-title">Metro Detroit Based</div>
-            <div class="quality-card-desc">We know this community because we are from it.</div>
-          </div>
-          <div class="quality-card">
-            <div class="quality-card-icon">🎓</div>
-            <div class="quality-card-title">PreK through College</div>
-            <div class="quality-card-desc">Every grade level, every subject, every student.</div>
-          </div>
-          <div class="quality-card">
-            <div class="quality-card-icon">💻</div>
-            <div class="quality-card-title">Virtual &amp; In-Person</div>
-            <div class="quality-card-desc">We meet students exactly where they are.</div>
-          </div>
-          <div class="quality-card">
-            <div class="quality-card-icon">🎯</div>
-            <div class="quality-card-title">Always Personalized</div>
-            <div class="quality-card-desc">No two sessions are the same. Ever.</div>
-          </div>
+          <div class="quality-card"><div class="quality-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div><div class="quality-card-title">Metro Detroit Based</div><div class="quality-card-desc">We know this community because we are from it.</div></div>
+          <div class="quality-card"><div class="quality-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div class="quality-card-title">PreK through College</div><div class="quality-card-desc">Every grade level, every subject, every student.</div></div>
+          <div class="quality-card"><div class="quality-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="quality-card-title">Virtual &amp; In-Person</div><div class="quality-card-desc">We meet students exactly where they are.</div></div>
+          <div class="quality-card"><div class="quality-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg></div><div class="quality-card-title">Always Personalized</div><div class="quality-card-desc">No two sessions are the same. Ever.</div></div>
         </div>
         <div class="beliefs-card">
           <div class="beliefs-title">What We Believe</div>
@@ -306,7 +254,6 @@
     </div>
   </section>
 
-  <!-- VALUES -->
   <section class="values-sec">
     <div class="sec-inner">
       <div class="sr">
@@ -314,41 +261,16 @@
         <h2 class="sec-h2">The values behind<br/>every session.</h2>
       </div>
       <div class="values-grid">
-        <div class="value-card sr sr-d1">
-          <div class="value-icon">🤝</div>
-          <h3 class="value-title">Genuine Care</h3>
-          <p class="value-desc">We don't just teach subjects — we invest in students as people. Every session is built on the belief that the student in front of us matters beyond their grade.</p>
-        </div>
-        <div class="value-card sr sr-d2">
-          <div class="value-icon">🎯</div>
-          <h3 class="value-title">Personalization</h3>
-          <p class="value-desc">No two students learn the same way. We meet every student exactly where they are and build from there — no scripts, no one-size-fits-all approach.</p>
-        </div>
-        <div class="value-card sr sr-d3">
-          <div class="value-icon">🏆</div>
-          <h3 class="value-title">Excellence</h3>
-          <p class="value-desc">We hold ourselves and our students to a high standard — not to create pressure, but because we know what they're capable of when someone believes in them.</p>
-        </div>
-        <div class="value-card sr sr-d1">
-          <div class="value-icon">🌍</div>
-          <h3 class="value-title">Community</h3>
-          <p class="value-desc">We are from Metro Detroit. We serve Metro Detroit. And we are building with Metro Detroit in mind — today and for every generation that comes after.</p>
-        </div>
-        <div class="value-card sr sr-d2">
-          <div class="value-icon">📈</div>
-          <h3 class="value-title">Growth</h3>
-          <p class="value-desc">We are always learning, improving, and building. NextGen Tutoring today is just the beginning of what we are committed to becoming.</p>
-        </div>
-        <div class="value-card sr sr-d3">
-          <div class="value-icon">🙏</div>
-          <h3 class="value-title">Faith &amp; Purpose</h3>
-          <p class="value-desc">Everything we do is grounded in a belief that we are called to serve — that building up the next generation is not just a business, it's a purpose.</p>
-        </div>
+        <div class="value-card sr sr-d1"><div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h3 class="value-title">Genuine Care</h3><p class="value-desc">We don't just teach subjects — we invest in students as people. Every session is built on the belief that the student in front of us matters beyond their grade.</p></div>
+        <div class="value-card sr sr-d2"><div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg></div><h3 class="value-title">Personalization</h3><p class="value-desc">No two students learn the same way. We meet every student exactly where they are and build from there — no scripts, no one-size-fits-all approach.</p></div>
+        <div class="value-card sr sr-d3"><div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><h3 class="value-title">Excellence</h3><p class="value-desc">We hold ourselves and our students to a high standard — not to create pressure, but because we know what they're capable of when someone believes in them.</p></div>
+        <div class="value-card sr sr-d1"><div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3 class="value-title">Community</h3><p class="value-desc">We are from Metro Detroit. We serve Metro Detroit. And we are building with Metro Detroit in mind — today and for every generation that comes after.</p></div>
+        <div class="value-card sr sr-d2"><div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><h3 class="value-title">Growth</h3><p class="value-desc">We are always learning, improving, and building. NextGen Tutoring today is just the beginning of what we are committed to becoming.</p></div>
+        <div class="value-card sr sr-d3"><div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><h3 class="value-title">Faith &amp; Purpose</h3><p class="value-desc">Everything we do is grounded in a belief that we are called to serve — that building up the next generation is not just a business, it's a purpose.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- VISION -->
   <section class="vision-sec">
     <div class="vision-inner">
       <div class="sr">
@@ -363,63 +285,28 @@
       </div>
       <div class="sr sr-d2">
         <div class="vision-pillars">
-          <div class="vision-pillar">
-            <div class="vision-pillar-icon">📚</div>
-            <div>
-              <div class="vision-pillar-title">Learning Centers</div>
-              <div class="vision-pillar-desc">Physical spaces where students can come to learn, be mentored, and access resources — built for and by our community.</div>
-            </div>
-          </div>
-          <div class="vision-pillar">
-            <div class="vision-pillar-icon">💻</div>
-            <div>
-              <div class="vision-pillar-title">Digital Learning Platform</div>
-              <div class="vision-pillar-desc">An IXL and Khan Academy-style platform built specifically for the students and communities we serve.</div>
-            </div>
-          </div>
-          <div class="vision-pillar">
-            <div class="vision-pillar-icon">📖</div>
-            <div>
-              <div class="vision-pillar-title">Workbooks &amp; Curriculum</div>
-              <div class="vision-pillar-desc">Physical and digital curriculum materials that students can use independently to reinforce learning between sessions.</div>
-            </div>
-          </div>
-          <div class="vision-pillar">
-            <div class="vision-pillar-icon">🤲</div>
-            <div>
-              <div class="vision-pillar-title">Non-Profit &amp; Free Access</div>
-              <div class="vision-pillar-desc">A non-profit arm providing free resources and programs to students who need it most — because quality education should never be a privilege.</div>
-            </div>
-          </div>
-          <div class="vision-pillar">
-            <div class="vision-pillar-icon">🖥️</div>
-            <div>
-              <div class="vision-pillar-title">Tech &amp; AI Education</div>
-              <div class="vision-pillar-desc">Introducing the next generation to technology and AI — equipping students with the skills that will define tomorrow's world.</div>
-            </div>
-          </div>
+          <div class="vision-pillar"><div class="vision-pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div><div class="vision-pillar-title">Learning Centers</div><div class="vision-pillar-desc">Physical spaces where students can come to learn, be mentored, and access resources — built for and by our community.</div></div></div>
+          <div class="vision-pillar"><div class="vision-pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div><div class="vision-pillar-title">Digital Learning Platform</div><div class="vision-pillar-desc">An IXL and Khan Academy-style platform built specifically for the students and communities we serve.</div></div></div>
+          <div class="vision-pillar"><div class="vision-pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div><div class="vision-pillar-title">Workbooks &amp; Curriculum</div><div class="vision-pillar-desc">Physical and digital curriculum materials that students can use independently to reinforce learning between sessions.</div></div></div>
+          <div class="vision-pillar"><div class="vision-pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><div class="vision-pillar-title">Non-Profit &amp; Free Access</div><div class="vision-pillar-desc">A non-profit arm providing free resources and programs to students who need it most — because quality education should never be a privilege.</div></div></div>
+          <div class="vision-pillar"><div class="vision-pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div><div class="vision-pillar-title">Tech &amp; AI Education</div><div class="vision-pillar-desc">Introducing the next generation to technology and AI — equipping students with the skills that will define tomorrow's world.</div></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
   <section class="cta-sec">
     <div class="cta-inner sr">
       <span class="sec-tag" style="text-align:center; display:block; color:rgba(11,31,58,0.5);">Join the Movement</span>
       <h2 class="cta-h2">Every student who books a session<br/>is part of building something bigger.</h2>
       <p class="cta-p">Your investment in your student today helps us build the resources, programs, and centers that will serve the next generation of students in our community.</p>
       <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="btn btn-dark">
-          Book a Session
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="btn btn-dark">Book a Session <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a href="../index.html#contact" class="btn btn-navy-outline">Get In Touch</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div>
