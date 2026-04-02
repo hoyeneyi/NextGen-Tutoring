@@ -508,13 +508,9 @@
       if (val.length === 0) { hint.textContent = 'Minimum 8 characters'; return; }
       if (val.length < 8)   { bars[0].classList.add('weak'); hint.textContent = 'Too short'; return; }
 
-      for (let i = 0; i < score; i++) bars[i].classList.add(levels[score - 1]);
-      hint.textContent = labels[score - 1] || 'Strong';
+      for (let i = 0; i < score; i++) {
+        bars[i].classList.add(levels[score - 1]);
+      }
+      hint.textContent = labels[score - 1];
     }
-
-    /* ── CHECK URL PARAM ── */
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('tab') === 'signup') switchTab('signup');
-  </script>
-</body>
-</html>
+  </script> 
