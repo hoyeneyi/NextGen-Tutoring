@@ -464,8 +464,8 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
           <div class="stat-label">Lessons Available</div>
-          <div class="stat-value">6</div>
-          <div class="stat-sub">Across all subjects</div>
+          <div class="stat-value" id="statSessions">—</div>
+          <div class="stat-sub">Sessions completed</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon">
@@ -675,48 +675,25 @@
         <div class="progress-card">
           <div class="sec-title">Subject Progress</div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Mathematics</span><span class="progress-pct">Building</span></div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
-            <div class="progress-sub">Foundations in place — keep pushing</div>
+            <div class="progress-top"><span class="progress-name">Mathematics</span><span class="progress-pct" id="progMathPct">—</span></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progMathFill" style="width:0%"></div></div>
+            <div class="progress-sub" id="progMathSub">Loading...</div>
           </div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Reading &amp; Writing</span><span class="progress-pct">Growing</span></div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:45%"></div></div>
-            <div class="progress-sub">Strong fundamentals developing</div>
+            <div class="progress-top"><span class="progress-name">Reading &amp; Writing</span><span class="progress-pct" id="progReadingPct">—</span></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progReadingFill" style="width:0%"></div></div>
+            <div class="progress-sub" id="progReadingSub">Loading...</div>
           </div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Test Prep</span><span class="progress-pct">In Progress</span></div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:35%"></div></div>
-            <div class="progress-sub">Strategy work underway</div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Science</span><span class="progress-pct">Starting</span></div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:25%"></div></div>
-            <div class="progress-sub">Core concepts being introduced</div>
+            <div class="progress-top"><span class="progress-name">Test Prep</span><span class="progress-pct" id="progTestPrepPct">—</span></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progTestPrepFill" style="width:0%"></div></div>
+            <div class="progress-sub" id="progTestPrepSub">Loading...</div>
           </div>
         </div>
         <div class="announce-card">
-          <div class="sec-title">Progress Notes</div>
-          <div class="announce-item">
-            <div class="announce-dot"></div>
-            <div>
-              <div class="announce-title">Keep showing up</div>
-              <div class="announce-text">Consistency is the most important factor in academic progress. Every session builds on the last.</div>
-            </div>
-          </div>
-          <div class="announce-item">
-            <div class="announce-dot"></div>
-            <div>
-              <div class="announce-title">Ask questions</div>
-              <div class="announce-text">No question is too basic. The goal of every session is to make sure you leave with clarity — not confusion.</div>
-            </div>
-          </div>
-          <div class="announce-item">
-            <div class="announce-dot"></div>
-            <div>
-              <div class="announce-title">Detailed progress reports</div>
-              <div class="announce-text">Ask Hafeez for a written progress update at any time — email nextgentutoringco@gmail.com</div>
-            </div>
+          <div class="sec-title">Session Notes from Hafeez</div>
+          <div id="progressNotes">
+            <div style="font-size:0.85rem;color:var(--text-light);padding:1rem 0;">Loading your session notes...</div>
           </div>
         </div>
       </div>
@@ -738,8 +715,20 @@
           <span class="profile-val">Hafeez Oyeneyin</span>
         </div>
         <div class="profile-row">
-          <span class="profile-key">Program</span>
-          <span class="profile-val">NextGen Tutoring</span>
+          <span class="profile-key">Grade</span>
+          <span class="profile-val" id="profileGrade">—</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Subject</span>
+          <span class="profile-val" id="profileSubject">—</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Rate</span>
+          <span class="profile-val" id="profileRate">—</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Sessions Completed</span>
+          <span class="profile-val" id="profileSessions">—</span>
         </div>
         <div class="profile-row">
           <span class="profile-key">Session Length</span>
@@ -768,6 +757,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+  import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
@@ -780,27 +770,79 @@
 
   const app  = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db   = getFirestore(app);
 
   const loadingScreen = document.getElementById('loadingScreen');
   const appLayout     = document.getElementById('appLayout');
 
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(auth, async user => {
     if (!user) {
       window.location.href = 'login.html';
       return;
     }
 
-    // Populate user info
-    const name  = user.displayName || user.email.split('@')[0];
-    const email = user.email;
+    // Populate user info from auth
+    const name     = user.displayName || user.email.split('@')[0];
+    const email    = user.email;
     const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
 
-    document.getElementById('sidebarName').textContent  = name;
+    document.getElementById('sidebarName').textContent   = name;
     document.getElementById('sidebarAvatar').textContent = initials;
-    document.getElementById('topbarName').textContent   = name.split(' ')[0];
-    document.getElementById('profileName').textContent  = name;
-    document.getElementById('profileEmail').textContent = email;
+    document.getElementById('topbarName').textContent    = name.split(' ')[0];
+    document.getElementById('profileName').textContent   = name;
+    document.getElementById('profileEmail').textContent  = email;
     document.getElementById('profileAvatar').textContent = initials;
+
+    // Load student record from Firestore by matching email
+    try {
+      const studentsRef = collection(db, 'students');
+      const q = query(studentsRef, where('email', '==', email));
+      const snap = await getDocs(q);
+
+      if (!snap.empty) {
+        const studentData = snap.docs[0].data();
+        const studentId   = snap.docs[0].id;
+
+        // ── STAT CARDS on home page ──
+        const sessionsEl = document.getElementById('statSessions');
+        const gradeEl    = document.getElementById('statGrade');
+        const subjectEl  = document.getElementById('statSubject');
+        if (sessionsEl) sessionsEl.textContent = studentData.sessions || 0;
+        if (gradeEl)    gradeEl.textContent    = studentData.grade    || '—';
+        if (subjectEl)  subjectEl.textContent  = studentData.subject  || '—';
+
+        // ── PROGRESS BARS ──
+        const math     = studentData.mathProgress     || 0;
+        const reading  = studentData.readingProgress  || 0;
+        const testPrep = studentData.testPrepProgress || 0;
+
+        setProgress('progMath',     math,     getLabel(math));
+        setProgress('progReading',  reading,  getLabel(reading));
+        setProgress('progTestPrep', testPrep, getLabel(testPrep));
+
+        // ── SESSION NOTES ──
+        const notesSnap = await getDocs(
+          query(collection(db, 'sessionNotes'), where('studentId', '==', studentId))
+        );
+        const notes = notesSnap.docs
+          .map(d => d.data())
+          .sort((a,b) => (b.date||'').localeCompare(a.date||''));
+
+        renderNotes(notes);
+
+        // ── PROFILE PAGE extra info ──
+        const profileGrade   = document.getElementById('profileGrade');
+        const profileSubject = document.getElementById('profileSubject');
+        const profileRate    = document.getElementById('profileRate');
+        if (profileGrade)   profileGrade.textContent   = studentData.grade   || '—';
+        if (profileSubject) profileSubject.textContent = studentData.subject || '—';
+        if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : '—';
+        const profileSessions = document.getElementById('profileSessions');
+        if (profileSessions) profileSessions.textContent = studentData.sessions || 0;
+      }
+    } catch(e) {
+      console.error('Error loading student data:', e);
+    }
 
     // Show app
     loadingScreen.classList.add('hidden');
@@ -812,8 +854,8 @@
     });
 
     // Mobile menu
-    const sidebar   = document.getElementById('sidebar');
-    const mobBtn    = document.getElementById('mobMenuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const mobBtn  = document.getElementById('mobMenuBtn');
     mobBtn.addEventListener('click', () => sidebar.classList.toggle('mob-open'));
     document.addEventListener('click', e => {
       if (!sidebar.contains(e.target) && !mobBtn.contains(e.target)) {
@@ -821,6 +863,43 @@
       }
     });
   });
+
+  // ── HELPERS ──
+  function setProgress(id, pct, label) {
+    const fill  = document.getElementById(id + 'Fill');
+    const pctEl = document.getElementById(id + 'Pct');
+    const sub   = document.getElementById(id + 'Sub');
+    if (fill)  fill.style.width    = pct + '%';
+    if (pctEl) pctEl.textContent   = label;
+    if (sub)   sub.textContent     = pct + '% complete';
+  }
+
+  function getLabel(pct) {
+    if (pct === 0)       return 'Not started';
+    if (pct < 25)        return 'Starting';
+    if (pct < 50)        return 'Building';
+    if (pct < 75)        return 'Growing';
+    if (pct < 90)        return 'Strong';
+    return 'Excellent';
+  }
+
+  function renderNotes(notes) {
+    const el = document.getElementById('progressNotes');
+    if (!el) return;
+    if (!notes.length) {
+      el.innerHTML = '<div style="font-size:0.85rem;color:var(--text-light);padding:1rem 0;">No session notes yet — check back after your next session.</div>';
+      return;
+    }
+    el.innerHTML = notes.slice(0, 5).map(n => `
+      <div class="announce-item">
+        <div class="announce-dot"></div>
+        <div>
+          <div class="announce-title">${n.date || ''}</div>
+          <div class="announce-text">${n.text || ''}</div>
+        </div>
+      </div>
+    `).join('');
+  }
 
   // Page navigation — expose globally
   window.showPage = function(pageId) {

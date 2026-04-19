@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — NextGen Tutoring</title>
+  <meta name="description" content="NextGen Tutoring Privacy Policy — how we collect, use, and protect your information." />
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:#112240; --navy-mid:#1a3a5c; --navy-dark:#0a1628;
+      --gold:#C9A84C; --gold-light:#E8C97A; --gold-pale:#FBF3DC;
+      --white:#FFFFFF; --off-white:#F8F6F0;
+      --text-dark:#0B1F3A; --text-mid:#3A4A60; --text-light:#7A8A9E;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'DM Sans',sans-serif;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--off-white);color:var(--text-dark);-webkit-font-smoothing:antialiased;}
+
+    /* NAV */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(17,34,64,0.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,168,76,0.18);}
+    .nav-logo{text-decoration:none;}
+    .nav-logo-text{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--white);}
+    .nav-logo-accent{color:var(--gold);}
+    .nav-back{font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;}
+    .nav-back:hover{color:var(--gold);}
+
+    /* HERO */
+    .hero{background:var(--navy);padding:7rem 2rem 4rem;text-align:center;}
+    .hero-tag{display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:0.35rem 1rem;border-radius:100px;margin-bottom:1.25rem;}
+    .hero h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--white);margin-bottom:1rem;line-height:1.15;}
+    .hero-meta{font-size:0.85rem;color:rgba(255,255,255,0.35);}
+    .gold-bar{height:3px;background:var(--gold);width:48px;margin:1.5rem auto 0;border-radius:2px;}
+
+    /* CONTENT */
+    .content{max-width:760px;margin:0 auto;padding:4rem 2rem 6rem;}
+
+    .toc{background:var(--white);border:1px solid rgba(11,31,58,0.08);border-radius:10px;padding:1.5rem;margin-bottom:3rem;}
+    .toc-title{font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:1rem;}
+    .toc ol{padding-left:1.25rem;}
+    .toc li{margin-bottom:0.4rem;}
+    .toc a{font-size:0.875rem;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
+    .toc a:hover{color:var(--gold);}
+
+    .section{margin-bottom:3rem;}
+    .section-num{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+    .section h2{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(11,31,58,0.07);}
+    .section p{font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:1rem;}
+    .section ul{padding-left:1.25rem;margin-bottom:1rem;}
+    .section li{font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:0.4rem;}
+    .section a{color:var(--navy);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);transition:border-color 0.2s;}
+    .section a:hover{border-color:var(--gold);}
+
+    .highlight{background:var(--gold-pale);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:1rem 1.25rem;margin:1.25rem 0;}
+    .highlight p{margin-bottom:0;font-size:0.9rem;}
+
+    /* FOOTER */
+    .footer{background:var(--navy-dark);padding:2.5rem 2rem;border-top:1px solid rgba(201,168,76,0.12);text-align:center;}
+    .footer-brand{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:0.75rem;}
+    .footer-brand span{color:var(--gold);}
+    .footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;}
+    .footer-links a{font-size:0.8rem;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--gold);}
+    .footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.15);}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">
+    <span class="nav-logo-text">Next<span class="nav-logo-accent">Gen</span> Tutoring</span>
+  </a>
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p class="hero-meta">Effective Date: April 19, 2026 &nbsp;·&nbsp; Last Updated: April 19, 2026</p>
+  <div class="gold-bar"></div>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#who-we-are">Who We Are</a></li>
+      <li><a href="#information-we-collect">Information We Collect</a></li>
+      <li><a href="#how-we-use">How We Use Your Information</a></li>
+      <li><a href="#sharing">How We Share Your Information</a></li>
+      <li><a href="#minors">Children's Privacy (COPPA)</a></li>
+      <li><a href="#data-storage">Data Storage & Security</a></li>
+      <li><a href="#your-rights">Your Rights</a></li>
+      <li><a href="#cookies">Cookies & Analytics</a></li>
+      <li><a href="#changes">Changes to This Policy</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <div class="highlight">
+    <p><strong>Plain English summary:</strong> We collect only what we need to run your tutoring sessions. We do not sell your data. We do not share it with advertisers. Student progress data is private and only accessible to you and your tutor.</p>
+  </div>
+
+  <div class="section" id="who-we-are">
+    <div class="section-num">01</div>
+    <h2>Who We Are</h2>
+    <p>NextGen Tutoring is an academic coaching service based in Metro Detroit, Michigan, operated by Hafeez Oyeneyin. We provide personalized tutoring services for K–12 and college students in person and virtually.</p>
+    <p>This Privacy Policy explains how we collect, use, and protect information when you visit our website at <a href="https://nextgentutoring.org">nextgentutoring.org</a>, create a student account, or contact us through any of our channels.</p>
+  </div>
+
+  <div class="section" id="information-we-collect">
+    <div class="section-num">02</div>
+    <h2>Information We Collect</h2>
+    <p>We collect information in two ways — information you give us directly and information collected automatically.</p>
+    <p><strong>Information you provide directly:</strong></p>
+    <ul>
+      <li>Name and email address when you create a student account</li>
+      <li>Name, email, and message when you submit our contact form</li>
+      <li>Email address when you subscribe to our newsletter</li>
+      <li>Payment information when purchasing a session package (processed by third-party payment providers — we do not store card numbers)</li>
+    </ul>
+    <p><strong>Information we collect about students (tutor-entered):</strong></p>
+    <ul>
+      <li>Grade level and subjects being studied</li>
+      <li>Session count and attendance records</li>
+      <li>Academic progress tracking (Math, Reading, Test Prep scores)</li>
+      <li>Session notes written by your tutor</li>
+    </ul>
+    <p><strong>Information collected automatically:</strong></p>
+    <ul>
+      <li>Basic website analytics (page views, referral source) via Simple Analytics — a privacy-focused, cookie-free analytics tool</li>
+      <li>Browser type and device type for compatibility purposes</li>
+    </ul>
+  </div>
+
+  <div class="section" id="how-we-use">
+    <div class="section-num">03</div>
+    <h2>How We Use Your Information</h2>
+    <p>We use the information we collect for the following purposes only:</p>
+    <ul>
+      <li>To create and manage your student portal account</li>
+      <li>To track and display your academic progress in your dashboard</li>
+      <li>To communicate with you about sessions, scheduling, and updates</li>
+      <li>To respond to contact form inquiries</li>
+      <li>To send newsletters if you have subscribed (you may unsubscribe at any time)</li>
+      <li>To improve the website and our services based on aggregate usage data</li>
+    </ul>
+    <p>We will never use your information for advertising purposes or sell it to any third party.</p>
+  </div>
+
+  <div class="section" id="sharing">
+    <div class="section-num">04</div>
+    <h2>How We Share Your Information</h2>
+    <p>We do not sell, rent, or trade your personal information. We share information only in the following limited circumstances:</p>
+    <ul>
+      <li><strong>Firebase / Google:</strong> We use Google Firebase to store account data and student progress records securely. Firebase is governed by Google's Privacy Policy.</li>
+      <li><strong>Formspree:</strong> Contact form submissions are processed by Formspree and delivered to our email. Formspree's privacy policy applies to form data in transit.</li>
+      <li><strong>Calendly:</strong> If you book a session through our Calendly link, Calendly's privacy policy governs that interaction.</li>
+      <li><strong>Legal requirements:</strong> We may disclose information if required by law or to protect the rights and safety of our students and staff.</li>
+    </ul>
+  </div>
+
+  <div class="section" id="minors">
+    <div class="section-num">05</div>
+    <h2>Children's Privacy (COPPA)</h2>
+    <div class="highlight">
+      <p><strong>We take the privacy of minors very seriously.</strong> A significant portion of our students are under the age of 13.</p>
+    </div>
+    <p>In compliance with the Children's Online Privacy Protection Act (COPPA):</p>
+    <ul>
+      <li>We do not knowingly collect personal information directly from children under 13 without verifiable parental consent</li>
+      <li>Student accounts for children under 13 must be created and managed by a parent or legal guardian</li>
+      <li>Parents may review, request deletion of, or refuse further collection of their child's personal information at any time by contacting us at <a href="mailto:nextgentutoringco@gmail.com">nextgentutoringco@gmail.com</a></li>
+      <li>Student progress data entered by the tutor (sessions, grades, notes) is stored securely and accessible only to the tutor and the student's account</li>
+      <li>We do not display student information publicly under any circumstances</li>
+    </ul>
+    <p>If you believe we have inadvertently collected information from a child under 13 without proper consent, please contact us immediately and we will delete it promptly.</p>
+  </div>
+
+  <div class="section" id="data-storage">
+    <div class="section-num">06</div>
+    <h2>Data Storage & Security</h2>
+    <p>All student account data and progress records are stored in Google Firebase Firestore, a secure cloud database with industry-standard encryption at rest and in transit.</p>
+    <p>Access to student data is protected by Firebase Authentication and role-based security rules:</p>
+    <ul>
+      <li>Students can only access their own account data</li>
+      <li>Only the NextGen Tutoring administrator account can view or modify student records</li>
+      <li>All data is transmitted over HTTPS — never unencrypted</li>
+    </ul>
+    <p>While we take reasonable measures to protect your data, no system is 100% secure. We encourage you to use a strong password and keep your login credentials private.</p>
+  </div>
+
+  <div class="section" id="your-rights">
+    <div class="section-num">07</div>
+    <h2>Your Rights</h2>
+    <p>You have the following rights regarding your personal information:</p>
+    <ul>
+      <li><strong>Access:</strong> You may request a copy of the personal data we hold about you</li>
+      <li><strong>Correction:</strong> You may request that inaccurate information be corrected</li>
+      <li><strong>Deletion:</strong> You may request that your account and associated data be deleted</li>
+      <li><strong>Opt-out:</strong> You may unsubscribe from our newsletter at any time using the unsubscribe link in any email</li>
+      <li><strong>Parental rights:</strong> Parents of minor students may exercise any of the above rights on their child's behalf</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="mailto:nextgentutoringco@gmail.com">nextgentutoringco@gmail.com</a>. We will respond within 30 days.</p>
+  </div>
+
+  <div class="section" id="cookies">
+    <div class="section-num">08</div>
+    <h2>Cookies & Analytics</h2>
+    <p>Our website uses Simple Analytics for website traffic data. Simple Analytics is a privacy-first analytics platform that does not use cookies and does not collect personally identifiable information. It is fully GDPR and CCPA compliant.</p>
+    <p>We do not use advertising cookies, tracking pixels, or third-party marketing tools on this website.</p>
+    <p>Firebase Authentication uses a session token stored in your browser's local storage to keep you logged in. This is necessary for the student portal to function and is not used for tracking or advertising purposes.</p>
+  </div>
+
+  <div class="section" id="changes">
+    <div class="section-num">09</div>
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time as our services grow or legal requirements change. When we do we will update the "Last Updated" date at the top of this page.</p>
+    <p>For significant changes we will make reasonable efforts to notify active users via email. Continued use of our website or student portal after changes are posted constitutes acceptance of the updated policy.</p>
+  </div>
+
+  <div class="section" id="contact">
+    <div class="section-num">10</div>
+    <h2>Contact Us</h2>
+    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or how we handle your data, please contact us:</p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:nextgentutoringco@gmail.com">nextgentutoringco@gmail.com</a></li>
+      <li><strong>Phone:</strong> <a href="tel:7345525832">734-552-5832</a></li>
+      <li><strong>Address:</strong> Metro Detroit, Michigan, United States</li>
+    </ul>
+    <p style="margin-top:1.5rem;">You may also review our <a href="terms.html">Terms of Service</a>.</p>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">Next<span>Gen</span> Tutoring</div>
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="../index.html#contact">Contact</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="login.html">Student Login</a>
+  </div>
+  <div class="footer-copy">© 2026 NextGen Tutoring. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

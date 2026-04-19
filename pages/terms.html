@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — NextGen Tutoring</title>
+  <meta name="description" content="NextGen Tutoring Terms of Service — session policies, payment terms, and your agreement with us." />
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:#112240; --navy-mid:#1a3a5c; --navy-dark:#0a1628;
+      --gold:#C9A84C; --gold-light:#E8C97A; --gold-pale:#FBF3DC;
+      --white:#FFFFFF; --off-white:#F8F6F0;
+      --text-dark:#0B1F3A; --text-mid:#3A4A60; --text-light:#7A8A9E;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'DM Sans',sans-serif;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font-body);background:var(--off-white);color:var(--text-dark);-webkit-font-smoothing:antialiased;}
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;height:72px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(17,34,64,0.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,168,76,0.18);}
+    .nav-logo{text-decoration:none;}
+    .nav-logo-text{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--white);}
+    .nav-logo-accent{color:var(--gold);}
+    .nav-back{font-size:0.82rem;color:rgba(255,255,255,0.5);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;}
+    .nav-back:hover{color:var(--gold);}
+    .hero{background:var(--navy);padding:7rem 2rem 4rem;text-align:center;}
+    .hero-tag{display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);padding:0.35rem 1rem;border-radius:100px;margin-bottom:1.25rem;}
+    .hero h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--white);margin-bottom:1rem;line-height:1.15;}
+    .hero-meta{font-size:0.85rem;color:rgba(255,255,255,0.35);}
+    .gold-bar{height:3px;background:var(--gold);width:48px;margin:1.5rem auto 0;border-radius:2px;}
+    .content{max-width:760px;margin:0 auto;padding:4rem 2rem 6rem;}
+    .toc{background:var(--white);border:1px solid rgba(11,31,58,0.08);border-radius:10px;padding:1.5rem;margin-bottom:3rem;}
+    .toc-title{font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:1rem;}
+    .toc ol{padding-left:1.25rem;}
+    .toc li{margin-bottom:0.4rem;}
+    .toc a{font-size:0.875rem;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
+    .toc a:hover{color:var(--gold);}
+    .section{margin-bottom:3rem;}
+    .section-num{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+    .section h2{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(11,31,58,0.07);}
+    .section p{font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:1rem;}
+    .section ul{padding-left:1.25rem;margin-bottom:1rem;}
+    .section li{font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:0.4rem;}
+    .section a{color:var(--navy);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);transition:border-color 0.2s;}
+    .section a:hover{border-color:var(--gold);}
+    .highlight{background:var(--gold-pale);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:1rem 1.25rem;margin:1.25rem 0;}
+    .highlight p{margin-bottom:0;font-size:0.9rem;}
+    .policy-table{width:100%;border-collapse:collapse;margin:1rem 0;}
+    .policy-table th{background:var(--navy);color:var(--gold);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.75rem 1rem;text-align:left;}
+    .policy-table td{padding:0.85rem 1rem;font-size:0.9rem;color:var(--text-mid);border-bottom:1px solid rgba(11,31,58,0.06);}
+    .policy-table tr:last-child td{border-bottom:none;}
+    .policy-table tr:nth-child(even) td{background:var(--white);}
+    .footer{background:var(--navy-dark);padding:2.5rem 2rem;border-top:1px solid rgba(201,168,76,0.12);text-align:center;}
+    .footer-brand{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:0.75rem;}
+    .footer-brand span{color:var(--gold);}
+    .footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;}
+    .footer-links a{font-size:0.8rem;color:rgba(255,255,255,0.3);text-decoration:none;transition:color 0.2s;}
+    .footer-links a:hover{color:var(--gold);}
+    .footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.15);}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="../index.html" class="nav-logo">
+    <span class="nav-logo-text">Next<span class="nav-logo-accent">Gen</span> Tutoring</span>
+  </a>
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Legal</div>
+  <h1>Terms of Service</h1>
+  <p class="hero-meta">Effective Date: April 19, 2026 &nbsp;·&nbsp; Last Updated: April 19, 2026</p>
+  <div class="gold-bar"></div>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#agreement">Agreement to Terms</a></li>
+      <li><a href="#services">Our Services</a></li>
+      <li><a href="#booking">Booking & Scheduling</a></li>
+      <li><a href="#cancellation">Cancellation Policy</a></li>
+      <li><a href="#payment">Payment Terms</a></li>
+      <li><a href="#packages">Session Packages</a></li>
+      <li><a href="#conduct">Code of Conduct</a></li>
+      <li><a href="#accounts">Student Portal Accounts</a></li>
+      <li><a href="#liability">Limitation of Liability</a></li>
+      <li><a href="#governing">Governing Law</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </div>
+
+  <div class="highlight">
+    <p><strong>Plain English summary:</strong> Book sessions in advance, pay before or at the time of service, cancel at least 24 hours ahead, and treat every session with respect. We are here to help your student succeed.</p>
+  </div>
+
+  <div class="section" id="agreement">
+    <div class="section-num">01</div>
+    <h2>Agreement to Terms</h2>
+    <p>By accessing our website, creating a student account, booking a session, or purchasing a session package, you agree to be bound by these Terms of Service and our <a href="privacy.html">Privacy Policy</a>.</p>
+    <p>These Terms apply to all clients, parents, guardians, and students who use NextGen Tutoring services. If you do not agree to these Terms, please do not use our services.</p>
+    <p>NextGen Tutoring is operated by Hafeez Oyeneyin, based in Metro Detroit, Michigan.</p>
+  </div>
+
+  <div class="section" id="services">
+    <div class="section-num">02</div>
+    <h2>Our Services</h2>
+    <p>NextGen Tutoring provides personalized academic coaching for K–12 and college students. Services include but are not limited to:</p>
+    <ul>
+      <li>One-on-one tutoring sessions in math, science, reading, writing, and other core subjects</li>
+      <li>SAT, ACT, GED, and placement test preparation</li>
+      <li>Homework help and academic support</li>
+      <li>Group tutoring sessions (where applicable)</li>
+      <li>Virtual and in-person sessions in the Metro Detroit area</li>
+    </ul>
+    <p>NextGen Tutoring is not a school, accredited institution, or licensed therapy provider. Our services are supplemental academic coaching and do not replace formal schooling or special education services.</p>
+  </div>
+
+  <div class="section" id="booking">
+    <div class="section-num">03</div>
+    <h2>Booking & Scheduling</h2>
+    <p>Sessions may be booked through our Calendly scheduling link at <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank">calendly.com/hoyeneyi/tutoring-with-hafeez</a> or by contacting us directly via email or phone.</p>
+    <ul>
+      <li>Session availability is subject to tutor availability and is not guaranteed until confirmed</li>
+      <li>Recurring session times may be reserved for ongoing clients on a first-come, first-served basis</li>
+      <li>NextGen Tutoring reserves the right to reschedule sessions due to illness, emergency, or circumstances beyond our control with reasonable notice provided to the client</li>
+      <li>Sessions are 1 hour in duration unless otherwise agreed upon in writing</li>
+    </ul>
+  </div>
+
+  <div class="section" id="cancellation">
+    <div class="section-num">04</div>
+    <h2>Cancellation Policy</h2>
+    <div class="highlight">
+      <p><strong>We require at least 24 hours notice to cancel or reschedule a session.</strong></p>
+    </div>
+    <table class="policy-table">
+      <thead>
+        <tr><th>Notice Given</th><th>Result</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>24+ hours before session</td><td>Full credit or reschedule — no charge</td></tr>
+        <tr><td>Less than 24 hours notice</td><td>Session counts as used — no refund or credit</td></tr>
+        <tr><td>No-show (no notice given)</td><td>Session counts as used — no refund or credit</td></tr>
+        <tr><td>NextGen cancels the session</td><td>Full credit or reschedule at no charge to client</td></tr>
+      </tbody>
+    </table>
+    <p>Repeated late cancellations or no-shows may result in a requirement to prepay for future sessions or termination of the tutoring relationship at NextGen Tutoring's discretion.</p>
+  </div>
+
+  <div class="section" id="payment">
+    <div class="section-num">05</div>
+    <h2>Payment Terms</h2>
+    <p>Payment is due at or before the time of each session unless a package has been purchased in advance. We accept the following payment methods:</p>
+    <ul>
+      <li>Cash</li>
+      <li>Zelle</li>
+      <li>Venmo</li>
+      <li>PayPal</li>
+      <li>Credit or debit card (where available)</li>
+    </ul>
+    <p>Invoices not paid within 7 days of the session date may result in suspension of future bookings until the balance is settled.</p>
+    <p>NextGen Tutoring does not offer sliding scale pricing, financial aid, or pro bono services except at the sole discretion of the tutor on a case-by-case basis.</p>
+  </div>
+
+  <div class="section" id="packages">
+    <div class="section-num">06</div>
+    <h2>Session Packages</h2>
+    <p>Session packages are prepaid bundles that offer a discounted per-session rate. The following terms apply to all packages:</p>
+    <ul>
+      <li>Packages must be paid in full at the time of purchase</li>
+      <li>Sessions within a package expire 90 days from the date of purchase unless otherwise agreed</li>
+      <li>Packages are non-transferable and may not be shared between students</li>
+      <li>Unused sessions are non-refundable after 7 days from the purchase date</li>
+      <li>Refund requests within 7 days of purchase will be honored for unused sessions only, less any administrative fees</li>
+    </ul>
+    <p>Current package pricing is displayed on our <a href="../index.html#pricing">pricing page</a> and is subject to change. Existing clients are not affected by price changes during an active package period.</p>
+  </div>
+
+  <div class="section" id="conduct">
+    <div class="section-num">07</div>
+    <h2>Code of Conduct</h2>
+    <p>NextGen Tutoring is committed to providing a safe, respectful, and productive learning environment for every student. We expect the following from all parties:</p>
+    <p><strong>Students and parents/guardians agree to:</strong></p>
+    <ul>
+      <li>Treat the tutor with respect in all communications and sessions</li>
+      <li>Arrive on time and prepared for each session</li>
+      <li>Provide a safe and distraction-appropriate environment for virtual or in-home sessions</li>
+      <li>Not record sessions without the express written consent of NextGen Tutoring</li>
+      <li>Not share session materials, worksheets, or content created by NextGen Tutoring without permission</li>
+    </ul>
+    <p><strong>NextGen Tutoring agrees to:</strong></p>
+    <ul>
+      <li>Arrive on time and prepared for each session</li>
+      <li>Maintain the confidentiality of student information</li>
+      <li>Provide honest progress feedback to students and parents</li>
+      <li>Treat every student with patience, respect, and encouragement</li>
+    </ul>
+    <p>NextGen Tutoring reserves the right to terminate the tutoring relationship immediately and without refund in cases of harassment, abuse, or repeated violation of this code of conduct.</p>
+  </div>
+
+  <div class="section" id="accounts">
+    <div class="section-num">08</div>
+    <h2>Student Portal Accounts</h2>
+    <p>Access to the NextGen Tutoring student portal is provided as a courtesy to active clients. By creating an account you agree to:</p>
+    <ul>
+      <li>Provide accurate information when creating your account</li>
+      <li>Keep your login credentials secure and not share them with others</li>
+      <li>Notify us immediately if you suspect unauthorized access to your account</li>
+    </ul>
+    <p>For students under 13, a parent or guardian must create and manage the account. By creating an account on behalf of a minor you confirm you are the parent or legal guardian and consent to the collection of the minor's academic data as described in our <a href="privacy.html">Privacy Policy</a>.</p>
+    <p>NextGen Tutoring reserves the right to suspend or terminate portal access for clients who are no longer active students or who violate these Terms.</p>
+  </div>
+
+  <div class="section" id="liability">
+    <div class="section-num">09</div>
+    <h2>Limitation of Liability</h2>
+    <p>NextGen Tutoring provides academic coaching services and makes no guarantees regarding specific academic outcomes, test scores, grade improvements, or college admissions results. Results depend on many factors including student effort, consistency, and individual ability.</p>
+    <p>To the fullest extent permitted by Michigan law, NextGen Tutoring shall not be liable for:</p>
+    <ul>
+      <li>Any indirect, incidental, or consequential damages arising from use of our services</li>
+      <li>Academic outcomes or test results</li>
+      <li>Technical issues with the student portal or third-party services (Firebase, Calendly, Formspree)</li>
+      <li>Loss of data due to circumstances beyond our reasonable control</li>
+    </ul>
+    <p>Our total liability to any client for any claim arising from these Terms or our services shall not exceed the total amount paid by that client in the 30 days preceding the claim.</p>
+  </div>
+
+  <div class="section" id="governing">
+    <div class="section-num">10</div>
+    <h2>Governing Law</h2>
+    <p>These Terms of Service are governed by and construed in accordance with the laws of the State of Michigan, without regard to conflict of law principles.</p>
+    <p>Any disputes arising under these Terms shall first be attempted to be resolved informally by contacting us directly. If informal resolution is not possible, disputes shall be subject to the exclusive jurisdiction of the courts located in Wayne County, Michigan.</p>
+  </div>
+
+  <div class="section" id="contact">
+    <div class="section-num">11</div>
+    <h2>Contact</h2>
+    <p>If you have questions about these Terms of Service, please reach out:</p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:nextgentutoringco@gmail.com">nextgentutoringco@gmail.com</a></li>
+      <li><strong>Phone:</strong> <a href="tel:7345525832">734-552-5832</a></li>
+      <li><strong>Location:</strong> Metro Detroit, Michigan</li>
+    </ul>
+    <p style="margin-top:1.5rem;">You may also review our <a href="privacy.html">Privacy Policy</a>.</p>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-brand">Next<span>Gen</span> Tutoring</div>
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="../index.html#contact">Contact</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="login.html">Student Login</a>
+  </div>
+  <div class="footer-copy">© 2026 NextGen Tutoring. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
