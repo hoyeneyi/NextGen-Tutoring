@@ -26,7 +26,7 @@
     html { scroll-behavior:smooth; }
     body { font-family:var(--font-body); background:var(--off-white); color:var(--text-dark); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
 
-    .sr { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .sr { opacity:1; transform:none; transition:none; }
     .sr.sr-left { transform:translateX(-28px); }
     .sr.sr-right { transform:translateX(28px); }
     .sr.visible { opacity:1; transform:translateY(0) translateX(0); }
@@ -312,11 +312,7 @@
       <div>
         <div class="f-brand">Next<span>Gen</span> Tutoring</div>
         <p class="f-desc">Empowering students to master academics with clarity and confidence. Metro Detroit &amp; Virtual.</p>
-        <div class="f-socials">
-          <a href="https://instagram.com/nextgentutoringco" target="_blank" class="f-social" aria-label="Instagram">ig</a>
-          <a href="https://tiktok.com/@nextgentutoringco" target="_blank" class="f-social" aria-label="TikTok">tk</a>
-          <a href="https://facebook.com/nextgentutoring" target="_blank" class="f-social" aria-label="Facebook">fb</a>
-        </div>
+      
       </div>
       <div>
         <div class="f-col-title">Navigation</div>
@@ -362,7 +358,8 @@
       window.addEventListener('scroll', () => srEls.forEach(el => { if (isInView(el)) revealEl(el); }), { passive:true });
     }
     window.addEventListener('load', () => srEls.forEach(el => { if (isInView(el)) revealEl(el); }));
-    setTimeout(() => srEls.forEach(revealEl), 2000);
+    document.addEventListener('DOMContentLoaded', () => srEls.forEach(el => { if (isInView(el)) revealEl(el); }));
+    setTimeout(() => srEls.forEach(revealEl), 800);
   </script>
 
   <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>

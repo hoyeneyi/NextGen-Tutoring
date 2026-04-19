@@ -2,86 +2,844 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard | NextGen Tutoring</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- SEO -->
-  <meta name="description" content="Access your personalized tutoring dashboard with lessons, assignments, and progress tracking." />
-  <meta name="keywords" content="student dashboard, tutoring progress, assignments, NextGen Tutoring, Hafeez" />
-
-  <meta property="og:title" content="Dashboard | NextGen Tutoring" />
-  <meta property="og:description" content="Access your personalized tutoring dashboard with lessons, assignments, and progress tracking." />
-  <meta property="og:image" content="assets/images/logo-trans.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Scripts -->
-  <script type="module" src="scripts/dashboard.js"></script>
-  <script src="scripts/loadHeader.js" defer></script>
+  <title>Dashboard — NextGen Tutoring</title>
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    body {
-      font-family: 'Space Grotesk', sans-serif;
+    :root {
+      --navy:       #112240;
+      --navy-mid:   #1a3a5c;
+      --navy-light: #1e4976;
+      --navy-dark:  #0a1628;
+      --gold:       #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale:  #FBF3DC;
+      --white:      #FFFFFF;
+      --off-white:  #F8F6F0;
+      --text-dark:  #0B1F3A;
+      --text-mid:   #3A4A60;
+      --text-light: #7A8A9E;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+      --sidebar-w:  240px;
     }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--font-body); background:var(--off-white); color:var(--text-dark); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+
+    /* ── LOADING SCREEN ── */
+    .loading-screen {
+      position:fixed; inset:0; background:var(--navy);
+      display:flex; align-items:center; justify-content:center;
+      z-index:999; transition:opacity 0.4s ease;
+    }
+    .loading-screen.hidden { opacity:0; pointer-events:none; }
+    .loader-brand { font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--white); }
+    .loader-brand span { color:var(--gold); }
+    .loader-dots { display:flex; gap:6px; margin-top:1rem; justify-content:center; }
+    .loader-dot { width:7px; height:7px; background:var(--gold); border-radius:50%; animation:pulse 1.2s ease infinite; }
+    .loader-dot:nth-child(2) { animation-delay:0.2s; }
+    .loader-dot:nth-child(3) { animation-delay:0.4s; }
+    @keyframes pulse { 0%,80%,100% { opacity:0.2; transform:scale(0.8); } 40% { opacity:1; transform:scale(1); } }
+
+    /* ── LAYOUT ── */
+    .layout { display:flex; min-height:100vh; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width:var(--sidebar-w);
+      background:var(--navy);
+      position:fixed;
+      top:0; left:0; bottom:0;
+      display:flex; flex-direction:column;
+      border-right:1px solid rgba(201,168,76,0.12);
+      z-index:50;
+      transition:transform 0.3s ease;
+    }
+
+    .sidebar-logo {
+      padding:1.75rem 1.5rem 1.25rem;
+      border-bottom:1px solid rgba(201,168,76,0.1);
+      text-decoration:none;
+    }
+    .sidebar-logo-text { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--white); }
+    .sidebar-logo-text span { color:var(--gold); }
+    .sidebar-logo-sub { font-size:0.7rem; color:rgba(255,255,255,0.3); margin-top:2px; letter-spacing:0.06em; text-transform:uppercase; }
+
+    .sidebar-nav { flex:1; padding:1.25rem 0; overflow-y:auto; }
+    .nav-section-label { font-size:0.62rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.2); padding:0 1.5rem; margin-bottom:0.5rem; margin-top:1rem; }
+    .nav-section-label:first-child { margin-top:0; }
+
+    .nav-item {
+      display:flex; align-items:center; gap:10px;
+      padding:0.7rem 1.5rem;
+      text-decoration:none;
+      color:rgba(255,255,255,0.5);
+      font-size:0.875rem; font-weight:500;
+      border-left:3px solid transparent;
+      transition:all 0.2s;
+      cursor:pointer;
+    }
+    .nav-item:hover { color:var(--white); background:rgba(255,255,255,0.04); }
+    .nav-item.active { color:var(--gold); border-left-color:var(--gold); background:rgba(201,168,76,0.07); }
+    .nav-item svg { width:16px; height:16px; flex-shrink:0; }
+
+    .sidebar-user {
+      padding:1.25rem 1.5rem;
+      border-top:1px solid rgba(201,168,76,0.1);
+    }
+    .user-avatar {
+      width:36px; height:36px;
+      background:rgba(201,168,76,0.15);
+      border:1px solid rgba(201,168,76,0.3);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.8rem; font-weight:700; color:var(--gold);
+      flex-shrink:0;
+    }
+    .user-info { display:flex; align-items:center; gap:10px; margin-bottom:0.75rem; }
+    .user-name { font-size:0.82rem; font-weight:600; color:var(--white); }
+    .user-role { font-size:0.7rem; color:rgba(255,255,255,0.3); }
+    .sign-out-btn {
+      width:100%; padding:0.55rem; background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08); border-radius:6px;
+      color:rgba(255,255,255,0.4); font-size:0.78rem; font-weight:500;
+      cursor:pointer; font-family:var(--font-body);
+      transition:all 0.2s; text-align:center;
+    }
+    .sign-out-btn:hover { background:rgba(255,255,255,0.1); color:var(--white); }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      margin-left:var(--sidebar-w);
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background:var(--white);
+      border-bottom:1px solid rgba(11,31,58,0.07);
+      padding:0 2rem;
+      height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky; top:0; z-index:40;
+    }
+    .topbar-title { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--navy); }
+    .topbar-right { display:flex; align-items:center; gap:1rem; }
+    .topbar-greeting { font-size:0.82rem; color:var(--text-light); }
+    .topbar-greeting strong { color:var(--navy); font-weight:600; }
+    .book-btn {
+      background:var(--gold); color:var(--navy);
+      padding:0.5rem 1.1rem; border-radius:6px;
+      font-size:0.8rem; font-weight:700;
+      text-decoration:none;
+      transition:background 0.2s, transform 0.2s;
+      display:flex; align-items:center; gap:6px;
+    }
+    .book-btn:hover { background:var(--gold-light); transform:translateY(-1px); }
+
+    .mob-menu-btn { display:none; background:none; border:none; cursor:pointer; padding:4px; }
+    .mob-menu-btn svg { width:22px; height:22px; stroke:var(--navy); }
+
+    /* ── PAGE CONTENT ── */
+    .page { padding:2rem; flex:1; }
+    .page.hidden { display:none; }
+
+    /* ── WELCOME BANNER ── */
+    .welcome-banner {
+      background:var(--navy);
+      border-radius:14px;
+      padding:2rem 2.5rem;
+      margin-bottom:1.75rem;
+      position:relative;
+      overflow:hidden;
+    }
+    .welcome-banner::before {
+      content:'';
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(circle at 85% 50%, rgba(201,168,76,0.1) 0%, transparent 55%),
+        repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,168,76,0.02) 40px, rgba(201,168,76,0.02) 41px);
+      pointer-events:none;
+    }
+    .welcome-tag { font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem; position:relative; z-index:1; }
+    .welcome-h1 { font-family:var(--font-display); font-size:1.6rem; font-weight:900; color:var(--white); line-height:1.2; position:relative; z-index:1; }
+    .welcome-h1 span { color:var(--gold); font-style:italic; }
+    .welcome-sub { font-size:0.875rem; color:rgba(255,255,255,0.45); margin-top:0.5rem; position:relative; z-index:1; }
+
+    /* ── STAT CARDS ── */
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-bottom:1.75rem; }
+    .stat-card {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:12px;
+      padding:1.4rem 1.5rem;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(11,31,58,0.08); }
+    .stat-label { font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.6rem; }
+    .stat-value { font-family:var(--font-display); font-size:2rem; font-weight:700; color:var(--navy); line-height:1; }
+    .stat-sub { font-size:0.75rem; color:var(--text-light); margin-top:0.35rem; }
+    .stat-icon { width:36px; height:36px; background:var(--gold-pale); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:0.85rem; color:var(--gold); }
+    .stat-icon svg { width:18px; height:18px; }
+
+    /* ── SECTION TITLES ── */
+    .sec-title { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--navy); margin-bottom:1rem; }
+    .sec-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+    .sec-link { font-size:0.78rem; color:var(--gold); text-decoration:none; font-weight:600; }
+    .sec-link:hover { text-decoration:underline; }
+
+    /* ── TWO COL GRID ── */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.75rem; }
+
+    /* ── NEXT SESSION CARD ── */
+    .next-session {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:12px;
+      padding:1.5rem;
+    }
+    .session-item {
+      display:flex; align-items:center; gap:1rem;
+      padding:0.9rem;
+      background:var(--off-white);
+      border-radius:8px;
+      margin-bottom:0.75rem;
+    }
+    .session-item:last-child { margin-bottom:0; }
+    .session-date-box {
+      width:44px; height:44px;
+      background:var(--navy);
+      border-radius:8px;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      flex-shrink:0;
+    }
+    .session-month { font-size:0.55rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.06em; }
+    .session-day { font-size:1rem; font-weight:700; color:var(--white); line-height:1; }
+    .session-info { flex:1; }
+    .session-name { font-size:0.875rem; font-weight:600; color:var(--navy); }
+    .session-time { font-size:0.75rem; color:var(--text-light); margin-top:2px; }
+    .session-badge { font-size:0.68rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:100px; }
+    .badge-upcoming { background:rgba(201,168,76,0.1); color:var(--gold); border:1px solid rgba(201,168,76,0.2); }
+    .badge-done { background:rgba(26,92,56,0.1); color:#1A5C38; border:1px solid rgba(26,92,56,0.2); }
+
+    /* ── PROGRESS CARD ── */
+    .progress-card {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:12px;
+      padding:1.5rem;
+    }
+    .progress-item { margin-bottom:1.25rem; }
+    .progress-item:last-child { margin-bottom:0; }
+    .progress-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; }
+    .progress-name { font-size:0.82rem; font-weight:600; color:var(--navy); }
+    .progress-pct { font-size:0.75rem; font-weight:700; color:var(--gold); }
+    .progress-bar-bg { height:6px; background:var(--off-white); border-radius:100px; overflow:hidden; }
+    .progress-bar-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:100px; transition:width 1s ease; }
+    .progress-sub { font-size:0.7rem; color:var(--text-light); margin-top:4px; }
+
+    /* ── QUICK ACTIONS ── */
+    .actions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1rem; margin-bottom:1.75rem; }
+    .action-card {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:12px;
+      padding:1.25rem;
+      text-align:center;
+      text-decoration:none;
+      cursor:pointer;
+      transition:transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      display:flex; flex-direction:column; align-items:center; gap:0.6rem;
+    }
+    .action-card:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(11,31,58,0.08); border-color:rgba(201,168,76,0.25); }
+    .action-icon { width:44px; height:44px; background:var(--gold-pale); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--gold); }
+    .action-icon svg { width:20px; height:20px; }
+    .action-label { font-size:0.8rem; font-weight:600; color:var(--navy); }
+
+    /* ── ANNOUNCEMENTS ── */
+    .announce-card {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:12px;
+      padding:1.5rem;
+      margin-bottom:1.75rem;
+    }
+    .announce-item { display:flex; gap:1rem; padding:0.9rem 0; border-bottom:1px solid rgba(11,31,58,0.05); }
+    .announce-item:last-child { border-bottom:none; padding-bottom:0; }
+    .announce-dot { width:8px; height:8px; background:var(--gold); border-radius:50%; flex-shrink:0; margin-top:5px; }
+    .announce-title { font-size:0.875rem; font-weight:600; color:var(--navy); margin-bottom:3px; }
+    .announce-text { font-size:0.8rem; color:var(--text-mid); line-height:1.6; }
+    .announce-date { font-size:0.7rem; color:var(--text-light); margin-top:4px; }
+
+    /* ── LESSONS PAGE ── */
+    .lessons-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; }
+    .lesson-card {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:12px;
+      overflow:hidden;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .lesson-card:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(11,31,58,0.08); }
+    .lesson-header { background:var(--navy); padding:1.25rem; position:relative; overflow:hidden; }
+    .lesson-header::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 80% 20%, rgba(201,168,76,0.12) 0%, transparent 60%); }
+    .lesson-subject { font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:0.35rem; position:relative; z-index:1; }
+    .lesson-title { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--white); position:relative; z-index:1; }
+    .lesson-body { padding:1.25rem; }
+    .lesson-desc { font-size:0.82rem; color:var(--text-mid); line-height:1.65; margin-bottom:1rem; }
+    .lesson-meta { display:flex; align-items:center; justify-content:space-between; }
+    .lesson-status { font-size:0.72rem; font-weight:600; padding:0.2rem 0.65rem; border-radius:100px; }
+    .status-new { background:rgba(201,168,76,0.1); color:var(--gold); border:1px solid rgba(201,168,76,0.2); }
+    .status-inprogress { background:rgba(30,73,118,0.1); color:var(--navy-light); border:1px solid rgba(30,73,118,0.2); }
+    .status-done { background:rgba(26,92,56,0.1); color:#1A5C38; border:1px solid rgba(26,92,56,0.2); }
+    .lesson-btn { font-size:0.78rem; font-weight:600; color:var(--gold); text-decoration:none; transition:opacity 0.2s; }
+    .lesson-btn:hover { opacity:0.7; }
+
+    /* ── PROFILE PAGE ── */
+    .profile-card {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:14px;
+      padding:2rem;
+      max-width:580px;
+    }
+    .profile-avatar-lg {
+      width:72px; height:72px;
+      background:var(--navy);
+      border:2px solid rgba(201,168,76,0.3);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem; font-weight:700; color:var(--gold);
+      margin-bottom:1.25rem;
+      font-family:var(--font-display);
+    }
+    .profile-name { font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--navy); }
+    .profile-email { font-size:0.82rem; color:var(--text-light); margin-top:3px; margin-bottom:1.5rem; }
+    .profile-divider { height:1px; background:rgba(11,31,58,0.07); margin:1.25rem 0; }
+    .profile-row { display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; }
+    .profile-key { font-size:0.8rem; color:var(--text-light); }
+    .profile-val { font-size:0.875rem; font-weight:600; color:var(--navy); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { text-align:center; padding:3rem 2rem; color:var(--text-light); }
+    .empty-state svg { width:48px; height:48px; margin:0 auto 1rem; opacity:0.3; }
+    .empty-title { font-size:0.95rem; font-weight:600; color:var(--text-mid); margin-bottom:0.4rem; }
+    .empty-sub { font-size:0.82rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width:768px) {
+      .sidebar { transform:translateX(-100%); }
+      .sidebar.mob-open { transform:translateX(0); }
+      .main { margin-left:0; }
+      .mob-menu-btn { display:block; }
+      .two-col { grid-template-columns:1fr; }
+      .topbar { padding:0 1rem; }
+      .page { padding:1.25rem; }
+      .welcome-banner { padding:1.5rem; }
+      .welcome-h1 { font-size:1.3rem; }
+      .stats-grid { grid-template-columns:1fr 1fr; }
+    }
+
+    /* ── FADE IN ── */
+    .fade-in { animation:fadeIn 0.4s ease both; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
   </style>
 </head>
+<body>
 
-<body class="bg-gradient-to-br from-[#f0fbff] via-white to-[#f7fcfd] text-slate-900" data-page="dashboard">
+<!-- LOADING -->
+<div class="loading-screen" id="loadingScreen">
+  <div style="text-align:center;">
+    <div class="loader-brand">Next<span>Gen</span> Tutoring</div>
+    <div class="loader-dots">
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+    </div>
+  </div>
+</div>
 
-  <!-- Header -->
-  <header></header>
+<div class="layout" id="appLayout" style="display:none;">
 
-  <!-- Main Dashboard -->
-  <main class="pt-28 px-6 max-w-7xl mx-auto">
-    <section>
-      <h1 class="text-3xl md:text-4xl font-bold mb-2 text-cyan-700">
-        Welcome back, <span id="userName">Student</span> 👋
-      </h1>
-      <p class="text-slate-500 mb-8 text-sm md:text-base">
-        Let’s make today a productive learning day.
-      </p>
-    </section>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <a href="../index.html" class="sidebar-logo">
+      <div class="sidebar-logo-text">Next<span>Gen</span> Tutoring</div>
+      <div class="sidebar-logo-sub">Student Portal</div>
+    </a>
 
-    <!-- Dashboard Features -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      
-      <!-- Book a Session -->
-      <div class="bg-white shadow-lg border border-cyan-100 rounded-xl p-6 hover:shadow-xl transition">
-        <h2 class="text-xl font-semibold text-cyan-700 mb-2">📅 Book a Session</h2>
-        <p class="text-sm text-slate-600 mb-4">Need extra help? Schedule a 1-on-1 session with Hafeez.</p>
-        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="text-cyan-600 font-medium hover:underline">
-          Book Now →
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a class="nav-item active" onclick="showPage('home')" id="nav-home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" onclick="showPage('lessons')" id="nav-lessons">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Lessons
+      </a>
+      <a class="nav-item" onclick="showPage('sessions')" id="nav-sessions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Sessions
+      </a>
+      <div class="nav-section-label">Resources</div>
+      <a class="nav-item" onclick="showPage('progress')" id="nav-progress">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        My Progress
+      </a>
+      <a class="nav-item" href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        Book a Session
+      </a>
+      <div class="nav-section-label">Account</div>
+      <a class="nav-item" onclick="showPage('profile')" id="nav-profile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </a>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="user-info">
+        <div class="user-avatar" id="sidebarAvatar">NG</div>
+        <div>
+          <div class="user-name" id="sidebarName">Student</div>
+          <div class="user-role">NextGen Student</div>
+        </div>
+      </div>
+      <button class="sign-out-btn" id="signOutBtn">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <button class="mob-menu-btn" id="mobMenuBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-greeting">Welcome back, <strong id="topbarName">Student</strong></span>
+        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="book-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book Session
+        </a>
+      </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div class="page fade-in" id="page-home">
+      <div class="welcome-banner">
+        <div class="welcome-tag">Student Dashboard</div>
+        <h1 class="welcome-h1">Keep going.<br/>You're <span>making progress.</span></h1>
+        <p class="welcome-sub">Everything you need for your NextGen sessions — all in one place.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="stat-label">Next Session</div>
+          <div class="stat-value" style="font-size:1.1rem;">Book Now</div>
+          <div class="stat-sub">Schedule via Calendly</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="stat-label">Lessons Available</div>
+          <div class="stat-value">6</div>
+          <div class="stat-sub">Across all subjects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="stat-label">Session Length</div>
+          <div class="stat-value">1 hr</div>
+          <div class="stat-sub">Every session</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          </div>
+          <div class="stat-label">Tutor</div>
+          <div class="stat-value" style="font-size:1rem;">Hafeez</div>
+          <div class="stat-sub">Founder &amp; Lead Tutor</div>
+        </div>
+      </div>
+
+      <div class="sec-row">
+        <div class="sec-title">Quick Actions</div>
+      </div>
+      <div class="actions-grid" style="margin-bottom:1.75rem;">
+        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="action-card">
+          <div class="action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="action-label">Book a Session</div>
+        </a>
+        <a onclick="showPage('lessons')" class="action-card">
+          <div class="action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="action-label">View Lessons</div>
+        </a>
+        <a href="mailto:nextgentutoringco@gmail.com" class="action-card">
+          <div class="action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="action-label">Email Tutor</div>
+        </a>
+        <a href="tel:7345525832" class="action-card">
+          <div class="action-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="action-label">Call or Text</div>
         </a>
       </div>
 
-      <!-- Assignments -->
-      <div class="bg-white shadow-lg border border-cyan-100 rounded-xl p-6 hover:shadow-xl transition">
-        <h2 class="text-xl font-semibold text-cyan-700 mb-2">📝 Assignments</h2>
-        <p class="text-sm text-slate-600 mb-4">Review your homework, practice problems, and challenge sets.</p>
-        <a href="lessons.html" class="text-cyan-600 font-medium hover:underline">
-          View Assignments →
-        </a>
+      <div class="announce-card">
+        <div class="sec-row" style="margin-bottom:0.75rem;">
+          <div class="sec-title" style="margin-bottom:0;">From NextGen</div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot"></div>
+          <div>
+            <div class="announce-title">Welcome to your student dashboard</div>
+            <div class="announce-text">This is your home base for everything NextGen — lessons, sessions, progress, and resources. More features coming soon.</div>
+            <div class="announce-date">April 2026</div>
+          </div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot"></div>
+          <div>
+            <div class="announce-title">Book your next session anytime</div>
+            <div class="announce-text">Use the Book a Session button above to schedule directly through Calendly. Sessions are 1 hour and available in person or virtually.</div>
+            <div class="announce-date">April 2026</div>
+          </div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot"></div>
+          <div>
+            <div class="announce-title">Questions? Reach out directly</div>
+            <div class="announce-text">Email nextgentutoringco@gmail.com or call/text 734-552-5832. Hafeez typically responds within a few hours.</div>
+            <div class="announce-date">April 2026</div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- Progress Tracker -->
-      <div class="bg-white shadow-lg border border-cyan-100 rounded-xl p-6 hover:shadow-xl transition">
-        <h2 class="text-xl font-semibold text-cyan-700 mb-2">📊 Progress Tracker</h2>
-        <p class="text-sm text-slate-600 mb-4">Check your performance, quiz scores, and improvement charts.</p>
-        <a href="#" class="text-cyan-600 font-medium hover:underline cursor-not-allowed opacity-60" title="Coming Soon">
-          Coming Soon →
+    <!-- LESSONS PAGE -->
+    <div class="page hidden fade-in" id="page-lessons">
+      <div style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.35rem;">Lessons</h2>
+        <p style="font-size:0.875rem; color:var(--text-light);">Resources and materials from your sessions with Hafeez.</p>
+      </div>
+      <div class="lessons-grid">
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <div class="lesson-subject">Math</div>
+            <div class="lesson-title">Algebra Fundamentals</div>
+          </div>
+          <div class="lesson-body">
+            <p class="lesson-desc">Core algebraic concepts — solving for x, linear equations, and graphing lines. Build the foundation before moving to advanced topics.</p>
+            <div class="lesson-meta">
+              <span class="lesson-status status-new">Available</span>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Algebra Fundamentals Materials" class="lesson-btn">Request Materials →</a>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <div class="lesson-subject">Test Prep</div>
+            <div class="lesson-title">SAT Math Strategies</div>
+          </div>
+          <div class="lesson-body">
+            <p class="lesson-desc">Proven SAT math strategies — time management, question types, and how to eliminate wrong answers efficiently on test day.</p>
+            <div class="lesson-meta">
+              <span class="lesson-status status-new">Available</span>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=SAT Math Strategy Materials" class="lesson-btn">Request Materials →</a>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <div class="lesson-subject">Writing</div>
+            <div class="lesson-title">Essay Structure Basics</div>
+          </div>
+          <div class="lesson-body">
+            <p class="lesson-desc">The PIE method for paragraph structure, thesis development, and how to build a strong argumentative essay from the ground up.</p>
+            <div class="lesson-meta">
+              <span class="lesson-status status-new">Available</span>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Essay Structure Materials" class="lesson-btn">Request Materials →</a>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <div class="lesson-subject">Math</div>
+            <div class="lesson-title">Geometry &amp; Proofs</div>
+          </div>
+          <div class="lesson-body">
+            <p class="lesson-desc">Angles, triangles, circles, and geometric proofs — visual learning techniques that make abstract geometry concepts concrete.</p>
+            <div class="lesson-meta">
+              <span class="lesson-status status-new">Available</span>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Geometry Materials" class="lesson-btn">Request Materials →</a>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <div class="lesson-subject">Science</div>
+            <div class="lesson-title">Biology Core Concepts</div>
+          </div>
+          <div class="lesson-body">
+            <p class="lesson-desc">Cell structure, genetics, ecosystems, and evolution — the essential biology topics covered in most K–12 and college intro courses.</p>
+            <div class="lesson-meta">
+              <span class="lesson-status status-new">Available</span>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Biology Materials" class="lesson-btn">Request Materials →</a>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-header">
+            <div class="lesson-subject">Reading</div>
+            <div class="lesson-title">Reading Comprehension</div>
+          </div>
+          <div class="lesson-body">
+            <p class="lesson-desc">Strategies for active reading, identifying main ideas, making inferences, and answering comprehension questions accurately and quickly.</p>
+            <div class="lesson-meta">
+              <span class="lesson-status status-new">Available</span>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Reading Comprehension Materials" class="lesson-btn">Request Materials →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SESSIONS PAGE -->
+    <div class="page hidden fade-in" id="page-sessions">
+      <div style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.35rem;">Sessions</h2>
+        <p style="font-size:0.875rem; color:var(--text-light);">Book and manage your tutoring sessions with Hafeez.</p>
+      </div>
+      <div class="next-session" style="margin-bottom:1.5rem; max-width:560px;">
+        <div class="sec-title">Book Your Next Session</div>
+        <p style="font-size:0.875rem; color:var(--text-mid); margin-bottom:1.25rem; line-height:1.7;">All sessions are 1 hour and available in person (Metro Detroit) or virtually. Schedule directly through Calendly — pick a time that works for you.</p>
+        <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="book-btn" style="display:inline-flex;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Schedule on Calendly
         </a>
       </div>
-    </section>
+      <div class="announce-card" style="max-width:560px;">
+        <div class="sec-title">Session Info</div>
+        <div class="announce-item">
+          <div class="announce-dot"></div>
+          <div><div class="announce-title">Session length</div><div class="announce-text">Every session is 1 hour long — in person or virtual.</div></div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot"></div>
+          <div><div class="announce-title">Pricing</div><div class="announce-text">$50/session · 5-pack $225 · 10-pack $400 · Multiple children $75/session</div></div>
+        </div>
+        <div class="announce-item">
+          <div class="announce-dot"></div>
+          <div><div class="announce-title">Questions?</div><div class="announce-text">Text or call Hafeez at 734-552-5832 or email nextgentutoringco@gmail.com</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS PAGE -->
+    <div class="page hidden fade-in" id="page-progress">
+      <div style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.35rem;">My Progress</h2>
+        <p style="font-size:0.875rem; color:var(--text-light);">Track your academic growth across subjects.</p>
+      </div>
+      <div class="two-col">
+        <div class="progress-card">
+          <div class="sec-title">Subject Progress</div>
+          <div class="progress-item">
+            <div class="progress-top"><span class="progress-name">Mathematics</span><span class="progress-pct">Building</span></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+            <div class="progress-sub">Foundations in place — keep pushing</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-top"><span class="progress-name">Reading &amp; Writing</span><span class="progress-pct">Growing</span></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:45%"></div></div>
+            <div class="progress-sub">Strong fundamentals developing</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-top"><span class="progress-name">Test Prep</span><span class="progress-pct">In Progress</span></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:35%"></div></div>
+            <div class="progress-sub">Strategy work underway</div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-top"><span class="progress-name">Science</span><span class="progress-pct">Starting</span></div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:25%"></div></div>
+            <div class="progress-sub">Core concepts being introduced</div>
+          </div>
+        </div>
+        <div class="announce-card">
+          <div class="sec-title">Progress Notes</div>
+          <div class="announce-item">
+            <div class="announce-dot"></div>
+            <div>
+              <div class="announce-title">Keep showing up</div>
+              <div class="announce-text">Consistency is the most important factor in academic progress. Every session builds on the last.</div>
+            </div>
+          </div>
+          <div class="announce-item">
+            <div class="announce-dot"></div>
+            <div>
+              <div class="announce-title">Ask questions</div>
+              <div class="announce-text">No question is too basic. The goal of every session is to make sure you leave with clarity — not confusion.</div>
+            </div>
+          </div>
+          <div class="announce-item">
+            <div class="announce-dot"></div>
+            <div>
+              <div class="announce-title">Detailed progress reports</div>
+              <div class="announce-text">Ask Hafeez for a written progress update at any time — email nextgentutoringco@gmail.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div class="page hidden fade-in" id="page-profile">
+      <div style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.35rem;">My Profile</h2>
+        <p style="font-size:0.875rem; color:var(--text-light);">Your account details.</p>
+      </div>
+      <div class="profile-card">
+        <div class="profile-avatar-lg" id="profileAvatar">NG</div>
+        <div class="profile-name" id="profileName">Student</div>
+        <div class="profile-email" id="profileEmail">Loading...</div>
+        <div class="profile-divider"></div>
+        <div class="profile-row">
+          <span class="profile-key">Tutor</span>
+          <span class="profile-val">Hafeez Oyeneyin</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Program</span>
+          <span class="profile-val">NextGen Tutoring</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Session Length</span>
+          <span class="profile-val">1 Hour</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Format</span>
+          <span class="profile-val">In-Person or Virtual</span>
+        </div>
+        <div class="profile-divider"></div>
+        <div class="profile-row">
+          <span class="profile-key">Contact Hafeez</span>
+          <span class="profile-val"><a href="tel:7345525832" style="color:var(--gold); text-decoration:none;">734-552-5832</a></span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Email</span>
+          <span class="profile-val"><a href="mailto:nextgentutoringco@gmail.com" style="color:var(--gold); text-decoration:none; font-size:0.8rem;">nextgentutoringco@gmail.com</a></span>
+        </div>
+      </div>
+    </div>
+
   </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="text-center py-6 text-slate-500 text-sm mt-12">
-    &copy; 2025 NextGen Tutoring. All rights reserved. <br/>
-    <a href="about.html" class="text-cyan-600 hover:underline">About</a> |
-    <a href="contact.html" class="text-cyan-600 hover:underline">Contact</a>
-  </footer>
+<!-- FIREBASE + JS -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
+    authDomain: "nextgen-tutoring.firebaseapp.com",
+    projectId: "nextgen-tutoring",
+    storageBucket: "nextgen-tutoring.appspot.com",
+    messagingSenderId: "1064020614361",
+    appId: "1:1064020614361:web:4a88beaf6765b23c59f2c8"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const loadingScreen = document.getElementById('loadingScreen');
+  const appLayout     = document.getElementById('appLayout');
+
+  onAuthStateChanged(auth, user => {
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Populate user info
+    const name  = user.displayName || user.email.split('@')[0];
+    const email = user.email;
+    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+
+    document.getElementById('sidebarName').textContent  = name;
+    document.getElementById('sidebarAvatar').textContent = initials;
+    document.getElementById('topbarName').textContent   = name.split(' ')[0];
+    document.getElementById('profileName').textContent  = name;
+    document.getElementById('profileEmail').textContent = email;
+    document.getElementById('profileAvatar').textContent = initials;
+
+    // Show app
+    loadingScreen.classList.add('hidden');
+    appLayout.style.display = 'flex';
+
+    // Sign out
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      signOut(auth).then(() => window.location.href = 'login.html');
+    });
+
+    // Mobile menu
+    const sidebar   = document.getElementById('sidebar');
+    const mobBtn    = document.getElementById('mobMenuBtn');
+    mobBtn.addEventListener('click', () => sidebar.classList.toggle('mob-open'));
+    document.addEventListener('click', e => {
+      if (!sidebar.contains(e.target) && !mobBtn.contains(e.target)) {
+        sidebar.classList.remove('mob-open');
+      }
+    });
+  });
+
+  // Page navigation — expose globally
+  window.showPage = function(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    const page = document.getElementById('page-' + pageId);
+    const nav  = document.getElementById('nav-' + pageId);
+
+    if (page) { page.classList.remove('hidden'); page.classList.add('fade-in'); }
+    if (nav)  nav.classList.add('active');
+
+    const titles = { home:'Dashboard', lessons:'Lessons', sessions:'Sessions', progress:'My Progress', profile:'Profile' };
+    document.getElementById('topbarTitle').textContent = titles[pageId] || 'Dashboard';
+
+    document.getElementById('sidebar').classList.remove('mob-open');
+    window.scrollTo(0,0);
+  };
+</script>
+
 </body>
 </html>

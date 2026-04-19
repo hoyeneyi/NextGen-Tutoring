@@ -62,13 +62,10 @@
        Fallback: everything shows after 800ms
     ───────────────────────────────────────── */
     .sr {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
-    .sr.sr-left  { transform: translateX(-32px); }
-    .sr.sr-right { transform: translateX(32px); }
-    .sr.sr-scale { transform: scale(0.95); }
 
     .sr.visible {
       opacity: 1;
@@ -278,7 +275,8 @@
     .svc-card:hover { transform:translateY(-5px); box-shadow:0 20px 50px rgba(11,31,58,0.1); border-color:rgba(201,168,76,0.25); }
     .svc-card:hover::after { transform:scaleX(1); }
 
-    .svc-icon { width:48px; height:48px; background:var(--gold-pale); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:1.25rem; }
+    .svc-icon { width:48px; height:48px; background:var(--gold-pale); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem; color:var(--gold); flex-shrink:0; }
+    .svc-icon svg { width:24px; height:24px; }
     .svc-tag { font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:0.4rem; }
     .svc-title { font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--navy); margin-bottom:0.75rem; }
     .svc-desc { font-size:0.875rem; color:var(--text-mid); line-height:1.7; margin-bottom:1.25rem; }
@@ -358,7 +356,8 @@
     .contact-h2 { font-family:var(--font-display); font-size:clamp(1.8rem,3.5vw,2.5rem); color:var(--white); font-weight:700; margin-bottom:1rem; line-height:1.2; }
     .contact-sub { font-size:0.95rem; color:rgba(255,255,255,0.5); line-height:1.75; margin-bottom:2rem; }
     .contact-row { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
-    .contact-icon { width:40px; height:40px; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+    .contact-icon { width:40px; height:40px; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--gold); flex-shrink:0; }
+    .contact-icon svg { width:18px; height:18px; }
     .contact-label { font-size:0.72rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.08em; }
     .contact-val { font-size:0.9rem; color:var(--white); font-weight:500; text-decoration:none; transition:color 0.2s; }
     .contact-val:hover { color:var(--gold); }
@@ -486,15 +485,15 @@
   <!-- PROOF BAR -->
   <div class="proof-bar">
     <div class="proof-inner">
-      <span class="proof-item">✓ K–12 &amp; College</span>
+      <span class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg>K–12 &amp; College</span>
       <span class="proof-dot"></span>
-      <span class="proof-item">✓ SAT / ACT / GED Prep</span>
+      <span class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg>SAT / ACT / GED Prep</span>
       <span class="proof-dot"></span>
-      <span class="proof-item">✓ Virtual &amp; In-Person</span>
+      <span class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg>Virtual &amp; In-Person</span>
       <span class="proof-dot"></span>
-      <span class="proof-item">✓ Metro Detroit Based</span>
+      <span class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg>Metro Detroit Based</span>
       <span class="proof-dot"></span>
-      <span class="proof-item">✓ Personalized Coaching</span>
+      <span class="proof-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><polyline points="20 6 9 17 4 12"/></svg>Personalized Coaching</span>
     </div>
   </div>
 
@@ -508,7 +507,7 @@
       </div>
       <div class="services-grid">
         <div class="svc-card sr sr-d1">
-          <div class="svc-icon">📐</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
           <div class="svc-tag">Core Subjects</div>
           <h3 class="svc-title">Math</h3>
           <p class="svc-desc">Step-by-step problem solving that builds real understanding from the ground up — not just test answers.</p>
@@ -519,7 +518,7 @@
           </div>
         </div>
         <div class="svc-card sr sr-d2">
-          <div class="svc-icon">🎯</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg></div>
           <div class="svc-tag">Test Preparation</div>
           <h3 class="svc-title">SAT / ACT / GED Prep</h3>
           <p class="svc-desc">Targeted test prep that increases scores. Strategy, timing, and subject mastery to maximize performance on test day.</p>
@@ -530,7 +529,7 @@
           </div>
         </div>
         <div class="svc-card sr sr-d3">
-          <div class="svc-icon">🔬</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0a4 4 0 1 0 6 0M9 14H3m6 0h12"/><path d="M7 17h.01M17 17h.01"/></svg></div>
           <div class="svc-tag">STEM</div>
           <h3 class="svc-title">Science</h3>
           <p class="svc-desc">Concept-first science tutoring that makes complex topics click and prepares students for exams and lab work.</p>
@@ -541,7 +540,7 @@
           </div>
         </div>
         <div class="svc-card sr sr-d1">
-          <div class="svc-icon">✍️</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
           <div class="svc-tag">Language Arts</div>
           <h3 class="svc-title">Writing &amp; Grammar</h3>
           <p class="svc-desc">Strong writing fundamentals from elementary through college essays, research papers, and grammar mastery.</p>
@@ -552,7 +551,7 @@
           </div>
         </div>
         <div class="svc-card sr sr-d2">
-          <div class="svc-icon">📚</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg></div>
           <div class="svc-tag">Homework Support</div>
           <h3 class="svc-title">Homework Help</h3>
           <p class="svc-desc">Real-time homework support across all subjects. We explain the reasoning so it actually sticks long-term.</p>
@@ -563,7 +562,7 @@
           </div>
         </div>
         <div class="svc-card sr sr-d3">
-          <div class="svc-icon">🎓</div>
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
           <div class="svc-tag">Higher Education</div>
           <h3 class="svc-title">College-Level Tutoring</h3>
           <p class="svc-desc">College coursework support for students navigating higher-level academics who need a guide in their corner.</p>
@@ -625,13 +624,13 @@
       </div>
       <div class="testi-grid">
         <div class="testi-card sr sr-d1">
-          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+          <div class="stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
           <p class="testi-text">"Nadia took a big test, finished early, and received a 4.0. THANK YOU AGAIN. If you need a reference, call me — I'll be happy to spread the news!"</p>
           <div class="testi-name">5th Grade Parent</div>
           <div class="testi-role">Metro Detroit</div>
         </div>
         <div class="testi-card sr sr-d2">
-          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+          <div class="stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
           <p class="testi-text">"I look forward to every session. I've been feeling more confident than ever. Hafeez has a way of making difficult concepts actually click."</p>
           <div class="testi-name">College Student</div>
           <div class="testi-role">Metro Detroit</div>
@@ -675,19 +674,19 @@
         <p class="contact-sub">Whether you have questions, want to discuss your student's needs, or are ready to book — we're here.</p>
         <div style="margin-top:2rem;">
           <div class="contact-row">
-            <div class="contact-icon">📧</div>
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
             <div><div class="contact-label">Email</div><a href="mailto:nextgentutoringco@gmail.com" class="contact-val">nextgentutoringco@gmail.com</a></div>
           </div>
           <div class="contact-row">
-            <div class="contact-icon">📱</div>
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
             <div><div class="contact-label">Call or Text</div><a href="tel:7345525832" class="contact-val">734-552-5832</a></div>
           </div>
           <div class="contact-row">
-            <div class="contact-icon">📍</div>
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
             <div><div class="contact-label">Location</div><span class="contact-val">Metro Detroit, MI · Virtual Available</span></div>
           </div>
           <div class="contact-row">
-            <div class="contact-icon">📅</div>
+            <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
             <div><div class="contact-label">Book Online</div><a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="contact-val">Book via Calendly</a></div>
           </div>
         </div>
@@ -724,11 +723,6 @@
       <div>
         <div class="f-brand">Next<span>Gen</span> Tutoring</div>
         <p class="f-desc">Empowering students to master academics with clarity and confidence. Metro Detroit &amp; Virtual.</p>
-        <div class="f-socials">
-          <a href="https://instagram.com/nextgentutoringco" target="_blank" class="f-social" aria-label="Instagram">ig</a>
-          <a href="https://tiktok.com/@nextgentutoringco" target="_blank" class="f-social" aria-label="TikTok">tk</a>
-          <a href="https://facebook.com/nextgentutoring" target="_blank" class="f-social" aria-label="Facebook">fb</a>
-        </div>
       </div>
       <div>
         <div class="f-col-title">Navigation</div>
@@ -755,7 +749,7 @@
     </div>
   </footer>
 
-  <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="float-cta" id="floatCta">📅 Book a Session</a>
+  <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="float-cta" id="floatCta">Book a Session</a>
 
   <script>
     /* ── Mobile menu ── */
@@ -799,11 +793,16 @@
       checkAll();
     }
 
-    /* Safety net — reveal anything still hidden after 2 seconds */
-    setTimeout(() => srEls.forEach(revealEl), 2000);
+    /* Safety net — reveal anything still hidden after 800ms */
+    setTimeout(() => srEls.forEach(revealEl), 800);
 
-    /* Also reveal anything already in view on page load */
+    /* Reveal on load */
     window.addEventListener('load', () => {
+      srEls.forEach(el => { if (isInView(el)) revealEl(el); });
+    });
+
+    /* Reveal immediately on DOMContentLoaded */
+    document.addEventListener('DOMContentLoaded', () => {
       srEls.forEach(el => { if (isInView(el)) revealEl(el); });
     });
 
@@ -841,15 +840,14 @@
           alert('Something went wrong. Please email us at nextgentutoringco@gmail.com');
         }
       })
-      .catch(() => {
+      .catch((error) => {
         btn.disabled    = false;
         btn.textContent = 'Send Message →';
-        alert('Something went wrong. Please email us at nextgentutoringco@gmail.com');
+        console.error('Contact form submit error:', error);
+        alert('Network error. Please email us at nextgentutoringco@gmail.com or try again later.');
       });
     }
-  </script>
 
-  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" /></noscript>
-</body>
-</html>
+    </script>
+    </body>
+    </html>
