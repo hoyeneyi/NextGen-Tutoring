@@ -317,8 +317,8 @@
             <input type="text" class="fi" id="addName" placeholder="Student full name" />
           </div>
           <div class="fg">
-            <label class="fl">Email Address</label>
-            <input type="email" class="fi" id="addEmail" placeholder="student@email.com" />
+            <label class="fl">Email Address <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-light);">(optional)</span></label>
+            <input type="text" class="fi" id="addEmail" placeholder="student@email.com (optional)" />
           </div>
           <div class="fg">
             <label class="fl">Grade Level</label>
@@ -591,7 +591,7 @@
     const rate    = parseInt(document.getElementById('addRate').value) || 50;
     const status  = document.getElementById('addStatus').value;
     const notes_  = document.getElementById('addNotes').value.trim();
-    if (!name || !email) { showToast('Name and email are required.'); return; }
+    if (!name) { showToast('Student name is required.'); return; }
     try {
       const ref = await addDoc(collection(db, 'students'), {
         name, email, grade, subject, rate, status,
