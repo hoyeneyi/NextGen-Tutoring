@@ -355,6 +355,30 @@
     /* ── FADE IN ── */
     .fade-in { animation:fadeIn 0.4s ease both; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    /* ── PRACTICE SYSTEM ── */
+    .grade-tab{background:var(--white);border:1px solid rgba(11,31,58,0.12);border-radius:8px;padding:0.6rem 1.25rem;font-family:var(--font-body);font-size:0.875rem;font-weight:600;color:var(--text-mid);cursor:pointer;transition:all 0.2s;}
+    .grade-tab.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+    .grade-tab:hover:not(.active){border-color:var(--gold);color:var(--gold);}
+    .topic-card{background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:10px;padding:1.25rem;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;}
+    .topic-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,31,58,0.08);}
+    .topic-card.selected{border-color:var(--gold);background:var(--gold-pale);}
+    .topic-cat{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+    .topic-name{font-weight:700;color:var(--navy);font-size:0.95rem;margin-bottom:0.35rem;}
+    .topic-desc{font-size:0.78rem;color:var(--text-light);line-height:1.5;}
+    .level-btn{background:var(--white);border:1px solid rgba(11,31,58,0.1);border-radius:10px;padding:1.25rem 1.5rem;cursor:pointer;text-align:left;transition:all 0.2s;min-width:180px;font-family:var(--font-body);}
+    .level-btn:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,31,58,0.08);}
+    .level-num{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;}
+    .level-name{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.25rem;}
+    .level-desc{font-size:0.78rem;color:var(--text-light);}
+    .choice-btn{width:100%;text-align:left;padding:0.9rem 1.1rem;border:1.5px solid rgba(11,31,58,0.1);border-radius:8px;background:var(--white);font-family:var(--font-body);font-size:0.9rem;color:var(--text-mid);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.75rem;}
+    .choice-btn:hover:not(:disabled){border-color:var(--gold);background:var(--gold-pale);color:var(--navy);}
+    .choice-btn.correct{border-color:#1A5C38;background:rgba(26,92,56,0.06);color:#1A5C38;font-weight:600;}
+    .choice-btn.incorrect{border-color:#C0392B;background:rgba(192,57,43,0.05);color:#C0392B;}
+    .choice-btn:disabled{cursor:default;}
+    .choice-letter{width:26px;height:26px;border-radius:50%;background:var(--off-white);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--text-light);flex-shrink:0;}
+    .dots{display:flex;gap:6px;justify-content:center;margin-top:1rem;}
+    .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse 1.2s ease infinite;}
+    .dot:nth-child(2){animation-delay:0.2s;}.dot:nth-child(3){animation-delay:0.4s;}
   </style>
 </head>
 <body>
@@ -395,6 +419,10 @@
         Sessions
       </a>
       <div class="nav-section-label">Resources</div>
+      <a class="nav-item" onclick="showPage('practice')" id="nav-practice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Practice
+      </a>
       <a class="nav-item" onclick="showPage('progress')" id="nav-progress">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
         My Progress
@@ -699,6 +727,109 @@
       </div>
     </div>
 
+    <!-- PRACTICE PAGE -->
+    <div class="page hidden fade-in" id="page-practice">
+
+      <!-- SELECTOR VIEW -->
+      <div id="practice-selector">
+        <div style="margin-bottom:1.75rem;">
+          <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Math Practice</h2>
+          <p style="font-size:0.875rem;color:var(--text-light);">Pick your grade, topic, and level. The AI generates 10 fresh questions every time.</p>
+        </div>
+
+        <!-- GRADE TABS -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+          <button class="grade-tab active" onclick="selectGrade('6')" id="grade-tab-6">6th Grade</button>
+          <button class="grade-tab" onclick="selectGrade('7')" id="grade-tab-7">7th Grade</button>
+          <button class="grade-tab" onclick="selectGrade('8')" id="grade-tab-8">8th Grade</button>
+        </div>
+
+        <!-- TOPIC GRID -->
+        <div id="topic-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:2rem;"></div>
+
+        <!-- LEVEL SELECT -->
+        <div id="level-selector" style="display:none;">
+          <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Selected: <span id="selectedTopicLabel" style="color:var(--gold);"></span></div>
+          <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.25rem;">Now choose your level:</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+            <button class="level-btn" onclick="startPractice(1)">
+              <div class="level-num">Level 1</div>
+              <div class="level-name">Foundation</div>
+              <div class="level-desc">Core concepts, direct application</div>
+            </button>
+            <button class="level-btn" onclick="startPractice(2)">
+              <div class="level-num">Level 2</div>
+              <div class="level-name">Application</div>
+              <div class="level-desc">Multi-step, real world context</div>
+            </button>
+            <button class="level-btn" onclick="startPractice(3)">
+              <div class="level-num">Level 3</div>
+              <div class="level-name">Challenge</div>
+              <div class="level-desc">Complex problems, test-ready</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOADING VIEW -->
+      <div id="practice-loading" style="display:none;text-align:center;padding:4rem 2rem;">
+        <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem;">Generating your questions...</div>
+        <p style="font-size:0.875rem;color:var(--text-light);margin-bottom:1.5rem;">Creating 10 personalized problems just for you.</p>
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+
+      <!-- QUIZ VIEW -->
+      <div id="practice-quiz" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+          <div>
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;" id="quizTopicLabel"></div>
+            <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--navy);">Question <span id="qNum">1</span> of 10</div>
+          </div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <div style="font-size:0.82rem;color:var(--text-light);">Score: <strong id="scoreDisplay" style="color:var(--navy);">0/0</strong></div>
+            <button onclick="exitPractice()" style="background:none;border:1px solid rgba(11,31,58,0.12);border-radius:6px;padding:0.4rem 0.85rem;font-size:0.78rem;color:var(--text-light);cursor:pointer;font-family:var(--font-body);">Exit</button>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div style="height:4px;background:var(--off-white);border-radius:100px;margin-bottom:1.75rem;overflow:hidden;">
+          <div id="quizProgressBar" style="height:100%;background:var(--gold);border-radius:100px;transition:width 0.4s ease;width:0%;"></div>
+        </div>
+
+        <!-- Question card -->
+        <div style="background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:12px;padding:2rem;margin-bottom:1.25rem;">
+          <div id="questionText" style="font-size:1.05rem;font-weight:600;color:var(--navy);line-height:1.6;margin-bottom:1.75rem;"></div>
+          <div id="choicesContainer" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
+        </div>
+
+        <!-- Feedback -->
+        <div id="feedbackBox" style="display:none;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;">
+          <div id="feedbackTitle" style="font-weight:700;font-size:0.95rem;margin-bottom:0.4rem;"></div>
+          <div id="feedbackText" style="font-size:0.875rem;line-height:1.7;"></div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;">
+          <button id="nextBtn" onclick="nextQuestion()" style="display:none;background:var(--gold);color:var(--navy);font-weight:700;font-size:0.9rem;padding:0.85rem 2rem;border:none;border-radius:6px;cursor:pointer;font-family:var(--font-body);transition:background 0.2s;">Next Question →</button>
+        </div>
+      </div>
+
+      <!-- RESULTS VIEW -->
+      <div id="practice-results" style="display:none;text-align:center;padding:3rem 2rem;">
+        <div style="font-size:3rem;margin-bottom:1rem;" id="resultEmoji">🎯</div>
+        <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">Session Complete!</div>
+        <div style="font-size:1rem;color:var(--text-light);margin-bottom:2rem;">Here's how you did:</div>
+        <div style="background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:12px;padding:2rem;max-width:400px;margin:0 auto 2rem;">
+          <div style="font-family:var(--font-display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;" id="finalScore"></div>
+          <div style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.5rem;">correct out of 10</div>
+          <div style="font-size:0.875rem;color:var(--text-mid);line-height:1.7;" id="resultMessage"></div>
+        </div>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <button onclick="retryPractice()" style="background:var(--gold);color:var(--navy);font-weight:700;font-size:0.9rem;padding:0.85rem 1.75rem;border:none;border-radius:6px;cursor:pointer;font-family:var(--font-body);">Try Again</button>
+          <button onclick="exitPractice()" style="background:transparent;color:var(--navy);font-weight:600;font-size:0.9rem;padding:0.85rem 1.75rem;border:1px solid rgba(11,31,58,0.15);border-radius:6px;cursor:pointer;font-family:var(--font-body);">Choose New Topic</button>
+        </div>
+      </div>
+    </div>
+
     <!-- PROFILE PAGE -->
     <div class="page hidden fade-in" id="page-profile">
       <div style="margin-bottom:1.5rem;">
@@ -912,12 +1043,300 @@
     if (page) { page.classList.remove('hidden'); page.classList.add('fade-in'); }
     if (nav)  nav.classList.add('active');
 
-    const titles = { home:'Dashboard', lessons:'Lessons', sessions:'Sessions', progress:'My Progress', profile:'Profile' };
+    const titles = { home:'Dashboard', lessons:'Lessons', sessions:'Sessions', progress:'My Progress', practice:'Math Practice', profile:'Profile' };
     document.getElementById('topbarTitle').textContent = titles[pageId] || 'Dashboard';
 
     document.getElementById('sidebar').classList.remove('mob-open');
     window.scrollTo(0,0);
   };
+
+  // ══════════════════════════════════════════
+  // PRACTICE SYSTEM
+  // ══════════════════════════════════════════
+
+  const CURRICULUM = {
+    '6': {
+      'Number Sense & Operations': [
+        { id:'fractions',    name:'Fractions',                desc:'Add, subtract, multiply, and divide fractions' },
+        { id:'decimals',     name:'Decimals & Percentages',   desc:'Convert, compare, and calculate with decimals and percents' },
+        { id:'ratios',       name:'Ratios & Proportions',     desc:'Understand and solve ratio and proportion problems' },
+        { id:'integers',     name:'Integers & Negative Numbers', desc:'Work with positive and negative numbers on the number line' },
+        { id:'pemdas',       name:'Order of Operations',      desc:'PEMDAS — solve multi-operation expressions correctly' },
+      ],
+      'Algebra Foundations': [
+        { id:'expressions',  name:'Variables & Expressions',  desc:'Write and evaluate algebraic expressions' },
+        { id:'one-step',     name:'One-Step Equations',       desc:'Solve for x using one inverse operation' },
+      ],
+      'Geometry Basics': [
+        { id:'area-perim',   name:'Area & Perimeter',         desc:'Calculate area and perimeter of common shapes' },
+        { id:'volume',       name:'Volume & Surface Area',    desc:'Find volume and surface area of 3D figures' },
+      ],
+    },
+    '7': {
+      'Number Sense': [
+        { id:'rational',     name:'Rational Numbers',         desc:'Add, subtract, multiply, and divide rational numbers' },
+        { id:'percent-apps', name:'Percent Applications',     desc:'Tax, tip, discount, and percent change problems' },
+        { id:'proportional', name:'Proportional Relationships', desc:'Identify and use proportional relationships' },
+      ],
+      'Algebra': [
+        { id:'two-step',     name:'Two-Step Equations',       desc:'Solve equations requiring two inverse operations' },
+        { id:'inequalities', name:'Inequalities',             desc:'Solve and graph one and two-step inequalities' },
+        { id:'properties',   name:'Expressions & Properties', desc:'Distributive property, combining like terms' },
+      ],
+      'Geometry': [
+        { id:'angles',       name:'Angles & Triangles',       desc:'Angle relationships, triangle properties, and missing angles' },
+        { id:'scale',        name:'Scale & Similar Figures',  desc:'Scale factors, similar figures, and indirect measurement' },
+        { id:'circles',      name:'Circles',                  desc:'Circumference and area of circles using pi' },
+      ],
+    },
+    '8': {
+      'Algebra': [
+        { id:'linear-eq',    name:'Linear Equations',         desc:'Multi-step equations with variables on both sides' },
+        { id:'systems',      name:'Systems of Equations',     desc:'Solve systems by substitution and elimination' },
+        { id:'slope',        name:'Slope & Rate of Change',   desc:'Find and interpret slope, y-intercept, and rate of change' },
+        { id:'functions',    name:'Functions',                desc:'Identify, evaluate, and represent functions' },
+      ],
+      'Geometry': [
+        { id:'pythagorean',  name:'Pythagorean Theorem',      desc:'Apply the Pythagorean theorem to find missing sides' },
+        { id:'transformations', name:'Transformations',       desc:'Translations, reflections, rotations, and dilations' },
+        { id:'coordinate',   name:'Coordinate Plane',         desc:'Plot, distance, and midpoint on the coordinate plane' },
+      ],
+      'Statistics & Probability': [
+        { id:'scatter',      name:'Scatter Plots & Trends',   desc:'Interpret scatter plots and lines of best fit' },
+        { id:'probability',  name:'Probability',              desc:'Simple, compound, and experimental probability' },
+      ],
+    },
+  };
+
+  let currentGrade      = '6';
+  let currentTopic      = null;
+  let currentLevel      = null;
+  let questions         = [];
+  let currentQIndex     = 0;
+  let score             = 0;
+  let answered          = false;
+
+  // ── GRADE SELECTION ──
+  window.selectGrade = function(grade) {
+    currentGrade  = grade;
+    currentTopic  = null;
+    document.querySelectorAll('.grade-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('grade-tab-' + grade).classList.add('active');
+    document.getElementById('level-selector').style.display = 'none';
+    renderTopics();
+  };
+
+  function renderTopics() {
+    const grid = document.getElementById('topic-grid');
+    const data = CURRICULUM[currentGrade];
+    let html = '';
+    for (const [category, topics] of Object.entries(data)) {
+      topics.forEach(topic => {
+        html += `<button class="topic-card" onclick="selectTopic('${topic.id}','${topic.name.replace(/'/g,"\\'")}','${category.replace(/'/g,"\\'")}')">
+          <div class="topic-cat">${category}</div>
+          <div class="topic-name">${topic.name}</div>
+          <div class="topic-desc">${topic.desc}</div>
+        </button>`;
+      });
+    }
+    grid.innerHTML = html;
+  }
+
+  // ── TOPIC SELECTION ──
+  window.selectTopic = function(id, name, category) {
+    currentTopic = { id, name, category };
+    document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+    document.getElementById('selectedTopicLabel').textContent = name;
+    document.getElementById('level-selector').style.display = 'block';
+    document.getElementById('level-selector').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  };
+
+  // ── START PRACTICE ──
+  window.startPractice = async function(level) {
+    if (!currentTopic) return;
+    currentLevel  = level;
+    currentQIndex = 0;
+    score         = 0;
+    questions     = [];
+
+    const levelNames = { 1:'Foundation', 2:'Application', 3:'Challenge' };
+
+    // Show loading
+    document.getElementById('practice-selector').style.display = 'none';
+    document.getElementById('practice-loading').style.display  = 'block';
+    document.getElementById('practice-quiz').style.display     = 'none';
+    document.getElementById('practice-results').style.display  = 'none';
+
+    try {
+      const prompt = buildPrompt(currentGrade, currentTopic, level, levelNames[level]);
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          system: `You are an expert middle school math curriculum designer. You generate multiple choice math practice questions. Always respond with valid JSON only — no markdown, no explanation, no backticks.`,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      const data = await response.json();
+      const raw  = data.content[0].text.trim();
+      questions  = JSON.parse(raw);
+
+      document.getElementById('practice-loading').style.display = 'none';
+      document.getElementById('practice-quiz').style.display    = 'block';
+
+      document.getElementById('quizTopicLabel').textContent =
+        `Grade ${currentGrade} · ${currentTopic.name} · Level ${level} — ${levelNames[level]}`;
+
+      renderQuestion();
+
+    } catch(err) {
+      console.error('Error generating questions:', err);
+      document.getElementById('practice-loading').style.display  = 'none';
+      document.getElementById('practice-selector').style.display = 'block';
+      alert('Something went wrong generating questions. Please try again.');
+    }
+  };
+
+  function buildPrompt(grade, topic, level, levelName) {
+    const levelDescriptions = {
+      1: 'straightforward single-step problems that directly test the core concept with clean whole numbers',
+      2: 'multi-step problems with real world context, fractions, decimals, or word problems',
+      3: 'complex problems requiring critical thinking, multiple concepts, or test-style reasoning'
+    };
+    return `Generate exactly 10 multiple choice math questions for:
+- Grade: ${grade}th grade
+- Topic: ${topic.name} (${topic.category})
+- Level ${level} (${levelName}): ${levelDescriptions[level]}
+
+Requirements:
+- Each question has exactly 4 answer choices labeled A, B, C, D
+- Exactly one correct answer per question
+- Include a clear, concise explanation of why the correct answer is right
+- Questions should be appropriate for ${grade}th grade middle school students
+- Make questions varied — different problem types, not repetitive
+- For Level 3, include at least 2 word problems
+
+Return ONLY this JSON array, nothing else:
+[
+  {
+    "question": "question text here",
+    "choices": ["A) choice", "B) choice", "C) choice", "D) choice"],
+    "correct": "A",
+    "explanation": "explanation of why A is correct"
+  }
+]`;
+  }
+
+  // ── RENDER QUESTION ──
+  function renderQuestion() {
+    answered = false;
+    const q   = questions[currentQIndex];
+    const pct = (currentQIndex / 10) * 100;
+
+    document.getElementById('qNum').textContent          = currentQIndex + 1;
+    document.getElementById('quizProgressBar').style.width = pct + '%';
+    document.getElementById('questionText').textContent  = q.question;
+    document.getElementById('scoreDisplay').textContent  = `${score}/${currentQIndex}`;
+    document.getElementById('feedbackBox').style.display = 'none';
+    document.getElementById('nextBtn').style.display     = 'none';
+
+    const letters = ['A','B','C','D'];
+    const container = document.getElementById('choicesContainer');
+    container.innerHTML = q.choices.map((choice, i) => `
+      <button class="choice-btn" onclick="selectAnswer(this,'${letters[i]}')">
+        <span class="choice-letter">${letters[i]}</span>
+        ${choice.replace(/^[A-D]\)\s*/,'')}
+      </button>
+    `).join('');
+  }
+
+  // ── ANSWER SELECTION ──
+  window.selectAnswer = function(btn, selected) {
+    if (answered) return;
+    answered = true;
+
+    const q       = questions[currentQIndex];
+    const correct = q.correct;
+    const isRight = selected === correct;
+
+    if (isRight) score++;
+
+    // Style all buttons
+    document.querySelectorAll('.choice-btn').forEach(b => {
+      b.disabled = true;
+      const letter = b.querySelector('.choice-letter').textContent.trim();
+      if (letter === correct) b.classList.add('correct');
+      else if (b === btn && !isRight) b.classList.add('incorrect');
+    });
+
+    // Show feedback
+    const box = document.getElementById('feedbackBox');
+    box.style.display = 'block';
+    box.style.background = isRight ? 'rgba(26,92,56,0.06)' : 'rgba(192,57,43,0.05)';
+    box.style.border = `1px solid ${isRight ? '#1A5C38' : '#C0392B'}`;
+    document.getElementById('feedbackTitle').style.color = isRight ? '#1A5C38' : '#C0392B';
+    document.getElementById('feedbackTitle').textContent = isRight ? 'Correct!' : 'Not quite.';
+    document.getElementById('feedbackText').textContent  = q.explanation;
+
+    // Show next button or finish
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.style.display = 'block';
+    if (currentQIndex === 9) {
+      nextBtn.textContent = 'See Results';
+    } else {
+      nextBtn.textContent = 'Next Question →';
+    }
+  };
+
+  // ── NEXT QUESTION ──
+  window.nextQuestion = function() {
+    currentQIndex++;
+    if (currentQIndex >= 10) {
+      showResults();
+    } else {
+      renderQuestion();
+    }
+  };
+
+  // ── RESULTS ──
+  function showResults() {
+    document.getElementById('practice-quiz').style.display    = 'none';
+    document.getElementById('practice-results').style.display = 'block';
+    document.getElementById('finalScore').textContent = score;
+
+    const pct = score / 10;
+    let emoji, msg;
+    if (pct === 1)       { emoji = '🏆'; msg = 'Perfect score! Outstanding work. You have mastered this topic at this level. Try Level ' + (currentLevel < 3 ? currentLevel + 1 : 3) + ' for a bigger challenge.'; }
+    else if (pct >= 0.8) { emoji = '⭐'; msg = 'Great job! You have a strong understanding of this topic. Review the questions you missed and try again to hit 100%.'; }
+    else if (pct >= 0.6) { emoji = '💪'; msg = 'Good effort. You are building your understanding. Focus on the feedback from your incorrect answers and practice again.'; }
+    else if (pct >= 0.4) { emoji = '📚'; msg = 'Keep going. This topic needs more practice. Review your notes from session with Hafeez and try Level 1 again.'; }
+    else                 { emoji = '🔄'; msg = 'This is a tough topic — that is okay. Go back to Level 1, work through your session notes, and try again. Progress takes practice.'; }
+
+    document.getElementById('resultEmoji').textContent   = emoji;
+    document.getElementById('resultMessage').textContent = msg;
+  }
+
+  // ── RETRY / EXIT ──
+  window.retryPractice = function() {
+    startPractice(currentLevel);
+  };
+
+  window.exitPractice = function() {
+    document.getElementById('practice-results').style.display  = 'none';
+    document.getElementById('practice-quiz').style.display     = 'none';
+    document.getElementById('practice-loading').style.display  = 'none';
+    document.getElementById('practice-selector').style.display = 'block';
+    document.getElementById('level-selector').style.display    = 'none';
+    document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
+    currentTopic = null;
+  };
+
+  // Initialize topic grid on load
+  renderTopics();
 </script>
 
 </body>
