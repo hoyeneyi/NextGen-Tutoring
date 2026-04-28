@@ -133,7 +133,7 @@
       background: var(--navy);
       border-top: 1px solid rgba(201,168,76,0.2);
       padding: 1.5rem 2rem;
-      z-index: 99;
+      z-index: 999;
       flex-direction: column;
       gap: 1.25rem;
     }
@@ -756,11 +756,24 @@
   <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="float-cta" id="floatCta">Book a Session</a>
 
   <script>
-    /* ── Mobile menu ── */
-    const ham = document.getElementById('ham');
-    const mob = document.getElementById('mobNav');
-    ham.addEventListener('click', () => mob.classList.toggle('open'));
-    mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+    document.addEventListener('DOMContentLoaded', function() {
+      /* ── Mobile menu ── */
+      const ham = document.getElementById('ham');
+      const mob = document.getElementById('mobNav');
+
+      if (ham && mob) {
+        ham.addEventListener('click', function(e) {
+          e.stopPropagation();
+          mob.classList.toggle('open');
+        });
+        mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!ham.contains(e.target) && !mob.contains(e.target)) {
+            mob.classList.remove('open');
+          }
+        });
+      }
 
     /* ── Floating CTA ── */
     const floatCta = document.getElementById('floatCta');
@@ -841,4 +854,19 @@
         } else {
           btn.disabled    = false;
           btn.textContent = 'Send Message →';
-          alert('Something went wrong. Please email us at ne
+          alert('Something went wrong. Please email us at nextgentutoringco@gmail.com');
+        }
+      })
+      .catch(() => {
+        btn.disabled    = false;
+        btn.textContent = 'Send Message →';
+        alert('Something went wrong. Please email us at nextgentutoringco@gmail.com');
+      });
+    }
+    }); // end DOMContentLoaded
+  </script>
+
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" /></noscript>
+</body>
+</html>
