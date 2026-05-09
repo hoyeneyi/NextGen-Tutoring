@@ -815,7 +815,9 @@
 
       <!-- RESULTS VIEW -->
       <div id="practice-results" style="display:none;text-align:center;padding:3rem 2rem;">
-        <div style="font-size:3rem;margin-bottom:1rem;" id="resultEmoji">🎯</div>
+        <div style="margin-bottom:1rem;display:flex;justify-content:center;" id="resultEmoji">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
         <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">Session Complete!</div>
         <div style="font-size:1rem;color:var(--text-light);margin-bottom:2rem;">Here's how you did:</div>
         <div style="background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:12px;padding:2rem;max-width:400px;margin:0 auto 2rem;">
@@ -1170,7 +1172,8 @@
 
     try {
       const prompt = buildPrompt(currentGrade, currentTopic, level, levelNames[level]);
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const PROXY_URL = 'https://nextgen-proxy.nextgentutoringco.workers.dev';
+      const response = await fetch(PROXY_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1310,13 +1313,19 @@ Return ONLY this JSON array, nothing else:
 
     const pct = score / 10;
     let emoji, msg;
-    if (pct === 1)       { emoji = '🏆'; msg = 'Perfect score! Outstanding work. You have mastered this topic at this level. Try Level ' + (currentLevel < 3 ? currentLevel + 1 : 3) + ' for a bigger challenge.'; }
-    else if (pct >= 0.8) { emoji = '⭐'; msg = 'Great job! You have a strong understanding of this topic. Review the questions you missed and try again to hit 100%.'; }
-    else if (pct >= 0.6) { emoji = '💪'; msg = 'Good effort. You are building your understanding. Focus on the feedback from your incorrect answers and practice again.'; }
-    else if (pct >= 0.4) { emoji = '📚'; msg = 'Keep going. This topic needs more practice. Review your notes from session with Hafeez and try Level 1 again.'; }
-    else                 { emoji = '🔄'; msg = 'This is a tough topic — that is okay. Go back to Level 1, work through your session notes, and try again. Progress takes practice.'; }
+    const svgTrophy  = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H3V4h3"/><path d="M18 9h3V4h-3"/><path d="M6 4h12v7a6 6 0 0 1-12 0V4z"/><path d="M12 17v4"/><path d="M8 21h8"/></svg>`;
+    const svgStar    = `<svg width="56" height="56" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+    const svgStrong  = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`;
+    const svgBook    = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`;
+    const svgRetry   = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.61"/></svg>`;
 
-    document.getElementById('resultEmoji').textContent   = emoji;
+    if (pct === 1)       { emoji = svgTrophy; msg = 'Perfect score! Outstanding work. You have mastered this topic at this level. Try Level ' + (currentLevel < 3 ? currentLevel + 1 : 3) + ' for a bigger challenge.'; }
+    else if (pct >= 0.8) { emoji = svgStar;   msg = 'Great job! You have a strong understanding of this topic. Review the questions you missed and try again to hit 100%.'; }
+    else if (pct >= 0.6) { emoji = svgStrong; msg = 'Good effort. You are building your understanding. Focus on the feedback from your incorrect answers and practice again.'; }
+    else if (pct >= 0.4) { emoji = svgBook;   msg = 'Keep going. This topic needs more practice. Review your notes from session with Hafeez and try Level 1 again.'; }
+    else                 { emoji = svgRetry;  msg = 'This is a tough topic — that is okay. Go back to Level 1, work through your session notes, and try again. Progress takes practice.'; }
+
+    document.getElementById('resultEmoji').innerHTML = emoji;
     document.getElementById('resultMessage').textContent = msg;
   }
 
