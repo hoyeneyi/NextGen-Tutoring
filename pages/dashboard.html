@@ -356,26 +356,26 @@
     .fade-in { animation:fadeIn 0.4s ease both; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
     /* ── PRACTICE SYSTEM ── */
-    .grade-tab{background:var(--white);border:1px solid rgba(11,31,58,0.12);border-radius:8px;padding:0.6rem 1.25rem;font-family:var(--font-body);font-size:0.875rem;font-weight:600;color:var(--text-mid);cursor:pointer;transition:all 0.2s;}
+    .subject-card{background:var(--white);border:1px solid rgba(11,31,58,0.08);border-radius:12px;padding:1.75rem;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;display:flex;flex-direction:column;gap:0.75rem;}
+    .subject-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 30px rgba(11,31,58,0.1);}
+    .subject-icon{width:44px;height:44px;background:var(--gold-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--gold);}
+    .subject-icon svg{width:22px;height:22px;}
+    .subject-name{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--navy);}
+    .subject-desc{font-size:0.8rem;color:var(--text-light);line-height:1.5;}
+    .grade-tab{background:var(--white);border:1px solid rgba(11,31,58,0.12);border-radius:8px;padding:0.55rem 1.1rem;font-family:var(--font-body);font-size:0.82rem;font-weight:600;color:var(--text-mid);cursor:pointer;transition:all 0.2s;}
     .grade-tab.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
     .grade-tab:hover:not(.active){border-color:var(--gold);color:var(--gold);}
     .topic-card{background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:10px;padding:1.25rem;cursor:pointer;transition:all 0.2s;text-align:left;width:100%;}
     .topic-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,31,58,0.08);}
-    .topic-card.selected{border-color:var(--gold);background:var(--gold-pale);}
-    .topic-cat{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
-    .topic-name{font-weight:700;color:var(--navy);font-size:0.95rem;margin-bottom:0.35rem;}
-    .topic-desc{font-size:0.78rem;color:var(--text-light);line-height:1.5;}
-    .level-btn{background:var(--white);border:1px solid rgba(11,31,58,0.1);border-radius:10px;padding:1.25rem 1.5rem;cursor:pointer;text-align:left;transition:all 0.2s;min-width:180px;font-family:var(--font-body);}
-    .level-btn:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,31,58,0.08);}
-    .level-num{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;}
-    .level-name{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.25rem;}
-    .level-desc{font-size:0.78rem;color:var(--text-light);}
+    .topic-cat{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.35rem;}
+    .topic-name{font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:0.3rem;}
+    .topic-desc{font-size:0.75rem;color:var(--text-light);line-height:1.5;}
     .choice-btn{width:100%;text-align:left;padding:0.9rem 1.1rem;border:1.5px solid rgba(11,31,58,0.1);border-radius:8px;background:var(--white);font-family:var(--font-body);font-size:0.9rem;color:var(--text-mid);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.75rem;}
     .choice-btn:hover:not(:disabled){border-color:var(--gold);background:var(--gold-pale);color:var(--navy);}
     .choice-btn.correct{border-color:#1A5C38;background:rgba(26,92,56,0.06);color:#1A5C38;font-weight:600;}
     .choice-btn.incorrect{border-color:#C0392B;background:rgba(192,57,43,0.05);color:#C0392B;}
     .choice-btn:disabled{cursor:default;}
-    .choice-letter{width:26px;height:26px;border-radius:50%;background:var(--off-white);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--text-light);flex-shrink:0;}
+    .choice-letter{width:28px;height:28px;border-radius:50%;background:var(--off-white);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--text-light);flex-shrink:0;}
     .dots{display:flex;gap:6px;justify-content:center;margin-top:1rem;}
     .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse 1.2s ease infinite;}
     .dot:nth-child(2){animation-delay:0.2s;}.dot:nth-child(3){animation-delay:0.4s;}
@@ -730,82 +730,143 @@
     <!-- PRACTICE PAGE -->
     <div class="page hidden fade-in" id="page-practice">
 
-      <!-- SELECTOR VIEW -->
-      <div id="practice-selector">
+      <!-- SUBJECT SELECTOR -->
+      <div id="practice-home">
         <div style="margin-bottom:1.75rem;">
-          <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Math Practice</h2>
-          <p style="font-size:0.875rem;color:var(--text-light);">Pick your grade, topic, and level. The AI generates 10 fresh questions every time.</p>
+          <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Practice</h2>
+          <p style="font-size:0.875rem;color:var(--text-light);">Choose a subject, pick your grade, and start building mastery. Questions are unlimited and generated fresh every time.</p>
         </div>
+
+        <!-- SUBJECT CARDS -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;margin-bottom:2rem;">
+          <button class="subject-card" onclick="selectSubject('math')">
+            <div class="subject-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+            </div>
+            <div class="subject-name">Mathematics</div>
+            <div class="subject-desc">Arithmetic through Pre-Calculus — K through 12</div>
+          </button>
+          <button class="subject-card" onclick="selectSubject('reading')">
+            <div class="subject-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <div class="subject-name">Reading</div>
+            <div class="subject-desc">Comprehension, vocabulary, and analysis — K through 12</div>
+          </button>
+          <button class="subject-card" onclick="selectSubject('writing')">
+            <div class="subject-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div class="subject-name">Writing</div>
+            <div class="subject-desc">Grammar, essay structure, and conventions — K through 12</div>
+          </button>
+          <button class="subject-card" onclick="selectSubject('sat')">
+            <div class="subject-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <div class="subject-name">SAT / ACT Prep</div>
+            <div class="subject-desc">Test-ready practice for Math, Reading, and Writing</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- GRADE + TOPIC SELECTOR -->
+      <div id="practice-selector" style="display:none;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <button onclick="backToSubjects()" style="background:none;border:1px solid rgba(11,31,58,0.12);border-radius:6px;padding:0.4rem 0.85rem;font-size:0.78rem;color:var(--text-light);cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back
+          </button>
+          <div>
+            <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--navy);" id="selectorTitle">Mathematics</div>
+            <div style="font-size:0.78rem;color:var(--text-light);">Select your grade level</div>
+          </div>
+        </div>
+
+        <!-- GRADE BAND TABS -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;" id="gradeBandTabs"></div>
 
         <!-- GRADE TABS -->
-        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-          <button class="grade-tab active" onclick="selectGrade('6')" id="grade-tab-6">6th Grade</button>
-          <button class="grade-tab" onclick="selectGrade('7')" id="grade-tab-7">7th Grade</button>
-          <button class="grade-tab" onclick="selectGrade('8')" id="grade-tab-8">8th Grade</button>
-        </div>
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;" id="gradeTabs"></div>
 
         <!-- TOPIC GRID -->
-        <div id="topic-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:2rem;"></div>
-
-        <!-- LEVEL SELECT -->
-        <div id="level-selector" style="display:none;">
-          <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Selected: <span id="selectedTopicLabel" style="color:var(--gold);"></span></div>
-          <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.25rem;">Now choose your level:</p>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-            <button class="level-btn" onclick="startPractice(1)">
-              <div class="level-num">Level 1</div>
-              <div class="level-name">Foundation</div>
-              <div class="level-desc">Core concepts, direct application</div>
-            </button>
-            <button class="level-btn" onclick="startPractice(2)">
-              <div class="level-num">Level 2</div>
-              <div class="level-name">Application</div>
-              <div class="level-desc">Multi-step, real world context</div>
-            </button>
-            <button class="level-btn" onclick="startPractice(3)">
-              <div class="level-num">Level 3</div>
-              <div class="level-name">Challenge</div>
-              <div class="level-desc">Complex problems, test-ready</div>
-            </button>
-          </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:1rem;" id="topicGridLabel">Choose a topic to practice</div>
+          <div id="topic-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;"></div>
         </div>
       </div>
 
       <!-- LOADING VIEW -->
       <div id="practice-loading" style="display:none;text-align:center;padding:4rem 2rem;">
-        <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem;">Generating your questions...</div>
-        <p style="font-size:0.875rem;color:var(--text-light);margin-bottom:1.5rem;">Creating 10 personalized problems just for you.</p>
+        <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem;" id="loadingLabel">Generating your questions...</div>
+        <p style="font-size:0.875rem;color:var(--text-light);margin-bottom:1.5rem;">Building fresh problems tailored to this topic.</p>
         <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
       </div>
 
       <!-- QUIZ VIEW -->
       <div id="practice-quiz" style="display:none;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+
+        <!-- Header row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;">
           <div>
-            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.25rem;" id="quizTopicLabel"></div>
-            <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--navy);">Question <span id="qNum">1</span> of 10</div>
+            <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;" id="quizTopicLabel"></div>
+            <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--navy);" id="quizHeading">Question 1</div>
           </div>
-          <div style="display:flex;gap:0.5rem;align-items:center;">
-            <div style="font-size:0.82rem;color:var(--text-light);">Score: <strong id="scoreDisplay" style="color:var(--navy);">0/0</strong></div>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <!-- SmartScore -->
+            <div style="text-align:center;">
+              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:2px;">SmartScore</div>
+              <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;line-height:1;" id="smartScoreDisplay">0</div>
+              <div style="font-size:0.62rem;color:var(--text-light);">need 70 to pass</div>
+            </div>
+            <!-- Streak -->
+            <div style="text-align:center;">
+              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:2px;">Streak</div>
+              <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;line-height:1;color:var(--gold);" id="streakDisplay">0</div>
+              <div style="font-size:0.62rem;color:var(--text-light);">in a row</div>
+            </div>
             <button onclick="exitPractice()" style="background:none;border:1px solid rgba(11,31,58,0.12);border-radius:6px;padding:0.4rem 0.85rem;font-size:0.78rem;color:var(--text-light);cursor:pointer;font-family:var(--font-body);">Exit</button>
           </div>
         </div>
 
-        <!-- Progress bar -->
-        <div style="height:4px;background:var(--off-white);border-radius:100px;margin-bottom:1.75rem;overflow:hidden;">
-          <div id="quizProgressBar" style="height:100%;background:var(--gold);border-radius:100px;transition:width 0.4s ease;width:0%;"></div>
+        <!-- SmartScore bar -->
+        <div style="margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text-light);margin-bottom:4px;">
+            <span>0</span>
+            <span style="color:var(--gold);font-weight:600;">Pass: 70</span>
+            <span style="color:#1A5C38;font-weight:600;">Master: 90</span>
+            <span>100</span>
+          </div>
+          <div style="height:8px;background:var(--off-white);border-radius:100px;overflow:hidden;position:relative;">
+            <div id="smartScoreBar" style="height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;transition:width 0.6s ease;width:0%;"></div>
+            <!-- Pass marker -->
+            <div style="position:absolute;top:0;bottom:0;left:70%;width:2px;background:rgba(201,168,76,0.5);"></div>
+            <!-- Master marker -->
+            <div style="position:absolute;top:0;bottom:0;left:90%;width:2px;background:rgba(26,92,56,0.5);"></div>
+          </div>
+        </div>
+
+        <!-- Concept reminder (shown after wrong answer) -->
+        <div id="conceptReminder" style="display:none;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.35rem;">Concept Reminder</div>
+          <div id="conceptReminderText" style="font-size:0.875rem;color:var(--text-mid);line-height:1.7;"></div>
+        </div>
+
+        <!-- Recovery tag -->
+        <div id="recoveryTag" style="display:none;background:rgba(30,73,118,0.06);border:1px solid rgba(30,73,118,0.15);border-radius:6px;padding:0.6rem 1rem;margin-bottom:1rem;font-size:0.8rem;color:var(--navy-light);font-weight:500;">
+          Similar question — show me you've got it this time.
         </div>
 
         <!-- Question card -->
         <div style="background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:12px;padding:2rem;margin-bottom:1.25rem;">
-          <div id="questionText" style="font-size:1.05rem;font-weight:600;color:var(--navy);line-height:1.6;margin-bottom:1.75rem;"></div>
+          <div id="questionText" style="font-size:1.05rem;font-weight:600;color:var(--navy);line-height:1.65;margin-bottom:1.75rem;"></div>
           <div id="choicesContainer" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
         </div>
 
         <!-- Feedback -->
         <div id="feedbackBox" style="display:none;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;">
           <div id="feedbackTitle" style="font-weight:700;font-size:0.95rem;margin-bottom:0.4rem;"></div>
-          <div id="feedbackText" style="font-size:0.875rem;line-height:1.7;"></div>
+          <div id="feedbackText" style="font-size:0.875rem;line-height:1.75;"></div>
         </div>
 
         <div style="display:flex;justify-content:flex-end;">
@@ -813,43 +874,18 @@
         </div>
       </div>
 
-      <!-- RESULTS VIEW -->
-      <div id="practice-results" style="display:none;text-align:center;padding:3rem 2rem;">
-        <div style="margin-bottom:1rem;display:flex;justify-content:center;" id="resultEmoji">
-          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-        </div>
-        <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;">Session Complete!</div>
-        <div style="font-size:1rem;color:var(--text-light);margin-bottom:2rem;">Here's how you did:</div>
-        <div style="background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:12px;padding:2rem;max-width:400px;margin:0 auto 2rem;">
-          <div style="font-family:var(--font-display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;" id="finalScore"></div>
-          <div style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.5rem;">correct out of 10</div>
-          <div style="font-size:0.875rem;color:var(--text-mid);line-height:1.7;" id="resultMessage"></div>
-        </div>
+      <!-- MILESTONE VIEW (shown at 70 and 90) -->
+      <div id="practice-milestone" style="display:none;text-align:center;padding:3rem 2rem;">
+        <div style="margin-bottom:1.25rem;display:flex;justify-content:center;" id="milestoneIcon"></div>
+        <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;" id="milestoneTitle"></div>
+        <div style="font-size:0.95rem;color:var(--text-mid);line-height:1.75;max-width:480px;margin:0 auto 2rem;" id="milestoneMessage"></div>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-          <button onclick="retryPractice()" style="background:var(--gold);color:var(--navy);font-weight:700;font-size:0.9rem;padding:0.85rem 1.75rem;border:none;border-radius:6px;cursor:pointer;font-family:var(--font-body);">Try Again</button>
+          <button id="milestoneContinue" onclick="continuePractice()" style="background:var(--gold);color:var(--navy);font-weight:700;font-size:0.9rem;padding:0.85rem 1.75rem;border:none;border-radius:6px;cursor:pointer;font-family:var(--font-body);">Keep Going — Reach Mastery</button>
           <button onclick="exitPractice()" style="background:transparent;color:var(--navy);font-weight:600;font-size:0.9rem;padding:0.85rem 1.75rem;border:1px solid rgba(11,31,58,0.15);border-radius:6px;cursor:pointer;font-family:var(--font-body);">Choose New Topic</button>
         </div>
       </div>
-    </div>
 
-    <!-- PROFILE PAGE -->
-    <div class="page hidden fade-in" id="page-profile">
-      <div style="margin-bottom:1.5rem;">
-        <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.35rem;">My Profile</h2>
-        <p style="font-size:0.875rem; color:var(--text-light);">Your account details.</p>
-      </div>
-      <div class="profile-card">
-        <div class="profile-avatar-lg" id="profileAvatar">NG</div>
-        <div class="profile-name" id="profileName">Student</div>
-        <div class="profile-email" id="profileEmail">Loading...</div>
-        <div class="profile-divider"></div>
-        <div class="profile-row">
-          <span class="profile-key">Tutor</span>
-          <span class="profile-val">Hafeez Oyeneyin</span>
-        </div>
-        <div class="profile-row">
-          <span class="profile-key">Grade</span>
-          <span class="profile-val" id="profileGrade">—</span>
+    </div>
         </div>
         <div class="profile-row">
           <span class="profile-key">Subject</span>
@@ -1054,88 +1090,342 @@
 
   // ══════════════════════════════════════════
   // PRACTICE SYSTEM
+
+  // ══ PRACTICE SYSTEM ══
+  // ══════════════════════════════════════════
+  // PRACTICE SYSTEM — IXL/KHAN HYBRID
+  // SmartScore mastery, unlimited questions, K-12
   // ══════════════════════════════════════════
 
+  const PROXY_URL = 'https://nextgen-proxy.nextgentutoringco.workers.dev';
+
+  // ── FULL K-12 CURRICULUM ──
   const CURRICULUM = {
-    '6': {
-      'Number Sense & Operations': [
-        { id:'fractions',    name:'Fractions',                desc:'Add, subtract, multiply, and divide fractions' },
-        { id:'decimals',     name:'Decimals & Percentages',   desc:'Convert, compare, and calculate with decimals and percents' },
-        { id:'ratios',       name:'Ratios & Proportions',     desc:'Understand and solve ratio and proportion problems' },
-        { id:'integers',     name:'Integers & Negative Numbers', desc:'Work with positive and negative numbers on the number line' },
-        { id:'pemdas',       name:'Order of Operations',      desc:'PEMDAS — solve multi-operation expressions correctly' },
-      ],
-      'Algebra Foundations': [
-        { id:'expressions',  name:'Variables & Expressions',  desc:'Write and evaluate algebraic expressions' },
-        { id:'one-step',     name:'One-Step Equations',       desc:'Solve for x using one inverse operation' },
-      ],
-      'Geometry Basics': [
-        { id:'area-perim',   name:'Area & Perimeter',         desc:'Calculate area and perimeter of common shapes' },
-        { id:'volume',       name:'Volume & Surface Area',    desc:'Find volume and surface area of 3D figures' },
-      ],
+    math: {
+      'K–2': {
+        label: 'K–2',
+        grades: ['K', '1st', '2nd'],
+        categories: {
+          'Counting & Numbers': [
+            { id:'counting',      name:'Counting to 100',        desc:'Count forward and backward, skip count by 2s, 5s, and 10s' },
+            { id:'place-value-k', name:'Place Value',            desc:'Ones and tens — understand what each digit means' },
+            { id:'comparing',     name:'Comparing Numbers',      desc:'Greater than, less than, and equal to' },
+          ],
+          'Addition & Subtraction': [
+            { id:'add-basic',     name:'Basic Addition',         desc:'Adding within 20 using objects, drawings, and equations' },
+            { id:'sub-basic',     name:'Basic Subtraction',      desc:'Subtracting within 20 — take away and find the difference' },
+            { id:'word-prob-k',   name:'Word Problems',          desc:'Add and subtract to solve simple real-world problems' },
+          ],
+          'Shapes & Measurement': [
+            { id:'shapes-2d',     name:'2D Shapes',              desc:'Identify circles, squares, triangles, rectangles, and hexagons' },
+            { id:'shapes-3d',     name:'3D Shapes',              desc:'Cubes, cones, cylinders, and spheres in the real world' },
+            { id:'measurement-k', name:'Measuring Length',       desc:'Compare lengths and measure using non-standard units' },
+          ],
+        }
+      },
+      '3–5': {
+        label: '3–5',
+        grades: ['3rd', '4th', '5th'],
+        categories: {
+          'Multiplication & Division': [
+            { id:'mult-basic',    name:'Multiplication Facts',   desc:'Master times tables 1–12 with strategies and patterns' },
+            { id:'div-basic',     name:'Division Basics',        desc:'Understand division as sharing equally and as repeated subtraction' },
+            { id:'mult-div-word', name:'Multiplication & Division Word Problems', desc:'Apply multiplication and division to real-world situations' },
+          ],
+          'Fractions': [
+            { id:'fractions-intro', name:'Intro to Fractions',  desc:'Equal parts, numerator, denominator — what fractions mean' },
+            { id:'fractions-comp',  name:'Comparing Fractions', desc:'Compare fractions with the same numerator or denominator' },
+            { id:'fractions-ops',   name:'Adding & Subtracting Fractions', desc:'Add and subtract fractions with like denominators' },
+            { id:'fractions-unlike',name:'Unlike Denominators',  desc:'Find common denominators and add or subtract unlike fractions' },
+          ],
+          'Decimals & Place Value': [
+            { id:'place-value-35',name:'Place Value',            desc:'Hundreds through thousandths — reading and writing numbers' },
+            { id:'decimals-intro',name:'Intro to Decimals',      desc:'Tenths and hundredths — connect fractions to decimals' },
+            { id:'decimals-ops',  name:'Decimal Operations',     desc:'Add, subtract, multiply, and divide decimals' },
+          ],
+          'Geometry & Measurement': [
+            { id:'area-perim',    name:'Area & Perimeter',       desc:'Find area and perimeter of rectangles and irregular shapes' },
+            { id:'angles',        name:'Angles & Lines',         desc:'Right, acute, obtuse, and straight angles — parallel and perpendicular lines' },
+            { id:'volume-intro',  name:'Volume',                 desc:'Count unit cubes and use formulas to find volume' },
+          ],
+        }
+      },
+      '6–8': {
+        label: '6–8',
+        grades: ['6th', '7th', '8th'],
+        categories: {
+          'Number Sense': [
+            { id:'integers',      name:'Integers & Negatives',   desc:'Add, subtract, multiply, and divide positive and negative numbers' },
+            { id:'rational',      name:'Rational Numbers',       desc:'Operations with fractions, decimals, and mixed numbers' },
+            { id:'ratios',        name:'Ratios & Proportions',   desc:'Unit rates, proportional relationships, and scale' },
+            { id:'percent',       name:'Percents',               desc:'Percent of a number, percent change, tax, tip, and discount' },
+            { id:'pemdas',        name:'Order of Operations',    desc:'PEMDAS — evaluate expressions with multiple operations correctly' },
+          ],
+          'Algebra': [
+            { id:'expressions',   name:'Variables & Expressions',desc:'Write, evaluate, and simplify algebraic expressions' },
+            { id:'one-step-eq',   name:'One-Step Equations',     desc:'Solve equations using one inverse operation' },
+            { id:'two-step-eq',   name:'Two-Step Equations',     desc:'Solve equations requiring two inverse operations' },
+            { id:'inequalities',  name:'Inequalities',           desc:'Solve and graph one and two-step inequalities' },
+            { id:'linear-eq',     name:'Linear Equations',       desc:'Multi-step equations with variables on both sides' },
+            { id:'systems',       name:'Systems of Equations',   desc:'Solve systems by substitution and elimination' },
+            { id:'slope',         name:'Slope & Rate of Change', desc:'Find and interpret slope, y-intercept, and rate of change' },
+            { id:'functions',     name:'Functions',              desc:'Identify, evaluate, and represent functions' },
+          ],
+          'Geometry': [
+            { id:'area-adv',      name:'Area of Complex Shapes', desc:'Composite figures, triangles, trapezoids, and circles' },
+            { id:'surface-vol',   name:'Surface Area & Volume',  desc:'Prisms, pyramids, cylinders, cones, and spheres' },
+            { id:'pythagorean',   name:'Pythagorean Theorem',    desc:'Find missing sides of right triangles using a² + b² = c²' },
+            { id:'transformations','name':'Transformations',     desc:'Translations, reflections, rotations, and dilations' },
+            { id:'similar',       name:'Similar & Congruent Figures', desc:'Scale factors, angle relationships, and congruence' },
+          ],
+          'Statistics & Probability': [
+            { id:'stats-basic',   name:'Mean, Median, Mode',     desc:'Measures of center and spread for data sets' },
+            { id:'probability',   name:'Probability',            desc:'Simple, compound, and experimental probability' },
+            { id:'scatter',       name:'Scatter Plots & Trends', desc:'Interpret scatter plots and lines of best fit' },
+          ],
+        }
+      },
+      '9–12': {
+        label: '9–12',
+        grades: ['9th', '10th', '11th', '12th'],
+        categories: {
+          'Algebra 2': [
+            { id:'quadratics',    name:'Quadratic Equations',    desc:'Factor, complete the square, and use the quadratic formula' },
+            { id:'polynomials',   name:'Polynomials',            desc:'Add, subtract, multiply, factor, and divide polynomials' },
+            { id:'exponents',     name:'Exponents & Radicals',   desc:'Laws of exponents, radical expressions, and rational exponents' },
+            { id:'log-exp',       name:'Logarithms & Exponential Functions', desc:'Exponential growth and decay, log properties and equations' },
+            { id:'sequences',     name:'Sequences & Series',     desc:'Arithmetic and geometric sequences and series' },
+          ],
+          'Geometry': [
+            { id:'proofs',        name:'Geometric Proofs',       desc:'Two-column and paragraph proofs using theorems and postulates' },
+            { id:'trig-intro',    name:'Trigonometry Basics',    desc:'Sine, cosine, tangent — SOH CAH TOA and the unit circle' },
+            { id:'circles-adv',   name:'Circle Theorems',        desc:'Arc length, sector area, inscribed angles, and tangent lines' },
+          ],
+          'Statistics': [
+            { id:'stats-adv',     name:'Advanced Statistics',    desc:'Normal distributions, z-scores, sampling, and confidence intervals' },
+            { id:'regression',    name:'Regression & Correlation',desc:'Linear regression, correlation coefficients, and residuals' },
+          ],
+          'SAT/ACT Math': [
+            { id:'sat-algebra',   name:'SAT Algebra',            desc:'Heart of Algebra — linear equations, systems, and inequalities' },
+            { id:'sat-data',      name:'SAT Data Analysis',      desc:'Ratios, rates, percentages, and data interpretation' },
+            { id:'sat-advanced',  name:'SAT Advanced Math',      desc:'Passport to Advanced Math — complex equations and functions' },
+          ],
+        }
+      }
     },
-    '7': {
-      'Number Sense': [
-        { id:'rational',     name:'Rational Numbers',         desc:'Add, subtract, multiply, and divide rational numbers' },
-        { id:'percent-apps', name:'Percent Applications',     desc:'Tax, tip, discount, and percent change problems' },
-        { id:'proportional', name:'Proportional Relationships', desc:'Identify and use proportional relationships' },
-      ],
-      'Algebra': [
-        { id:'two-step',     name:'Two-Step Equations',       desc:'Solve equations requiring two inverse operations' },
-        { id:'inequalities', name:'Inequalities',             desc:'Solve and graph one and two-step inequalities' },
-        { id:'properties',   name:'Expressions & Properties', desc:'Distributive property, combining like terms' },
-      ],
-      'Geometry': [
-        { id:'angles',       name:'Angles & Triangles',       desc:'Angle relationships, triangle properties, and missing angles' },
-        { id:'scale',        name:'Scale & Similar Figures',  desc:'Scale factors, similar figures, and indirect measurement' },
-        { id:'circles',      name:'Circles',                  desc:'Circumference and area of circles using pi' },
-      ],
+    reading: {
+      'K–2': {
+        label: 'K–2',
+        grades: ['K', '1st', '2nd'],
+        categories: {
+          'Phonics & Decoding': [
+            { id:'phonics',       name:'Phonics & Letter Sounds',desc:'Letter-sound relationships, blends, and digraphs' },
+            { id:'sight-words',   name:'Sight Words',            desc:'High-frequency words every early reader should know' },
+          ],
+          'Reading Comprehension': [
+            { id:'main-idea-k',   name:'Main Idea & Details',    desc:'Find the main idea and key details in short texts' },
+            { id:'story-elem',    name:'Story Elements',         desc:'Characters, setting, problem, and solution' },
+          ],
+        }
+      },
+      '3–5': {
+        label: '3–5',
+        grades: ['3rd', '4th', '5th'],
+        categories: {
+          'Comprehension': [
+            { id:'main-idea-35',  name:'Main Idea & Details',    desc:'Identify main idea and supporting details in longer passages' },
+            { id:'inference',     name:'Making Inferences',      desc:'Use text evidence and background knowledge to draw conclusions' },
+            { id:'summarize',     name:'Summarizing',            desc:'Retell key ideas in your own words accurately and concisely' },
+            { id:'text-structure',name:'Text Structure',         desc:'Identify cause/effect, compare/contrast, problem/solution' },
+          ],
+          'Vocabulary': [
+            { id:'context-clues', name:'Context Clues',          desc:'Use surrounding words to determine meaning of unknown words' },
+            { id:'figurative',    name:'Figurative Language',    desc:'Similes, metaphors, idioms, and personification' },
+          ],
+        }
+      },
+      '6–8': {
+        label: '6–8',
+        grades: ['6th', '7th', '8th'],
+        categories: {
+          'Comprehension': [
+            { id:'inference-68',  name:'Inference & Evidence',   desc:'Make evidence-based inferences from complex literary and informational texts' },
+            { id:'theme',         name:'Theme & Central Idea',   desc:'Identify theme in fiction and central idea in nonfiction' },
+            { id:'author-purpose',name:"Author's Purpose & Point of View", desc:'Analyze why an author writes and how perspective shapes text' },
+            { id:'compare-texts', name:'Comparing Texts',        desc:'Compare and contrast two texts on the same topic' },
+          ],
+          'Vocabulary': [
+            { id:'vocab-68',      name:'Academic Vocabulary',    desc:'Tier 2 and Tier 3 vocabulary words across content areas' },
+            { id:'connotation',   name:'Connotation & Denotation',desc:'Understand the literal and implied meanings of words' },
+          ],
+        }
+      },
+      '9–12': {
+        label: '9–12',
+        grades: ['9th', '10th', '11th', '12th'],
+        categories: {
+          'Literary Analysis': [
+            { id:'lit-analysis',  name:'Literary Analysis',      desc:'Analyze character, theme, symbol, and irony in complex literature' },
+            { id:'rhetoric',      name:'Rhetorical Analysis',    desc:'Identify ethos, pathos, logos, and rhetorical devices' },
+            { id:'sat-reading',   name:'SAT Reading',            desc:'Evidence-based reading — paired passages, data graphics, and inference' },
+          ],
+        }
+      }
     },
-    '8': {
-      'Algebra': [
-        { id:'linear-eq',    name:'Linear Equations',         desc:'Multi-step equations with variables on both sides' },
-        { id:'systems',      name:'Systems of Equations',     desc:'Solve systems by substitution and elimination' },
-        { id:'slope',        name:'Slope & Rate of Change',   desc:'Find and interpret slope, y-intercept, and rate of change' },
-        { id:'functions',    name:'Functions',                desc:'Identify, evaluate, and represent functions' },
-      ],
-      'Geometry': [
-        { id:'pythagorean',  name:'Pythagorean Theorem',      desc:'Apply the Pythagorean theorem to find missing sides' },
-        { id:'transformations', name:'Transformations',       desc:'Translations, reflections, rotations, and dilations' },
-        { id:'coordinate',   name:'Coordinate Plane',         desc:'Plot, distance, and midpoint on the coordinate plane' },
-      ],
-      'Statistics & Probability': [
-        { id:'scatter',      name:'Scatter Plots & Trends',   desc:'Interpret scatter plots and lines of best fit' },
-        { id:'probability',  name:'Probability',              desc:'Simple, compound, and experimental probability' },
-      ],
+    writing: {
+      'K–2': {
+        label: 'K–2',
+        grades: ['K', '1st', '2nd'],
+        categories: {
+          'Sentence Basics': [
+            { id:'sentences-k',   name:'Complete Sentences',     desc:'Identify and write complete sentences with subjects and predicates' },
+            { id:'punctuation-k', name:'Punctuation Basics',     desc:'Periods, question marks, and exclamation points' },
+            { id:'capitalization',name:'Capitalization Rules',   desc:'Capitalize the first word of sentences and proper nouns' },
+          ],
+        }
+      },
+      '3–5': {
+        label: '3–5',
+        grades: ['3rd', '4th', '5th'],
+        categories: {
+          'Grammar': [
+            { id:'parts-speech',  name:'Parts of Speech',        desc:'Nouns, verbs, adjectives, adverbs, pronouns, and conjunctions' },
+            { id:'grammar-35',    name:'Grammar & Usage',        desc:'Subject-verb agreement, verb tense, and pronoun agreement' },
+            { id:'punct-35',      name:'Punctuation & Mechanics',desc:'Commas, apostrophes, quotation marks, and capitalization' },
+          ],
+          'Writing Structure': [
+            { id:'paragraph',     name:'Paragraph Writing',      desc:'Topic sentence, supporting details, and concluding sentence' },
+            { id:'opinion',       name:'Opinion Writing',        desc:'State a clear opinion and support it with reasons and evidence' },
+          ],
+        }
+      },
+      '6–8': {
+        label: '6–8',
+        grades: ['6th', '7th', '8th'],
+        categories: {
+          'Grammar & Mechanics': [
+            { id:'grammar-68',    name:'Grammar & Usage',        desc:'Phrases, clauses, parallel structure, and misplaced modifiers' },
+            { id:'punct-68',      name:'Advanced Punctuation',   desc:'Semicolons, colons, dashes, and comma rules' },
+            { id:'style-68',      name:'Style & Word Choice',    desc:'Precise language, conciseness, and tone' },
+          ],
+          'Essay Writing': [
+            { id:'thesis',        name:'Thesis Statements',      desc:'Write clear, arguable thesis statements for any essay type' },
+            { id:'evidence',      name:'Using Evidence',         desc:'Introduce, quote, and analyze textual evidence effectively' },
+            { id:'essay-struct',  name:'Essay Structure',        desc:'Introduction, body paragraphs, transitions, and conclusion' },
+          ],
+        }
+      },
+      '9–12': {
+        label: '9–12',
+        grades: ['9th', '10th', '11th', '12th'],
+        categories: {
+          'Advanced Writing': [
+            { id:'argumentative', name:'Argumentative Writing',  desc:'Build a logical argument with evidence, counterargument, and rebuttal' },
+            { id:'sat-writing',   name:'SAT Writing & Language', desc:'Grammar, punctuation, style, and passage revision questions' },
+            { id:'ap-essay',      name:'AP-Style Essays',        desc:'Synthesis, rhetorical analysis, and argument essays' },
+          ],
+        }
+      }
     },
+    sat: {
+      'SAT': {
+        label: 'SAT/ACT',
+        grades: ['SAT', 'ACT'],
+        categories: {
+          'SAT Math': [
+            { id:'sat-algebra',   name:'Heart of Algebra',       desc:'Linear equations, inequalities, and systems' },
+            { id:'sat-data',      name:'Problem Solving & Data', desc:'Ratios, percentages, statistics, and data interpretation' },
+            { id:'sat-passport',  name:'Passport to Advanced Math',desc:'Quadratics, polynomials, and complex equations' },
+            { id:'sat-geom',      name:'Additional Topics',      desc:'Geometry, trigonometry, and complex numbers' },
+          ],
+          'SAT Reading & Writing': [
+            { id:'sat-read',      name:'Reading Comprehension',  desc:'Evidence-based reading with paired passages and graphics' },
+            { id:'sat-grammar',   name:'Writing & Language',     desc:'Grammar, punctuation, and passage revision' },
+            { id:'sat-vocab',     name:'Words in Context',       desc:'Determine meaning from context in academic passages' },
+          ],
+          'ACT': [
+            { id:'act-english',   name:'ACT English',            desc:'Grammar, punctuation, and rhetorical skills' },
+            { id:'act-math',      name:'ACT Math',               desc:'Pre-algebra through pre-calculus in 60 questions' },
+            { id:'act-reading',   name:'ACT Reading',            desc:'Prose fiction, social studies, humanities, and natural science' },
+            { id:'act-science',   name:'ACT Science',            desc:'Interpret data, understand experiments, and evaluate viewpoints' },
+          ],
+        }
+      }
+    }
   };
 
-  let currentGrade      = '6';
+  // ── STATE ──
+  let currentSubject    = null;
+  let currentBand       = null;
+  let currentGrade      = null;
   let currentTopic      = null;
-  let currentLevel      = null;
-  let questions         = [];
-  let currentQIndex     = 0;
-  let score             = 0;
-  let answered          = false;
+  let currentQuestion   = null;
+  let smartScore        = 0;
+  let streak            = 0;
+  let totalAnswered     = 0;
+  let isRecovery        = false;
+  let recoveryAttempted = false;
+  let milestonePassed70 = false;
+  let milestonePassed90 = false;
+  let questionBuffer    = [];
+  let generating        = false;
 
-  // ── GRADE SELECTION ──
-  window.selectGrade = function(grade) {
-    currentGrade  = grade;
-    currentTopic  = null;
-    document.querySelectorAll('.grade-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('grade-tab-' + grade).classList.add('active');
-    document.getElementById('level-selector').style.display = 'none';
-    renderTopics();
+  // ── SUBJECT SELECTION ──
+  window.selectSubject = function(subject) {
+    currentSubject    = subject;
+    smartScore        = 0;
+    streak            = 0;
+    totalAnswered     = 0;
+    isRecovery        = false;
+    milestonePassed70 = false;
+    milestonePassed90 = false;
+
+    const data = CURRICULUM[subject];
+    const bands = Object.keys(data);
+
+    document.getElementById('selectorTitle').textContent =
+      subject === 'math' ? 'Mathematics' :
+      subject === 'reading' ? 'Reading' :
+      subject === 'writing' ? 'Writing' : 'SAT / ACT Prep';
+
+    // Build band tabs
+    const bandTabs = document.getElementById('gradeBandTabs');
+    bandTabs.innerHTML = bands.map((b, i) => `
+      <button class="grade-tab ${i === 0 ? 'active' : ''}" onclick="selectBand('${b}')" id="band-tab-${b}">
+        ${data[b].label}
+      </button>
+    `).join('');
+
+    document.getElementById('practice-home').style.display     = 'none';
+    document.getElementById('practice-selector').style.display = 'block';
+    document.getElementById('gradeTabs').style.display         = 'none';
+
+    selectBand(bands[0]);
   };
 
-  function renderTopics() {
-    const grid = document.getElementById('topic-grid');
-    const data = CURRICULUM[currentGrade];
+  window.selectBand = function(band) {
+    currentBand = band;
+    const data  = CURRICULUM[currentSubject][band];
+
+    document.querySelectorAll('#gradeBandTabs .grade-tab').forEach(t => t.classList.remove('active'));
+    const bt = document.getElementById('band-tab-' + band);
+    if (bt) bt.classList.add('active');
+
+    renderTopicGrid(band);
+  };
+
+  function renderTopicGrid(band) {
+    const data  = CURRICULUM[currentSubject][band];
+    const grid  = document.getElementById('topic-grid');
+    const label = document.getElementById('topicGridLabel');
+    label.textContent = `Grade ${data.label} — Choose a topic`;
+
     let html = '';
-    for (const [category, topics] of Object.entries(data)) {
+    for (const [cat, topics] of Object.entries(data.categories)) {
+      html += `<div style="grid-column:1/-1;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-top:0.5rem;margin-bottom:0.25rem;">${cat}</div>`;
       topics.forEach(topic => {
-        html += `<button class="topic-card" onclick="selectTopic('${topic.id}','${topic.name.replace(/'/g,"\\'")}','${category.replace(/'/g,"\\'")}')">
-          <div class="topic-cat">${category}</div>
+        html += `<button class="topic-card" onclick="selectTopic('${topic.id}','${topic.name.replace(/'/g,"\\'")}','${cat.replace(/'/g,"\\'")}','${band}')">
+          <div class="topic-cat">${cat}</div>
           <div class="topic-name">${topic.name}</div>
           <div class="topic-desc">${topic.desc}</div>
         </button>`;
@@ -1144,112 +1434,121 @@
     grid.innerHTML = html;
   }
 
-  // ── TOPIC SELECTION ──
-  window.selectTopic = function(id, name, category) {
-    currentTopic = { id, name, category };
-    document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
-    event.currentTarget.classList.add('selected');
-    document.getElementById('selectedTopicLabel').textContent = name;
-    document.getElementById('level-selector').style.display = 'block';
-    document.getElementById('level-selector').scrollIntoView({ behavior:'smooth', block:'nearest' });
-  };
+  window.selectTopic = async function(id, name, category, band) {
+    currentTopic      = { id, name, category, band };
+    smartScore        = 0;
+    streak            = 0;
+    totalAnswered     = 0;
+    isRecovery        = false;
+    recoveryAttempted = false;
+    milestonePassed70 = false;
+    milestonePassed90 = false;
+    questionBuffer    = [];
 
-  // ── START PRACTICE ──
-  window.startPractice = async function(level) {
-    if (!currentTopic) return;
-    currentLevel  = level;
-    currentQIndex = 0;
-    score         = 0;
-    questions     = [];
-
-    const levelNames = { 1:'Foundation', 2:'Application', 3:'Challenge' };
-
-    // Show loading
     document.getElementById('practice-selector').style.display = 'none';
     document.getElementById('practice-loading').style.display  = 'block';
-    document.getElementById('practice-quiz').style.display     = 'none';
-    document.getElementById('practice-results').style.display  = 'none';
+    document.getElementById('loadingLabel').textContent        = `Loading ${name}...`;
 
-    try {
-      const prompt = buildPrompt(currentGrade, currentTopic, level, levelNames[level]);
-      const PROXY_URL = 'https://nextgen-proxy.nextgentutoringco.workers.dev';
-      const response = await fetch(PROXY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 2000,
-          system: `You are an expert middle school math curriculum designer. You generate multiple choice math practice questions. Always respond with valid JSON only — no markdown, no explanation, no backticks.`,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
+    await fetchQuestionBatch();
 
-      const data = await response.json();
-      const raw  = data.content[0].text.trim();
-      questions  = JSON.parse(raw);
+    document.getElementById('practice-loading').style.display = 'none';
+    document.getElementById('practice-quiz').style.display    = 'block';
 
-      document.getElementById('practice-loading').style.display = 'none';
-      document.getElementById('practice-quiz').style.display    = 'block';
-
-      document.getElementById('quizTopicLabel').textContent =
-        `Grade ${currentGrade} · ${currentTopic.name} · Level ${level} — ${levelNames[level]}`;
-
-      renderQuestion();
-
-    } catch(err) {
-      console.error('Error generating questions:', err);
-      document.getElementById('practice-loading').style.display  = 'none';
-      document.getElementById('practice-selector').style.display = 'block';
-      alert('Something went wrong generating questions. Please try again.');
-    }
+    updateScoreDisplay();
+    renderNextQuestion();
   };
 
-  function buildPrompt(grade, topic, level, levelName) {
-    const levelDescriptions = {
-      1: 'straightforward single-step problems that directly test the core concept with clean whole numbers',
-      2: 'multi-step problems with real world context, fractions, decimals, or word problems',
-      3: 'complex problems requiring critical thinking, multiple concepts, or test-style reasoning'
-    };
-    return `Generate exactly 10 multiple choice math questions for:
-- Grade: ${grade}th grade
-- Topic: ${topic.name} (${topic.category})
-- Level ${level} (${levelName}): ${levelDescriptions[level]}
+  window.backToSubjects = function() {
+    document.getElementById('practice-selector').style.display = 'none';
+    document.getElementById('practice-home').style.display     = 'block';
+  };
+
+  // ── FETCH QUESTION BATCH ──
+  async function fetchQuestionBatch(recoveryContext) {
+    generating = true;
+    const band  = CURRICULUM[currentSubject][currentTopic.band];
+    const grade = band.label;
+
+    const recoveryNote = recoveryContext
+      ? `\nIMPORTANT: The student just got a question wrong on "${recoveryContext}". Generate a SIMILAR but different question on the exact same concept to give them a chance to prove they understand it.`
+      : '';
+
+    const prompt = `You are an expert ${currentSubject} curriculum designer for K-12 students.
+
+Generate exactly 5 multiple choice ${currentSubject} questions for:
+- Grade band: ${grade}
+- Topic: ${currentTopic.name} (${currentTopic.category})
+- Subject: ${currentSubject}
+${recoveryNote}
 
 Requirements:
 - Each question has exactly 4 answer choices labeled A, B, C, D
 - Exactly one correct answer per question
-- Include a clear, concise explanation of why the correct answer is right
-- Questions should be appropriate for ${grade}th grade middle school students
-- Make questions varied — different problem types, not repetitive
-- For Level 3, include at least 2 word problems
+- Clear, concise explanation of why the correct answer is right
+- Appropriate difficulty for ${grade} grade level students
+- Vary the question types and difficulty slightly across the 5 questions
+- Include a short "concept" field (1-2 sentences) summarizing the key concept being tested — used as a reminder if the student gets it wrong
+- For math: include actual numbers and calculations
+- For reading/writing: create short 3-5 sentence passages or sentences to analyze
+- For SAT: mirror actual SAT/ACT style and difficulty
 
-Return ONLY this JSON array, nothing else:
+Return ONLY this JSON array, nothing else, no markdown:
 [
   {
     "question": "question text here",
     "choices": ["A) choice", "B) choice", "C) choice", "D) choice"],
     "correct": "A",
-    "explanation": "explanation of why A is correct"
+    "explanation": "clear explanation of why A is correct",
+    "concept": "brief reminder of the key concept this question tests"
   }
 ]`;
+
+    try {
+      const res  = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          system: 'You are an expert K-12 curriculum designer. Generate multiple choice questions. Always respond with valid JSON only — no markdown, no backticks, no explanation outside the JSON.',
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      const data = await res.json();
+      const raw  = data.content[0].text.trim().replace(/```json|```/g,'').trim();
+      const batch = JSON.parse(raw);
+      questionBuffer.push(...batch);
+    } catch(e) {
+      console.error('Error fetching questions:', e);
+    }
+    generating = false;
   }
 
   // ── RENDER QUESTION ──
-  function renderQuestion() {
-    answered = false;
-    const q   = questions[currentQIndex];
-    const pct = (currentQIndex / 10) * 100;
+  function renderNextQuestion() {
+    if (questionBuffer.length < 2 && !generating) {
+      fetchQuestionBatch();
+    }
 
-    document.getElementById('qNum').textContent          = currentQIndex + 1;
-    document.getElementById('quizProgressBar').style.width = pct + '%';
-    document.getElementById('questionText').textContent  = q.question;
-    document.getElementById('scoreDisplay').textContent  = `${score}/${currentQIndex}`;
-    document.getElementById('feedbackBox').style.display = 'none';
-    document.getElementById('nextBtn').style.display     = 'none';
+    currentQuestion = questionBuffer.shift();
+    if (!currentQuestion) {
+      setTimeout(renderNextQuestion, 800);
+      return;
+    }
+
+    const q        = currentQuestion;
+    const qNum     = totalAnswered + 1;
+
+    document.getElementById('quizHeading').textContent      = `Question ${qNum}`;
+    document.getElementById('quizTopicLabel').textContent   = `${currentTopic.name} · ${currentTopic.category}`;
+    document.getElementById('questionText').textContent     = q.question;
+    document.getElementById('feedbackBox').style.display    = 'none';
+    document.getElementById('nextBtn').style.display        = 'none';
+    document.getElementById('recoveryTag').style.display    = isRecovery ? 'block' : 'none';
+    document.getElementById('conceptReminder').style.display = 'none';
 
     const letters = ['A','B','C','D'];
-    const container = document.getElementById('choicesContainer');
-    container.innerHTML = q.choices.map((choice, i) => `
+    document.getElementById('choicesContainer').innerHTML = q.choices.map((choice, i) => `
       <button class="choice-btn" onclick="selectAnswer(this,'${letters[i]}')">
         <span class="choice-letter">${letters[i]}</span>
         ${choice.replace(/^[A-D]\)\s*/,'')}
@@ -1258,17 +1557,29 @@ Return ONLY this JSON array, nothing else:
   }
 
   // ── ANSWER SELECTION ──
-  window.selectAnswer = function(btn, selected) {
-    if (answered) return;
-    answered = true;
-
-    const q       = questions[currentQIndex];
+  window.selectAnswer = async function(btn, selected) {
+    const q       = currentQuestion;
     const correct = q.correct;
     const isRight = selected === correct;
 
-    if (isRight) score++;
+    totalAnswered++;
 
-    // Style all buttons
+    // Update SmartScore
+    if (isRight) {
+      streak++;
+      const gain = Math.max(4, 8 - Math.floor(smartScore / 15));
+      smartScore = Math.min(100, smartScore + gain);
+      isRecovery        = false;
+      recoveryAttempted = false;
+    } else {
+      streak = 0;
+      const loss = Math.min(10, 4 + Math.floor(smartScore / 20));
+      smartScore = Math.max(0, smartScore - loss);
+    }
+
+    updateScoreDisplay();
+
+    // Style buttons
     document.querySelectorAll('.choice-btn').forEach(b => {
       b.disabled = true;
       const letter = b.querySelector('.choice-letter').textContent.trim();
@@ -1278,74 +1589,111 @@ Return ONLY this JSON array, nothing else:
 
     // Show feedback
     const box = document.getElementById('feedbackBox');
-    box.style.display = 'block';
+    box.style.display   = 'block';
     box.style.background = isRight ? 'rgba(26,92,56,0.06)' : 'rgba(192,57,43,0.05)';
-    box.style.border = `1px solid ${isRight ? '#1A5C38' : '#C0392B'}`;
-    document.getElementById('feedbackTitle').style.color = isRight ? '#1A5C38' : '#C0392B';
-    document.getElementById('feedbackTitle').textContent = isRight ? 'Correct!' : 'Not quite.';
-    document.getElementById('feedbackText').textContent  = q.explanation;
+    box.style.border     = `1px solid ${isRight ? '#1A5C38' : '#C0392B'}`;
+    document.getElementById('feedbackTitle').style.color   = isRight ? '#1A5C38' : '#C0392B';
+    document.getElementById('feedbackTitle').textContent   = isRight
+      ? (streak >= 3 ? `Correct! ${streak} in a row — keep it up.` : 'Correct!')
+      : 'Not quite — here is why:';
+    document.getElementById('feedbackText').textContent    = q.explanation;
 
-    // Show next button or finish
-    const nextBtn = document.getElementById('nextBtn');
-    nextBtn.style.display = 'block';
-    if (currentQIndex === 9) {
-      nextBtn.textContent = 'See Results';
-    } else {
-      nextBtn.textContent = 'Next Question →';
+    // Show concept reminder on wrong answer
+    if (!isRight && q.concept) {
+      document.getElementById('conceptReminderText').textContent = q.concept;
+      document.getElementById('conceptReminder').style.display   = 'block';
     }
+
+    // Queue recovery question if wrong and not already recovering
+    if (!isRight && !recoveryAttempted) {
+      recoveryAttempted = true;
+      isRecovery        = true;
+      fetchQuestionBatch(q.question).then(() => {});
+    } else if (!isRight && recoveryAttempted) {
+      isRecovery        = false;
+      recoveryAttempted = false;
+    }
+
+    document.getElementById('nextBtn').style.display = 'block';
+
+    // Check milestones after showing feedback
+    checkMilestone();
   };
 
-  // ── NEXT QUESTION ──
-  window.nextQuestion = function() {
-    currentQIndex++;
-    if (currentQIndex >= 10) {
-      showResults();
+  function checkMilestone() {
+    if (smartScore >= 90 && !milestonePassed90) {
+      milestonePassed90 = true;
+      document.getElementById('nextBtn').textContent = 'See Results';
+      document.getElementById('nextBtn').onclick     = showMastery;
+    } else if (smartScore >= 70 && !milestonePassed70) {
+      milestonePassed70 = true;
+      document.getElementById('nextBtn').textContent = 'See Results';
+      document.getElementById('nextBtn').onclick     = showPassMilestone;
     } else {
-      renderQuestion();
+      document.getElementById('nextBtn').textContent = 'Next Question →';
+      document.getElementById('nextBtn').onclick     = nextQuestion;
     }
-  };
-
-  // ── RESULTS ──
-  function showResults() {
-    document.getElementById('practice-quiz').style.display    = 'none';
-    document.getElementById('practice-results').style.display = 'block';
-    document.getElementById('finalScore').textContent = score;
-
-    const pct = score / 10;
-    let emoji, msg;
-    const svgTrophy  = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H3V4h3"/><path d="M18 9h3V4h-3"/><path d="M6 4h12v7a6 6 0 0 1-12 0V4z"/><path d="M12 17v4"/><path d="M8 21h8"/></svg>`;
-    const svgStar    = `<svg width="56" height="56" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
-    const svgStrong  = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`;
-    const svgBook    = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`;
-    const svgRetry   = `<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.61"/></svg>`;
-
-    if (pct === 1)       { emoji = svgTrophy; msg = 'Perfect score! Outstanding work. You have mastered this topic at this level. Try Level ' + (currentLevel < 3 ? currentLevel + 1 : 3) + ' for a bigger challenge.'; }
-    else if (pct >= 0.8) { emoji = svgStar;   msg = 'Great job! You have a strong understanding of this topic. Review the questions you missed and try again to hit 100%.'; }
-    else if (pct >= 0.6) { emoji = svgStrong; msg = 'Good effort. You are building your understanding. Focus on the feedback from your incorrect answers and practice again.'; }
-    else if (pct >= 0.4) { emoji = svgBook;   msg = 'Keep going. This topic needs more practice. Review your notes from session with Hafeez and try Level 1 again.'; }
-    else                 { emoji = svgRetry;  msg = 'This is a tough topic — that is okay. Go back to Level 1, work through your session notes, and try again. Progress takes practice.'; }
-
-    document.getElementById('resultEmoji').innerHTML = emoji;
-    document.getElementById('resultMessage').textContent = msg;
   }
 
-  // ── RETRY / EXIT ──
-  window.retryPractice = function() {
-    startPractice(currentLevel);
+  window.nextQuestion = function() {
+    renderNextQuestion();
   };
 
+  // ── MILESTONE SCREENS ──
+  function showPassMilestone() {
+    document.getElementById('practice-quiz').style.display      = 'none';
+    document.getElementById('practice-milestone').style.display = 'block';
+    document.getElementById('milestoneIcon').innerHTML = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    document.getElementById('milestoneTitle').textContent   = 'Topic Passed!';
+    document.getElementById('milestoneMessage').textContent  = `Your SmartScore is ${smartScore}/100 — you have passed this topic. Keep going to reach Mastery at 90+. Mastery means you truly own this concept.`;
+    document.getElementById('milestoneContinue').textContent = 'Keep Going — Reach Mastery (90+)';
+  }
+
+  function showMastery() {
+    document.getElementById('practice-quiz').style.display      = 'none';
+    document.getElementById('practice-milestone').style.display = 'block';
+    document.getElementById('milestoneIcon').innerHTML = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H3V4h3"/><path d="M18 9h3V4h-3"/><path d="M6 4h12v7a6 6 0 0 1-12 0V4z"/><path d="M12 17v4"/><path d="M8 21h8"/></svg>`;
+    document.getElementById('milestoneTitle').textContent   = 'Mastery Achieved!';
+    document.getElementById('milestoneMessage').textContent  = `Your SmartScore is ${smartScore}/100. You have mastered ${currentTopic.name}. That means you can answer these questions consistently, under pressure, at any difficulty. Pick a new topic and keep building.`;
+    document.getElementById('milestoneContinue').textContent = 'Continue Practicing This Topic';
+  }
+
+  window.continuePractice = function() {
+    document.getElementById('practice-milestone').style.display = 'none';
+    document.getElementById('practice-quiz').style.display      = 'block';
+    renderNextQuestion();
+  };
+
+  // ── SCORE DISPLAY ──
+  function updateScoreDisplay() {
+    const score = Math.round(smartScore);
+    document.getElementById('smartScoreDisplay').textContent = score;
+    document.getElementById('smartScoreBar').style.width     = score + '%';
+    document.getElementById('streakDisplay').textContent     = streak;
+
+    // Color the score
+    const el = document.getElementById('smartScoreDisplay');
+    if (score >= 90)      el.style.color = '#1A5C38';
+    else if (score >= 70) el.style.color = 'var(--gold)';
+    else                  el.style.color = 'var(--navy)';
+  }
+
+  // ── EXIT ──
   window.exitPractice = function() {
-    document.getElementById('practice-results').style.display  = 'none';
-    document.getElementById('practice-quiz').style.display     = 'none';
-    document.getElementById('practice-loading').style.display  = 'none';
-    document.getElementById('practice-selector').style.display = 'block';
-    document.getElementById('level-selector').style.display    = 'none';
-    document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
-    currentTopic = null;
+    document.getElementById('practice-quiz').style.display      = 'none';
+    document.getElementById('practice-loading').style.display   = 'none';
+    document.getElementById('practice-milestone').style.display = 'none';
+    document.getElementById('practice-selector').style.display  = 'block';
+    document.getElementById('practice-home').style.display      = 'none';
+    questionBuffer = [];
+    currentTopic   = null;
+    smartScore     = 0;
+    streak         = 0;
   };
 
-  // Initialize topic grid on load
-  renderTopics();
+  // Initialize
+  document.getElementById('practice-home').style.display     = 'block';
+  document.getElementById('practice-selector').style.display = 'none';
 </script>
 
 </body>
