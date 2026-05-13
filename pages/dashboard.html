@@ -459,7 +459,7 @@
     .preload-label { font-size:0.72rem; color:var(--pt-subtext); margin-top:4px; }
 
     /* ── Quiz Interface ── */
-    .quiz-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:0.75rem; }
+    .quiz-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:0.75rem; padding:1rem 1.25rem; background:var(--pt-card, var(--white)); border-radius:var(--pt-radius, 12px); border:1px solid rgba(0,0,0,0.06); }
     .quiz-topic-label { font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--pt-primary, var(--gold)); margin-bottom:3px; }
     .quiz-heading { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--pt-text, var(--navy)); }
 
@@ -2167,6 +2167,7 @@ Requirements:
 - Clear explanation of why the correct answer is right
 - Include a brief "concept" field (1-2 sentences) — the key idea being tested
 - Appropriate difficulty for ${grade} students
+- NEVER use emojis, emoji characters, or unicode symbols in questions or answers. Use plain text only.
 - Vary question types across the 5 questions
 ${isYoung ? '- Use simple everyday words. Make it friendly and encouraging. Short questions.' : ''}
 ${currentSubject === 'math' ? '- Include actual numbers and calculations' : ''}
@@ -2374,6 +2375,59 @@ Return ONLY this JSON array, no markdown, no backticks:
   document.getElementById('practice-selector').style.display = 'none';
   applyTheme('68');
 
+
+  // ── PREFETCH ON HOVER ──
+  let prefetchCache = {};
+  let prefetchPending = null;
+
+  window.prefetchTopic = async function(id, name, category, grade) {
+    const key = id + '-' + grade;
+    if (prefetchCache[key] || prefetchPending === key) return;
+    prefetchPending = key;
+
+    // Silently start fetching in background
+    const tempTopic = { id, name: name.trim(), category: category.trim(), band: grade };
+    const savedTopic = currentTopic;
+    currentTopic = tempTopic;
+
+    try {
+      await fetchQuestionBatch();
+      prefetchCache[key] = questionBuffer.slice(); // save prefetched questions
+    } catch(e) {}
+
+    currentTopic = savedTopic;
+    prefetchPending = null;
+  };
+
+  // Override selectTopic to use prefetched questions if available
+  const _originalSelectTopic = window.selectTopic;
+  window.selectTopic = async function(id, name, category, grade) {
+    const key = id + '-' + grade;
+    if (prefetchCache[key] && prefetchCache[key].length >= 3) {
+      // Use prefetched questions
+      currentTopic      = { id, name, category, band: grade };
+      smartScore        = 0; streak = 0; totalAnswered = 0;
+      isRecovery        = false; recoveryAttempted = false;
+      milestonePassed70 = false; milestonePassed90 = false;
+      questionBuffer    = prefetchCache[key];
+      delete prefetchCache[key];
+
+      const themeKey = AGE_THEMES[grade] || '68';
+      applyTheme(themeKey);
+
+      document.getElementById('practice-selector').style.display  = 'none';
+      document.getElementById('practice-preloading').style.display = 'none';
+      document.getElementById('practice-quiz').style.display       = 'block';
+      document.getElementById('practice-milestone').style.display  = 'none';
+      document.getElementById('quizTopicLabel').textContent        = `${name} · ${category}`;
+      updateScoreDisplay();
+      renderNextQuestion();
+      fetchQuestionBatch(); // refill buffer silently
+    } else {
+      // No prefetch — go through normal flow
+      await _originalSelectTopic(id, name, category, grade);
+    }
+  };
 
 </script>
 
