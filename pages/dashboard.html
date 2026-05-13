@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — NextGen Tutoring</title>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#112240" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NextGen" />
+  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png" />
   <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -539,6 +547,72 @@
     .back-btn:hover { border-color:var(--pt-primary); color:var(--pt-primary); }
     .theme-912 .back-btn { border-color:rgba(255,255,255,0.15); color:rgba(255,255,255,0.4); }
 
+
+    /* ── MOBILE OPTIMIZATIONS ── */
+    @media (max-width: 768px) {
+      /* Practice wrapper full width */
+      .practice-wrapper { padding: 0.25rem; }
+
+      /* Subject grid — 2 cols on mobile */
+      .subject-grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+      .subject-card { padding: 1.25rem; }
+      .subject-icon { width: 40px; height: 40px; }
+      .subject-name { font-size: 0.95rem; }
+      .subject-desc { display: none; }
+
+      /* Grade tabs — scrollable row */
+      .grade-tabs-wrap { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; scrollbar-width: none; }
+      .grade-tabs-wrap::-webkit-scrollbar { display: none; }
+      .grade-tab { flex-shrink: 0; white-space: nowrap; }
+
+      /* Topic grid — single col */
+      #topic-grid { grid-template-columns: 1fr !important; }
+
+      /* Quiz header — stack on mobile */
+      .quiz-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .score-cluster { width: 100%; justify-content: space-between; }
+
+      /* Question card — tighter padding */
+      .question-card { padding: 1.25rem; }
+      .question-text { font-size: 1rem; margin-bottom: 1.25rem; }
+      .theme-k2 .question-text { font-size: 1.2rem; }
+
+      /* Choice buttons — bigger touch targets */
+      .choice-btn { padding: 1rem; min-height: 52px; font-size: 0.95rem; }
+      .theme-k2 .choice-btn { min-height: 64px; font-size: 1.05rem; padding: 1rem 1.25rem; }
+
+      /* Next button — full width on mobile */
+      .next-btn { width: 100%; text-align: center; justify-content: center; padding: 1rem; font-size: 1rem; }
+      .theme-k2 .next-btn { padding: 1.1rem; font-size: 1.1rem; }
+
+      /* Milestone screen */
+      .milestone-screen { padding: 2rem 1.25rem; }
+      .milestone-title { font-size: 1.6rem; }
+      .milestone-actions { flex-direction: column; }
+      .milestone-keep-btn, .milestone-new-btn { width: 100%; text-align: center; }
+
+      /* Smart bar labels — shorter */
+      .smart-bar-labels { font-size: 0.62rem; }
+
+      /* Back button */
+      .back-btn { font-size: 0.82rem; padding: 0.5rem 1rem; min-height: 40px; }
+
+      /* Feedback box */
+      .feedback-box { padding: 1rem; }
+      .feedback-title { font-size: 0.95rem; }
+      .feedback-text { font-size: 0.85rem; }
+    }
+
+    /* ── TOUCH IMPROVEMENTS (all sizes) ── */
+    .subject-card, .topic-card, .grade-tab, .choice-btn, .next-btn,
+    .back-btn, .exit-btn, .milestone-keep-btn, .milestone-new-btn {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+    .choice-btn { min-height: 48px; }
+    .grade-tab { min-height: 40px; }
+    .subject-card { min-height: 44px; }
 
   </style>
 </head>
@@ -2303,5 +2377,14 @@ Return ONLY this JSON array, no markdown, no backticks:
 
 </script>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.log('SW error:', err));
+      });
+    }
+  </script>
 </body>
 </html>
