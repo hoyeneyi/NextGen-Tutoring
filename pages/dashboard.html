@@ -1827,7 +1827,7 @@ Return ONLY this JSON array, nothing else, no markdown:
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-6',
           max_tokens: 2000,
           system: 'You are an expert K-12 curriculum designer. Generate multiple choice questions. Always respond with valid JSON only — no markdown, no backticks, no explanation outside the JSON.',
           messages: [{ role: 'user', content: prompt }]
