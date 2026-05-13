@@ -1235,6 +1235,554 @@
   // ══ PRACTICE SYSTEM ══
   const PROXY_URL = 'https://nextgen-proxy.nextgentutoringco.workers.dev';
 
+  const CURRICULUM = {
+    math: {
+      'K': { label:'Kindergarten', categories: {
+        'Counting & Numbers': [
+          { id:'count-20',    name:'Counting to 20',        desc:'Count forward and backward from any number within 20' },
+          { id:'count-100',   name:'Counting to 100',       desc:'Count to 100 by ones and by tens' },
+          { id:'compare-k',   name:'Comparing Numbers',     desc:'Greater than, less than, and equal to within 10' },
+        ],
+        'Addition & Subtraction': [
+          { id:'add-k',       name:'Addition within 5',     desc:'Add using objects, fingers, drawings, and equations' },
+          { id:'sub-k',       name:'Subtraction within 5',  desc:'Subtract using objects, fingers, and drawings' },
+        ],
+        'Shapes & Measurement': [
+          { id:'shapes-k',    name:'2D & 3D Shapes',        desc:'Identify squares, circles, triangles, rectangles, cubes, and spheres' },
+          { id:'measure-k',   name:'Comparing Lengths',     desc:'Compare lengths using longer, shorter, and equal' },
+        ],
+      }},
+      '1st': { label:'1st Grade', categories: {
+        'Addition & Subtraction': [
+          { id:'add-20',      name:'Addition within 20',    desc:'Add with strategies — counting on, making ten, doubles' },
+          { id:'sub-20',      name:'Subtraction within 20', desc:'Subtract within 20 and understand the relationship to addition' },
+          { id:'word-1st',    name:'Word Problems',         desc:'Solve add/subtract word problems using objects and drawings' },
+        ],
+        'Place Value': [
+          { id:'tens-ones',   name:'Tens and Ones',         desc:'Understand two-digit numbers as tens and ones' },
+          { id:'compare-1st', name:'Comparing Two-Digit Numbers', desc:'Use >, =, < to compare two-digit numbers' },
+        ],
+        'Measurement & Data': [
+          { id:'measure-1st', name:'Measuring Length',      desc:'Order objects by length and measure with non-standard units' },
+          { id:'time-1st',    name:'Telling Time',          desc:'Tell time to the hour and half-hour using analog and digital clocks' },
+        ],
+      }},
+      '2nd': { label:'2nd Grade', categories: {
+        'Addition & Subtraction': [
+          { id:'add-100',     name:'Addition within 100',   desc:'Add two-digit numbers with and without regrouping' },
+          { id:'sub-100',     name:'Subtraction within 100',desc:'Subtract two-digit numbers with and without regrouping' },
+          { id:'add-1000',    name:'Addition within 1000',  desc:'Add up to four two-digit numbers and three-digit numbers' },
+        ],
+        'Place Value': [
+          { id:'hundreds',    name:'Hundreds, Tens, Ones',  desc:'Understand three-digit numbers and their place value' },
+          { id:'skip-count',  name:'Skip Counting',         desc:'Skip count by 5s, 10s, and 100s' },
+        ],
+        'Measurement & Geometry': [
+          { id:'measure-2nd', name:'Measuring in Inches & Cm', desc:'Measure lengths using rulers with inches and centimeters' },
+          { id:'time-2nd',    name:'Telling Time to 5 Minutes', desc:'Tell and write time from analog and digital clocks' },
+          { id:'money-2nd',   name:'Money',                 desc:'Count dollar bills, quarters, dimes, nickels, and pennies' },
+          { id:'shapes-2nd',  name:'Shapes & Partitions',   desc:'Partition shapes into halves, thirds, and fourths' },
+        ],
+      }},
+      '3rd': { label:'3rd Grade', categories: {
+        'Multiplication & Division': [
+          { id:'mult-intro',  name:'Intro to Multiplication',desc:'Understand multiplication as equal groups and arrays' },
+          { id:'div-intro',   name:'Intro to Division',     desc:'Understand division as sharing equally and repeated subtraction' },
+          { id:'times-tables',name:'Times Tables (1–10)',   desc:'Memorize and apply multiplication facts through 10×10' },
+          { id:'mult-div-rel',name:'Multiplication & Division Relationship', desc:'Use fact families and inverse operations' },
+        ],
+        'Fractions': [
+          { id:'frac-intro',  name:'Intro to Fractions',    desc:'Equal parts, numerator, denominator — unit fractions' },
+          { id:'frac-num-line',name:'Fractions on a Number Line', desc:'Place fractions on a number line between 0 and 1' },
+          { id:'frac-compare',name:'Comparing Fractions',   desc:'Compare fractions with same numerator or denominator' },
+        ],
+        'Measurement & Data': [
+          { id:'area-3rd',    name:'Area',                  desc:'Find area by counting unit squares and using multiplication' },
+          { id:'perim-3rd',   name:'Perimeter',             desc:'Find perimeter of polygons by adding side lengths' },
+          { id:'time-3rd',    name:'Time Intervals',        desc:'Tell time and solve elapsed time problems' },
+        ],
+      }},
+      '4th': { label:'4th Grade', categories: {
+        'Multiplication & Division': [
+          { id:'mult-adv',    name:'Multi-Digit Multiplication', desc:'Multiply up to four-digit numbers by one-digit numbers' },
+          { id:'div-adv',     name:'Division with Remainders', desc:'Divide with remainders and check with multiplication' },
+          { id:'factors-mult',name:'Factors & Multiples',   desc:'Find factor pairs, multiples, and identify prime vs composite' },
+        ],
+        'Fractions': [
+          { id:'frac-equiv',  name:'Equivalent Fractions',  desc:'Generate and identify equivalent fractions using models' },
+          { id:'frac-add',    name:'Adding & Subtracting Fractions', desc:'Add and subtract fractions with like denominators' },
+          { id:'mixed-num',   name:'Mixed Numbers',         desc:'Convert between mixed numbers and improper fractions' },
+          { id:'frac-dec',    name:'Fractions & Decimals',  desc:'Connect fractions with denominators 10 and 100 to decimals' },
+        ],
+        'Geometry': [
+          { id:'angles-4th',  name:'Angles',                desc:'Measure and draw angles using a protractor' },
+          { id:'lines-4th',   name:'Lines & Symmetry',      desc:'Parallel, perpendicular, and intersecting lines — line symmetry' },
+          { id:'shapes-4th',  name:'Classifying Shapes',    desc:'Classify 2D shapes by properties — sides, angles, symmetry' },
+        ],
+      }},
+      '5th': { label:'5th Grade', categories: {
+        'Operations': [
+          { id:'mult-5th',    name:'Multi-Digit Multiplication', desc:'Multiply multi-digit whole numbers fluently' },
+          { id:'div-5th',     name:'Long Division',         desc:'Divide four-digit dividends by two-digit divisors' },
+          { id:'pemdas-5th',  name:'Order of Operations',   desc:'Evaluate expressions using PEMDAS with whole numbers' },
+        ],
+        'Fractions': [
+          { id:'frac-unlike', name:'Unlike Denominators',   desc:'Add and subtract fractions with unlike denominators' },
+          { id:'frac-mult',   name:'Multiplying Fractions', desc:'Multiply fractions and whole numbers, including mixed numbers' },
+          { id:'frac-div',    name:'Dividing Fractions',    desc:'Divide unit fractions by whole numbers and whole numbers by unit fractions' },
+        ],
+        'Decimals': [
+          { id:'dec-place',   name:'Decimal Place Value',   desc:'Read, write, and compare decimals to thousandths' },
+          { id:'dec-ops',     name:'Decimal Operations',    desc:'Add, subtract, multiply, and divide decimals' },
+        ],
+        'Geometry': [
+          { id:'coord-5th',   name:'Coordinate Plane',      desc:'Plot and interpret points in the first quadrant' },
+          { id:'vol-5th',     name:'Volume',                desc:'Find volume of rectangular prisms using unit cubes and formulas' },
+        ],
+      }},
+      '6th': { label:'6th Grade', categories: {
+        'Number Sense': [
+          { id:'integers-6',  name:'Integers & Negatives',  desc:'Add, subtract, multiply, and divide positive and negative numbers' },
+          { id:'abs-val',     name:'Absolute Value',        desc:'Understand and apply absolute value in real-world contexts' },
+          { id:'ratios-6',    name:'Ratios & Rates',        desc:'Understand ratios, unit rates, and equivalent ratios' },
+          { id:'percent-6',   name:'Percents',              desc:'Find percent of a number, percent of change, and conversions' },
+          { id:'pemdas-6',    name:'Order of Operations',   desc:'PEMDAS with integers, fractions, and decimals' },
+        ],
+        'Algebra': [
+          { id:'expr-6',      name:'Variables & Expressions', desc:'Write and evaluate algebraic expressions' },
+          { id:'eq-6',        name:'One-Step Equations',    desc:'Solve one-step equations using inverse operations' },
+          { id:'ineq-6',      name:'Inequalities',          desc:'Write, solve, and graph one-step inequalities' },
+        ],
+        'Geometry': [
+          { id:'area-6',      name:'Area of Polygons',      desc:'Area of triangles, parallelograms, trapezoids, and composite figures' },
+          { id:'vol-6',       name:'Volume & Surface Area', desc:'Volume of rectangular prisms and surface area using nets' },
+          { id:'coord-6',     name:'Coordinate Plane',      desc:'Plot points in all four quadrants, distance, and reflections' },
+        ],
+        'Statistics': [
+          { id:'stats-6',     name:'Mean, Median, Mode, Range', desc:'Calculate measures of center and spread for data sets' },
+        ],
+      }},
+      '7th': { label:'7th Grade', categories: {
+        'Number Sense': [
+          { id:'rational-7',  name:'Rational Number Operations', desc:'Add, subtract, multiply, divide all rational numbers including negatives' },
+          { id:'percent-7',   name:'Percent Applications',  desc:'Tax, tip, discount, markup, and percent change' },
+          { id:'prop-7',      name:'Proportional Relationships', desc:'Identify and use proportional relationships from tables and graphs' },
+          { id:'scale-7',     name:'Scale & Similar Figures', desc:'Scale factors, scale drawings, and indirect measurement' },
+        ],
+        'Algebra': [
+          { id:'two-step-7',  name:'Two-Step Equations',    desc:'Solve equations requiring two inverse operations' },
+          { id:'ineq-7',      name:'Two-Step Inequalities', desc:'Solve and graph two-step inequalities' },
+          { id:'dist-prop',   name:'Distributive Property', desc:'Expand and factor expressions using the distributive property' },
+          { id:'like-terms',  name:'Combining Like Terms',  desc:'Simplify expressions by combining like terms' },
+        ],
+        'Geometry': [
+          { id:'angles-7',    name:'Angles & Triangles',    desc:'Supplementary, complementary, vertical, and triangle angle sum' },
+          { id:'circles-7',   name:'Circles',               desc:'Circumference and area of circles using pi' },
+          { id:'surface-7',   name:'Surface Area & Volume', desc:'Surface area and volume of prisms and pyramids' },
+        ],
+        'Statistics': [
+          { id:'prob-7',      name:'Probability',           desc:'Simple and compound probability — theoretical and experimental' },
+          { id:'sample-7',    name:'Sampling & Inference',  desc:'Use random samples to draw inferences about populations' },
+        ],
+      }},
+      '8th': { label:'8th Grade', categories: {
+        'Algebra': [
+          { id:'linear-8',    name:'Linear Equations',      desc:'Solve multi-step equations with variables on both sides' },
+          { id:'systems-8',   name:'Systems of Equations',  desc:'Solve systems by graphing, substitution, and elimination' },
+          { id:'slope-8',     name:'Slope & Rate of Change', desc:'Calculate slope and interpret rate of change in graphs and tables' },
+          { id:'functions-8', name:'Functions',             desc:'Understand, evaluate, and compare functions from tables, graphs, equations' },
+          { id:'linear-fn',   name:'Linear vs Nonlinear',   desc:'Distinguish between linear and nonlinear functions' },
+        ],
+        'Geometry': [
+          { id:'pythagorean', name:'Pythagorean Theorem',   desc:'Apply a² + b² = c² to find missing sides and distances' },
+          { id:'transform-8', name:'Transformations',       desc:'Translations, reflections, rotations, and dilations on the coordinate plane' },
+          { id:'similar-8',   name:'Similar & Congruent Figures', desc:'Angle-Angle similarity, congruence transformations' },
+          { id:'vol-8',       name:'Volume of Cylinders, Cones & Spheres', desc:'Apply volume formulas to 3D figures' },
+        ],
+        'Number Sense': [
+          { id:'exponents-8', name:'Exponents & Scientific Notation', desc:'Laws of exponents and operations in scientific notation' },
+          { id:'square-root', name:'Square & Cube Roots',  desc:'Evaluate perfect squares and cubes, estimate irrational numbers' },
+        ],
+        'Statistics': [
+          { id:'scatter-8',   name:'Scatter Plots',         desc:'Construct, interpret, and write equations for lines of best fit' },
+          { id:'two-way',     name:'Two-Way Tables',        desc:'Construct and interpret two-way frequency tables' },
+        ],
+      }},
+      '9th': { label:'9th Grade (Algebra 1)', categories: {
+        'Linear Relationships': [
+          { id:'linear-9',    name:'Linear Equations & Inequalities', desc:'Solve and graph linear equations and inequalities in one variable' },
+          { id:'systems-9',   name:'Systems of Equations',  desc:'Solve systems graphically, by substitution, and elimination' },
+          { id:'slope-int',   name:'Slope-Intercept Form',  desc:'Write, graph, and interpret y = mx + b' },
+          { id:'std-form',    name:'Standard Form',         desc:'Convert and graph linear equations in standard form Ax + By = C' },
+        ],
+        'Functions': [
+          { id:'fn-9',        name:'Functions & Function Notation', desc:'Identify functions, use f(x) notation, and evaluate' },
+          { id:'fn-transform',name:'Transformations of Functions', desc:'Shifts, reflections, and stretches of parent functions' },
+        ],
+        'Polynomials & Quadratics': [
+          { id:'poly-9',      name:'Polynomials',           desc:'Add, subtract, and multiply polynomials' },
+          { id:'factor-9',    name:'Factoring',             desc:'Factor GCF, trinomials, difference of squares' },
+          { id:'quad-9',      name:'Quadratic Equations',   desc:'Solve by factoring, square root, and quadratic formula' },
+        ],
+        'Statistics': [
+          { id:'stats-9',     name:'Data Analysis',         desc:'Measures of center, spread, and interpreting data displays' },
+        ],
+      }},
+      '10th': { label:'10th Grade (Geometry)', categories: {
+        'Reasoning & Proof': [
+          { id:'proofs-10',   name:'Geometric Proofs',      desc:'Two-column proofs using postulates, theorems, and definitions' },
+          { id:'logic-10',    name:'Conditional Statements', desc:'If-then statements, converses, inverses, and contrapositives' },
+        ],
+        'Triangles & Congruence': [
+          { id:'congruent-10',name:'Triangle Congruence',   desc:'SSS, SAS, ASA, AAS — prove triangles congruent' },
+          { id:'similar-10',  name:'Triangle Similarity',   desc:'AA, SAS, SSS similarity — proportions and scale factors' },
+          { id:'trig-10',     name:'Right Triangle Trigonometry', desc:'SOH CAH TOA — find missing sides and angles' },
+          { id:'pyth-10',     name:'Pythagorean Theorem Applications', desc:'Apply to 2D and 3D problems' },
+        ],
+        'Circles': [
+          { id:'circles-10',  name:'Circle Theorems',       desc:'Arc length, sector area, inscribed angles, and tangent lines' },
+          { id:'circle-eq',   name:'Circle Equations',      desc:'Write and use the equation of a circle (x-h)² + (y-k)² = r²' },
+        ],
+        'Coordinate Geometry': [
+          { id:'coord-10',    name:'Coordinate Geometry',   desc:'Distance, midpoint, slope, and parallel/perpendicular lines' },
+          { id:'transform-10',name:'Geometric Transformations', desc:'Rigid motions and dilations on the coordinate plane' },
+        ],
+        'Area & Volume': [
+          { id:'area-10',     name:'Area of Polygons & Circles', desc:'Complex area problems including composite figures' },
+          { id:'vol-10',      name:'Volume & Surface Area', desc:'Prisms, pyramids, cylinders, cones, and spheres' },
+        ],
+      }},
+      '11th': { label:'11th Grade (Algebra 2)', categories: {
+        'Functions': [
+          { id:'poly-fn',     name:'Polynomial Functions',  desc:'Graph, factor, and find zeros of polynomial functions' },
+          { id:'rational-fn', name:'Rational Functions',    desc:'Simplify, multiply, divide, add, and subtract rational expressions' },
+          { id:'radical-fn',  name:'Radical Functions',     desc:'Simplify radicals, solve radical equations, rational exponents' },
+          { id:'exp-fn',      name:'Exponential Functions', desc:'Graph and apply exponential growth and decay' },
+          { id:'log-fn',      name:'Logarithmic Functions', desc:'Log properties, solving log equations, natural log' },
+        ],
+        'Quadratics': [
+          { id:'quad-adv',    name:'Advanced Quadratics',   desc:'Complete the square, discriminant, complex roots, vertex form' },
+          { id:'complex',     name:'Complex Numbers',       desc:'Add, subtract, multiply, and divide complex numbers' },
+        ],
+        'Sequences & Series': [
+          { id:'arith-seq',   name:'Arithmetic Sequences & Series', desc:'Find terms and partial sums of arithmetic sequences' },
+          { id:'geo-seq',     name:'Geometric Sequences & Series', desc:'Find terms, partial sums, and infinite geometric series' },
+        ],
+        'Statistics': [
+          { id:'stats-11',    name:'Normal Distribution & Z-Scores', desc:'Standard deviation, z-scores, and the empirical rule' },
+          { id:'regression',  name:'Regression Analysis',   desc:'Linear and exponential regression, correlation coefficients' },
+        ],
+      }},
+      '12th': { label:'12th Grade (Pre-Calculus)', categories: {
+        'Trigonometry': [
+          { id:'unit-circle', name:'Unit Circle',           desc:'Memorize and apply all values on the unit circle in degrees and radians' },
+          { id:'trig-fn',     name:'Trig Functions & Graphs', desc:'Graph sin, cos, tan — amplitude, period, phase shift' },
+          { id:'trig-id',     name:'Trig Identities',       desc:'Pythagorean, reciprocal, co-function, and double angle identities' },
+          { id:'trig-eq',     name:'Solving Trig Equations', desc:'Solve trig equations over given intervals' },
+        ],
+        'Functions & Analysis': [
+          { id:'composite',   name:'Composite & Inverse Functions', desc:'Form, evaluate, and find inverses of functions' },
+          { id:'limits-intro',name:'Intro to Limits',       desc:'Understand the concept of a limit graphically and numerically' },
+          { id:'conic',       name:'Conic Sections',        desc:'Parabolas, ellipses, hyperbolas — standard form and graphs' },
+        ],
+        'Vectors & Matrices': [
+          { id:'vectors',     name:'Vectors',               desc:'Magnitude, direction, dot product, and vector operations' },
+          { id:'matrices',    name:'Matrices',              desc:'Matrix operations, determinants, and solving systems with matrices' },
+        ],
+        'Probability & Statistics': [
+          { id:'perm-comb',   name:'Permutations & Combinations', desc:'Counting principles, permutations, combinations, and binomial theorem' },
+          { id:'stats-12',    name:'Statistical Inference', desc:'Confidence intervals, hypothesis testing, and margin of error' },
+        ],
+      }},
+    },
+    reading: {
+      'K': { label:'Kindergarten', categories: {
+        'Phonics': [
+          { id:'letters-k',   name:'Letter Recognition',    desc:'Identify and name all 26 uppercase and lowercase letters' },
+          { id:'phonics-k',   name:'Letter Sounds',         desc:'Match letters to their sounds — consonants and short vowels' },
+          { id:'rhyming',     name:'Rhyming Words',         desc:'Identify and produce rhyming words' },
+        ],
+        'Comprehension': [
+          { id:'listen-k',    name:'Listening Comprehension', desc:'Retell key details from a story read aloud' },
+          { id:'story-k',     name:'Story Elements',        desc:'Identify characters, setting, and major events' },
+        ],
+      }},
+      '1st': { label:'1st Grade', categories: {
+        'Phonics & Decoding': [
+          { id:'blend-1',     name:'Blends & Digraphs',     desc:'Read words with consonant blends (fl, br) and digraphs (sh, ch, th)' },
+          { id:'vowels-1',    name:'Long & Short Vowels',   desc:'Distinguish long and short vowel sounds in words' },
+          { id:'sight-1',     name:'Sight Words',           desc:'Read the most common high-frequency words automatically' },
+        ],
+        'Comprehension': [
+          { id:'main-idea-1', name:'Main Idea',             desc:'Identify the main topic and key details in a text' },
+          { id:'retell-1',    name:'Retelling Stories',     desc:'Retell stories including characters, setting, and major events' },
+        ],
+      }},
+      '2nd': { label:'2nd Grade', categories: {
+        'Phonics': [
+          { id:'decode-2',    name:'Decoding Multisyllabic Words', desc:'Break words into syllables to decode longer words' },
+          { id:'vocab-2',     name:'Vocabulary in Context', desc:'Determine the meaning of unknown words using context clues' },
+        ],
+        'Comprehension': [
+          { id:'main-2',      name:'Main Idea & Details',   desc:'Identify the main idea and explain how key details support it' },
+          { id:'compare-2',   name:'Comparing Texts',       desc:'Compare and contrast two texts on the same topic' },
+          { id:'purpose-2',   name:"Author's Purpose",      desc:'Identify why an author writes — to inform, entertain, or persuade' },
+        ],
+      }},
+      '3rd': { label:'3rd Grade', categories: {
+        'Comprehension': [
+          { id:'main-3',      name:'Main Idea & Details',   desc:'Determine the main idea and explain how it is supported' },
+          { id:'infer-3',     name:'Making Inferences',     desc:'Use text evidence and background knowledge to make inferences' },
+          { id:'text-str-3',  name:'Text Structure',        desc:'Identify cause/effect, problem/solution, and compare/contrast structures' },
+          { id:'summarize-3', name:'Summarizing',           desc:'Summarize fiction and nonfiction texts in your own words' },
+        ],
+        'Vocabulary': [
+          { id:'context-3',   name:'Context Clues',         desc:'Determine word meaning using clues in surrounding sentences' },
+          { id:'fig-lang-3',  name:'Figurative Language',   desc:'Identify similes and metaphors in text' },
+        ],
+      }},
+      '4th': { label:'4th Grade', categories: {
+        'Comprehension': [
+          { id:'main-4',      name:'Main Idea & Theme',     desc:'Determine the theme in fiction and main idea in nonfiction' },
+          { id:'infer-4',     name:'Evidence-Based Inference', desc:'Make inferences and cite specific text evidence' },
+          { id:'point-view-4',name:'Point of View',         desc:"Compare narrator's and character's point of view" },
+          { id:'compare-4',   name:'Comparing Accounts',    desc:'Compare a firsthand and secondhand account of the same event' },
+        ],
+        'Vocabulary': [
+          { id:'roots-4',     name:'Roots & Affixes',       desc:'Use prefixes, suffixes, and roots to determine word meaning' },
+          { id:'connotation-4',name:'Word Nuance',          desc:'Distinguish between words with similar meanings — shades of meaning' },
+        ],
+      }},
+      '5th': { label:'5th Grade', categories: {
+        'Comprehension': [
+          { id:'theme-5',     name:'Theme & Central Idea',  desc:'Determine theme in fiction and central idea in informational text' },
+          { id:'inference-5', name:'Making Inferences',     desc:'Quote accurately when explaining what the text says explicitly and inferentially' },
+          { id:'text-str-5',  name:'Text Structure & Features', desc:'Use text features and structures to locate information' },
+          { id:'compare-5',   name:'Comparing Texts',       desc:'Integrate information from multiple texts on the same topic' },
+        ],
+        'Vocabulary': [
+          { id:'fig-5',       name:'Figurative Language',   desc:'Explain similes, metaphors, idioms, adages, and proverbs' },
+          { id:'greek-latin', name:'Greek & Latin Roots',   desc:'Use Greek and Latin roots to determine meaning of academic words' },
+        ],
+      }},
+      '6th': { label:'6th Grade', categories: {
+        'Comprehension': [
+          { id:'central-6',   name:'Central Idea & Details', desc:'Determine central idea and explain how details develop it' },
+          { id:'inference-6', name:'Inference & Evidence',   desc:'Make evidence-based inferences in literary and informational texts' },
+          { id:'author-6',    name:"Author's Purpose & Craft", desc:"Analyze how author's word choices affect meaning and tone" },
+          { id:'compare-6',   name:'Comparing Texts',        desc:'Compare how two authors write about the same topic differently' },
+        ],
+        'Vocabulary': [
+          { id:'academic-6',  name:'Academic Vocabulary',    desc:'Tier 2 words across multiple content areas' },
+          { id:'connotation-6',name:'Connotation & Denotation',desc:'Distinguish literal and figurative word meanings' },
+        ],
+      }},
+      '7th': { label:'7th Grade', categories: {
+        'Comprehension': [
+          { id:'theme-7',     name:'Theme & Central Idea',   desc:'Analyze how theme develops over the course of a text' },
+          { id:'inference-7', name:'Complex Inference',      desc:'Draw inferences from complex texts using multiple pieces of evidence' },
+          { id:'pov-7',       name:'Point of View & Perspective', desc:"Analyze how an author's perspective influences the text" },
+          { id:'argument-7',  name:'Evaluating Arguments',   desc:'Assess whether evidence supports the claims in an argument' },
+        ],
+        'Vocabulary': [
+          { id:'fig-7',       name:'Figurative Language',    desc:'Analyze alliteration, personification, hyperbole, irony, and allusion' },
+          { id:'vocab-7',     name:'Word Relationships',     desc:'Analogies, synonyms, antonyms, and nuanced meanings' },
+        ],
+      }},
+      '8th': { label:'8th Grade', categories: {
+        'Comprehension': [
+          { id:'argument-8',  name:'Analyzing Arguments',    desc:'Trace an argument, evaluate the evidence, and identify fallacies' },
+          { id:'theme-8',     name:'Theme & Textual Evidence', desc:'Cite strong and thorough textual evidence to support analysis' },
+          { id:'compare-8',   name:'Comparing Multiple Texts', desc:'Compare how similar themes are treated in different texts or media' },
+          { id:'rhetoric-8',  name:'Rhetoric & Word Choice', desc:'Analyze how specific word choices shape meaning and tone' },
+        ],
+      }},
+      '9th': { label:'9th Grade', categories: {
+        'Literary Analysis': [
+          { id:'lit-9',       name:'Literary Analysis',      desc:'Analyze character, conflict, theme, and symbol in complex literature' },
+          { id:'sat-read-9',  name:'SAT-Style Reading',      desc:'Evidence-based reading with complex passages and paired texts' },
+          { id:'nonfiction-9',name:'Informational Text Analysis', desc:'Analyze structure, purpose, and rhetoric in nonfiction' },
+        ],
+      }},
+      '10th': { label:'10th Grade', categories: {
+        'Literary Analysis': [
+          { id:'lit-10',      name:'Advanced Literary Analysis', desc:'Analyze complex themes, irony, satire, and authorial choices' },
+          { id:'rhetoric-10', name:'Rhetorical Analysis',    desc:'Identify and analyze ethos, pathos, and logos in speeches and essays' },
+          { id:'compare-10',  name:'Comparative Analysis',   desc:'Compare works across genres, time periods, and cultures' },
+        ],
+      }},
+      '11th': { label:'11th Grade', categories: {
+        'Advanced Reading': [
+          { id:'ap-lit',      name:'AP Literature Reading',  desc:'Close reading of poetry, fiction, and drama at AP level' },
+          { id:'sat-read-11', name:'SAT Reading Comprehension', desc:'Evidence-based reading — paired passages, data, complex inference' },
+          { id:'primary-src', name:'Primary Source Analysis',desc:'Analyze historical and founding documents for purpose and argument' },
+        ],
+      }},
+      '12th': { label:'12th Grade', categories: {
+        'Advanced Reading': [
+          { id:'college-read',name:'College-Level Reading',  desc:'Read and analyze complex academic texts across disciplines' },
+          { id:'synthesis',   name:'Synthesis & Research',   desc:'Synthesize information from multiple sources to support a claim' },
+          { id:'critique',    name:'Critical Analysis',      desc:'Evaluate credibility, bias, and reasoning in complex texts' },
+        ],
+      }},
+    },
+    writing: {
+      'K': { label:'Kindergarten', categories: {
+        'Writing Basics': [
+          { id:'write-name',  name:'Writing Your Name',      desc:'Write first and last name with correct capitalization' },
+          { id:'letters-w',   name:'Writing Letters',        desc:'Print all uppercase and lowercase letters legibly' },
+          { id:'sentence-k',  name:'Simple Sentences',       desc:'Write simple sentences with a capital letter and period' },
+        ],
+      }},
+      '1st': { label:'1st Grade', categories: {
+        'Grammar': [
+          { id:'cap-1',       name:'Capitalization',         desc:'Capitalize the first word of sentences and the pronoun I' },
+          { id:'punct-1',     name:'End Punctuation',        desc:'Use periods, question marks, and exclamation marks correctly' },
+          { id:'noun-verb-1', name:'Nouns & Verbs',          desc:'Identify and use common nouns and verbs in sentences' },
+        ],
+        'Writing': [
+          { id:'opinion-1',   name:'Opinion Writing',        desc:'State an opinion and give a reason with a closing statement' },
+          { id:'narrative-1', name:'Narrative Writing',      desc:'Write narratives about real or imagined events with sequence' },
+        ],
+      }},
+      '2nd': { label:'2nd Grade', categories: {
+        'Grammar': [
+          { id:'adj-2',       name:'Adjectives',             desc:'Use adjectives to describe nouns and improve sentences' },
+          { id:'plural-2',    name:'Plural Nouns',           desc:'Form and use regular and irregular plural nouns' },
+          { id:'comma-2',     name:'Commas in Series',       desc:'Use commas in a series of three or more items' },
+        ],
+        'Writing': [
+          { id:'inform-2',    name:'Informative Writing',    desc:'Write to inform with a topic sentence, facts, and closing' },
+          { id:'paragraph-2', name:'Paragraph Structure',    desc:'Write organized paragraphs with topic sentence and details' },
+        ],
+      }},
+      '3rd': { label:'3rd Grade', categories: {
+        'Grammar': [
+          { id:'pos-3',       name:'Parts of Speech',        desc:'Identify nouns, verbs, adjectives, adverbs, and pronouns' },
+          { id:'tense-3',     name:'Verb Tense',             desc:'Use correct verb tense — past, present, and future consistently' },
+          { id:'poss-3',      name:"Possessive Nouns",       desc:"Form and use singular and plural possessive nouns with apostrophes" },
+        ],
+        'Writing': [
+          { id:'opinion-3',   name:'Opinion Writing',        desc:'Write opinion essays with clear reasons and linking words' },
+          { id:'narrative-3', name:'Narrative Writing',      desc:'Write narratives with dialogue, description, and logical sequence' },
+          { id:'inform-3',    name:'Informative Writing',    desc:'Write to explain or inform with facts, definitions, and details' },
+        ],
+      }},
+      '4th': { label:'4th Grade', categories: {
+        'Grammar': [
+          { id:'clause-4',    name:'Phrases & Clauses',      desc:'Identify relative pronouns, clauses, and prepositional phrases' },
+          { id:'punct-4',     name:'Punctuation',            desc:'Use commas before coordinating conjunctions and quotation marks' },
+          { id:'misc-4',      name:'Commonly Confused Words', desc:'Their/there/they\'re, your/you\'re, its/it\'s, affect/effect' },
+        ],
+        'Writing': [
+          { id:'opinion-4',   name:'Opinion Essay',          desc:'Write multi-paragraph opinion essays with clear structure and transitions' },
+          { id:'research-4',  name:'Research Writing',       desc:'Write informational reports using multiple sources' },
+        ],
+      }},
+      '5th': { label:'5th Grade', categories: {
+        'Grammar': [
+          { id:'conj-5',      name:'Conjunctions',           desc:'Use coordinating and subordinating conjunctions correctly' },
+          { id:'style-5',     name:'Word Choice & Style',    desc:'Use precise language and domain-specific vocabulary' },
+          { id:'punct-5',     name:'Advanced Punctuation',   desc:'Commas after introductory elements, between clauses' },
+        ],
+        'Writing': [
+          { id:'argument-5',  name:'Argumentative Writing',  desc:'Write arguments with claim, reasons, evidence, and counterclaim' },
+          { id:'narrative-5', name:'Narrative Craft',        desc:'Write narratives with dialogue, sensory detail, and pacing' },
+          { id:'inform-5',    name:'Explanatory Writing',    desc:'Explain a concept clearly using facts, definitions, and examples' },
+        ],
+      }},
+      '6th': { label:'6th Grade', categories: {
+        'Grammar': [
+          { id:'gram-6',      name:'Grammar & Usage',        desc:'Pronouns in subjective, objective, possessive case' },
+          { id:'punct-6',     name:'Punctuation & Mechanics', desc:'Commas, dashes, parentheses, and semicolons' },
+          { id:'style-6',     name:'Precise Language',       desc:'Choose words for effect, eliminate wordiness, vary sentences' },
+        ],
+        'Writing': [
+          { id:'argument-6',  name:'Argument Writing',       desc:'Claims, reasons, evidence, counterclaim — 5-paragraph structure' },
+          { id:'thesis-6',    name:'Thesis Statements',      desc:'Write clear, arguable thesis statements' },
+          { id:'evidence-6',  name:'Using Evidence',         desc:'Introduce, quote, and analyze evidence correctly' },
+        ],
+      }},
+      '7th': { label:'7th Grade', categories: {
+        'Grammar': [
+          { id:'gram-7',      name:'Phrases & Clauses',      desc:'Dependent/independent clauses, phrase types, and sentence structure' },
+          { id:'parallel-7',  name:'Parallel Structure',     desc:'Use parallel structure in lists and paired ideas' },
+          { id:'misc-7',      name:'Misplaced Modifiers',    desc:'Identify and fix dangling and misplaced modifiers' },
+        ],
+        'Writing': [
+          { id:'argument-7w', name:'Argumentative Essay',    desc:'Multi-paragraph essays with sophisticated claims and rebuttals' },
+          { id:'inform-7',    name:'Informative/Explanatory',desc:'Research-based writing with transitions, formatting, and citations' },
+        ],
+      }},
+      '8th': { label:'8th Grade', categories: {
+        'Grammar': [
+          { id:'gram-8',      name:'Advanced Grammar',       desc:'Verbals — gerunds, participles, infinitives — and their phrases' },
+          { id:'punct-8',     name:'Advanced Punctuation',   desc:'Semicolons, colons, dashes, hyphens in context' },
+          { id:'style-8',     name:'Style & Voice',          desc:'Develop a distinct voice and appropriate style for audience and purpose' },
+        ],
+        'Writing': [
+          { id:'argument-8w', name:'Argument & Persuasion',  desc:'Write persuasive essays with sophisticated reasoning and rebuttals' },
+          { id:'analysis-8',  name:'Literary Analysis Essay',desc:'Analyze theme, character, or author\'s craft in a structured essay' },
+        ],
+      }},
+      '9th': { label:'9th Grade', categories: {
+        'Writing': [
+          { id:'sat-write-9', name:'SAT Writing & Language', desc:'Grammar, punctuation, sentence structure, and passage revision' },
+          { id:'analysis-9',  name:'Analytical Essay',       desc:'Evidence-based essays analyzing literature and nonfiction' },
+          { id:'research-9',  name:'Research Paper Basics',  desc:'Thesis, source integration, citations, and bibliography' },
+        ],
+      }},
+      '10th': { label:'10th Grade', categories: {
+        'Writing': [
+          { id:'rhetoric-w10',name:'Rhetorical Writing',     desc:'Write speeches and essays using ethos, pathos, and logos effectively' },
+          { id:'sat-write-10',name:'SAT Grammar & Style',    desc:'Advanced grammar, conciseness, and style questions' },
+          { id:'synthesis-10',name:'Synthesis Essay',        desc:'Integrate multiple sources into a coherent, sourced argument' },
+        ],
+      }},
+      '11th': { label:'11th Grade', categories: {
+        'Writing': [
+          { id:'ap-write',    name:'AP-Style Essays',        desc:'Synthesis, rhetorical analysis, and argument — AP format and scoring' },
+          { id:'sat-write-11',name:'SAT Writing Mastery',    desc:'All SAT writing and language question types at full difficulty' },
+          { id:'college-app', name:'College Application Writing', desc:'Personal statement structure, voice, and storytelling' },
+        ],
+      }},
+      '12th': { label:'12th Grade', categories: {
+        'Writing': [
+          { id:'college-essay',name:'College Essay Craft',   desc:'Develop compelling personal statements and supplemental essays' },
+          { id:'research-12', name:'Research Paper',         desc:'Full research paper with thesis, body, citations, and works cited' },
+          { id:'college-write',name:'College-Level Writing', desc:'Academic writing conventions for college — argument and analysis' },
+        ],
+      }},
+    },
+    sat: {
+      'SAT': { label:'SAT / ACT', categories: {
+        'SAT Math': [
+          { id:'sat-alg',     name:'Heart of Algebra',       desc:'Linear equations, inequalities, and systems — the core of SAT math' },
+          { id:'sat-data',    name:'Problem Solving & Data Analysis', desc:'Ratios, percentages, statistics, and data interpretation' },
+          { id:'sat-adv',     name:'Passport to Advanced Math', desc:'Quadratics, polynomials, and complex equations and functions' },
+          { id:'sat-geom',    name:'Additional Topics in Math', desc:'Geometry, trigonometry, and complex numbers' },
+        ],
+        'SAT Reading': [
+          { id:'sat-read',    name:'Evidence-Based Reading', desc:'Complex passages, paired texts, and data graphics' },
+          { id:'sat-vocab',   name:'Words in Context',       desc:'Determine precise word meanings from academic passage context' },
+          { id:'sat-info',    name:'Informational Graphics', desc:'Interpret tables, graphs, and charts alongside passages' },
+        ],
+        'SAT Writing & Language': [
+          { id:'sat-gram',    name:'Grammar & Conventions',  desc:'Punctuation, subject-verb agreement, pronoun case, modifiers' },
+          { id:'sat-style',   name:'Expression of Ideas',    desc:'Conciseness, transitions, relevance, and passage organization' },
+          { id:'sat-rhet',    name:'Rhetorical Skills',      desc:'Purpose, audience, and evidence questions' },
+        ],
+        'ACT': [
+          { id:'act-eng',     name:'ACT English',            desc:'Grammar, punctuation, usage, and rhetorical skills — 75 questions' },
+          { id:'act-math',    name:'ACT Math',               desc:'Pre-algebra through pre-calculus — 60 questions in 60 minutes' },
+          { id:'act-read',    name:'ACT Reading',            desc:'Prose fiction, social science, humanities, and natural science passages' },
+          { id:'act-sci',     name:'ACT Science',            desc:'Data representation, research summaries, and conflicting viewpoints' },
+        ],
+      }},
+    },
+  };
+
+
   // ── AGE THEMES ──
   const AGE_THEMES = {
     'K':   'k2', '1st': 'k2', '2nd': 'k2',
