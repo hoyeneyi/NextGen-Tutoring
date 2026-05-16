@@ -81,7 +81,7 @@
     .sec-title{font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:1rem;}
     .sec-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
 
-    /* TABLE */
+    /* STUDENT TABLE */
     .table-wrap{background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:10px;overflow:hidden;}
     table{width:100%;border-collapse:collapse;}
     thead th{background:var(--navy);color:var(--gold);font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.85rem 1rem;text-align:left;}
@@ -106,8 +106,7 @@
     .modal{background:var(--white);border-radius:14px;padding:2rem;width:100%;max-width:480px;position:relative;}
     .modal-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;}
     .modal-sub{font-size:0.82rem;color:var(--text-light);margin-bottom:1.5rem;}
-    .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:var(--text-light);line-height:1;}
-    .modal-close svg{width:18px;height:18px;}
+    .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.2rem;color:var(--text-light);cursor:pointer;line-height:1;}
     .modal-close:hover{color:var(--navy);}
     .fg{margin-bottom:1.1rem;}
     .fl{display:block;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.4rem;}
@@ -123,9 +122,11 @@
     .btn-danger{background:transparent;color:#C0392B;border:1px solid rgba(192,57,43,0.2);}
     .btn-danger:hover{background:rgba(192,57,43,0.05);}
 
-    /* FORMS */
+    /* ADD STUDENT FORM */
     .add-card{background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;}
     .add-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+    /* NOTES */
     .note-card{background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:10px;padding:1.5rem;margin-bottom:1rem;}
     .note-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;}
     .note-student{font-weight:600;color:var(--navy);font-size:0.875rem;}
@@ -141,59 +142,10 @@
     .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--navy);color:var(--white);padding:0.85rem 1.25rem;border-radius:8px;font-size:0.85rem;font-weight:500;z-index:300;transform:translateY(80px);opacity:0;transition:all 0.3s;border-left:3px solid var(--gold);}
     .toast.show{transform:translateY(0);opacity:1;}
 
-    /* ── SESSION ARCHITECT ── */
-    .architect-card{background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:12px;padding:1.75rem;margin-bottom:1.5rem;}
-    .architect-header{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;}
-    .architect-icon{width:44px;height:44px;background:var(--gold-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;}
-    .architect-icon svg{width:22px;height:22px;}
-    .architect-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--navy);}
-    .architect-sub{font-size:0.8rem;color:var(--text-light);margin-top:2px;}
-
-    .student-context-box{background:var(--off-white);border:1px solid rgba(11,31,58,0.08);border-radius:10px;padding:1.25rem;margin-bottom:1.25rem;display:none;}
-    .context-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;}
-    .context-item{}
-    .context-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.3rem;}
-    .context-val{font-size:0.875rem;font-weight:600;color:var(--navy);}
-    .context-progress{display:flex;flex-direction:column;gap:4px;}
-    .context-prog-row{display:flex;align-items:center;gap:8px;}
-    .context-prog-label{font-size:0.72rem;color:var(--text-mid);width:70px;flex-shrink:0;}
-    .context-prog-bar{flex:1;height:5px;background:rgba(11,31,58,0.08);border-radius:100px;overflow:hidden;}
-    .context-prog-fill{height:100%;background:var(--gold);border-radius:100px;}
-    .context-prog-pct{font-size:0.68rem;font-weight:700;color:var(--gold);width:30px;text-align:right;}
-
-    .recent-notes-box{background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:1rem;margin-top:0.75rem;}
-    .recent-notes-title{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
-    .recent-note-item{font-size:0.8rem;color:var(--text-mid);line-height:1.55;padding:0.4rem 0;border-bottom:1px solid rgba(201,168,76,0.1);}
-    .recent-note-item:last-child{border-bottom:none;}
-    .recent-note-date{font-size:0.68rem;color:var(--text-light);margin-bottom:2px;}
-
-    .phase-indicator{display:flex;align-items:center;gap:0;margin-bottom:1.5rem;}
-    .phase-step{display:flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:600;color:var(--text-light);padding:0.5rem 1rem;border-radius:6px;transition:all 0.3s;}
-    .phase-step.active{background:rgba(201,168,76,0.1);color:var(--gold);}
-    .phase-step.done{color:rgba(26,92,56,0.8);}
-    .phase-step svg{width:14px;height:14px;}
-    .phase-arrow{color:rgba(11,31,58,0.2);margin:0 4px;font-size:0.8rem;}
-
-    .architect-output{background:var(--navy);border-radius:12px;padding:2rem;margin-top:1.5rem;display:none;}
-    .output-phase-label{font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;}
-    .output-content{font-size:0.875rem;color:rgba(255,255,255,0.75);line-height:1.85;white-space:pre-wrap;font-family:var(--font-body);}
-    .reviewer-notes-box{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:1.25rem;margin-top:1.25rem;}
-    .reviewer-notes-label{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
-    .reviewer-notes-text{font-size:0.82rem;color:rgba(255,255,255,0.6);line-height:1.7;white-space:pre-wrap;}
-
-    .generating-indicator{text-align:center;padding:2.5rem;display:none;}
-    .generating-indicator .gen-label{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;}
-    .generating-indicator .gen-sub{font-size:0.82rem;color:var(--text-light);margin-bottom:1rem;}
-
-    .download-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);font-family:var(--font-body);font-weight:700;font-size:0.85rem;padding:0.7rem 1.25rem;border:none;border-radius:6px;cursor:pointer;margin-top:1.25rem;transition:background 0.2s;}
-    .download-btn:hover{background:var(--gold-light);}
-    .download-btn svg{width:16px;height:16px;}
-
     @media(max-width:768px){
       .sidebar{transform:translateX(-100%);}
       .main{margin-left:0;}
       .add-grid{grid-template-columns:1fr;}
-      .architect-output{padding:1.25rem;}
     }
   </style>
 </head>
@@ -214,12 +166,14 @@
 <!-- UPDATE MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+    <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-title" id="modalTitle">Update Student</div>
     <div class="modal-sub" id="modalSub">Edit progress and session details</div>
     <input type="hidden" id="modalStudentId" />
+    <div class="fg">
+      <label class="fl">Portal Email Address <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-light);">(must match student login)</span></label>
+      <input type="email" class="fi" id="modalEmail" placeholder="student@email.com" />
+    </div>
     <div class="fg">
       <label class="fl">Sessions Completed</label>
       <input type="number" class="fi" id="modalSessions" min="0" placeholder="0" />
@@ -230,7 +184,7 @@
       <small style="color:var(--text-light);font-size:0.75rem;" id="mathVal">0%</small>
     </div>
     <div class="fg">
-      <label class="fl">Reading &amp; Writing Progress (0–100)</label>
+      <label class="fl">Reading & Writing Progress (0–100)</label>
       <input type="range" id="modalReading" min="0" max="100" value="0" style="width:100%;" />
       <small style="color:var(--text-light);font-size:0.75rem;" id="readingVal">0%</small>
     </div>
@@ -277,18 +231,13 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Session Notes
       </div>
-      <div class="nav-lbl">AI Tools</div>
-      <div class="nav-item" onclick="showPage('architect')" id="nav-architect">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Session Architect
-      </div>
     </nav>
     <div class="sidebar-foot">
       <div class="admin-info">
         <div class="admin-avatar">H</div>
         <div>
           <div class="admin-name">Hafeez Oyeneyin</div>
-          <div class="admin-role">Lead Tutor &amp; Founder</div>
+          <div class="admin-role">Lead Tutor & Founder</div>
         </div>
       </div>
       <button class="sign-out" id="signOutBtn">Sign Out</button>
@@ -346,7 +295,14 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Name</th><th>Email</th><th>Sessions</th><th>Status</th><th>Math</th><th>Actions</th></tr>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Sessions</th>
+              <th>Status</th>
+              <th>Math</th>
+              <th>Actions</th>
+            </tr>
           </thead>
           <tbody id="studentsTableBody">
             <tr><td colspan="6"><div class="empty"><div class="empty-title">No students yet</div></div></td></tr>
@@ -384,7 +340,7 @@
             <select class="fi" id="addSubject">
               <option value="">Select subject</option>
               <option>Math</option>
-              <option>Reading &amp; Writing</option>
+              <option>Reading & Writing</option>
               <option>SAT / ACT Prep</option>
               <option>Science</option>
               <option>GED Prep</option>
@@ -412,10 +368,13 @@
           <button class="btn btn-ghost" onclick="clearAddForm()">Clear</button>
         </div>
       </div>
+
       <div class="sec-title" style="margin-top:1.5rem;">Current Students</div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Name</th><th>Grade</th><th>Subject</th><th>Rate</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead>
+            <tr><th>Name</th><th>Grade</th><th>Subject</th><th>Rate</th><th>Status</th><th>Actions</th></tr>
+          </thead>
           <tbody id="addPageTableBody">
             <tr><td colspan="6"><div class="empty"><div class="empty-title">No students yet</div></div></td></tr>
           </tbody>
@@ -425,12 +384,16 @@
 
     <!-- NOTES PAGE -->
     <div class="page" id="page-notes">
-      <div class="sec-row"><div class="sec-title">Session Notes</div></div>
+      <div class="sec-row">
+        <div class="sec-title">Session Notes</div>
+      </div>
       <div class="add-card">
         <div class="add-grid">
           <div class="fg">
             <label class="fl">Student</label>
-            <select class="fi" id="noteStudent"><option value="">Select student</option></select>
+            <select class="fi" id="noteStudent">
+              <option value="">Select student</option>
+            </select>
           </div>
           <div class="fg">
             <label class="fl">Date</label>
@@ -446,128 +409,13 @@
       <div id="notesList"></div>
     </div>
 
-    <!-- SESSION ARCHITECT PAGE -->
-    <div class="page" id="page-architect">
-
-      <div style="margin-bottom:1.5rem;">
-        <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Session Architect</div>
-        <p style="font-size:0.875rem;color:var(--text-light);">Select a student — the AI generates a complete, personalized session plan in two phases.</p>
-      </div>
-
-      <!-- INPUT CARD -->
-      <div class="architect-card">
-        <div class="architect-header">
-          <div class="architect-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </div>
-          <div>
-            <div class="architect-title">Build a Session Plan</div>
-            <div class="architect-sub">Student data auto-fills from Firestore. Add your session details below.</div>
-          </div>
-        </div>
-
-        <div class="add-grid" style="margin-bottom:1rem;">
-          <div class="fg" style="margin-bottom:0;">
-            <label class="fl">Select Student</label>
-            <select class="fi" id="archStudentSelect" onchange="onArchStudentSelect()">
-              <option value="">Choose a student...</option>
-            </select>
-          </div>
-          <div class="fg" style="margin-bottom:0;">
-            <label class="fl">Session Number</label>
-            <input type="number" class="fi" id="archSessionNum" placeholder="e.g. 5" min="1" />
-          </div>
-        </div>
-
-        <!-- Student context auto-fill -->
-        <div class="student-context-box" id="studentContextBox">
-          <div class="context-grid" id="contextGrid"></div>
-          <div class="recent-notes-box" id="recentNotesBox" style="display:none;">
-            <div class="recent-notes-title">Last 3 Session Notes</div>
-            <div id="recentNotesList"></div>
-          </div>
-        </div>
-
-        <div class="add-grid" style="margin-top:1rem;">
-          <div class="fg">
-            <label class="fl">Topics to Cover This Session</label>
-            <textarea class="fi" id="archTopics" placeholder="e.g. Fractions — adding unlike denominators, word problems" style="min-height:75px;"></textarea>
-          </div>
-          <div class="fg">
-            <label class="fl">Weak Areas from Last Session</label>
-            <textarea class="fi" id="archWeakAreas" placeholder="e.g. Student struggled with negative fractions, rushed through word problems" style="min-height:75px;"></textarea>
-          </div>
-          <div class="fg">
-            <label class="fl">Homework Results</label>
-            <textarea class="fi" id="archHomework" placeholder="e.g. Completed 8/10 problems, missed #4 and #7 — both fraction word problems" style="min-height:75px;"></textarea>
-          </div>
-          <div class="fg">
-            <label class="fl">Special Instructions (optional)</label>
-            <textarea class="fi" id="archSpecial" placeholder="e.g. Student has a test next week — prioritize practice problems over new material" style="min-height:75px;"></textarea>
-          </div>
-        </div>
-
-        <div style="margin-top:1rem;display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
-          <button class="btn btn-gold" id="generateBtn" onclick="generateSessionPlan()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            Generate Session Plan
-          </button>
-          <button class="btn btn-ghost" onclick="resetArchitect()">Reset</button>
-        </div>
-      </div>
-
-      <!-- PHASE INDICATOR -->
-      <div class="phase-indicator" id="phaseIndicator" style="display:none;">
-        <div class="phase-step" id="phase1Step">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          Phase 1 — Drafting
-        </div>
-        <span class="phase-arrow">›</span>
-        <div class="phase-step" id="phase2Step">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          Phase 2 — Reviewing
-        </div>
-        <span class="phase-arrow">›</span>
-        <div class="phase-step" id="phase3Step">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Complete
-        </div>
-      </div>
-
-      <!-- GENERATING INDICATOR -->
-      <div class="generating-indicator" id="generatingIndicator">
-        <div class="gen-label" id="genLabel">Drafting session plan...</div>
-        <div class="gen-sub" id="genSub">Analyzing student data and building a complete plan.</div>
-        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      </div>
-
-      <!-- OUTPUT -->
-      <div class="architect-output" id="architectOutput">
-        <div class="output-phase-label">Final Session Plan</div>
-        <div class="output-content" id="outputContent"></div>
-        <div class="reviewer-notes-box" id="reviewerNotesBox">
-          <div class="reviewer-notes-label">Reviewer Notes — What Was Improved</div>
-          <div class="reviewer-notes-text" id="reviewerNotesText"></div>
-        </div>
-        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1.25rem;">
-          <button class="download-btn" onclick="downloadPlan()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Plan (.txt)
-          </button>
-          <button class="btn btn-ghost" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15);" onclick="resetArchitect()">Generate Another</button>
-        </div>
-      </div>
-
-    </div>
-    <!-- END SESSION ARCHITECT PAGE -->
-
   </main>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-  import { getFirestore, collection, doc, addDoc, getDocs, updateDoc, deleteDoc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
@@ -579,7 +427,6 @@
   };
 
   const ADMIN_EMAIL = 'hoyeneyi@umich.edu';
-  const PROXY_URL   = 'https://nextgen-proxy.nextgentutoringco.workers.dev';
 
   const app  = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -590,13 +437,15 @@
 
   let students = [];
   let notes    = [];
-  let currentPlanText = '';
-  let currentStudentForPlan = null;
 
   // ── AUTH GUARD ──
   onAuthStateChanged(auth, async user => {
     if (!user) { window.location.href = 'login.html'; return; }
-    if (user.email !== ADMIN_EMAIL) { window.location.href = 'dashboard.html'; return; }
+    if (user.email !== ADMIN_EMAIL) {
+      // Not admin — redirect to student dashboard
+      window.location.href = 'dashboard.html';
+      return;
+    }
     loadingScreen.classList.add('hidden');
     appLayout.style.display = 'flex';
     await loadStudents();
@@ -604,6 +453,7 @@
     renderAll();
   });
 
+  // ── SIGN OUT ──
   document.getElementById('signOutBtn').addEventListener('click', () => {
     signOut(auth).then(() => window.location.href = 'login.html');
   });
@@ -621,7 +471,7 @@
     try {
       const snap = await getDocs(collection(db, 'sessionNotes'));
       notes = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-                       .sort((a,b) => (b.date||'').localeCompare(a.date||''));
+                       .sort((a,b) => (b.date || '').localeCompare(a.date || ''));
     } catch(e) { console.error(e); }
   }
 
@@ -632,7 +482,6 @@
     renderStudentsTable();
     renderAddPageTable();
     renderNoteStudentSelect();
-    renderArchStudentSelect();
     renderNotes();
     setDefaultDate();
   }
@@ -653,14 +502,17 @@
       el.innerHTML = '<div class="empty"><div class="empty-title">No students yet</div><p style="font-size:0.8rem;">Add your first student to get started.</p></div>';
       return;
     }
+    const recent = [...students].slice(0, 10);
     el.innerHTML = `<table><thead><tr><th>Name</th><th>Grade</th><th>Subject</th><th>Sessions</th><th>Status</th><th>Actions</th></tr></thead><tbody>
-      ${students.slice(0,10).map(s => `<tr>
+      ${recent.map(s => `<tr>
         <td><strong>${s.name||'—'}</strong></td>
         <td>${s.grade||'—'}</td>
         <td>${s.subject||'—'}</td>
         <td>${s.sessions||0}</td>
         <td><span class="badge badge-${s.status==='active'?'active':'inactive'}">${s.status||'active'}</span></td>
-        <td><button class="action-btn" onclick="openModal('${s.id}')">Update</button></td>
+        <td>
+          <button class="action-btn" onclick="openModal('${s.id}')">Update</button>
+        </td>
       </tr>`).join('')}
     </tbody></table>`;
   }
@@ -684,7 +536,7 @@
       </td>
       <td>
         <button class="action-btn" onclick="openModal('${s.id}')">Update</button>
-        <button class="action-btn btn-danger" onclick="removeStudent('${s.id}','${(s.name||'').replace(/'/g,"\\'")}')">Remove</button>
+        <button class="action-btn btn-danger" onclick="removeStudent('${s.id}','${s.name||''}')">Remove</button>
       </td>
     </tr>`).join('');
   }
@@ -711,12 +563,6 @@
       students.map(s => `<option value="${s.id}">${s.name||s.email}</option>`).join('');
   }
 
-  function renderArchStudentSelect() {
-    const sel = document.getElementById('archStudentSelect');
-    sel.innerHTML = '<option value="">Choose a student...</option>' +
-      students.map(s => `<option value="${s.id}">${s.name||s.email} — ${s.grade||'?'}</option>`).join('');
-  }
-
   function renderNotes() {
     const el = document.getElementById('notesList');
     if (!notes.length) {
@@ -736,7 +582,8 @@
   }
 
   function setDefaultDate() {
-    document.getElementById('noteDate').value = new Date().toISOString().split('T')[0];
+    const d = new Date();
+    document.getElementById('noteDate').value = d.toISOString().split('T')[0];
   }
 
   // ── ADD STUDENT ──
@@ -756,7 +603,7 @@
         mathProgress: 0, readingProgress: 0, testPrepProgress: 0,
         createdAt: serverTimestamp()
       });
-      students.push({ id: ref.id, name, email, grade, subject, rate, status, sessions:0, mathProgress:0, readingProgress:0, testPrepProgress:0 });
+      students.push({ id: ref.id, name, email, grade, subject, rate, status, sessions: 0, mathProgress:0, readingProgress:0, testPrepProgress:0 });
       document.getElementById('studentCountDisplay').textContent = students.length;
       clearAddForm();
       renderAll();
@@ -774,17 +621,17 @@
   window.openModal = function(id) {
     const s = students.find(st => st.id === id);
     if (!s) return;
-    document.getElementById('modalStudentId').value    = id;
-    document.getElementById('modalTitle').textContent  = `Update — ${s.name||s.email}`;
-    document.getElementById('modalSub').textContent    = `${s.grade||''} · ${s.subject||''}`;
-    document.getElementById('modalSessions').value     = s.sessions || 0;
-    document.getElementById('modalMath').value         = s.mathProgress || 0;
-    document.getElementById('modalReading').value      = s.readingProgress || 0;
-    document.getElementById('modalTestPrep').value     = s.testPrepProgress || 0;
-    document.getElementById('mathVal').textContent     = (s.mathProgress||0) + '%';
-    document.getElementById('readingVal').textContent  = (s.readingProgress||0) + '%';
+    document.getElementById('modalStudentId').value = id;
+    document.getElementById('modalTitle').textContent = `Update — ${s.name||s.email}`;
+    document.getElementById('modalSub').textContent = `${s.grade||''} · ${s.subject||''}`;
+    document.getElementById('modalSessions').value = s.sessions || 0;
+    document.getElementById('modalMath').value = s.mathProgress || 0;
+    document.getElementById('modalReading').value = s.readingProgress || 0;
+    document.getElementById('modalTestPrep').value = s.testPrepProgress || 0;
+    document.getElementById('mathVal').textContent = (s.mathProgress||0) + '%';
+    document.getElementById('readingVal').textContent = (s.readingProgress||0) + '%';
     document.getElementById('testPrepVal').textContent = (s.testPrepProgress||0) + '%';
-    document.getElementById('modalNote').value         = '';
+    document.getElementById('modalNote').value = '';
     document.getElementById('modalOverlay').classList.add('open');
   };
 
@@ -792,6 +639,7 @@
     document.getElementById('modalOverlay').classList.remove('open');
   };
 
+  // Live slider labels
   ['modalMath','modalReading','modalTestPrep'].forEach((id, i) => {
     const label = ['mathVal','readingVal','testPrepVal'][i];
     document.getElementById(id).addEventListener('input', e => {
@@ -807,18 +655,25 @@
     const testPrep = parseInt(document.getElementById('modalTestPrep').value) || 0;
     const note     = document.getElementById('modalNote').value.trim();
     try {
-      await updateDoc(doc(db, 'students', id), {
+      const email = document.getElementById('modalEmail').value.trim();
+      const updateData = {
         sessions, mathProgress: math, readingProgress: reading, testPrepProgress: testPrep,
         updatedAt: serverTimestamp()
-      });
+      };
+      if (email) updateData.email = email;
+      await updateDoc(doc(db, 'students', id), updateData);
+      // Save note if provided
       if (note) {
         const d = new Date().toISOString().split('T')[0];
-        await addDoc(collection(db, 'sessionNotes'), { studentId: id, text: note, date: d, createdAt: serverTimestamp() });
+        await addDoc(collection(db, 'sessionNotes'), {
+          studentId: id, text: note, date: d, createdAt: serverTimestamp()
+        });
         notes.unshift({ studentId: id, text: note, date: d });
       }
       const idx = students.findIndex(s => s.id === id);
       if (idx > -1) {
-        students[idx] = { ...students[idx], sessions, mathProgress: math, readingProgress: reading, testPrepProgress: testPrep };
+        const emailVal = document.getElementById('modalEmail').value.trim();
+        students[idx] = { ...students[idx], sessions, mathProgress: math, readingProgress: reading, testPrepProgress: testPrep, ...(emailVal && { email: emailVal }) };
       }
       closeModal();
       renderAll();
@@ -860,7 +715,7 @@
     document.getElementById('page-' + pageId).classList.add('active');
     const nav = document.getElementById('nav-' + pageId);
     if (nav) nav.classList.add('active');
-    const titles = { overview:'Overview', students:'All Students', add:'Add Student', notes:'Session Notes', architect:'Session Architect' };
+    const titles = { overview:'Overview', students:'All Students', add:'Add Student', notes:'Session Notes' };
     document.getElementById('topbarTitle').textContent = titles[pageId] || pageId;
   };
 
@@ -872,305 +727,6 @@
     setTimeout(() => t.classList.remove('show'), 3000);
   }
   window.showToast = showToast;
-
-  // ══════════════════════════════════════════
-  // SESSION ARCHITECT
-  // ══════════════════════════════════════════
-
-  window.onArchStudentSelect = function() {
-    const id = document.getElementById('archStudentSelect').value;
-    const contextBox = document.getElementById('studentContextBox');
-    if (!id) { contextBox.style.display = 'none'; currentStudentForPlan = null; return; }
-
-    const s = students.find(st => st.id === id);
-    if (!s) return;
-    currentStudentForPlan = s;
-
-    // Auto-fill session number
-    const sessionInput = document.getElementById('archSessionNum');
-    if (!sessionInput.value) sessionInput.value = (s.sessions || 0) + 1;
-
-    // Build context grid
-    document.getElementById('contextGrid').innerHTML = `
-      <div class="context-item">
-        <div class="context-label">Student</div>
-        <div class="context-val">${s.name||'—'}</div>
-      </div>
-      <div class="context-item">
-        <div class="context-label">Grade</div>
-        <div class="context-val">${s.grade||'—'}</div>
-      </div>
-      <div class="context-item">
-        <div class="context-label">Subject</div>
-        <div class="context-val">${s.subject||'—'}</div>
-      </div>
-      <div class="context-item">
-        <div class="context-label">Sessions Done</div>
-        <div class="context-val">${s.sessions||0}</div>
-      </div>
-      <div class="context-item" style="grid-column:1/-1;">
-        <div class="context-label">Progress Overview</div>
-        <div class="context-progress">
-          <div class="context-prog-row">
-            <span class="context-prog-label">Math</span>
-            <div class="context-prog-bar"><div class="context-prog-fill" style="width:${s.mathProgress||0}%"></div></div>
-            <span class="context-prog-pct">${s.mathProgress||0}%</span>
-          </div>
-          <div class="context-prog-row">
-            <span class="context-prog-label">Reading</span>
-            <div class="context-prog-bar"><div class="context-prog-fill" style="width:${s.readingProgress||0}%"></div></div>
-            <span class="context-prog-pct">${s.readingProgress||0}%</span>
-          </div>
-          <div class="context-prog-row">
-            <span class="context-prog-label">Test Prep</span>
-            <div class="context-prog-bar"><div class="context-prog-fill" style="width:${s.testPrepProgress||0}%"></div></div>
-            <span class="context-prog-pct">${s.testPrepProgress||0}%</span>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Show last 3 notes for this student
-    const studentNotes = notes.filter(n => n.studentId === id).slice(0, 3);
-    const notesBox = document.getElementById('recentNotesBox');
-    const notesList = document.getElementById('recentNotesList');
-    if (studentNotes.length) {
-      notesList.innerHTML = studentNotes.map(n => `
-        <div class="recent-note-item">
-          <div class="recent-note-date">${n.date||''}</div>
-          ${n.text||''}
-        </div>
-      `).join('');
-      notesBox.style.display = 'block';
-    } else {
-      notesBox.style.display = 'none';
-    }
-
-    contextBox.style.display = 'block';
-  };
-
-  window.generateSessionPlan = async function() {
-    const studentId  = document.getElementById('archStudentSelect').value;
-    const sessionNum = document.getElementById('archSessionNum').value || '?';
-    const topics     = document.getElementById('archTopics').value.trim();
-    const weakAreas  = document.getElementById('archWeakAreas').value.trim();
-    const homework   = document.getElementById('archHomework').value.trim();
-    const special    = document.getElementById('archSpecial').value.trim();
-
-    if (!studentId) { showToast('Please select a student first.'); return; }
-    if (!topics)    { showToast('Please enter topics to cover this session.'); return; }
-
-    const s = currentStudentForPlan;
-    const studentNotes = notes.filter(n => n.studentId === studentId).slice(0, 3);
-
-    // Build student context string
-    const studentContext = `
-Student: ${s.name||'Unknown'}
-Grade: ${s.grade||'Unknown'}
-Subject: ${s.subject||'Unknown'}
-Session Number: ${sessionNum}
-Sessions Completed: ${s.sessions||0}
-Math Progress: ${s.mathProgress||0}%
-Reading & Writing Progress: ${s.readingProgress||0}%
-Test Prep Progress: ${s.testPrepProgress||0}%
-${studentNotes.length ? `\nLast ${studentNotes.length} Session Notes:\n${studentNotes.map(n => `[${n.date}] ${n.text}`).join('\n')}` : ''}
-${s.adminNotes ? `\nAdmin Notes: ${s.adminNotes}` : ''}
-    `.trim();
-
-    // Show UI
-    document.getElementById('phaseIndicator').style.display = 'flex';
-    document.getElementById('generatingIndicator').style.display = 'block';
-    document.getElementById('architectOutput').style.display = 'none';
-    document.getElementById('generateBtn').disabled = true;
-    setPhase(1);
-
-    let draftPlan = '';
-
-    try {
-      // ── PHASE 1: DRAFT ──
-      document.getElementById('genLabel').textContent = 'Phase 1 — Drafting session plan...';
-      document.getElementById('genSub').textContent   = 'Building a complete plan tailored to this student.';
-
-      const draftPrompt = `You are an expert academic tutor building a complete session plan for a one-on-one tutoring session.
-
-STUDENT PROFILE:
-${studentContext}
-
-THIS SESSION:
-Topics to Cover: ${topics}
-Weak Areas from Last Session: ${weakAreas || 'None specified'}
-Homework Results: ${homework || 'None specified'}
-Special Instructions: ${special || 'None'}
-
-Create a detailed, professional 60-minute session plan. Include:
-
-1. SESSION OVERVIEW
-   - Session objectives (3 bullet points)
-   - What success looks like today
-   - Student context summary
-
-2. TIMED BLOCKS (must total 60 minutes)
-   - Each block: time range, activity, what to teach and how
-
-3. TEACHING CONTENT
-   - Key concepts to explain with your exact approach
-   - Analogies or examples specific to this student's level
-
-4. PRACTICE PROBLEMS
-   - At least 5 problems per topic with full worked solutions
-   - Labeled by difficulty
-
-5. COACHING LANGUAGE
-   - 3-5 exact phrases to use with this student at key moments
-   - How to handle frustration or confusion if it arises
-
-6. HOMEWORK ASSIGNMENT
-   - Specific tasks before next session
-   - How to check their own work
-
-7. CLOSING STATEMENT
-   - How to end the session
-   - What to tell the student about their progress today
-
-Be specific, practical, and thorough. This plan should be ready to use immediately.`;
-
-      const draftRes = await fetch(PROXY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 3000,
-          messages: [{ role: 'user', content: draftPrompt }]
-        })
-      });
-
-      const draftData = await draftRes.json();
-      draftPlan = draftData.content[0].text.trim();
-
-      // ── PHASE 2: REVIEW ──
-      setPhase(2);
-      document.getElementById('genLabel').textContent = 'Phase 2 — Reviewing and improving...';
-      document.getElementById('genSub').textContent   = 'A second AI pass refines the plan for quality.';
-
-      const reviewPrompt = `You are an expert tutoring supervisor reviewing a session plan written by another tutor. Your job is to improve it.
-
-ORIGINAL PLAN:
-${draftPlan}
-
-STUDENT CONTEXT:
-${studentContext}
-
-Review this plan and:
-1. Identify any gaps, vague sections, or missing content
-2. Strengthen weak areas — add more specific coaching language, better problem progressions, or clearer explanations
-3. Ensure the timing is realistic for a 60-minute session
-4. Make it feel personal to this specific student — not generic
-
-Return your response in exactly this format:
-
-IMPROVED PLAN:
-[The full improved session plan — complete, ready to use]
-
-REVIEWER NOTES:
-[3-5 bullet points explaining what you improved and why]`;
-
-      const reviewRes = await fetch(PROXY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 3500,
-          messages: [{ role: 'user', content: reviewPrompt }]
-        })
-      });
-
-      const reviewData = await reviewRes.json();
-      const reviewText = reviewData.content[0].text.trim();
-
-      // Parse improved plan and reviewer notes
-      let finalPlan     = reviewText;
-      let reviewerNotes = '';
-
-      const splitIdx = reviewText.indexOf('REVIEWER NOTES:');
-      if (splitIdx !== -1) {
-        finalPlan     = reviewText.substring(reviewText.indexOf('IMPROVED PLAN:') !== -1 ? reviewText.indexOf('IMPROVED PLAN:') + 'IMPROVED PLAN:'.length : 0, splitIdx).trim();
-        reviewerNotes = reviewText.substring(splitIdx + 'REVIEWER NOTES:'.length).trim();
-      }
-
-      currentPlanText = finalPlan;
-
-      // ── SAVE TO FIRESTORE ──
-      const today = new Date().toISOString().split('T')[0];
-      await addDoc(collection(db, 'sessionNotes'), {
-        studentId: studentId,
-        date: today,
-        text: `[Session Architect] Plan generated for Session ${sessionNum} — Topics: ${topics}`,
-        createdAt: serverTimestamp()
-      });
-      notes.unshift({ studentId, date: today, text: `[Session Architect] Plan generated for Session ${sessionNum} — Topics: ${topics}` });
-
-      // ── SHOW OUTPUT ──
-      setPhase(3);
-      document.getElementById('generatingIndicator').style.display = 'none';
-      document.getElementById('outputContent').textContent          = finalPlan;
-      document.getElementById('reviewerNotesText').textContent      = reviewerNotes;
-      document.getElementById('reviewerNotesBox').style.display     = reviewerNotes ? 'block' : 'none';
-      document.getElementById('architectOutput').style.display      = 'block';
-      document.getElementById('generateBtn').disabled               = false;
-      showToast('Session plan generated and saved.');
-
-    } catch(err) {
-      console.error('Session Architect error:', err);
-      document.getElementById('generatingIndicator').style.display = 'none';
-      document.getElementById('phaseIndicator').style.display      = 'none';
-      document.getElementById('generateBtn').disabled              = false;
-      showToast('Error generating plan. Check Worker deployment and try again.');
-    }
-  };
-
-  function setPhase(phase) {
-    const steps = [
-      document.getElementById('phase1Step'),
-      document.getElementById('phase2Step'),
-      document.getElementById('phase3Step')
-    ];
-    steps.forEach((s, i) => {
-      s.classList.remove('active','done');
-      if (i + 1 === phase) s.classList.add('active');
-      else if (i + 1 < phase) s.classList.add('done');
-    });
-  }
-
-  window.downloadPlan = function() {
-    if (!currentPlanText) return;
-    const s    = currentStudentForPlan;
-    const name = s ? s.name.replace(/\s+/g,'-') : 'student';
-    const date = new Date().toISOString().split('T')[0];
-    const blob = new Blob([currentPlanText], { type: 'text/plain' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = `NextGen-Session-Plan-${name}-${date}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  window.resetArchitect = function() {
-    document.getElementById('archStudentSelect').value = '';
-    document.getElementById('archSessionNum').value    = '';
-    document.getElementById('archTopics').value        = '';
-    document.getElementById('archWeakAreas').value     = '';
-    document.getElementById('archHomework').value      = '';
-    document.getElementById('archSpecial').value       = '';
-    document.getElementById('studentContextBox').style.display  = 'none';
-    document.getElementById('architectOutput').style.display    = 'none';
-    document.getElementById('phaseIndicator').style.display     = 'none';
-    document.getElementById('generatingIndicator').style.display= 'none';
-    document.getElementById('generateBtn').disabled             = false;
-    currentPlanText = '';
-    currentStudentForPlan = null;
-  };
-
 </script>
 </body>
 </html>
