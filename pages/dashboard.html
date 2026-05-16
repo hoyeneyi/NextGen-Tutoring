@@ -614,6 +614,16 @@
     .grade-tab { min-height: 40px; }
     .subject-card { min-height: 44px; }
 
+    /* ── FREE RESPONSE ── */
+    #frInput:focus { border-color:var(--pt-primary, var(--gold)); outline:none; }
+    .theme-k2 #frInput { font-size:1.1rem; }
+    .fr-grade-correct { background:rgba(76,175,80,0.07); border:1.5px solid rgba(76,175,80,0.3); border-radius:var(--pt-radius,10px); padding:1rem 1.25rem; margin-bottom:1rem; }
+    .fr-grade-partial { background:rgba(255,165,0,0.07); border:1.5px solid rgba(255,165,0,0.3); border-radius:var(--pt-radius,10px); padding:1rem 1.25rem; margin-bottom:1rem; }
+    .fr-grade-wrong   { background:rgba(244,67,54,0.06); border:1.5px solid rgba(244,67,54,0.25); border-radius:var(--pt-radius,10px); padding:1rem 1.25rem; margin-bottom:1rem; }
+    .fr-grade-label { font-weight:700; font-size:0.95rem; margin-bottom:0.4rem; }
+    .fr-grade-text  { font-size:0.875rem; line-height:1.75; }
+    .fr-mode-badge  { display:inline-flex; align-items:center; gap:6px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); color:var(--pt-primary,var(--gold)); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:100px; margin-bottom:0.75rem; }
+
   </style>
 </head>
 <body>
@@ -1085,6 +1095,21 @@
         <div class="question-card">
           <div class="question-text" id="questionText"></div>
           <div class="choices-wrap" id="choicesContainer"></div>
+
+        <!-- FREE RESPONSE (shown at SmartScore 80+) -->
+        <div id="freeResponseWrap" style="display:none;">
+          <div id="frModeLabel" style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pt-primary, var(--gold));margin-bottom:0.75rem;">Mastery Mode — Write Your Answer</div>
+          <textarea id="frInput" rows="4" placeholder="Type your full answer here..." style="width:100%;padding:1rem;border:2px solid rgba(0,0,0,0.1);border-radius:var(--pt-radius,10px);font-family:var(--font-body);font-size:var(--pt-font-size,0.95rem);color:var(--pt-text,var(--navy));background:var(--pt-card,var(--white));resize:vertical;outline:none;transition:border-color 0.2s;line-height:1.6;"></textarea>
+          <div style="display:flex;align-items:center;gap:1rem;margin-top:0.75rem;">
+            <button id="frSubmitBtn" onclick="submitFreeResponse()" style="background:var(--pt-primary,var(--navy));color:#fff;font-weight:700;font-size:0.95rem;padding:0.75rem 1.75rem;border:none;border-radius:var(--pt-radius,6px);cursor:pointer;font-family:var(--font-body);transition:all 0.2s;display:flex;align-items:center;gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Submit Answer
+            </button>
+            <div id="frGrading" style="display:none;font-size:0.82rem;color:var(--pt-subtext);">
+              <div class="dots" style="margin:0;"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+            </div>
+          </div>
+        </div>
         </div>
 
         <!-- Feedback -->
@@ -2205,8 +2230,8 @@ Return ONLY this JSON array, no markdown, no backticks:
     generating = false;
   }
 
-  // ── RENDER QUESTION ──
-  function renderNextQuestion() {
+  // ── RENDER QUESTION (base — overridden by FR system below) ──
+  function _baseRenderNextQuestion_unused() {
     if (questionBuffer.length < 2 && !generating) fetchQuestionBatch();
     if (!questionBuffer.length) { setTimeout(renderNextQuestion, 600); return; }
 
@@ -2375,6 +2400,226 @@ Return ONLY this JSON array, no markdown, no backticks:
   document.getElementById('practice-selector').style.display = 'none';
   applyTheme('68');
 
+
+  // ══ FREE RESPONSE SYSTEM ══
+
+  let isFreeResponseMode = false;
+  let frGradeResult      = null;
+
+  // Determine if current question should be free response
+  function shouldUseFreeResponse() {
+    // K-2 never gets free response
+    if (currentTheme === 'k2') return false;
+    // Only when SmartScore is 80+
+    if (smartScore < 80) return false;
+    return true;
+  }
+
+  // Override renderNextQuestion to inject FR mode
+  const _baseRenderNextQuestion = renderNextQuestion;
+
+  function renderNextQuestion() {
+    if (!currentQuestion) {
+      if (questionBuffer.length < 2 && !generating) fetchQuestionBatch();
+      if (!questionBuffer.length) { setTimeout(renderNextQuestion, 600); return; }
+      currentQuestion = questionBuffer.shift();
+    } else {
+      if (questionBuffer.length < 2 && !generating) fetchQuestionBatch();
+      if (!questionBuffer.length) { setTimeout(renderNextQuestion, 600); return; }
+      currentQuestion = questionBuffer.shift();
+    }
+
+    isFreeResponseMode = shouldUseFreeResponse();
+    const q   = currentQuestion;
+    const t   = getTheme();
+    const num = totalAnswered + 1;
+
+    document.getElementById('quizHeading').textContent     = `Question ${num}`;
+    document.getElementById('questionText').textContent    = q.question;
+    document.getElementById('feedbackBox').style.display   = 'none';
+    document.getElementById('nextBtn').style.display       = 'none';
+    document.getElementById('conceptReminder').style.display = 'none';
+    document.getElementById('recoveryTag').style.display   = isRecovery ? 'block' : 'none';
+    if (isRecovery) document.getElementById('recoveryTag').textContent = t.recoveryMsg;
+    document.getElementById('nextBtn').textContent = t.nextBtn;
+
+    if (isFreeResponseMode) {
+      // Show free response mode
+      document.getElementById('choicesContainer').style.display = 'none';
+      document.getElementById('freeResponseWrap').style.display = 'block';
+      document.getElementById('frInput').value = '';
+      document.getElementById('frInput').disabled = false;
+      document.getElementById('frSubmitBtn').disabled = false;
+      document.getElementById('frGrading').style.display = 'none';
+
+      // Update label based on theme
+      const frLabel = document.getElementById('frModeLabel');
+      if (currentTheme === '35') {
+        frLabel.textContent = 'Write Your Answer';
+      } else if (currentTheme === '912') {
+        frLabel.textContent = 'Free Response — Type your complete answer';
+      } else {
+        frLabel.textContent = 'Mastery Mode — Write Your Answer';
+      }
+
+      // Focus the textarea
+      setTimeout(() => document.getElementById('frInput').focus(), 100);
+
+    } else {
+      // Show multiple choice
+      document.getElementById('choicesContainer').style.display = 'flex';
+      document.getElementById('freeResponseWrap').style.display = 'none';
+
+      const letters = ['A','B','C','D'];
+      document.getElementById('choicesContainer').innerHTML = q.choices.map((choice, i) => `
+        <button class="choice-btn" onclick="selectAnswer(this,'${letters[i]}')">
+          <span class="choice-letter">${letters[i]}</span>
+          ${choice.replace(/^[A-D]\)\s*/,'')}
+        </button>
+      `).join('');
+    }
+  }
+
+  // Submit free response answer
+  window.submitFreeResponse = async function() {
+    const studentAnswer = document.getElementById('frInput').value.trim();
+    if (!studentAnswer) {
+      document.getElementById('frInput').style.borderColor = 'var(--pt-wrong, #C0392B)';
+      setTimeout(() => document.getElementById('frInput').style.borderColor = '', 1500);
+      return;
+    }
+
+    // Disable input and show grading indicator
+    document.getElementById('frInput').disabled      = true;
+    document.getElementById('frSubmitBtn').disabled  = true;
+    document.getElementById('frGrading').style.display = 'flex';
+
+    const q = currentQuestion;
+
+    try {
+      const gradingPrompt = `You are grading a student's free response answer for a ${currentSubject} question.
+
+Grade Level: ${currentTopic.band} (${CURRICULUM[currentSubject][currentTopic.band]?.label || currentTopic.band})
+Topic: ${currentTopic.name}
+
+Question: ${q.question}
+
+Correct Answer: ${q.correct} — ${q.choices.find(c => c.startsWith(q.correct))}
+Full Explanation: ${q.explanation}
+
+Student's Answer: "${studentAnswer}"
+
+Grade the student's response as one of:
+- CORRECT: The student clearly demonstrates understanding of the concept, even if wording differs
+- PARTIAL: The student shows some understanding but is missing key elements or has minor errors
+- INCORRECT: The student's answer is wrong or shows a fundamental misunderstanding
+
+Respond ONLY with this JSON:
+{
+  "grade": "CORRECT" or "PARTIAL" or "INCORRECT",
+  "score_delta": number between -8 and 12,
+  "feedback": "2-3 sentence feedback specific to what the student wrote — what was right, what was missing or wrong, and what to remember",
+  "correct_answer_summary": "A clear 1-sentence summary of the correct answer in plain language"
+}`;
+
+      const res  = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model:      'claude-sonnet-4-6',
+          max_tokens: 400,
+          system:     'You are a K-12 grading assistant. Respond ONLY with valid JSON.',
+          messages:   [{ role: 'user', content: gradingPrompt }]
+        })
+      });
+
+      const data  = await res.json();
+      const raw   = data.content[0].text.trim().replace(/```json|```/g,'').trim();
+      frGradeResult = JSON.parse(raw);
+
+    } catch(e) {
+      console.error('Grading error:', e);
+      frGradeResult = {
+        grade: 'INCORRECT',
+        score_delta: -4,
+        feedback: 'We could not grade your answer automatically. Review the correct answer below.',
+        correct_answer_summary: q.explanation
+      };
+    }
+
+    document.getElementById('frGrading').style.display = 'none';
+
+    // Apply score
+    totalAnswered++;
+    const grade = frGradeResult.grade;
+
+    if (grade === 'CORRECT') {
+      streak++;
+      smartScore = Math.min(100, smartScore + 12);
+      isRecovery = false; recoveryAttempted = false;
+    } else if (grade === 'PARTIAL') {
+      streak = Math.max(0, streak - 1);
+      smartScore = Math.min(100, smartScore + 4);
+    } else {
+      streak = 0;
+      smartScore = Math.max(0, smartScore - 8);
+      // Queue recovery question
+      if (!recoveryAttempted) {
+        recoveryAttempted = true; isRecovery = true;
+        fetchQuestionBatch(q.question);
+      }
+    }
+
+    updateScoreDisplay();
+
+    // Show graded feedback
+    const t          = getTheme();
+    const isCorrect  = grade === 'CORRECT';
+    const isPartial  = grade === 'PARTIAL';
+    const color      = isCorrect ? 'var(--pt-correct,#1A5C38)' : isPartial ? '#8B6914' : 'var(--pt-wrong,#C0392B)';
+    const bgClass    = isCorrect ? 'fr-grade-correct' : isPartial ? 'fr-grade-partial' : 'fr-grade-wrong';
+
+    const titleText = isCorrect
+      ? (currentTheme === 'k2' ? 'Amazing! You got it right!' : 'Correct!')
+      : isPartial
+      ? (currentTheme === 'k2' ? 'Good try! Almost there.' : 'Partially Correct')
+      : (currentTheme === 'k2' ? 'Not quite. Here's what to remember:' : 'Incorrect');
+
+    const feedbackEl = document.getElementById('feedbackBox');
+    feedbackEl.className = '';
+    feedbackEl.style.display    = 'block';
+    feedbackEl.style.background = isCorrect ? 'rgba(76,175,80,0.07)' : isPartial ? 'rgba(255,165,0,0.07)' : 'rgba(244,67,54,0.06)';
+    feedbackEl.style.border     = `1.5px solid ${isCorrect ? 'rgba(76,175,80,0.3)' : isPartial ? 'rgba(255,165,0,0.3)' : 'rgba(244,67,54,0.25)'}`;
+    feedbackEl.style.borderRadius = 'var(--pt-radius,10px)';
+    feedbackEl.style.padding    = '1.25rem 1.5rem';
+
+    const titleEl = document.getElementById('feedbackTitle');
+    titleEl.style.color    = color;
+    titleEl.textContent    = titleText;
+
+    document.getElementById('feedbackText').innerHTML =
+      `${frGradeResult.feedback}<br/><br/><strong style="color:${color};">Correct answer:</strong> ${frGradeResult.correct_answer_summary}`;
+
+    // Show concept reminder on wrong/partial
+    if (!isCorrect && q.concept) {
+      document.getElementById('conceptReminderText').textContent = q.concept;
+      document.getElementById('conceptReminder').style.display  = 'block';
+    }
+
+    document.getElementById('nextBtn').style.display = 'block';
+    checkMilestone();
+  };
+
+  // Allow Enter key to submit (Shift+Enter for newline)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey && isFreeResponseMode) {
+      const input = document.getElementById('frInput');
+      if (document.activeElement === input && !input.disabled) {
+        e.preventDefault();
+        submitFreeResponse();
+      }
+    }
+  });
 
   // ── PREFETCH ON HOVER ──
   let prefetchCache = {};
