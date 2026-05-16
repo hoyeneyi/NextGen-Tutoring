@@ -194,6 +194,13 @@
       <small style="color:var(--text-light);font-size:0.75rem;" id="testPrepVal">0%</small>
     </div>
     <div class="fg">
+      <label class="fl">Status</label>
+      <select class="fi" id="modalStatus">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+    <div class="fg">
       <label class="fl">Session Note (optional)</label>
       <textarea class="fi" id="modalNote" placeholder="What did you cover this session?"></textarea>
     </div>
@@ -656,9 +663,10 @@
     const note     = document.getElementById('modalNote').value.trim();
     try {
       const email = document.getElementById('modalEmail').value.trim();
+      const status = document.getElementById('modalStatus').value;
       const updateData = {
         sessions, mathProgress: math, readingProgress: reading, testPrepProgress: testPrep,
-        updatedAt: serverTimestamp()
+        status, updatedAt: serverTimestamp()
       };
       if (email) updateData.email = email;
       await updateDoc(doc(db, 'students', id), updateData);
@@ -673,7 +681,8 @@
       const idx = students.findIndex(s => s.id === id);
       if (idx > -1) {
         const emailVal = document.getElementById('modalEmail').value.trim();
-        students[idx] = { ...students[idx], sessions, mathProgress: math, readingProgress: reading, testPrepProgress: testPrep, ...(emailVal && { email: emailVal }) };
+        const statusVal = document.getElementById('modalStatus').value;
+        students[idx] = { ...students[idx], sessions, mathProgress: math, readingProgress: reading, testPrepProgress: testPrep, status: statusVal, ...(emailVal && { email: emailVal }) };
       }
       closeModal();
       renderAll();
