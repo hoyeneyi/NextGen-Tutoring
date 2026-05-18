@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — NextGen Tutoring</title>
+  <title>Dashboard â€” NextGen Tutoring</title>
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#112240" />
@@ -40,7 +40,7 @@
     html { scroll-behavior:smooth; }
     body { font-family:var(--font-body); background:var(--off-white); color:var(--text-dark); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
 
-    /* ── LOADING SCREEN ── */
+    /* â”€â”€ LOADING SCREEN â”€â”€ */
     .loading-screen {
       position:fixed; inset:0; background:var(--navy);
       display:flex; align-items:center; justify-content:center;
@@ -55,10 +55,10 @@
     .loader-dot:nth-child(3) { animation-delay:0.4s; }
     @keyframes pulse { 0%,80%,100% { opacity:0.2; transform:scale(0.8); } 40% { opacity:1; transform:scale(1); } }
 
-    /* ── LAYOUT ── */
+    /* â”€â”€ LAYOUT â”€â”€ */
     .layout { display:flex; min-height:100vh; }
 
-    /* ── SIDEBAR ── */
+    /* â”€â”€ SIDEBAR â”€â”€ */
     .sidebar {
       width:var(--sidebar-w);
       background:var(--navy);
@@ -122,7 +122,7 @@
     }
     .sign-out-btn:hover { background:rgba(255,255,255,0.1); color:var(--white); }
 
-    /* ── MAIN CONTENT ── */
+    /* â”€â”€ MAIN CONTENT â”€â”€ */
     .main {
       margin-left:var(--sidebar-w);
       flex:1;
@@ -131,7 +131,7 @@
       min-height:100vh;
     }
 
-    /* ── TOP BAR ── */
+    /* â”€â”€ TOP BAR â”€â”€ */
     .topbar {
       background:var(--white);
       border-bottom:1px solid rgba(11,31,58,0.07);
@@ -159,11 +159,11 @@
     .mob-menu-btn { display:none; background:none; border:none; cursor:pointer; padding:4px; }
     .mob-menu-btn svg { width:22px; height:22px; stroke:var(--navy); }
 
-    /* ── PAGE CONTENT ── */
+    /* â”€â”€ PAGE CONTENT â”€â”€ */
     .page { padding:2rem; flex:1; }
     .page.hidden { display:none; }
 
-    /* ── WELCOME BANNER ── */
+    /* â”€â”€ WELCOME BANNER â”€â”€ */
     .welcome-banner {
       background:var(--navy);
       border-radius:14px;
@@ -185,7 +185,7 @@
     .welcome-h1 span { color:var(--gold); font-style:italic; }
     .welcome-sub { font-size:0.875rem; color:rgba(255,255,255,0.45); margin-top:0.5rem; position:relative; z-index:1; }
 
-    /* ── STAT CARDS ── */
+    /* â”€â”€ STAT CARDS â”€â”€ */
     .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-bottom:1.75rem; }
     .stat-card {
       background:var(--white);
@@ -201,16 +201,16 @@
     .stat-icon { width:36px; height:36px; background:var(--gold-pale); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:0.85rem; color:var(--gold); }
     .stat-icon svg { width:18px; height:18px; }
 
-    /* ── SECTION TITLES ── */
+    /* â”€â”€ SECTION TITLES â”€â”€ */
     .sec-title { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--navy); margin-bottom:1rem; }
     .sec-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
     .sec-link { font-size:0.78rem; color:var(--gold); text-decoration:none; font-weight:600; }
     .sec-link:hover { text-decoration:underline; }
 
-    /* ── TWO COL GRID ── */
+    /* â”€â”€ TWO COL GRID â”€â”€ */
     .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.75rem; }
 
-    /* ── NEXT SESSION CARD ── */
+    /* â”€â”€ NEXT SESSION CARD â”€â”€ */
     .next-session {
       background:var(--white);
       border:1px solid rgba(11,31,58,0.07);
@@ -242,7 +242,7 @@
     .badge-upcoming { background:rgba(201,168,76,0.1); color:var(--gold); border:1px solid rgba(201,168,76,0.2); }
     .badge-done { background:rgba(26,92,56,0.1); color:#1A5C38; border:1px solid rgba(26,92,56,0.2); }
 
-    /* ── PROGRESS CARD ── */
+    /* â”€â”€ PROGRESS CARD â”€â”€ */
     .progress-card {
       background:var(--white);
       border:1px solid rgba(11,31,58,0.07);
@@ -258,7 +258,7 @@
     .progress-bar-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:100px; transition:width 1s ease; }
     .progress-sub { font-size:0.7rem; color:var(--text-light); margin-top:4px; }
 
-    /* ── QUICK ACTIONS ── */
+    /* â”€â”€ QUICK ACTIONS â”€â”€ */
     .actions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1rem; margin-bottom:1.75rem; }
     .action-card {
       background:var(--white);
@@ -276,7 +276,7 @@
     .action-icon svg { width:20px; height:20px; }
     .action-label { font-size:0.8rem; font-weight:600; color:var(--navy); }
 
-    /* ── ANNOUNCEMENTS ── */
+    /* â”€â”€ ANNOUNCEMENTS â”€â”€ */
     .announce-card {
       background:var(--white);
       border:1px solid rgba(11,31,58,0.07);
@@ -291,7 +291,7 @@
     .announce-text { font-size:0.8rem; color:var(--text-mid); line-height:1.6; }
     .announce-date { font-size:0.7rem; color:var(--text-light); margin-top:4px; }
 
-    /* ── LESSONS PAGE ── */
+    /* â”€â”€ LESSONS PAGE â”€â”€ */
     .lessons-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; }
     .lesson-card {
       background:var(--white);
@@ -315,7 +315,7 @@
     .lesson-btn { font-size:0.78rem; font-weight:600; color:var(--gold); text-decoration:none; transition:opacity 0.2s; }
     .lesson-btn:hover { opacity:0.7; }
 
-    /* ── PROFILE PAGE ── */
+    /* â”€â”€ PROFILE PAGE â”€â”€ */
     .profile-card {
       background:var(--white);
       border:1px solid rgba(11,31,58,0.07);
@@ -340,13 +340,13 @@
     .profile-key { font-size:0.8rem; color:var(--text-light); }
     .profile-val { font-size:0.875rem; font-weight:600; color:var(--navy); }
 
-    /* ── EMPTY STATE ── */
+    /* â”€â”€ EMPTY STATE â”€â”€ */
     .empty-state { text-align:center; padding:3rem 2rem; color:var(--text-light); }
     .empty-state svg { width:48px; height:48px; margin:0 auto 1rem; opacity:0.3; }
     .empty-title { font-size:0.95rem; font-weight:600; color:var(--text-mid); margin-bottom:0.4rem; }
     .empty-sub { font-size:0.82rem; }
 
-    /* ── MOBILE ── */
+    /* â”€â”€ MOBILE â”€â”€ */
     @media (max-width:768px) {
       .sidebar { transform:translateX(-100%); }
       .sidebar.mob-open { transform:translateX(0); }
@@ -360,12 +360,12 @@
       .stats-grid { grid-template-columns:1fr 1fr; }
     }
 
-    /* ── FADE IN ── */
+    /* â”€â”€ FADE IN â”€â”€ */
     .fade-in { animation:fadeIn 0.4s ease both; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-    /* ── PRACTICE SYSTEM ── */
+    /* â”€â”€ PRACTICE SYSTEM â”€â”€ */
 
-    /* ── Age Theme Variables ── */
+    /* â”€â”€ Age Theme Variables â”€â”€ */
     .theme-k2 {
       --pt-bg: #FFFBF0;
       --pt-primary: #FF6B35;
@@ -423,15 +423,31 @@
       --pt-q-size: 1.05rem;
     }
 
-    /* ── Practice Wrapper ── */
+    /* â”€â”€ Practice Wrapper â”€â”€ */
     .practice-wrapper {
       min-height: 100%;
-      background: var(--pt-bg, var(--off-white));
+      background: var(--off-white);
       transition: background 0.4s ease;
       padding: 0.5rem;
     }
+    #practice-quiz, #practice-milestone, #practice-preloading {
+      background: var(--pt-bg, var(--off-white));
+      border-radius: 12px;
+    }
+    #practice-home, #practice-selector {
+      --pt-primary: var(--navy) !important;
+      --pt-card: var(--white) !important;
+      --pt-text: var(--text-dark) !important;
+      --pt-subtext: var(--text-mid) !important;
+      --pt-radius: 12px !important;
+    }
+    #practice-home .subject-card, #practice-selector .topic-card { background: var(--white) !important; border-color: rgba(11,31,58,0.08) !important; }
+    #practice-home .subject-name, #practice-selector .topic-name { color: var(--navy) !important; }
+    #practice-home .subject-desc, #practice-selector .topic-desc { color: var(--text-mid) !important; }
+    #practice-selector .grade-tab { background: var(--white) !important; color: var(--text-mid) !important; border-color: rgba(11,31,58,0.12) !important; }
+    #practice-selector .grade-tab.active { background: var(--navy) !important; color: #fff !important; border-color: var(--navy) !important; }
 
-    /* ── Subject Cards ── */
+    /* â”€â”€ Subject Cards â”€â”€ */
     .subject-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1.25rem; margin-bottom:2rem; }
     .subject-card { background:var(--pt-card, var(--white)); border:2px solid rgba(0,0,0,0.07); border-radius:var(--pt-radius, 12px); padding:1.75rem; cursor:pointer; transition:all 0.22s; text-align:left; width:100%; display:flex; flex-direction:column; gap:0.75rem; }
     .subject-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.12); border-color:var(--pt-primary, var(--navy)); }
@@ -440,25 +456,25 @@
     .subject-name { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--pt-text, var(--navy)); }
     .subject-desc { font-size:0.82rem; color:var(--pt-subtext, var(--text-light)); line-height:1.5; }
 
-    /* ── Grade Tabs ── */
+    /* â”€â”€ Grade Tabs â”€â”€ */
     .grade-tabs-wrap { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem; }
     .grade-tab { background:var(--pt-card, var(--white)); border:2px solid rgba(0,0,0,0.1); border-radius:var(--pt-radius, 8px); padding:0.55rem 1.1rem; font-family:var(--font-body); font-size:0.82rem; font-weight:600; color:var(--pt-subtext, var(--text-mid)); cursor:pointer; transition:all 0.2s; }
     .grade-tab.active { background:var(--pt-primary, var(--navy)); color:#fff; border-color:var(--pt-primary, var(--navy)); }
     .grade-tab:hover:not(.active) { border-color:var(--pt-primary, var(--gold)); color:var(--pt-primary, var(--gold)); }
 
-    /* ── Topic Cards ── */
+    /* â”€â”€ Topic Cards â”€â”€ */
     .topic-card { background:var(--pt-card, var(--white)); border:2px solid rgba(0,0,0,0.07); border-radius:var(--pt-radius, 10px); padding:1.25rem; cursor:pointer; transition:all 0.2s; text-align:left; width:100%; }
     .topic-card:hover { border-color:var(--pt-primary, var(--gold)); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.1); }
     .topic-cat { font-size:0.62rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--pt-primary, var(--gold)); margin-bottom:0.35rem; }
     .topic-name { font-weight:700; color:var(--pt-text, var(--navy)); font-size:0.9rem; margin-bottom:0.3rem; }
     .topic-desc { font-size:0.75rem; color:var(--pt-subtext, var(--text-light)); line-height:1.5; }
 
-    /* ── Pre-load Bar ── */
+    /* â”€â”€ Pre-load Bar â”€â”€ */
     .preload-bar { height:3px; background:rgba(0,0,0,0.08); border-radius:100px; margin-top:0.75rem; overflow:hidden; }
     .preload-fill { height:100%; background:var(--pt-primary, var(--gold)); border-radius:100px; width:0%; transition:width 0.8s ease; }
     .preload-label { font-size:0.72rem; color:var(--pt-subtext); margin-top:4px; }
 
-    /* ── Quiz Interface ── */
+    /* â”€â”€ Quiz Interface â”€â”€ */
     .quiz-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:0.75rem; padding:1rem 1.25rem; background:var(--pt-card, var(--white)); border-radius:var(--pt-radius, 12px); border:1px solid rgba(0,0,0,0.06); }
     .quiz-topic-label { font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--pt-primary, var(--gold)); margin-bottom:3px; }
     .quiz-heading { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--pt-text, var(--navy)); }
@@ -482,20 +498,20 @@
     .theme-k2 .smart-bar-bg { height:16px; border-radius:100px; }
     .theme-k2 .smart-bar-fill { background:linear-gradient(90deg,#FF6B35,#FFD700); }
 
-    /* ── Concept Reminder ── */
+    /* â”€â”€ Concept Reminder â”€â”€ */
     .concept-reminder { background:rgba(201,168,76,0.08); border:1.5px solid rgba(201,168,76,0.25); border-radius:var(--pt-radius, 10px); padding:1rem 1.25rem; margin-bottom:1.25rem; display:none; }
     .concept-reminder-label { font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--pt-primary, var(--gold)); margin-bottom:0.35rem; }
     .concept-reminder-text { font-size:0.875rem; color:var(--pt-subtext); line-height:1.7; }
 
-    /* ── Recovery Tag ── */
+    /* â”€â”€ Recovery Tag â”€â”€ */
     .recovery-tag { background:rgba(63,81,181,0.06); border:1.5px solid rgba(63,81,181,0.15); border-radius:6px; padding:0.6rem 1rem; margin-bottom:1rem; font-size:0.82rem; font-weight:600; color:var(--pt-accent, var(--navy-light)); display:none; }
 
-    /* ── Question Card ── */
+    /* â”€â”€ Question Card â”€â”€ */
     .question-card { background:var(--pt-card, var(--white)); border:2px solid rgba(0,0,0,0.07); border-radius:var(--pt-radius, 12px); padding:2rem; margin-bottom:1.25rem; }
     .question-text { font-size:var(--pt-q-size, 1.05rem); font-weight:600; color:var(--pt-text, var(--navy)); line-height:1.7; margin-bottom:1.75rem; }
     .theme-k2 .question-text { font-size:1.4rem; line-height:1.6; }
 
-    /* ── Choice Buttons ── */
+    /* â”€â”€ Choice Buttons â”€â”€ */
     .choices-wrap { display:flex; flex-direction:column; gap:0.75rem; }
     .choice-btn { width:100%; text-align:left; padding:1rem 1.25rem; border:2px solid rgba(0,0,0,0.1); border-radius:var(--pt-radius, 8px); background:var(--pt-card, var(--white)); font-family:var(--font-body); font-size:var(--pt-font-size, 0.9rem); color:var(--pt-subtext, var(--text-mid)); cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:0.85rem; }
     .choice-btn:hover:not(:disabled) { border-color:var(--pt-primary, var(--gold)); background:rgba(201,168,76,0.05); color:var(--pt-text, var(--navy)); transform:translateX(4px); }
@@ -506,30 +522,30 @@
     .theme-k2 .choice-btn { padding:1.25rem 1.5rem; font-size:1.15rem; border-radius:20px; }
     .theme-k2 .choice-letter { width:40px; height:40px; font-size:1rem; }
 
-    /* ── Feedback Box ── */
+    /* â”€â”€ Feedback Box â”€â”€ */
     .feedback-box { border-radius:var(--pt-radius, 10px); padding:1.25rem 1.5rem; margin-bottom:1.25rem; display:none; }
     .feedback-title { font-weight:700; font-size:1rem; margin-bottom:0.4rem; }
     .feedback-text { font-size:0.875rem; line-height:1.75; }
     .theme-k2 .feedback-title { font-size:1.3rem; }
     .theme-k2 .feedback-text { font-size:1.05rem; }
 
-    /* ── Next Button ── */
+    /* â”€â”€ Next Button â”€â”€ */
     .next-btn { background:var(--pt-primary, var(--gold)); color:#fff; font-weight:700; font-size:1rem; padding:0.9rem 2rem; border:none; border-radius:var(--pt-radius, 6px); cursor:pointer; font-family:var(--font-body); transition:all 0.2s; display:none; }
     .theme-68 .next-btn, .theme-912 .next-btn { color:var(--navy); }
     .next-btn:hover { opacity:0.88; transform:translateY(-2px); }
     .theme-k2 .next-btn { font-size:1.2rem; padding:1rem 2.5rem; border-radius:20px; }
 
-    /* ── Exit Button ── */
+    /* â”€â”€ Exit Button â”€â”€ */
     .exit-btn { background:none; border:1.5px solid rgba(0,0,0,0.12); border-radius:6px; padding:0.4rem 0.85rem; font-size:0.78rem; color:var(--pt-subtext); cursor:pointer; font-family:var(--font-body); transition:all 0.2s; }
     .exit-btn:hover { border-color:var(--pt-primary); color:var(--pt-primary); }
     .theme-912 .exit-btn { border-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.4); }
 
-    /* ── Loading Dots ── */
+    /* â”€â”€ Loading Dots â”€â”€ */
     .dots { display:flex; gap:6px; justify-content:center; margin-top:1rem; }
     .dot { width:8px; height:8px; background:var(--pt-primary, var(--gold)); border-radius:50%; animation:pulse 1.2s ease infinite; }
     .dot:nth-child(2){animation-delay:0.2s;} .dot:nth-child(3){animation-delay:0.4s;}
 
-    /* ── Milestone Screen ── */
+    /* â”€â”€ Milestone Screen â”€â”€ */
     .milestone-screen { text-align:center; padding:3rem 2rem; background:var(--pt-bg, var(--off-white)); border-radius:var(--pt-radius, 12px); }
     .milestone-icon-wrap { display:flex; justify-content:center; margin-bottom:1.25rem; }
     .milestone-title { font-family:var(--font-display); font-size:2rem; font-weight:700; color:var(--pt-text, var(--navy)); margin-bottom:0.75rem; }
@@ -542,46 +558,46 @@
     .milestone-new-btn { background:transparent; font-weight:600; font-size:0.95rem; padding:0.9rem 1.75rem; border:1.5px solid rgba(0,0,0,0.15); border-radius:var(--pt-radius, 6px); cursor:pointer; font-family:var(--font-body); color:var(--pt-text, var(--navy)); }
     .theme-912 .milestone-new-btn { border-color:rgba(255,255,255,0.15); color:rgba(255,255,255,0.7); }
 
-    /* ── Back Button ── */
+    /* â”€â”€ Back Button â”€â”€ */
     .back-btn { background:none; border:1.5px solid rgba(0,0,0,0.1); border-radius:6px; padding:0.4rem 0.85rem; font-size:0.78rem; color:var(--pt-subtext); cursor:pointer; font-family:var(--font-body); display:inline-flex; align-items:center; gap:6px; transition:all 0.2s; }
     .back-btn:hover { border-color:var(--pt-primary); color:var(--pt-primary); }
     .theme-912 .back-btn { border-color:rgba(255,255,255,0.15); color:rgba(255,255,255,0.4); }
 
 
-    /* ── MOBILE OPTIMIZATIONS ── */
+    /* â”€â”€ MOBILE OPTIMIZATIONS â”€â”€ */
     @media (max-width: 768px) {
       /* Practice wrapper full width */
       .practice-wrapper { padding: 0.25rem; }
 
-      /* Subject grid — 2 cols on mobile */
+      /* Subject grid â€” 2 cols on mobile */
       .subject-grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
       .subject-card { padding: 1.25rem; }
       .subject-icon { width: 40px; height: 40px; }
       .subject-name { font-size: 0.95rem; }
       .subject-desc { display: none; }
 
-      /* Grade tabs — scrollable row */
+      /* Grade tabs â€” scrollable row */
       .grade-tabs-wrap { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; scrollbar-width: none; }
       .grade-tabs-wrap::-webkit-scrollbar { display: none; }
       .grade-tab { flex-shrink: 0; white-space: nowrap; }
 
-      /* Topic grid — single col */
+      /* Topic grid â€” single col */
       #topic-grid { grid-template-columns: 1fr !important; }
 
-      /* Quiz header — stack on mobile */
+      /* Quiz header â€” stack on mobile */
       .quiz-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
       .score-cluster { width: 100%; justify-content: space-between; }
 
-      /* Question card — tighter padding */
+      /* Question card â€” tighter padding */
       .question-card { padding: 1.25rem; }
       .question-text { font-size: 1rem; margin-bottom: 1.25rem; }
       .theme-k2 .question-text { font-size: 1.2rem; }
 
-      /* Choice buttons — bigger touch targets */
+      /* Choice buttons â€” bigger touch targets */
       .choice-btn { padding: 1rem; min-height: 52px; font-size: 0.95rem; }
       .theme-k2 .choice-btn { min-height: 64px; font-size: 1.05rem; padding: 1rem 1.25rem; }
 
-      /* Next button — full width on mobile */
+      /* Next button â€” full width on mobile */
       .next-btn { width: 100%; text-align: center; justify-content: center; padding: 1rem; font-size: 1rem; }
       .theme-k2 .next-btn { padding: 1.1rem; font-size: 1.1rem; }
 
@@ -591,7 +607,7 @@
       .milestone-actions { flex-direction: column; }
       .milestone-keep-btn, .milestone-new-btn { width: 100%; text-align: center; }
 
-      /* Smart bar labels — shorter */
+      /* Smart bar labels â€” shorter */
       .smart-bar-labels { font-size: 0.62rem; }
 
       /* Back button */
@@ -603,7 +619,7 @@
       .feedback-text { font-size: 0.85rem; }
     }
 
-    /* ── TOUCH IMPROVEMENTS (all sizes) ── */
+    /* â”€â”€ TOUCH IMPROVEMENTS (all sizes) â”€â”€ */
     .subject-card, .topic-card, .grade-tab, .choice-btn, .next-btn,
     .back-btn, .exit-btn, .milestone-keep-btn, .milestone-new-btn {
       touch-action: manipulation;
@@ -614,7 +630,7 @@
     .grade-tab { min-height: 40px; }
     .subject-card { min-height: 44px; }
 
-    /* ── FREE RESPONSE ── */
+    /* â”€â”€ FREE RESPONSE â”€â”€ */
     #frInput:focus { border-color:var(--pt-primary, var(--gold)); outline:none; }
     .theme-k2 #frInput { font-size:1.1rem; }
     .fr-grade-correct { background:rgba(76,175,80,0.07); border:1.5px solid rgba(76,175,80,0.3); border-radius:var(--pt-radius,10px); padding:1rem 1.25rem; margin-bottom:1rem; }
@@ -624,6 +640,43 @@
     .fr-grade-text  { font-size:0.875rem; line-height:1.75; }
     .fr-mode-badge  { display:inline-flex; align-items:center; gap:6px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); color:var(--pt-primary,var(--gold)); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:100px; margin-bottom:0.75rem; }
 
+
+    /* ── LEADERBOARD ── */
+    .lb-tabs { display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+    .lb-tab { padding:0.55rem 1.25rem; border-radius:8px; font-size:0.82rem; font-weight:600; cursor:pointer; border:1.5px solid rgba(11,31,58,0.1); background:var(--white); color:var(--text-mid); transition:all 0.2s; font-family:var(--font-body); }
+    .lb-tab.active { background:var(--navy); color:#fff; border-color:var(--navy); }
+    .lb-card { background:var(--white); border:1px solid rgba(11,31,58,0.07); border-radius:14px; padding:1.5rem; margin-bottom:1.25rem; }
+    .lb-row { display:flex; align-items:center; gap:1rem; padding:0.85rem 1rem; border-radius:10px; margin-bottom:0.4rem; transition:background 0.15s; }
+    .lb-row:hover { background:var(--off-white); }
+    .lb-row.mine { background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.2); }
+    .lb-rank { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:700; flex-shrink:0; background:var(--off-white); color:var(--text-mid); }
+    .lb-rank.gold   { background:linear-gradient(135deg,#FFD700,#FFA500); color:#fff; }
+    .lb-rank.silver { background:linear-gradient(135deg,#C0C0C0,#A8A8A8); color:#fff; }
+    .lb-rank.bronze { background:linear-gradient(135deg,#CD7F32,#A0522D); color:#fff; }
+    .lb-avatar { width:38px; height:38px; border-radius:50%; background:var(--navy); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; color:var(--gold); flex-shrink:0; }
+    .lb-name { font-size:0.875rem; font-weight:600; color:var(--navy); }
+    .lb-sub { font-size:0.72rem; color:var(--text-light); margin-top:1px; }
+    .lb-badge { display:inline-block; font-size:0.65rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:100px; margin-top:3px; }
+    .badge-champion { background:rgba(201,168,76,0.15); color:var(--gold); border:1px solid rgba(201,168,76,0.35); }
+    .badge-gold-b   { background:rgba(255,215,0,0.15); color:#B8860B; border:1px solid rgba(255,215,0,0.4); }
+    .badge-silver-b { background:rgba(192,192,192,0.2); color:#777; border:1px solid rgba(192,192,192,0.4); }
+    .badge-bronze-b { background:rgba(205,127,50,0.15); color:#8B4513; border:1px solid rgba(205,127,50,0.35); }
+    .badge-rookie   { background:rgba(30,73,118,0.1); color:var(--navy-light); border:1px solid rgba(30,73,118,0.2); }
+    .lb-pts-val { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--navy); line-height:1; text-align:right; }
+    .lb-pts-lbl { font-size:0.62rem; color:var(--text-light); text-transform:uppercase; letter-spacing:0.06em; text-align:right; }
+    .lb-empty { text-align:center; padding:2.5rem; color:var(--text-light); font-size:0.875rem; }
+    .lb-reset-note { font-size:0.72rem; color:var(--text-light); text-align:center; margin-top:0.75rem; }
+    .lb-my-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.25rem; }
+    .lb-stat-box { background:var(--off-white); border-radius:10px; padding:1rem; text-align:center; }
+    .lb-stat-val { font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--navy); line-height:1; }
+    .lb-stat-lbl { font-size:0.65rem; color:var(--text-light); text-transform:uppercase; letter-spacing:0.06em; margin-top:3px; }
+    .lb-rules-wrap { background:var(--navy); border-radius:14px; padding:1.5rem; }
+    .lb-rules-title { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--gold); margin-bottom:1rem; }
+    .lb-rule-row { display:flex; gap:0.85rem; align-items:flex-start; margin-bottom:0.85rem; font-size:0.82rem; line-height:1.65; color:rgba(255,255,255,0.7); }
+    .lb-rule-row:last-child { margin-bottom:0; }
+    .lb-rule-icon { width:26px; height:26px; flex-shrink:0; background:rgba(201,168,76,0.12); border-radius:6px; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+    .lb-rule-icon svg { width:13px; height:13px; stroke:var(--gold); }
+    .lb-divider { height:1px; background:rgba(255,255,255,0.07); margin:1rem 0; }
   </style>
 </head>
 <body>
@@ -671,6 +724,10 @@
       <a class="nav-item" onclick="showPage('progress')" id="nav-progress">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
         My Progress
+      </a>
+      <a class="nav-item" onclick="showPage('leaderboard')" id="nav-leaderboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21H5a2 2 0 0 1-2-2v-5"/><path d="M16 21h3a2 2 0 0 0 2-2v-5"/><path d="M12 21V9"/><path d="M3 14l9-9 9 9"/><rect x="9" y="14" width="6" height="7" rx="0"/></svg>
+        Leaderboard
       </a>
       <a class="nav-item" href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
@@ -720,7 +777,7 @@
       <div class="welcome-banner">
         <div class="welcome-tag">Student Dashboard</div>
         <h1 class="welcome-h1">Keep going.<br/>You're <span>making progress.</span></h1>
-        <p class="welcome-sub">Everything you need for your NextGen sessions — all in one place.</p>
+        <p class="welcome-sub">Everything you need for your NextGen sessions â€” all in one place.</p>
       </div>
 
       <div class="stats-grid">
@@ -737,7 +794,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
           <div class="stat-label">Lessons Available</div>
-          <div class="stat-value" id="statSessions">—</div>
+          <div class="stat-value" id="statSessions">â€”</div>
           <div class="stat-sub">Sessions completed</div>
         </div>
         <div class="stat-card">
@@ -796,7 +853,7 @@
           <div class="announce-dot"></div>
           <div>
             <div class="announce-title">Welcome to your student dashboard</div>
-            <div class="announce-text">This is your home base for everything NextGen — lessons, sessions, progress, and resources. More features coming soon.</div>
+            <div class="announce-text">This is your home base for everything NextGen â€” lessons, sessions, progress, and resources. More features coming soon.</div>
             <div class="announce-date">April 2026</div>
           </div>
         </div>
@@ -832,10 +889,10 @@
             <div class="lesson-title">Algebra Fundamentals</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Core algebraic concepts — solving for x, linear equations, and graphing lines. Build the foundation before moving to advanced topics.</p>
+            <p class="lesson-desc">Core algebraic concepts â€” solving for x, linear equations, and graphing lines. Build the foundation before moving to advanced topics.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
-              <a href="mailto:nextgentutoringco@gmail.com?subject=Algebra Fundamentals Materials" class="lesson-btn">Request Materials →</a>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Algebra Fundamentals Materials" class="lesson-btn">Request Materials â†’</a>
             </div>
           </div>
         </div>
@@ -845,10 +902,10 @@
             <div class="lesson-title">SAT Math Strategies</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Proven SAT math strategies — time management, question types, and how to eliminate wrong answers efficiently on test day.</p>
+            <p class="lesson-desc">Proven SAT math strategies â€” time management, question types, and how to eliminate wrong answers efficiently on test day.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
-              <a href="mailto:nextgentutoringco@gmail.com?subject=SAT Math Strategy Materials" class="lesson-btn">Request Materials →</a>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=SAT Math Strategy Materials" class="lesson-btn">Request Materials â†’</a>
             </div>
           </div>
         </div>
@@ -861,7 +918,7 @@
             <p class="lesson-desc">The PIE method for paragraph structure, thesis development, and how to build a strong argumentative essay from the ground up.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
-              <a href="mailto:nextgentutoringco@gmail.com?subject=Essay Structure Materials" class="lesson-btn">Request Materials →</a>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Essay Structure Materials" class="lesson-btn">Request Materials â†’</a>
             </div>
           </div>
         </div>
@@ -871,10 +928,10 @@
             <div class="lesson-title">Geometry &amp; Proofs</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Angles, triangles, circles, and geometric proofs — visual learning techniques that make abstract geometry concepts concrete.</p>
+            <p class="lesson-desc">Angles, triangles, circles, and geometric proofs â€” visual learning techniques that make abstract geometry concepts concrete.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
-              <a href="mailto:nextgentutoringco@gmail.com?subject=Geometry Materials" class="lesson-btn">Request Materials →</a>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Geometry Materials" class="lesson-btn">Request Materials â†’</a>
             </div>
           </div>
         </div>
@@ -884,10 +941,10 @@
             <div class="lesson-title">Biology Core Concepts</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Cell structure, genetics, ecosystems, and evolution — the essential biology topics covered in most K–12 and college intro courses.</p>
+            <p class="lesson-desc">Cell structure, genetics, ecosystems, and evolution â€” the essential biology topics covered in most Kâ€“12 and college intro courses.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
-              <a href="mailto:nextgentutoringco@gmail.com?subject=Biology Materials" class="lesson-btn">Request Materials →</a>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Biology Materials" class="lesson-btn">Request Materials â†’</a>
             </div>
           </div>
         </div>
@@ -900,7 +957,7 @@
             <p class="lesson-desc">Strategies for active reading, identifying main ideas, making inferences, and answering comprehension questions accurately and quickly.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
-              <a href="mailto:nextgentutoringco@gmail.com?subject=Reading Comprehension Materials" class="lesson-btn">Request Materials →</a>
+              <a href="mailto:nextgentutoringco@gmail.com?subject=Reading Comprehension Materials" class="lesson-btn">Request Materials â†’</a>
             </div>
           </div>
         </div>
@@ -915,7 +972,7 @@
       </div>
       <div class="next-session" style="margin-bottom:1.5rem; max-width:560px;">
         <div class="sec-title">Book Your Next Session</div>
-        <p style="font-size:0.875rem; color:var(--text-mid); margin-bottom:1.25rem; line-height:1.7;">All sessions are 1 hour and available in person (Metro Detroit) or virtually. Schedule directly through Calendly — pick a time that works for you.</p>
+        <p style="font-size:0.875rem; color:var(--text-mid); margin-bottom:1.25rem; line-height:1.7;">All sessions are 1 hour and available in person (Metro Detroit) or virtually. Schedule directly through Calendly â€” pick a time that works for you.</p>
         <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="book-btn" style="display:inline-flex;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Schedule on Calendly
@@ -925,11 +982,11 @@
         <div class="sec-title">Session Info</div>
         <div class="announce-item">
           <div class="announce-dot"></div>
-          <div><div class="announce-title">Session length</div><div class="announce-text">Every session is 1 hour long — in person or virtual.</div></div>
+          <div><div class="announce-title">Session length</div><div class="announce-text">Every session is 1 hour long â€” in person or virtual.</div></div>
         </div>
         <div class="announce-item">
           <div class="announce-dot"></div>
-          <div><div class="announce-title">Pricing</div><div class="announce-text">$50/session · 5-pack $225 · 10-pack $400 · Multiple children $75/session</div></div>
+          <div><div class="announce-title">Pricing</div><div class="announce-text">$50/session Â· 5-pack $225 Â· 10-pack $400 Â· Multiple children $75/session</div></div>
         </div>
         <div class="announce-item">
           <div class="announce-dot"></div>
@@ -948,17 +1005,17 @@
         <div class="progress-card">
           <div class="sec-title">Subject Progress</div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Mathematics</span><span class="progress-pct" id="progMathPct">—</span></div>
+            <div class="progress-top"><span class="progress-name">Mathematics</span><span class="progress-pct" id="progMathPct">â€”</span></div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progMathFill" style="width:0%"></div></div>
             <div class="progress-sub" id="progMathSub">Loading...</div>
           </div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Reading &amp; Writing</span><span class="progress-pct" id="progReadingPct">—</span></div>
+            <div class="progress-top"><span class="progress-name">Reading &amp; Writing</span><span class="progress-pct" id="progReadingPct">â€”</span></div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progReadingFill" style="width:0%"></div></div>
             <div class="progress-sub" id="progReadingSub">Loading...</div>
           </div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Test Prep</span><span class="progress-pct" id="progTestPrepPct">—</span></div>
+            <div class="progress-top"><span class="progress-name">Test Prep</span><span class="progress-pct" id="progTestPrepPct">â€”</span></div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progTestPrepFill" style="width:0%"></div></div>
             <div class="progress-sub" id="progTestPrepSub">Loading...</div>
           </div>
@@ -988,21 +1045,21 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
             </div>
             <div class="subject-name" id="mathCardName">Mathematics</div>
-            <div class="subject-desc" id="mathCardDesc">Numbers, algebra, geometry and more — K through 12th grade</div>
+            <div class="subject-desc" id="mathCardDesc">Numbers, algebra, geometry and more â€” K through 12th grade</div>
           </button>
           <button class="subject-card" onclick="selectSubject('reading')">
             <div class="subject-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             </div>
             <div class="subject-name" id="readingCardName">Reading</div>
-            <div class="subject-desc" id="readingCardDesc">Comprehension, vocabulary, and analysis — K through 12th grade</div>
+            <div class="subject-desc" id="readingCardDesc">Comprehension, vocabulary, and analysis â€” K through 12th grade</div>
           </button>
           <button class="subject-card" onclick="selectSubject('writing')">
             <div class="subject-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             </div>
             <div class="subject-name" id="writingCardName">Writing</div>
-            <div class="subject-desc" id="writingCardDesc">Grammar, sentences, and essays — K through 12th grade</div>
+            <div class="subject-desc" id="writingCardDesc">Grammar, sentences, and essays â€” K through 12th grade</div>
           </button>
           <button class="subject-card" onclick="selectSubject('sat')">
             <div class="subject-icon">
@@ -1098,7 +1155,7 @@
 
         <!-- FREE RESPONSE (shown at SmartScore 80+) -->
         <div id="freeResponseWrap" style="display:none;">
-          <div id="frModeLabel" style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pt-primary, var(--gold));margin-bottom:0.75rem;">Mastery Mode — Write Your Answer</div>
+          <div id="frModeLabel" style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pt-primary, var(--gold));margin-bottom:0.75rem;">Mastery Mode â€” Write Your Answer</div>
           <textarea id="frInput" rows="4" placeholder="Type your full answer here..." style="width:100%;padding:1rem;border:2px solid rgba(0,0,0,0.1);border-radius:var(--pt-radius,10px);font-family:var(--font-body);font-size:var(--pt-font-size,0.95rem);color:var(--pt-text,var(--navy));background:var(--pt-card,var(--white));resize:vertical;outline:none;transition:border-color 0.2s;line-height:1.6;"></textarea>
           <div style="display:flex;align-items:center;gap:1rem;margin-top:0.75rem;">
             <button id="frSubmitBtn" onclick="submitFreeResponse()" style="background:var(--pt-primary,var(--navy));color:#fff;font-weight:700;font-size:0.95rem;padding:0.75rem 1.75rem;border:none;border-radius:var(--pt-radius,6px);cursor:pointer;font-family:var(--font-body);transition:all 0.2s;display:flex;align-items:center;gap:8px;">
@@ -1119,7 +1176,7 @@
         </div>
 
         <div style="display:flex;justify-content:flex-end;">
-          <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+          <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question â†’</button>
         </div>
       </div>
 
@@ -1141,6 +1198,128 @@
 
 
 
+    <!-- LEADERBOARD PAGE -->
+    <div class="page hidden fade-in" id="page-leaderboard">
+      <div style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Leaderboard</h2>
+        <p style="font-size:0.875rem;color:var(--text-light);">Practice earns points. Points earn badges. Top students earn awards from Hafeez each month.</p>
+      </div>
+
+      <!-- YOUR STATS -->
+      <div class="lb-card">
+        <div class="sec-title" style="margin-bottom:1rem;">Your Stats This Month</div>
+        <div class="lb-my-stats">
+          <div class="lb-stat-box">
+            <div class="lb-stat-val" id="myPoints">—</div>
+            <div class="lb-stat-lbl">Points</div>
+          </div>
+          <div class="lb-stat-box">
+            <div class="lb-stat-val" id="myTopicsPassed">—</div>
+            <div class="lb-stat-lbl">Passed</div>
+          </div>
+          <div class="lb-stat-box">
+            <div class="lb-stat-val" id="myTopicsMastered">—</div>
+            <div class="lb-stat-lbl">Mastered</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+          <span style="font-size:0.8rem;color:var(--text-light);">Your badge:</span>
+          <span id="myBadgeDisplay" style="font-size:0.82rem;font-weight:500;color:var(--text-mid);">Keep practicing to earn your first badge!</span>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="lb-tabs">
+        <button class="lb-tab active" onclick="switchLbTab('private')" id="lb-tab-private">My Class</button>
+        <button class="lb-tab" onclick="switchLbTab('public')" id="lb-tab-public">Top 10 Global</button>
+        <button class="lb-tab" onclick="switchLbTab('rules')" id="lb-tab-rules">How It Works</button>
+      </div>
+
+      <!-- PRIVATE -->
+      <div id="lb-private">
+        <div class="lb-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <div class="sec-title" style="margin-bottom:0;">My Class Rankings</div>
+            <div style="font-size:0.72rem;color:var(--text-light);">Students you tutor with Hafeez</div>
+          </div>
+          <div id="lb-private-list"><div class="lb-empty">Loading...</div></div>
+          <div class="lb-reset-note" id="lb-private-reset"></div>
+        </div>
+      </div>
+
+      <!-- PUBLIC -->
+      <div id="lb-public" style="display:none;">
+        <div class="lb-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <div class="sec-title" style="margin-bottom:0;">Top 10 Global</div>
+            <div style="font-size:0.72rem;color:var(--text-light);">All NextGen students this month</div>
+          </div>
+          <div id="lb-public-list"><div class="lb-empty">Loading...</div></div>
+        </div>
+      </div>
+
+      <!-- RULES -->
+      <div id="lb-rules" style="display:none;">
+        <div class="lb-rules-wrap">
+          <div class="lb-rules-title">How Points Work</div>
+
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><strong style="color:var(--white);">Topic Passed — 10 pts</strong><br/>Hit a SmartScore of 70 or higher on any topic.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H3V4h3"/><path d="M18 9h3V4h-3"/><path d="M6 4h12v7a6 6 0 0 1-12 0V4z"/><path d="M12 17v4"/><path d="M8 21h8"/></svg></div>
+            <div><strong style="color:var(--white);">Topic Mastered — 25 pts</strong><br/>Hit 90+ on any topic. Mastery counts for more than passing.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+            <div><strong style="color:var(--white);">Correct Answer — 1 pt</strong><br/>Every correct answer earns a point. It all adds up.</div>
+          </div>
+
+          <div class="lb-divider"></div>
+          <div class="lb-rules-title">Badges</div>
+
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M12 14v7"/><path d="M9 18h6"/></svg></div>
+            <div><strong style="color:#E8C97A;">Rookie</strong> — Earn your first point. You're on the board.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><strong style="color:#CD7F32;">Bronze Star</strong> — 50 points total.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><strong style="color:#B0B0B0;">Silver Star</strong> — 150 points total.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div><strong style="color:#FFD700;">Gold Star</strong> — 300 points total.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H3V4h3"/><path d="M18 9h3V4h-3"/><path d="M6 4h12v7a6 6 0 0 1-12 0V4z"/><path d="M12 17v4"/><path d="M8 21h8"/></svg></div>
+            <div><strong style="color:var(--gold);">Champion</strong> — 500 points total. You've earned the monthly award!</div>
+          </div>
+
+          <div class="lb-divider"></div>
+          <div class="lb-rules-title">Monthly Reset &amp; Awards</div>
+
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div>The leaderboard resets on the 1st of every month. Badges are yours forever — they never reset.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div>At the end of each month, Hafeez announces a top student from the class and gives out a real award. Keep practicing to win.</div>
+          </div>
+          <div class="lb-rule-row">
+            <div class="lb-rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div>The Global Top 10 shows first names only. Anyone can view it at nextgentutoring.org.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="page hidden fade-in" id="page-profile">
       <div style="margin-bottom:1.5rem;">
         <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.35rem;">My Profile</h2>
@@ -1157,7 +1336,7 @@
         </div>
         <div class="profile-row">
           <span class="profile-key">Grade</span>
-          <span class="profile-val" id="profileGrade">—</span>
+          <span class="profile-val" id="profileGrade">â€”</span>
         </div>
   </main>
 </div>
@@ -1166,7 +1345,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-  import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs, orderBy, setDoc, doc, increment, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
@@ -1212,15 +1391,15 @@
         const studentData = snap.docs[0].data();
         const studentId   = snap.docs[0].id;
 
-        // ── STAT CARDS on home page ──
+        // â”€â”€ STAT CARDS on home page â”€â”€
         const sessionsEl = document.getElementById('statSessions');
         const gradeEl    = document.getElementById('statGrade');
         const subjectEl  = document.getElementById('statSubject');
         if (sessionsEl) sessionsEl.textContent = studentData.sessions || 0;
-        if (gradeEl)    gradeEl.textContent    = studentData.grade    || '—';
-        if (subjectEl)  subjectEl.textContent  = studentData.subject  || '—';
+        if (gradeEl)    gradeEl.textContent    = studentData.grade    || 'â€”';
+        if (subjectEl)  subjectEl.textContent  = studentData.subject  || 'â€”';
 
-        // ── PROGRESS BARS ──
+        // â”€â”€ PROGRESS BARS â”€â”€
         const math     = studentData.mathProgress     || 0;
         const reading  = studentData.readingProgress  || 0;
         const testPrep = studentData.testPrepProgress || 0;
@@ -1229,7 +1408,7 @@
         setProgress('progReading',  reading,  getLabel(reading));
         setProgress('progTestPrep', testPrep, getLabel(testPrep));
 
-        // ── SESSION NOTES ──
+        // â”€â”€ SESSION NOTES â”€â”€
         const notesSnap = await getDocs(
           query(collection(db, 'sessionNotes'), where('studentId', '==', studentId))
         );
@@ -1239,13 +1418,13 @@
 
         renderNotes(notes);
 
-        // ── PROFILE PAGE extra info ──
+        // â”€â”€ PROFILE PAGE extra info â”€â”€
         const profileGrade   = document.getElementById('profileGrade');
         const profileSubject = document.getElementById('profileSubject');
         const profileRate    = document.getElementById('profileRate');
-        if (profileGrade)   profileGrade.textContent   = studentData.grade   || '—';
-        if (profileSubject) profileSubject.textContent = studentData.subject || '—';
-        if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : '—';
+        if (profileGrade)   profileGrade.textContent   = studentData.grade   || 'â€”';
+        if (profileSubject) profileSubject.textContent = studentData.subject || 'â€”';
+        if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : 'â€”';
         const profileSessions = document.getElementById('profileSessions');
         if (profileSessions) profileSessions.textContent = studentData.sessions || 0;
       }
@@ -1273,7 +1452,7 @@
     });
   });
 
-  // ── HELPERS ──
+  // â”€â”€ HELPERS â”€â”€
   function setProgress(id, pct, label) {
     const fill  = document.getElementById(id + 'Fill');
     const pctEl = document.getElementById(id + 'Pct');
@@ -1296,7 +1475,7 @@
     const el = document.getElementById('progressNotes');
     if (!el) return;
     if (!notes.length) {
-      el.innerHTML = '<div style="font-size:0.85rem;color:var(--text-light);padding:1rem 0;">No session notes yet — check back after your next session.</div>';
+      el.innerHTML = '<div style="font-size:0.85rem;color:var(--text-light);padding:1rem 0;">No session notes yet â€” check back after your next session.</div>';
       return;
     }
     el.innerHTML = notes.slice(0, 5).map(n => `
@@ -1310,7 +1489,7 @@
     `).join('');
   }
 
-  // Page navigation — expose globally
+  // Page navigation â€” expose globally
   window.showPage = function(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1321,17 +1500,17 @@
     if (page) { page.classList.remove('hidden'); page.classList.add('fade-in'); }
     if (nav)  nav.classList.add('active');
 
-    const titles = { home:'Dashboard', lessons:'Lessons', sessions:'Sessions', progress:'My Progress', practice:'Math Practice', profile:'Profile' };
+    const titles = { home:'Dashboard', lessons:'Lessons', sessions:'Sessions', progress:'My Progress', practice:'Practice', leaderboard:'Leaderboard', profile:'Profile' };
     document.getElementById('topbarTitle').textContent = titles[pageId] || 'Dashboard';
 
     document.getElementById('sidebar').classList.remove('mob-open');
     window.scrollTo(0,0);
   };
 
-  // ══════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // PRACTICE SYSTEM
 
-  // ══ PRACTICE SYSTEM ══
+  // â•â• PRACTICE SYSTEM â•â•
   const PROXY_URL = 'https://nextgen-proxy.nextgentutoringco.workers.dev';
 
   const CURRICULUM = {
@@ -1353,7 +1532,7 @@
       }},
       '1st': { label:'1st Grade', categories: {
         'Addition & Subtraction': [
-          { id:'add-20',      name:'Addition within 20',    desc:'Add with strategies — counting on, making ten, doubles' },
+          { id:'add-20',      name:'Addition within 20',    desc:'Add with strategies â€” counting on, making ten, doubles' },
           { id:'sub-20',      name:'Subtraction within 20', desc:'Subtract within 20 and understand the relationship to addition' },
           { id:'word-1st',    name:'Word Problems',         desc:'Solve add/subtract word problems using objects and drawings' },
         ],
@@ -1387,11 +1566,11 @@
         'Multiplication & Division': [
           { id:'mult-intro',  name:'Intro to Multiplication',desc:'Understand multiplication as equal groups and arrays' },
           { id:'div-intro',   name:'Intro to Division',     desc:'Understand division as sharing equally and repeated subtraction' },
-          { id:'times-tables',name:'Times Tables (1–10)',   desc:'Memorize and apply multiplication facts through 10×10' },
+          { id:'times-tables',name:'Times Tables (1â€“10)',   desc:'Memorize and apply multiplication facts through 10Ã—10' },
           { id:'mult-div-rel',name:'Multiplication & Division Relationship', desc:'Use fact families and inverse operations' },
         ],
         'Fractions': [
-          { id:'frac-intro',  name:'Intro to Fractions',    desc:'Equal parts, numerator, denominator — unit fractions' },
+          { id:'frac-intro',  name:'Intro to Fractions',    desc:'Equal parts, numerator, denominator â€” unit fractions' },
           { id:'frac-num-line',name:'Fractions on a Number Line', desc:'Place fractions on a number line between 0 and 1' },
           { id:'frac-compare',name:'Comparing Fractions',   desc:'Compare fractions with same numerator or denominator' },
         ],
@@ -1415,8 +1594,8 @@
         ],
         'Geometry': [
           { id:'angles-4th',  name:'Angles',                desc:'Measure and draw angles using a protractor' },
-          { id:'lines-4th',   name:'Lines & Symmetry',      desc:'Parallel, perpendicular, and intersecting lines — line symmetry' },
-          { id:'shapes-4th',  name:'Classifying Shapes',    desc:'Classify 2D shapes by properties — sides, angles, symmetry' },
+          { id:'lines-4th',   name:'Lines & Symmetry',      desc:'Parallel, perpendicular, and intersecting lines â€” line symmetry' },
+          { id:'shapes-4th',  name:'Classifying Shapes',    desc:'Classify 2D shapes by properties â€” sides, angles, symmetry' },
         ],
       }},
       '5th': { label:'5th Grade', categories: {
@@ -1480,7 +1659,7 @@
           { id:'surface-7',   name:'Surface Area & Volume', desc:'Surface area and volume of prisms and pyramids' },
         ],
         'Statistics': [
-          { id:'prob-7',      name:'Probability',           desc:'Simple and compound probability — theoretical and experimental' },
+          { id:'prob-7',      name:'Probability',           desc:'Simple and compound probability â€” theoretical and experimental' },
           { id:'sample-7',    name:'Sampling & Inference',  desc:'Use random samples to draw inferences about populations' },
         ],
       }},
@@ -1493,7 +1672,7 @@
           { id:'linear-fn',   name:'Linear vs Nonlinear',   desc:'Distinguish between linear and nonlinear functions' },
         ],
         'Geometry': [
-          { id:'pythagorean', name:'Pythagorean Theorem',   desc:'Apply a² + b² = c² to find missing sides and distances' },
+          { id:'pythagorean', name:'Pythagorean Theorem',   desc:'Apply aÂ² + bÂ² = cÂ² to find missing sides and distances' },
           { id:'transform-8', name:'Transformations',       desc:'Translations, reflections, rotations, and dilations on the coordinate plane' },
           { id:'similar-8',   name:'Similar & Congruent Figures', desc:'Angle-Angle similarity, congruence transformations' },
           { id:'vol-8',       name:'Volume of Cylinders, Cones & Spheres', desc:'Apply volume formulas to 3D figures' },
@@ -1533,14 +1712,14 @@
           { id:'logic-10',    name:'Conditional Statements', desc:'If-then statements, converses, inverses, and contrapositives' },
         ],
         'Triangles & Congruence': [
-          { id:'congruent-10',name:'Triangle Congruence',   desc:'SSS, SAS, ASA, AAS — prove triangles congruent' },
-          { id:'similar-10',  name:'Triangle Similarity',   desc:'AA, SAS, SSS similarity — proportions and scale factors' },
-          { id:'trig-10',     name:'Right Triangle Trigonometry', desc:'SOH CAH TOA — find missing sides and angles' },
+          { id:'congruent-10',name:'Triangle Congruence',   desc:'SSS, SAS, ASA, AAS â€” prove triangles congruent' },
+          { id:'similar-10',  name:'Triangle Similarity',   desc:'AA, SAS, SSS similarity â€” proportions and scale factors' },
+          { id:'trig-10',     name:'Right Triangle Trigonometry', desc:'SOH CAH TOA â€” find missing sides and angles' },
           { id:'pyth-10',     name:'Pythagorean Theorem Applications', desc:'Apply to 2D and 3D problems' },
         ],
         'Circles': [
           { id:'circles-10',  name:'Circle Theorems',       desc:'Arc length, sector area, inscribed angles, and tangent lines' },
-          { id:'circle-eq',   name:'Circle Equations',      desc:'Write and use the equation of a circle (x-h)² + (y-k)² = r²' },
+          { id:'circle-eq',   name:'Circle Equations',      desc:'Write and use the equation of a circle (x-h)Â² + (y-k)Â² = rÂ²' },
         ],
         'Coordinate Geometry': [
           { id:'coord-10',    name:'Coordinate Geometry',   desc:'Distance, midpoint, slope, and parallel/perpendicular lines' },
@@ -1575,14 +1754,14 @@
       '12th': { label:'12th Grade (Pre-Calculus)', categories: {
         'Trigonometry': [
           { id:'unit-circle', name:'Unit Circle',           desc:'Memorize and apply all values on the unit circle in degrees and radians' },
-          { id:'trig-fn',     name:'Trig Functions & Graphs', desc:'Graph sin, cos, tan — amplitude, period, phase shift' },
+          { id:'trig-fn',     name:'Trig Functions & Graphs', desc:'Graph sin, cos, tan â€” amplitude, period, phase shift' },
           { id:'trig-id',     name:'Trig Identities',       desc:'Pythagorean, reciprocal, co-function, and double angle identities' },
           { id:'trig-eq',     name:'Solving Trig Equations', desc:'Solve trig equations over given intervals' },
         ],
         'Functions & Analysis': [
           { id:'composite',   name:'Composite & Inverse Functions', desc:'Form, evaluate, and find inverses of functions' },
           { id:'limits-intro',name:'Intro to Limits',       desc:'Understand the concept of a limit graphically and numerically' },
-          { id:'conic',       name:'Conic Sections',        desc:'Parabolas, ellipses, hyperbolas — standard form and graphs' },
+          { id:'conic',       name:'Conic Sections',        desc:'Parabolas, ellipses, hyperbolas â€” standard form and graphs' },
         ],
         'Vectors & Matrices': [
           { id:'vectors',     name:'Vectors',               desc:'Magnitude, direction, dot product, and vector operations' },
@@ -1598,7 +1777,7 @@
       'K': { label:'Kindergarten', categories: {
         'Phonics': [
           { id:'letters-k',   name:'Letter Recognition',    desc:'Identify and name all 26 uppercase and lowercase letters' },
-          { id:'phonics-k',   name:'Letter Sounds',         desc:'Match letters to their sounds — consonants and short vowels' },
+          { id:'phonics-k',   name:'Letter Sounds',         desc:'Match letters to their sounds â€” consonants and short vowels' },
           { id:'rhyming',     name:'Rhyming Words',         desc:'Identify and produce rhyming words' },
         ],
         'Comprehension': [
@@ -1625,7 +1804,7 @@
         'Comprehension': [
           { id:'main-2',      name:'Main Idea & Details',   desc:'Identify the main idea and explain how key details support it' },
           { id:'compare-2',   name:'Comparing Texts',       desc:'Compare and contrast two texts on the same topic' },
-          { id:'purpose-2',   name:"Author's Purpose",      desc:'Identify why an author writes — to inform, entertain, or persuade' },
+          { id:'purpose-2',   name:"Author's Purpose",      desc:'Identify why an author writes â€” to inform, entertain, or persuade' },
         ],
       }},
       '3rd': { label:'3rd Grade', categories: {
@@ -1649,7 +1828,7 @@
         ],
         'Vocabulary': [
           { id:'roots-4',     name:'Roots & Affixes',       desc:'Use prefixes, suffixes, and roots to determine word meaning' },
-          { id:'connotation-4',name:'Word Nuance',          desc:'Distinguish between words with similar meanings — shades of meaning' },
+          { id:'connotation-4',name:'Word Nuance',          desc:'Distinguish between words with similar meanings â€” shades of meaning' },
         ],
       }},
       '5th': { label:'5th Grade', categories: {
@@ -1713,7 +1892,7 @@
       '11th': { label:'11th Grade', categories: {
         'Advanced Reading': [
           { id:'ap-lit',      name:'AP Literature Reading',  desc:'Close reading of poetry, fiction, and drama at AP level' },
-          { id:'sat-read-11', name:'SAT Reading Comprehension', desc:'Evidence-based reading — paired passages, data, complex inference' },
+          { id:'sat-read-11', name:'SAT Reading Comprehension', desc:'Evidence-based reading â€” paired passages, data, complex inference' },
           { id:'primary-src', name:'Primary Source Analysis',desc:'Analyze historical and founding documents for purpose and argument' },
         ],
       }},
@@ -1758,7 +1937,7 @@
       '3rd': { label:'3rd Grade', categories: {
         'Grammar': [
           { id:'pos-3',       name:'Parts of Speech',        desc:'Identify nouns, verbs, adjectives, adverbs, and pronouns' },
-          { id:'tense-3',     name:'Verb Tense',             desc:'Use correct verb tense — past, present, and future consistently' },
+          { id:'tense-3',     name:'Verb Tense',             desc:'Use correct verb tense â€” past, present, and future consistently' },
           { id:'poss-3',      name:"Possessive Nouns",       desc:"Form and use singular and plural possessive nouns with apostrophes" },
         ],
         'Writing': [
@@ -1797,7 +1976,7 @@
           { id:'style-6',     name:'Precise Language',       desc:'Choose words for effect, eliminate wordiness, vary sentences' },
         ],
         'Writing': [
-          { id:'argument-6',  name:'Argument Writing',       desc:'Claims, reasons, evidence, counterclaim — 5-paragraph structure' },
+          { id:'argument-6',  name:'Argument Writing',       desc:'Claims, reasons, evidence, counterclaim â€” 5-paragraph structure' },
           { id:'thesis-6',    name:'Thesis Statements',      desc:'Write clear, arguable thesis statements' },
           { id:'evidence-6',  name:'Using Evidence',         desc:'Introduce, quote, and analyze evidence correctly' },
         ],
@@ -1815,7 +1994,7 @@
       }},
       '8th': { label:'8th Grade', categories: {
         'Grammar': [
-          { id:'gram-8',      name:'Advanced Grammar',       desc:'Verbals — gerunds, participles, infinitives — and their phrases' },
+          { id:'gram-8',      name:'Advanced Grammar',       desc:'Verbals â€” gerunds, participles, infinitives â€” and their phrases' },
           { id:'punct-8',     name:'Advanced Punctuation',   desc:'Semicolons, colons, dashes, hyphens in context' },
           { id:'style-8',     name:'Style & Voice',          desc:'Develop a distinct voice and appropriate style for audience and purpose' },
         ],
@@ -1840,7 +2019,7 @@
       }},
       '11th': { label:'11th Grade', categories: {
         'Writing': [
-          { id:'ap-write',    name:'AP-Style Essays',        desc:'Synthesis, rhetorical analysis, and argument — AP format and scoring' },
+          { id:'ap-write',    name:'AP-Style Essays',        desc:'Synthesis, rhetorical analysis, and argument â€” AP format and scoring' },
           { id:'sat-write-11',name:'SAT Writing Mastery',    desc:'All SAT writing and language question types at full difficulty' },
           { id:'college-app', name:'College Application Writing', desc:'Personal statement structure, voice, and storytelling' },
         ],
@@ -1849,14 +2028,14 @@
         'Writing': [
           { id:'college-essay',name:'College Essay Craft',   desc:'Develop compelling personal statements and supplemental essays' },
           { id:'research-12', name:'Research Paper',         desc:'Full research paper with thesis, body, citations, and works cited' },
-          { id:'college-write',name:'College-Level Writing', desc:'Academic writing conventions for college — argument and analysis' },
+          { id:'college-write',name:'College-Level Writing', desc:'Academic writing conventions for college â€” argument and analysis' },
         ],
       }},
     },
     sat: {
       'SAT': { label:'SAT / ACT', categories: {
         'SAT Math': [
-          { id:'sat-alg',     name:'Heart of Algebra',       desc:'Linear equations, inequalities, and systems — the core of SAT math' },
+          { id:'sat-alg',     name:'Heart of Algebra',       desc:'Linear equations, inequalities, and systems â€” the core of SAT math' },
           { id:'sat-data',    name:'Problem Solving & Data Analysis', desc:'Ratios, percentages, statistics, and data interpretation' },
           { id:'sat-adv',     name:'Passport to Advanced Math', desc:'Quadratics, polynomials, and complex equations and functions' },
           { id:'sat-geom',    name:'Additional Topics in Math', desc:'Geometry, trigonometry, and complex numbers' },
@@ -1872,8 +2051,8 @@
           { id:'sat-rhet',    name:'Rhetorical Skills',      desc:'Purpose, audience, and evidence questions' },
         ],
         'ACT': [
-          { id:'act-eng',     name:'ACT English',            desc:'Grammar, punctuation, usage, and rhetorical skills — 75 questions' },
-          { id:'act-math',    name:'ACT Math',               desc:'Pre-algebra through pre-calculus — 60 questions in 60 minutes' },
+          { id:'act-eng',     name:'ACT English',            desc:'Grammar, punctuation, usage, and rhetorical skills â€” 75 questions' },
+          { id:'act-math',    name:'ACT Math',               desc:'Pre-algebra through pre-calculus â€” 60 questions in 60 minutes' },
           { id:'act-read',    name:'ACT Reading',            desc:'Prose fiction, social science, humanities, and natural science passages' },
           { id:'act-sci',     name:'ACT Science',            desc:'Data representation, research summaries, and conflicting viewpoints' },
         ],
@@ -1882,7 +2061,7 @@
   };
 
 
-  // ── AGE THEMES ──
+  // â”€â”€ AGE THEMES â”€â”€
   const AGE_THEMES = {
     'K':   'k2', '1st': 'k2', '2nd': 'k2',
     '3rd': '35', '4th': '35', '5th': '35',
@@ -1906,9 +2085,9 @@
       masterLabel: 'Master at 90!',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Remember This!',
-      recoveryMsg: 'Let\'s try a similar one — you\'ve got this!',
+      recoveryMsg: 'Let\'s try a similar one â€” you\'ve got this!',
       correctMsgs: ['Amazing job!', 'You got it!', 'Awesome!', 'Way to go!', 'Incredible!'],
-      wrongMsgs: ['Good try! Here\'s a hint:', 'Not quite — let\'s learn this one:', 'Almost! Here\'s why:'],
+      wrongMsgs: ['Good try! Here\'s a hint:', 'Not quite â€” let\'s learn this one:', 'Almost! Here\'s why:'],
       streakMsg: (n) => n >= 3 ? `${n} in a row! You\'re on fire!` : 'Correct!',
       pass70Title: 'Great Job!',
       pass70Msg: (score) => `Your score is ${score} out of 100! Keep going to become a master at 90!`,
@@ -1916,12 +2095,12 @@
       master90Title: 'You\'re a STAR!',
       master90Msg: (topic, score) => `WOW! You mastered ${topic} with a score of ${score}! You are amazing! Pick a new topic to keep learning!`,
       master90Btn: 'Practice More',
-      nextBtn: 'Next Question →',
+      nextBtn: 'Next Question â†’',
     },
     '35': {
       homeTitle: 'Practice Center',
       homeSub: 'Pick a subject, choose your grade, and start earning your score!',
-      mathName: 'Mathematics', mathDesc: 'Multiplication, fractions, decimals, and more — 3rd through 5th grade',
+      mathName: 'Mathematics', mathDesc: 'Multiplication, fractions, decimals, and more â€” 3rd through 5th grade',
       readingName: 'Reading', readingDesc: 'Comprehension, vocabulary, and analysis',
       writingName: 'Writing', writingDesc: 'Grammar, paragraphs, and essays',
       selectorSub: 'Select your grade level',
@@ -1932,22 +2111,22 @@
       masterLabel: 'Master at 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Key Concept',
-      recoveryMsg: 'Try a similar question — prove you\'ve got it!',
+      recoveryMsg: 'Try a similar question â€” prove you\'ve got it!',
       correctMsgs: ['Correct! Nice work!', 'That\'s right!', 'Well done!', 'Great answer!'],
-      wrongMsgs: ['Not quite — here\'s why:', 'Good try! Here\'s the explanation:', 'Close! Here\'s what to remember:'],
-      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row — keep it up!` : 'Correct!',
+      wrongMsgs: ['Not quite â€” here\'s why:', 'Good try! Here\'s the explanation:', 'Close! Here\'s what to remember:'],
+      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row â€” keep it up!` : 'Correct!',
       pass70Title: 'Topic Passed!',
-      pass70Msg: (score) => `Your SmartScore is ${score}/100 — you passed! Keep going to reach Mastery at 90.`,
-      pass70Btn: 'Keep Going — Get to 90!',
+      pass70Msg: (score) => `Your SmartScore is ${score}/100 â€” you passed! Keep going to reach Mastery at 90.`,
+      pass70Btn: 'Keep Going â€” Get to 90!',
       master90Title: 'Mastery Achieved!',
       master90Msg: (topic, score) => `Excellent work! You mastered ${topic} with a SmartScore of ${score}/100. Pick a new topic to keep building!`,
       master90Btn: 'Practice This Topic More',
-      nextBtn: 'Next Question →',
+      nextBtn: 'Next Question â†’',
     },
     '68': {
       homeTitle: 'Practice',
       homeSub: 'Choose a subject, pick your grade, and start building mastery. Questions are unlimited and AI-generated.',
-      mathName: 'Mathematics', mathDesc: 'Integers through functions — 6th through 8th grade',
+      mathName: 'Mathematics', mathDesc: 'Integers through functions â€” 6th through 8th grade',
       readingName: 'Reading', readingDesc: 'Comprehension, inference, and analysis',
       writingName: 'Writing', writingDesc: 'Grammar, mechanics, and essay structure',
       selectorSub: 'Select your grade level',
@@ -1958,17 +2137,17 @@
       masterLabel: 'Master: 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Concept Reminder',
-      recoveryMsg: 'Similar question — show me you\'ve got it this time.',
+      recoveryMsg: 'Similar question â€” show me you\'ve got it this time.',
       correctMsgs: ['Correct!', 'That\'s right.', 'Well done.', 'Correct.'],
-      wrongMsgs: ['Not quite — here\'s why:', 'Incorrect. Here\'s the explanation:', 'Not this time. Here\'s what to know:'],
-      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row — keep it up.` : 'Correct!',
+      wrongMsgs: ['Not quite â€” here\'s why:', 'Incorrect. Here\'s the explanation:', 'Not this time. Here\'s what to know:'],
+      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row â€” keep it up.` : 'Correct!',
       pass70Title: 'Topic Passed!',
       pass70Msg: (score) => `Your SmartScore is ${score}/100. You\'ve passed this topic. Keep going to hit Mastery at 90.`,
-      pass70Btn: 'Keep Going — Reach Mastery',
+      pass70Btn: 'Keep Going â€” Reach Mastery',
       master90Title: 'Mastery Achieved!',
       master90Msg: (topic, score) => `Your SmartScore is ${score}/100. You have mastered ${topic}. Pick a new topic and keep building.`,
       master90Btn: 'Continue Practicing',
-      nextBtn: 'Next Question →',
+      nextBtn: 'Next Question â†’',
     },
     '912': {
       homeTitle: 'Practice',
@@ -1984,7 +2163,7 @@
       masterLabel: 'Master: 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Concept',
-      recoveryMsg: 'Recovery question — demonstrate understanding.',
+      recoveryMsg: 'Recovery question â€” demonstrate understanding.',
       correctMsgs: ['Correct.', 'That\'s right.', 'Correct answer.', 'Well done.'],
       wrongMsgs: ['Incorrect. Explanation:', 'Not quite. Here\'s why:', 'Wrong answer. Here\'s the reasoning:'],
       streakMsg: (n) => n >= 3 ? `Correct. ${n}-question streak.` : 'Correct.',
@@ -1994,11 +2173,11 @@
       master90Title: 'Mastery',
       master90Msg: (topic, score) => `SmartScore: ${score}/100. ${topic} mastered. Select a new topic.`,
       master90Btn: 'Continue Practice',
-      nextBtn: 'Next →',
+      nextBtn: 'Next â†’',
     },
   };
 
-  // ── STATE ──
+  // â”€â”€ STATE â”€â”€
   let currentSubject    = null;
   let currentBand       = null;
   let currentTopic      = null;
@@ -2039,7 +2218,7 @@
     if (el('conceptReminderLabel')) el('conceptReminderLabel').textContent = t.conceptLabel;
   }
 
-  // ── SUBJECT SELECTION ──
+  // â”€â”€ SUBJECT SELECTION â”€â”€
   window.selectSubject = function(subject) {
     currentSubject    = subject;
     smartScore        = 0; streak = 0; totalAnswered = 0;
@@ -2086,6 +2265,19 @@
     if (bt) bt.classList.add('active');
 
     renderTopicGrid(grade);
+
+    // Prefetch top 3 topics for this grade silently in background
+    setTimeout(() => {
+      if (!CURRICULUM[currentSubject] || !CURRICULUM[currentSubject][grade]) return;
+      const gradeData = CURRICULUM[currentSubject][grade];
+      const catKeys   = Object.keys(gradeData.categories);
+      const allTopics = [];
+      for (const key of catKeys) {
+        allTopics.push(...gradeData.categories[key]);
+        if (allTopics.length >= 3) break;
+      }
+      allTopics.slice(0, 3).forEach(t => prefetchTopic(t.id, t.name, catKeys[0], grade));
+    }, 500);
   };
 
   function renderTopicGrid(grade) {
@@ -2093,7 +2285,7 @@
     const grid  = document.getElementById('topic-grid');
     const label = document.getElementById('topicGridLabel');
     const t     = getTheme();
-    label.textContent = `${data.label} — ${t.topicLabel}`;
+    label.textContent = `${data.label} â€” ${t.topicLabel}`;
 
     let html = '';
     for (const [cat, topics] of Object.entries(data.categories)) {
@@ -2147,7 +2339,7 @@
     document.getElementById('practice-preloading').style.display = 'none';
     document.getElementById('practice-quiz').style.display       = 'block';
 
-    document.getElementById('quizTopicLabel').textContent = `${name} · ${category}`;
+    document.getElementById('quizTopicLabel').textContent = `${name} Â· ${category}`;
     updateScoreDisplay();
     renderNextQuestion();
   };
@@ -2158,7 +2350,7 @@
     applyTheme('68'); // Reset theme
   };
 
-  // ── FETCH QUESTIONS ──
+  // â”€â”€ FETCH QUESTIONS â”€â”€
   async function fetchQuestionBatch(recoveryContext) {
     generating = true;
     const data  = CURRICULUM[currentSubject][currentTopic.band];
@@ -2190,7 +2382,7 @@ Requirements:
 - Each question has exactly 4 answer choices labeled A, B, C, D
 - Exactly one correct answer per question
 - Clear explanation of why the correct answer is right
-- Include a brief "concept" field (1-2 sentences) — the key idea being tested
+- Include a brief "concept" field (1-2 sentences) â€” the key idea being tested
 - Appropriate difficulty for ${grade} students
 - NEVER use emojis, emoji characters, or unicode symbols in questions or answers. Use plain text only.
 - Vary question types across the 5 questions
@@ -2216,7 +2408,7 @@ Return ONLY this JSON array, no markdown, no backticks:
         body: JSON.stringify({
           model: 'claude-sonnet-4-6',
           max_tokens: 2000,
-          system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON — no markdown, no backticks, no preamble.',
+          system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON â€” no markdown, no backticks, no preamble.',
           messages: [{ role: 'user', content: prompt }]
         })
       });
@@ -2230,7 +2422,7 @@ Return ONLY this JSON array, no markdown, no backticks:
     generating = false;
   }
 
-  // ── RENDER QUESTION (base — overridden by FR system below) ──
+  // â”€â”€ RENDER QUESTION (base â€” overridden by FR system below) â”€â”€
   function _baseRenderNextQuestion_unused() {
     if (questionBuffer.length < 2 && !generating) fetchQuestionBatch();
     if (!questionBuffer.length) { setTimeout(renderNextQuestion, 600); return; }
@@ -2259,7 +2451,7 @@ Return ONLY this JSON array, no markdown, no backticks:
     document.getElementById('nextBtn').textContent = t.nextBtn;
   }
 
-  // ── ANSWER SELECTION ──
+  // â”€â”€ ANSWER SELECTION â”€â”€
   window.selectAnswer = function(btn, selected) {
     const q       = currentQuestion;
     const correct = q.correct;
@@ -2273,6 +2465,7 @@ Return ONLY this JSON array, no markdown, no backticks:
       const gain = Math.max(4, 8 - Math.floor(smartScore / 15));
       smartScore = Math.min(100, smartScore + gain);
       isRecovery = false; recoveryAttempted = false;
+      awardPracticePoints(1, 'correct');
     } else {
       streak = 0;
       const loss = Math.min(10, 4 + Math.floor(smartScore / 20));
@@ -2331,10 +2524,12 @@ Return ONLY this JSON array, no markdown, no backticks:
     const t = getTheme();
     if (smartScore >= 90 && !milestonePassed90) {
       milestonePassed90 = true;
+      awardPracticePoints(25, 'master');
       nextBtn.textContent = 'See Results';
       nextBtn.onclick = showMastery;
     } else if (smartScore >= 70 && !milestonePassed70) {
       milestonePassed70 = true;
+      awardPracticePoints(10, 'pass');
       nextBtn.textContent = 'See Results';
       nextBtn.onclick = showPassMilestone;
     } else {
@@ -2345,7 +2540,7 @@ Return ONLY this JSON array, no markdown, no backticks:
 
   window.nextQuestion = function() { renderNextQuestion(); };
 
-  // ── MILESTONES ──
+  // â”€â”€ MILESTONES â”€â”€
   function showPassMilestone() {
     const t = getTheme();
     document.getElementById('practice-quiz').style.display      = 'none';
@@ -2372,7 +2567,7 @@ Return ONLY this JSON array, no markdown, no backticks:
     renderNextQuestion();
   };
 
-  // ── SCORE DISPLAY ──
+  // â”€â”€ SCORE DISPLAY â”€â”€
   function updateScoreDisplay() {
     const score = Math.round(smartScore);
     document.getElementById('smartScoreDisplay').textContent = score;
@@ -2384,7 +2579,7 @@ Return ONLY this JSON array, no markdown, no backticks:
     else                  el.style.color = 'var(--pt-text, var(--navy))';
   }
 
-  // ── EXIT ──
+  // â”€â”€ EXIT â”€â”€
   window.exitPractice = function() {
     ['practice-quiz','practice-preloading','practice-milestone'].forEach(id => {
       document.getElementById(id).style.display = 'none';
@@ -2401,7 +2596,7 @@ Return ONLY this JSON array, no markdown, no backticks:
   applyTheme('68');
 
 
-  // ══ FREE RESPONSE SYSTEM ══
+  // â•â• FREE RESPONSE SYSTEM â•â•
 
   let isFreeResponseMode = false;
   let frGradeResult      = null;
@@ -2457,9 +2652,9 @@ Return ONLY this JSON array, no markdown, no backticks:
       if (currentTheme === '35') {
         frLabel.textContent = 'Write Your Answer';
       } else if (currentTheme === '912') {
-        frLabel.textContent = 'Free Response — Type your complete answer';
+        frLabel.textContent = 'Free Response â€” Type your complete answer';
       } else {
-        frLabel.textContent = 'Mastery Mode — Write Your Answer';
+        frLabel.textContent = 'Mastery Mode â€” Write Your Answer';
       }
 
       // Focus the textarea
@@ -2504,7 +2699,7 @@ Topic: ${currentTopic.name}
 
 Question: ${q.question}
 
-Correct Answer: ${q.correct} — ${q.choices.find(c => c.startsWith(q.correct))}
+Correct Answer: ${q.correct} â€” ${q.choices.find(c => c.startsWith(q.correct))}
 Full Explanation: ${q.explanation}
 
 Student's Answer: "${studentAnswer}"
@@ -2518,7 +2713,7 @@ Respond ONLY with this JSON:
 {
   "grade": "CORRECT" or "PARTIAL" or "INCORRECT",
   "score_delta": number between -8 and 12,
-  "feedback": "2-3 sentence feedback specific to what the student wrote — what was right, what was missing or wrong, and what to remember",
+  "feedback": "2-3 sentence feedback specific to what the student wrote â€” what was right, what was missing or wrong, and what to remember",
   "correct_answer_summary": "A clear 1-sentence summary of the correct answer in plain language"
 }`;
 
@@ -2621,8 +2816,109 @@ Respond ONLY with this JSON:
     }
   });
 
-  // ── PREFETCH ON HOVER ──
-  let prefetchCache = {};
+  // â”€â”€ PREFETCH ON HOVER â”€â”€
+  // ══════════════════════════════════════════
+  // LEADERBOARD SYSTEM
+  // ══════════════════════════════════════════
+
+  const BADGE_THRESHOLDS = [
+    { name:'Champion',    min:500, cls:'badge-champion' },
+    { name:'Gold Star',   min:300, cls:'badge-gold-b'   },
+    { name:'Silver Star', min:150, cls:'badge-silver-b' },
+    { name:'Bronze Star', min:50,  cls:'badge-bronze-b' },
+    { name:'Rookie',      min:1,   cls:'badge-rookie'   },
+  ];
+  function getBadge(pts) { for (const b of BADGE_THRESHOLDS) { if (pts >= b.min) return b; } return null; }
+  function lbRankCls(r)  { return r===1?'gold':r===2?'silver':r===3?'bronze':''; }
+
+  async function awardPracticePoints(pts, reason) {
+    try {
+      const user = auth.currentUser; if (!user) return;
+      const firstName = (user.displayName || user.email.split('@')[0]).split(' ')[0];
+      const now = new Date();
+      const monthKey = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+      await setDoc(doc(db,'leaderboard',user.uid), {
+        uid:user.uid, name:firstName, email:user.email,
+        points:         increment(pts), monthPoints: increment(pts), monthKey,
+        topicsPassed:   reason==='pass'    ? increment(1) : increment(0),
+        topicsMastered: reason==='master'  ? increment(1) : increment(0),
+        correctAnswers: reason==='correct' ? increment(1) : increment(0),
+        lastActive:     serverTimestamp(),
+      }, { merge:true });
+    } catch(e) { console.error('LB award error:',e); }
+  }
+  window.awardPracticePoints = awardPracticePoints;
+
+  async function loadLeaderboards() {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const mySnap = await getDocs(query(collection(db,'leaderboard'), where('uid','==',user.uid)));
+        if (!mySnap.empty) {
+          const d = mySnap.docs[0].data();
+          document.getElementById('myPoints').textContent         = d.monthPoints||0;
+          document.getElementById('myTopicsPassed').textContent   = d.topicsPassed||0;
+          document.getElementById('myTopicsMastered').textContent = d.topicsMastered||0;
+          const badge = getBadge(d.points||0);
+          document.getElementById('myBadgeDisplay').innerHTML = badge
+            ? `<span class="lb-badge ${badge.cls}">${badge.name}</span>`
+            : 'Keep practicing to earn your first badge!';
+        } else {
+          ['myPoints','myTopicsPassed','myTopicsMastered'].forEach(id => document.getElementById(id).textContent='0');
+        }
+      }
+      const lbSnap = await getDocs(query(collection(db,'leaderboard'), orderBy('monthPoints','desc')));
+      const all = lbSnap.docs.map(d => d.data());
+      const studSnap = await getDocs(collection(db,'students'));
+      const studentEmails = new Set(studSnap.docs.map(d=>d.data().email).filter(Boolean));
+      renderLbList('lb-private-list', all.filter(d=>studentEmails.has(d.email)), user?.uid, true);
+      renderLbList('lb-public-list',  all.slice(0,10), user?.uid, false);
+      const now=new Date(), next=new Date(now.getFullYear(),now.getMonth()+1,1);
+      const days=Math.ceil((next-now)/864e5);
+      const el=document.getElementById('lb-private-reset');
+      if(el) el.textContent=`Resets in ${days} day${days!==1?'s':''} — ${next.toLocaleDateString('en-US',{month:'long',day:'numeric'})}`;
+    } catch(e) { console.error('LB load error:',e); }
+  }
+
+  function renderLbList(containerId, entries, myUid, showFull) {
+    const el = document.getElementById(containerId); if(!el) return;
+    if(!entries.length){ el.innerHTML='<div class="lb-empty">No entries yet — start practicing to get on the board!</div>'; return; }
+    el.innerHTML = entries.map((e,i)=>{
+      const rank=i+1, isMe=e.uid===myUid, badge=getBadge(e.points||0);
+      const initials=(e.name||'??').slice(0,2).toUpperCase();
+      const name=showFull?(e.name||'Student'):(e.name||'Student').charAt(0).toUpperCase()+(e.name||'').slice(1,2)+'...';
+      return `<div class="lb-row${isMe?' mine':''}">
+        <div class="lb-rank ${lbRankCls(rank)}">${rank}</div>
+        <div class="lb-avatar">${initials}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="lb-name">${name}${isMe?' <span style="font-size:0.7rem;color:var(--gold);font-weight:600;">(you)</span>':''}</div>
+          <div class="lb-sub">${e.topicsPassed||0} passed · ${e.topicsMastered||0} mastered</div>
+          ${badge?`<span class="lb-badge ${badge.cls}">${badge.name}</span>`:''}
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div class="lb-pts-val">${e.monthPoints||0}</div>
+          <div class="lb-pts-lbl">pts</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.switchLbTab = function(tab) {
+    ['private','public','rules'].forEach(t => {
+      const el=document.getElementById('lb-'+t), btn=document.getElementById('lb-tab-'+t);
+      if(el)  el.style.display = t===tab?'block':'none';
+      if(btn) btn.classList.toggle('active', t===tab);
+    });
+  };
+
+  const _origShowPageLb = window.showPage;
+  window.showPage = function(pageId) {
+    _origShowPageLb(pageId);
+    if(pageId==='leaderboard') loadLeaderboards();
+  };
+
+
+    let prefetchCache = {};
   let prefetchPending = null;
 
   window.prefetchTopic = async function(id, name, category, grade) {
@@ -2664,12 +2960,12 @@ Respond ONLY with this JSON:
       document.getElementById('practice-preloading').style.display = 'none';
       document.getElementById('practice-quiz').style.display       = 'block';
       document.getElementById('practice-milestone').style.display  = 'none';
-      document.getElementById('quizTopicLabel').textContent        = `${name} · ${category}`;
+      document.getElementById('quizTopicLabel').textContent        = `${name} Â· ${category}`;
       updateScoreDisplay();
       renderNextQuestion();
       fetchQuestionBatch(); // refill buffer silently
     } else {
-      // No prefetch — go through normal flow
+      // No prefetch â€” go through normal flow
       await _originalSelectTopic(id, name, category, grade);
     }
   };
