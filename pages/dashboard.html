@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard â€” NextGen Tutoring</title>
+  <title>Dashboard &mdash; NextGen Tutoring</title>
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#112240" />
@@ -569,35 +569,35 @@
       /* Practice wrapper full width */
       .practice-wrapper { padding: 0.25rem; }
 
-      /* Subject grid â€” 2 cols on mobile */
+      /* Subject grid &mdash; 2 cols on mobile */
       .subject-grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
       .subject-card { padding: 1.25rem; }
       .subject-icon { width: 40px; height: 40px; }
       .subject-name { font-size: 0.95rem; }
       .subject-desc { display: none; }
 
-      /* Grade tabs â€” scrollable row */
+      /* Grade tabs &mdash; scrollable row */
       .grade-tabs-wrap { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; scrollbar-width: none; }
       .grade-tabs-wrap::-webkit-scrollbar { display: none; }
       .grade-tab { flex-shrink: 0; white-space: nowrap; }
 
-      /* Topic grid â€” single col */
+      /* Topic grid &mdash; single col */
       #topic-grid { grid-template-columns: 1fr !important; }
 
-      /* Quiz header â€” stack on mobile */
+      /* Quiz header &mdash; stack on mobile */
       .quiz-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
       .score-cluster { width: 100%; justify-content: space-between; }
 
-      /* Question card â€” tighter padding */
+      /* Question card &mdash; tighter padding */
       .question-card { padding: 1.25rem; }
       .question-text { font-size: 1rem; margin-bottom: 1.25rem; }
       .theme-k2 .question-text { font-size: 1.2rem; }
 
-      /* Choice buttons â€” bigger touch targets */
+      /* Choice buttons &mdash; bigger touch targets */
       .choice-btn { padding: 1rem; min-height: 52px; font-size: 0.95rem; }
       .theme-k2 .choice-btn { min-height: 64px; font-size: 1.05rem; padding: 1rem 1.25rem; }
 
-      /* Next button â€” full width on mobile */
+      /* Next button &mdash; full width on mobile */
       .next-btn { width: 100%; text-align: center; justify-content: center; padding: 1rem; font-size: 1rem; }
       .theme-k2 .next-btn { padding: 1.1rem; font-size: 1.1rem; }
 
@@ -607,7 +607,7 @@
       .milestone-actions { flex-direction: column; }
       .milestone-keep-btn, .milestone-new-btn { width: 100%; text-align: center; }
 
-      /* Smart bar labels â€” shorter */
+      /* Smart bar labels &mdash; shorter */
       .smart-bar-labels { font-size: 0.62rem; }
 
       /* Back button */
@@ -677,6 +677,75 @@
     .lb-rule-icon { width:26px; height:26px; flex-shrink:0; background:rgba(201,168,76,0.12); border-radius:6px; display:flex; align-items:center; justify-content:center; margin-top:1px; }
     .lb-rule-icon svg { width:13px; height:13px; stroke:var(--gold); }
     .lb-divider { height:1px; background:rgba(255,255,255,0.07); margin:1rem 0; }
+
+    /* -- HOMEWORK PAGE -- */
+    .hw-empty { text-align:center; padding:3rem 2rem; }
+    .hw-empty svg { width:48px; height:48px; margin:0 auto 1rem; display:block; color:var(--text-light); opacity:0.35; }
+    .hw-empty-title { font-size:0.95rem; font-weight:600; color:var(--text-mid); margin-bottom:0.4rem; }
+    .hw-empty-sub { font-size:0.82rem; color:var(--text-light); }
+    .hw-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.25rem; }
+    .hw-card {
+      background:var(--white);
+      border:1px solid rgba(11,31,58,0.07);
+      border-radius:14px;
+      overflow:hidden;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .hw-card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(11,31,58,0.08); }
+    .hw-card-header {
+      background:var(--navy);
+      padding:1.25rem 1.5rem;
+      position:relative;
+      overflow:hidden;
+    }
+    .hw-card-header::before {
+      content:'';
+      position:absolute; inset:0;
+      background:radial-gradient(circle at 80% 50%, rgba(201,168,76,0.12) 0%, transparent 60%);
+      pointer-events:none;
+    }
+    .hw-subject-badge {
+      font-size:0.65rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:0.4rem; position:relative; z-index:1;
+    }
+    .hw-title {
+      font-family:var(--font-display); font-size:1rem; font-weight:700;
+      color:var(--white); position:relative; z-index:1; line-height:1.3;
+    }
+    .hw-card-body { padding:1.25rem 1.5rem; }
+    .hw-desc { font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:1rem; }
+    .hw-meta { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; }
+    .hw-due {
+      display:flex; align-items:center; gap:6px;
+      font-size:0.75rem; font-weight:600;
+    }
+    .hw-due svg { width:13px; height:13px; }
+    .hw-due.overdue { color:#C0392B; }
+    .hw-due.due-soon { color:#D4821A; }
+    .hw-due.on-track { color:var(--text-light); }
+    .hw-status-pill {
+      font-size:0.68rem; font-weight:700; padding:0.22rem 0.75rem;
+      border-radius:100px; letter-spacing:0.04em;
+    }
+    .hw-status-assigned { background:rgba(201,168,76,0.1); color:var(--gold); border:1px solid rgba(201,168,76,0.25); }
+    .hw-status-completed { background:rgba(26,92,56,0.1); color:#1A5C38; border:1px solid rgba(26,92,56,0.2); }
+    .hw-status-overdue { background:rgba(192,57,43,0.08); color:#C0392B; border:1px solid rgba(192,57,43,0.2); }
+    .hw-progress-wrap { margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(11,31,58,0.06); }
+    .hw-progress-label { display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-light); margin-bottom:5px; }
+    .hw-progress-bar { height:5px; background:var(--off-white); border-radius:100px; overflow:hidden; }
+    .hw-progress-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:100px; transition:width 0.8s ease; }
+    .hw-summary-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.75rem; }
+    .hw-summary-card {
+      background:var(--white); border:1px solid rgba(11,31,58,0.07);
+      border-radius:12px; padding:1.25rem; text-align:center;
+    }
+    .hw-summary-val { font-family:var(--font-display); font-size:1.8rem; font-weight:700; color:var(--navy); line-height:1; }
+    .hw-summary-lbl { font-size:0.7rem; color:var(--text-light); text-transform:uppercase; letter-spacing:0.08em; margin-top:4px; }
+    @media (max-width:768px) {
+      .hw-grid { grid-template-columns:1fr; }
+      .hw-summary-cards { grid-template-columns:repeat(3,1fr); gap:0.75rem; }
+      .hw-summary-val { font-size:1.4rem; }
+    }
   </style>
 </head>
 <body>
@@ -729,6 +798,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21H5a2 2 0 0 1-2-2v-5"/><path d="M16 21h3a2 2 0 0 0 2-2v-5"/><path d="M12 21V9"/><path d="M3 14l9-9 9 9"/><rect x="9" y="14" width="6" height="7" rx="0"/></svg>
         Leaderboard
       </a>
+      <a class="nav-item" onclick="showPage('homework')" id="nav-homework">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Homework
+      </a>
       <a class="nav-item" href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
         Book a Session
@@ -777,7 +850,7 @@
       <div class="welcome-banner">
         <div class="welcome-tag">Student Dashboard</div>
         <h1 class="welcome-h1">Keep going.<br/>You're <span>making progress.</span></h1>
-        <p class="welcome-sub">Everything you need for your NextGen sessions â€” all in one place.</p>
+        <p class="welcome-sub">Everything you need for your NextGen sessions &mdash; all in one place.</p>
       </div>
 
       <div class="stats-grid">
@@ -794,7 +867,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
           <div class="stat-label">Lessons Available</div>
-          <div class="stat-value" id="statSessions">â€”</div>
+          <div class="stat-value" id="statSessions">&mdash;</div>
           <div class="stat-sub">Sessions completed</div>
         </div>
         <div class="stat-card">
@@ -853,7 +926,7 @@
           <div class="announce-dot"></div>
           <div>
             <div class="announce-title">Welcome to your student dashboard</div>
-            <div class="announce-text">This is your home base for everything NextGen â€” lessons, sessions, progress, and resources. More features coming soon.</div>
+            <div class="announce-text">This is your home base for everything NextGen &mdash; lessons, sessions, progress, and resources. More features coming soon.</div>
             <div class="announce-date">April 2026</div>
           </div>
         </div>
@@ -889,7 +962,7 @@
             <div class="lesson-title">Algebra Fundamentals</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Core algebraic concepts â€” solving for x, linear equations, and graphing lines. Build the foundation before moving to advanced topics.</p>
+            <p class="lesson-desc">Core algebraic concepts &mdash; solving for x, linear equations, and graphing lines. Build the foundation before moving to advanced topics.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
               <a href="mailto:nextgentutoringco@gmail.com?subject=Algebra Fundamentals Materials" class="lesson-btn">Request Materials â†’</a>
@@ -902,7 +975,7 @@
             <div class="lesson-title">SAT Math Strategies</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Proven SAT math strategies â€” time management, question types, and how to eliminate wrong answers efficiently on test day.</p>
+            <p class="lesson-desc">Proven SAT math strategies &mdash; time management, question types, and how to eliminate wrong answers efficiently on test day.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
               <a href="mailto:nextgentutoringco@gmail.com?subject=SAT Math Strategy Materials" class="lesson-btn">Request Materials â†’</a>
@@ -928,7 +1001,7 @@
             <div class="lesson-title">Geometry &amp; Proofs</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Angles, triangles, circles, and geometric proofs â€” visual learning techniques that make abstract geometry concepts concrete.</p>
+            <p class="lesson-desc">Angles, triangles, circles, and geometric proofs &mdash; visual learning techniques that make abstract geometry concepts concrete.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
               <a href="mailto:nextgentutoringco@gmail.com?subject=Geometry Materials" class="lesson-btn">Request Materials â†’</a>
@@ -941,7 +1014,7 @@
             <div class="lesson-title">Biology Core Concepts</div>
           </div>
           <div class="lesson-body">
-            <p class="lesson-desc">Cell structure, genetics, ecosystems, and evolution â€” the essential biology topics covered in most Kâ€“12 and college intro courses.</p>
+            <p class="lesson-desc">Cell structure, genetics, ecosystems, and evolution &mdash; the essential biology topics covered in most K&ldquo;12 and college intro courses.</p>
             <div class="lesson-meta">
               <span class="lesson-status status-new">Available</span>
               <a href="mailto:nextgentutoringco@gmail.com?subject=Biology Materials" class="lesson-btn">Request Materials â†’</a>
@@ -972,7 +1045,7 @@
       </div>
       <div class="next-session" style="margin-bottom:1.5rem; max-width:560px;">
         <div class="sec-title">Book Your Next Session</div>
-        <p style="font-size:0.875rem; color:var(--text-mid); margin-bottom:1.25rem; line-height:1.7;">All sessions are 1 hour and available in person (Metro Detroit) or virtually. Schedule directly through Calendly â€” pick a time that works for you.</p>
+        <p style="font-size:0.875rem; color:var(--text-mid); margin-bottom:1.25rem; line-height:1.7;">All sessions are 1 hour and available in person (Metro Detroit) or virtually. Schedule directly through Calendly &mdash; pick a time that works for you.</p>
         <a href="https://calendly.com/hoyeneyi/tutoring-with-hafeez" target="_blank" class="book-btn" style="display:inline-flex;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Schedule on Calendly
@@ -982,7 +1055,7 @@
         <div class="sec-title">Session Info</div>
         <div class="announce-item">
           <div class="announce-dot"></div>
-          <div><div class="announce-title">Session length</div><div class="announce-text">Every session is 1 hour long â€” in person or virtual.</div></div>
+          <div><div class="announce-title">Session length</div><div class="announce-text">Every session is 1 hour long &mdash; in person or virtual.</div></div>
         </div>
         <div class="announce-item">
           <div class="announce-dot"></div>
@@ -1005,17 +1078,17 @@
         <div class="progress-card">
           <div class="sec-title">Subject Progress</div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Mathematics</span><span class="progress-pct" id="progMathPct">â€”</span></div>
+            <div class="progress-top"><span class="progress-name">Mathematics</span><span class="progress-pct" id="progMathPct">&mdash;</span></div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progMathFill" style="width:0%"></div></div>
             <div class="progress-sub" id="progMathSub">Loading...</div>
           </div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Reading &amp; Writing</span><span class="progress-pct" id="progReadingPct">â€”</span></div>
+            <div class="progress-top"><span class="progress-name">Reading &amp; Writing</span><span class="progress-pct" id="progReadingPct">&mdash;</span></div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progReadingFill" style="width:0%"></div></div>
             <div class="progress-sub" id="progReadingSub">Loading...</div>
           </div>
           <div class="progress-item">
-            <div class="progress-top"><span class="progress-name">Test Prep</span><span class="progress-pct" id="progTestPrepPct">â€”</span></div>
+            <div class="progress-top"><span class="progress-name">Test Prep</span><span class="progress-pct" id="progTestPrepPct">&mdash;</span></div>
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progTestPrepFill" style="width:0%"></div></div>
             <div class="progress-sub" id="progTestPrepSub">Loading...</div>
           </div>
@@ -1045,21 +1118,21 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
             </div>
             <div class="subject-name" id="mathCardName">Mathematics</div>
-            <div class="subject-desc" id="mathCardDesc">Numbers, algebra, geometry and more â€” K through 12th grade</div>
+            <div class="subject-desc" id="mathCardDesc">Numbers, algebra, geometry and more &mdash; K through 12th grade</div>
           </button>
           <button class="subject-card" onclick="selectSubject('reading')">
             <div class="subject-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             </div>
             <div class="subject-name" id="readingCardName">Reading</div>
-            <div class="subject-desc" id="readingCardDesc">Comprehension, vocabulary, and analysis â€” K through 12th grade</div>
+            <div class="subject-desc" id="readingCardDesc">Comprehension, vocabulary, and analysis &mdash; K through 12th grade</div>
           </button>
           <button class="subject-card" onclick="selectSubject('writing')">
             <div class="subject-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             </div>
             <div class="subject-name" id="writingCardName">Writing</div>
-            <div class="subject-desc" id="writingCardDesc">Grammar, sentences, and essays â€” K through 12th grade</div>
+            <div class="subject-desc" id="writingCardDesc">Grammar, sentences, and essays &mdash; K through 12th grade</div>
           </button>
           <button class="subject-card" onclick="selectSubject('sat')">
             <div class="subject-icon">
@@ -1155,7 +1228,7 @@
 
         <!-- FREE RESPONSE (shown at SmartScore 80+) -->
         <div id="freeResponseWrap" style="display:none;">
-          <div id="frModeLabel" style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pt-primary, var(--gold));margin-bottom:0.75rem;">Mastery Mode â€” Write Your Answer</div>
+          <div id="frModeLabel" style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--pt-primary, var(--gold));margin-bottom:0.75rem;">Mastery Mode &mdash; Write Your Answer</div>
           <textarea id="frInput" rows="4" placeholder="Type your full answer here..." style="width:100%;padding:1rem;border:2px solid rgba(0,0,0,0.1);border-radius:var(--pt-radius,10px);font-family:var(--font-body);font-size:var(--pt-font-size,0.95rem);color:var(--pt-text,var(--navy));background:var(--pt-card,var(--white));resize:vertical;outline:none;transition:border-color 0.2s;line-height:1.6;"></textarea>
           <div style="display:flex;align-items:center;gap:1rem;margin-top:0.75rem;">
             <button id="frSubmitBtn" onclick="submitFreeResponse()" style="background:var(--pt-primary,var(--navy));color:#fff;font-weight:700;font-size:0.95rem;padding:0.75rem 1.75rem;border:none;border-radius:var(--pt-radius,6px);cursor:pointer;font-family:var(--font-body);transition:all 0.2s;display:flex;align-items:center;gap:8px;">
@@ -1320,6 +1393,44 @@
     </div>
 
 
+    <!-- HOMEWORK PAGE -->
+    <div class="page hidden fade-in" id="page-homework">
+      <div style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:0.35rem;">Homework</h2>
+        <p style="font-size:0.875rem;color:var(--text-light);">Assignments from Hafeez. Complete them before your next session.</p>
+      </div>
+
+      <!-- Summary cards -->
+      <div class="hw-summary-cards">
+        <div class="hw-summary-card">
+          <div class="hw-summary-val" id="hwCountAssigned">--</div>
+          <div class="hw-summary-lbl">Assigned</div>
+        </div>
+        <div class="hw-summary-card">
+          <div class="hw-summary-val" id="hwCountCompleted">--</div>
+          <div class="hw-summary-lbl">Completed</div>
+        </div>
+        <div class="hw-summary-card">
+          <div class="hw-summary-val" id="hwCountOverdue">--</div>
+          <div class="hw-summary-lbl">Overdue</div>
+        </div>
+      </div>
+
+      <!-- Homework list -->
+      <div id="hwList">
+        <div class="hw-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          <div class="hw-empty-title">Loading your homework...</div>
+          <div class="hw-empty-sub">Check back after your next session with Hafeez.</div>
+        </div>
+      </div>
+    </div>
+
     <div class="page hidden fade-in" id="page-profile">
       <div style="margin-bottom:1.5rem;">
         <h2 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:0.35rem;">My Profile</h2>
@@ -1336,7 +1447,7 @@
         </div>
         <div class="profile-row">
           <span class="profile-key">Grade</span>
-          <span class="profile-val" id="profileGrade">â€”</span>
+          <span class="profile-val" id="profileGrade">&mdash;</span>
         </div>
   </main>
 </div>
@@ -1396,8 +1507,8 @@
         const gradeEl    = document.getElementById('statGrade');
         const subjectEl  = document.getElementById('statSubject');
         if (sessionsEl) sessionsEl.textContent = studentData.sessions || 0;
-        if (gradeEl)    gradeEl.textContent    = studentData.grade    || 'â€”';
-        if (subjectEl)  subjectEl.textContent  = studentData.subject  || 'â€”';
+        if (gradeEl)    gradeEl.textContent    = studentData.grade    || '&mdash;';
+        if (subjectEl)  subjectEl.textContent  = studentData.subject  || '&mdash;';
 
         // â”€â”€ PROGRESS BARS â”€â”€
         const math     = studentData.mathProgress     || 0;
@@ -1422,9 +1533,9 @@
         const profileGrade   = document.getElementById('profileGrade');
         const profileSubject = document.getElementById('profileSubject');
         const profileRate    = document.getElementById('profileRate');
-        if (profileGrade)   profileGrade.textContent   = studentData.grade   || 'â€”';
-        if (profileSubject) profileSubject.textContent = studentData.subject || 'â€”';
-        if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : 'â€”';
+        if (profileGrade)   profileGrade.textContent   = studentData.grade   || '&mdash;';
+        if (profileSubject) profileSubject.textContent = studentData.subject || '&mdash;';
+        if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : '&mdash;';
         const profileSessions = document.getElementById('profileSessions');
         if (profileSessions) profileSessions.textContent = studentData.sessions || 0;
       }
@@ -1475,7 +1586,7 @@
     const el = document.getElementById('progressNotes');
     if (!el) return;
     if (!notes.length) {
-      el.innerHTML = '<div style="font-size:0.85rem;color:var(--text-light);padding:1rem 0;">No session notes yet â€” check back after your next session.</div>';
+      el.innerHTML = '<div style="font-size:0.85rem;color:var(--text-light);padding:1rem 0;">No session notes yet &mdash; check back after your next session.</div>';
       return;
     }
     el.innerHTML = notes.slice(0, 5).map(n => `
@@ -1489,7 +1600,7 @@
     `).join('');
   }
 
-  // Page navigation â€” expose globally
+  // Page navigation &mdash; expose globally
   window.showPage = function(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1500,7 +1611,7 @@
     if (page) { page.classList.remove('hidden'); page.classList.add('fade-in'); }
     if (nav)  nav.classList.add('active');
 
-    const titles = { home:'Dashboard', lessons:'Lessons', sessions:'Sessions', progress:'My Progress', practice:'Practice', leaderboard:'Leaderboard', profile:'Profile' };
+    const titles = { home:'Dashboard', lessons:'Lessons', sessions:'Sessions', progress:'My Progress', practice:'Practice', leaderboard:'Leaderboard', homework:'Homework', profile:'Profile' };
     document.getElementById('topbarTitle').textContent = titles[pageId] || 'Dashboard';
 
     document.getElementById('sidebar').classList.remove('mob-open');
@@ -1532,7 +1643,7 @@
       }},
       '1st': { label:'1st Grade', categories: {
         'Addition & Subtraction': [
-          { id:'add-20',      name:'Addition within 20',    desc:'Add with strategies â€” counting on, making ten, doubles' },
+          { id:'add-20',      name:'Addition within 20',    desc:'Add with strategies &mdash; counting on, making ten, doubles' },
           { id:'sub-20',      name:'Subtraction within 20', desc:'Subtract within 20 and understand the relationship to addition' },
           { id:'word-1st',    name:'Word Problems',         desc:'Solve add/subtract word problems using objects and drawings' },
         ],
@@ -1566,11 +1677,11 @@
         'Multiplication & Division': [
           { id:'mult-intro',  name:'Intro to Multiplication',desc:'Understand multiplication as equal groups and arrays' },
           { id:'div-intro',   name:'Intro to Division',     desc:'Understand division as sharing equally and repeated subtraction' },
-          { id:'times-tables',name:'Times Tables (1â€“10)',   desc:'Memorize and apply multiplication facts through 10Ã&mdash;10' },
+          { id:'times-tables',name:'Times Tables (1&ldquo;10)',   desc:'Memorize and apply multiplication facts through 10Ã&mdash;10' },
           { id:'mult-div-rel',name:'Multiplication & Division Relationship', desc:'Use fact families and inverse operations' },
         ],
         'Fractions': [
-          { id:'frac-intro',  name:'Intro to Fractions',    desc:'Equal parts, numerator, denominator â€” unit fractions' },
+          { id:'frac-intro',  name:'Intro to Fractions',    desc:'Equal parts, numerator, denominator &mdash; unit fractions' },
           { id:'frac-num-line',name:'Fractions on a Number Line', desc:'Place fractions on a number line between 0 and 1' },
           { id:'frac-compare',name:'Comparing Fractions',   desc:'Compare fractions with same numerator or denominator' },
         ],
@@ -1594,8 +1705,8 @@
         ],
         'Geometry': [
           { id:'angles-4th',  name:'Angles',                desc:'Measure and draw angles using a protractor' },
-          { id:'lines-4th',   name:'Lines & Symmetry',      desc:'Parallel, perpendicular, and intersecting lines â€” line symmetry' },
-          { id:'shapes-4th',  name:'Classifying Shapes',    desc:'Classify 2D shapes by properties â€” sides, angles, symmetry' },
+          { id:'lines-4th',   name:'Lines & Symmetry',      desc:'Parallel, perpendicular, and intersecting lines &mdash; line symmetry' },
+          { id:'shapes-4th',  name:'Classifying Shapes',    desc:'Classify 2D shapes by properties &mdash; sides, angles, symmetry' },
         ],
       }},
       '5th': { label:'5th Grade', categories: {
@@ -1659,7 +1770,7 @@
           { id:'surface-7',   name:'Surface Area & Volume', desc:'Surface area and volume of prisms and pyramids' },
         ],
         'Statistics': [
-          { id:'prob-7',      name:'Probability',           desc:'Simple and compound probability â€” theoretical and experimental' },
+          { id:'prob-7',      name:'Probability',           desc:'Simple and compound probability &mdash; theoretical and experimental' },
           { id:'sample-7',    name:'Sampling & Inference',  desc:'Use random samples to draw inferences about populations' },
         ],
       }},
@@ -1712,9 +1823,9 @@
           { id:'logic-10',    name:'Conditional Statements', desc:'If-then statements, converses, inverses, and contrapositives' },
         ],
         'Triangles & Congruence': [
-          { id:'congruent-10',name:'Triangle Congruence',   desc:'SSS, SAS, ASA, AAS â€” prove triangles congruent' },
-          { id:'similar-10',  name:'Triangle Similarity',   desc:'AA, SAS, SSS similarity â€” proportions and scale factors' },
-          { id:'trig-10',     name:'Right Triangle Trigonometry', desc:'SOH CAH TOA â€” find missing sides and angles' },
+          { id:'congruent-10',name:'Triangle Congruence',   desc:'SSS, SAS, ASA, AAS &mdash; prove triangles congruent' },
+          { id:'similar-10',  name:'Triangle Similarity',   desc:'AA, SAS, SSS similarity &mdash; proportions and scale factors' },
+          { id:'trig-10',     name:'Right Triangle Trigonometry', desc:'SOH CAH TOA &mdash; find missing sides and angles' },
           { id:'pyth-10',     name:'Pythagorean Theorem Applications', desc:'Apply to 2D and 3D problems' },
         ],
         'Circles': [
@@ -1754,14 +1865,14 @@
       '12th': { label:'12th Grade (Pre-Calculus)', categories: {
         'Trigonometry': [
           { id:'unit-circle', name:'Unit Circle',           desc:'Memorize and apply all values on the unit circle in degrees and radians' },
-          { id:'trig-fn',     name:'Trig Functions & Graphs', desc:'Graph sin, cos, tan â€” amplitude, period, phase shift' },
+          { id:'trig-fn',     name:'Trig Functions & Graphs', desc:'Graph sin, cos, tan &mdash; amplitude, period, phase shift' },
           { id:'trig-id',     name:'Trig Identities',       desc:'Pythagorean, reciprocal, co-function, and double angle identities' },
           { id:'trig-eq',     name:'Solving Trig Equations', desc:'Solve trig equations over given intervals' },
         ],
         'Functions & Analysis': [
           { id:'composite',   name:'Composite & Inverse Functions', desc:'Form, evaluate, and find inverses of functions' },
           { id:'limits-intro',name:'Intro to Limits',       desc:'Understand the concept of a limit graphically and numerically' },
-          { id:'conic',       name:'Conic Sections',        desc:'Parabolas, ellipses, hyperbolas â€” standard form and graphs' },
+          { id:'conic',       name:'Conic Sections',        desc:'Parabolas, ellipses, hyperbolas &mdash; standard form and graphs' },
         ],
         'Vectors & Matrices': [
           { id:'vectors',     name:'Vectors',               desc:'Magnitude, direction, dot product, and vector operations' },
@@ -1777,7 +1888,7 @@
       'K': { label:'Kindergarten', categories: {
         'Phonics': [
           { id:'letters-k',   name:'Letter Recognition',    desc:'Identify and name all 26 uppercase and lowercase letters' },
-          { id:'phonics-k',   name:'Letter Sounds',         desc:'Match letters to their sounds â€” consonants and short vowels' },
+          { id:'phonics-k',   name:'Letter Sounds',         desc:'Match letters to their sounds &mdash; consonants and short vowels' },
           { id:'rhyming',     name:'Rhyming Words',         desc:'Identify and produce rhyming words' },
         ],
         'Comprehension': [
@@ -1804,7 +1915,7 @@
         'Comprehension': [
           { id:'main-2',      name:'Main Idea & Details',   desc:'Identify the main idea and explain how key details support it' },
           { id:'compare-2',   name:'Comparing Texts',       desc:'Compare and contrast two texts on the same topic' },
-          { id:'purpose-2',   name:"Author's Purpose",      desc:'Identify why an author writes â€” to inform, entertain, or persuade' },
+          { id:'purpose-2',   name:"Author's Purpose",      desc:'Identify why an author writes &mdash; to inform, entertain, or persuade' },
         ],
       }},
       '3rd': { label:'3rd Grade', categories: {
@@ -1828,7 +1939,7 @@
         ],
         'Vocabulary': [
           { id:'roots-4',     name:'Roots & Affixes',       desc:'Use prefixes, suffixes, and roots to determine word meaning' },
-          { id:'connotation-4',name:'Word Nuance',          desc:'Distinguish between words with similar meanings â€” shades of meaning' },
+          { id:'connotation-4',name:'Word Nuance',          desc:'Distinguish between words with similar meanings &mdash; shades of meaning' },
         ],
       }},
       '5th': { label:'5th Grade', categories: {
@@ -1892,7 +2003,7 @@
       '11th': { label:'11th Grade', categories: {
         'Advanced Reading': [
           { id:'ap-lit',      name:'AP Literature Reading',  desc:'Close reading of poetry, fiction, and drama at AP level' },
-          { id:'sat-read-11', name:'SAT Reading Comprehension', desc:'Evidence-based reading â€” paired passages, data, complex inference' },
+          { id:'sat-read-11', name:'SAT Reading Comprehension', desc:'Evidence-based reading &mdash; paired passages, data, complex inference' },
           { id:'primary-src', name:'Primary Source Analysis',desc:'Analyze historical and founding documents for purpose and argument' },
         ],
       }},
@@ -1937,7 +2048,7 @@
       '3rd': { label:'3rd Grade', categories: {
         'Grammar': [
           { id:'pos-3',       name:'Parts of Speech',        desc:'Identify nouns, verbs, adjectives, adverbs, and pronouns' },
-          { id:'tense-3',     name:'Verb Tense',             desc:'Use correct verb tense â€” past, present, and future consistently' },
+          { id:'tense-3',     name:'Verb Tense',             desc:'Use correct verb tense &mdash; past, present, and future consistently' },
           { id:'poss-3',      name:"Possessive Nouns",       desc:"Form and use singular and plural possessive nouns with apostrophes" },
         ],
         'Writing': [
@@ -1976,7 +2087,7 @@
           { id:'style-6',     name:'Precise Language',       desc:'Choose words for effect, eliminate wordiness, vary sentences' },
         ],
         'Writing': [
-          { id:'argument-6',  name:'Argument Writing',       desc:'Claims, reasons, evidence, counterclaim â€” 5-paragraph structure' },
+          { id:'argument-6',  name:'Argument Writing',       desc:'Claims, reasons, evidence, counterclaim &mdash; 5-paragraph structure' },
           { id:'thesis-6',    name:'Thesis Statements',      desc:'Write clear, arguable thesis statements' },
           { id:'evidence-6',  name:'Using Evidence',         desc:'Introduce, quote, and analyze evidence correctly' },
         ],
@@ -1994,7 +2105,7 @@
       }},
       '8th': { label:'8th Grade', categories: {
         'Grammar': [
-          { id:'gram-8',      name:'Advanced Grammar',       desc:'Verbals â€” gerunds, participles, infinitives â€” and their phrases' },
+          { id:'gram-8',      name:'Advanced Grammar',       desc:'Verbals &mdash; gerunds, participles, infinitives &mdash; and their phrases' },
           { id:'punct-8',     name:'Advanced Punctuation',   desc:'Semicolons, colons, dashes, hyphens in context' },
           { id:'style-8',     name:'Style & Voice',          desc:'Develop a distinct voice and appropriate style for audience and purpose' },
         ],
@@ -2019,7 +2130,7 @@
       }},
       '11th': { label:'11th Grade', categories: {
         'Writing': [
-          { id:'ap-write',    name:'AP-Style Essays',        desc:'Synthesis, rhetorical analysis, and argument â€” AP format and scoring' },
+          { id:'ap-write',    name:'AP-Style Essays',        desc:'Synthesis, rhetorical analysis, and argument &mdash; AP format and scoring' },
           { id:'sat-write-11',name:'SAT Writing Mastery',    desc:'All SAT writing and language question types at full difficulty' },
           { id:'college-app', name:'College Application Writing', desc:'Personal statement structure, voice, and storytelling' },
         ],
@@ -2028,14 +2139,14 @@
         'Writing': [
           { id:'college-essay',name:'College Essay Craft',   desc:'Develop compelling personal statements and supplemental essays' },
           { id:'research-12', name:'Research Paper',         desc:'Full research paper with thesis, body, citations, and works cited' },
-          { id:'college-write',name:'College-Level Writing', desc:'Academic writing conventions for college â€” argument and analysis' },
+          { id:'college-write',name:'College-Level Writing', desc:'Academic writing conventions for college &mdash; argument and analysis' },
         ],
       }},
     },
     sat: {
       'SAT': { label:'SAT / ACT', categories: {
         'SAT Math': [
-          { id:'sat-alg',     name:'Heart of Algebra',       desc:'Linear equations, inequalities, and systems â€” the core of SAT math' },
+          { id:'sat-alg',     name:'Heart of Algebra',       desc:'Linear equations, inequalities, and systems &mdash; the core of SAT math' },
           { id:'sat-data',    name:'Problem Solving & Data Analysis', desc:'Ratios, percentages, statistics, and data interpretation' },
           { id:'sat-adv',     name:'Passport to Advanced Math', desc:'Quadratics, polynomials, and complex equations and functions' },
           { id:'sat-geom',    name:'Additional Topics in Math', desc:'Geometry, trigonometry, and complex numbers' },
@@ -2051,8 +2162,8 @@
           { id:'sat-rhet',    name:'Rhetorical Skills',      desc:'Purpose, audience, and evidence questions' },
         ],
         'ACT': [
-          { id:'act-eng',     name:'ACT English',            desc:'Grammar, punctuation, usage, and rhetorical skills â€” 75 questions' },
-          { id:'act-math',    name:'ACT Math',               desc:'Pre-algebra through pre-calculus â€” 60 questions in 60 minutes' },
+          { id:'act-eng',     name:'ACT English',            desc:'Grammar, punctuation, usage, and rhetorical skills &mdash; 75 questions' },
+          { id:'act-math',    name:'ACT Math',               desc:'Pre-algebra through pre-calculus &mdash; 60 questions in 60 minutes' },
           { id:'act-read',    name:'ACT Reading',            desc:'Prose fiction, social science, humanities, and natural science passages' },
           { id:'act-sci',     name:'ACT Science',            desc:'Data representation, research summaries, and conflicting viewpoints' },
         ],
@@ -2085,9 +2196,9 @@
       masterLabel: 'Master at 90!',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Remember This!',
-      recoveryMsg: 'Let\'s try a similar one â€” you\'ve got this!',
+      recoveryMsg: 'Let\'s try a similar one &mdash; you\'ve got this!',
       correctMsgs: ['Amazing job!', 'You got it!', 'Awesome!', 'Way to go!', 'Incredible!'],
-      wrongMsgs: ['Good try! Here\'s a hint:', 'Not quite â€” let\'s learn this one:', 'Almost! Here\'s why:'],
+      wrongMsgs: ['Good try! Here\'s a hint:', 'Not quite &mdash; let\'s learn this one:', 'Almost! Here\'s why:'],
       streakMsg: (n) => n >= 3 ? `${n} in a row! You\'re on fire!` : 'Correct!',
       pass70Title: 'Great Job!',
       pass70Msg: (score) => `Your score is ${score} out of 100! Keep going to become a master at 90!`,
@@ -2100,7 +2211,7 @@
     '35': {
       homeTitle: 'Practice Center',
       homeSub: 'Pick a subject, choose your grade, and start earning your score!',
-      mathName: 'Mathematics', mathDesc: 'Multiplication, fractions, decimals, and more â€” 3rd through 5th grade',
+      mathName: 'Mathematics', mathDesc: 'Multiplication, fractions, decimals, and more &mdash; 3rd through 5th grade',
       readingName: 'Reading', readingDesc: 'Comprehension, vocabulary, and analysis',
       writingName: 'Writing', writingDesc: 'Grammar, paragraphs, and essays',
       selectorSub: 'Select your grade level',
@@ -2111,13 +2222,13 @@
       masterLabel: 'Master at 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Key Concept',
-      recoveryMsg: 'Try a similar question â€” prove you\'ve got it!',
+      recoveryMsg: 'Try a similar question &mdash; prove you\'ve got it!',
       correctMsgs: ['Correct! Nice work!', 'That\'s right!', 'Well done!', 'Great answer!'],
-      wrongMsgs: ['Not quite â€” here\'s why:', 'Good try! Here\'s the explanation:', 'Close! Here\'s what to remember:'],
-      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row â€” keep it up!` : 'Correct!',
+      wrongMsgs: ['Not quite &mdash; here\'s why:', 'Good try! Here\'s the explanation:', 'Close! Here\'s what to remember:'],
+      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row &mdash; keep it up!` : 'Correct!',
       pass70Title: 'Topic Passed!',
-      pass70Msg: (score) => `Your SmartScore is ${score}/100 â€” you passed! Keep going to reach Mastery at 90.`,
-      pass70Btn: 'Keep Going â€” Get to 90!',
+      pass70Msg: (score) => `Your SmartScore is ${score}/100 &mdash; you passed! Keep going to reach Mastery at 90.`,
+      pass70Btn: 'Keep Going &mdash; Get to 90!',
       master90Title: 'Mastery Achieved!',
       master90Msg: (topic, score) => `Excellent work! You mastered ${topic} with a SmartScore of ${score}/100. Pick a new topic to keep building!`,
       master90Btn: 'Practice This Topic More',
@@ -2126,7 +2237,7 @@
     '68': {
       homeTitle: 'Practice',
       homeSub: 'Choose a subject, pick your grade, and start building mastery. Questions are unlimited and AI-generated.',
-      mathName: 'Mathematics', mathDesc: 'Integers through functions â€” 6th through 8th grade',
+      mathName: 'Mathematics', mathDesc: 'Integers through functions &mdash; 6th through 8th grade',
       readingName: 'Reading', readingDesc: 'Comprehension, inference, and analysis',
       writingName: 'Writing', writingDesc: 'Grammar, mechanics, and essay structure',
       selectorSub: 'Select your grade level',
@@ -2137,13 +2248,13 @@
       masterLabel: 'Master: 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Concept Reminder',
-      recoveryMsg: 'Similar question â€” show me you\'ve got it this time.',
+      recoveryMsg: 'Similar question &mdash; show me you\'ve got it this time.',
       correctMsgs: ['Correct!', 'That\'s right.', 'Well done.', 'Correct.'],
-      wrongMsgs: ['Not quite â€” here\'s why:', 'Incorrect. Here\'s the explanation:', 'Not this time. Here\'s what to know:'],
-      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row â€” keep it up.` : 'Correct!',
+      wrongMsgs: ['Not quite &mdash; here\'s why:', 'Incorrect. Here\'s the explanation:', 'Not this time. Here\'s what to know:'],
+      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row &mdash; keep it up.` : 'Correct!',
       pass70Title: 'Topic Passed!',
       pass70Msg: (score) => `Your SmartScore is ${score}/100. You\'ve passed this topic. Keep going to hit Mastery at 90.`,
-      pass70Btn: 'Keep Going â€” Reach Mastery',
+      pass70Btn: 'Keep Going &mdash; Reach Mastery',
       master90Title: 'Mastery Achieved!',
       master90Msg: (topic, score) => `Your SmartScore is ${score}/100. You have mastered ${topic}. Pick a new topic and keep building.`,
       master90Btn: 'Continue Practicing',
@@ -2163,7 +2274,7 @@
       masterLabel: 'Master: 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Concept',
-      recoveryMsg: 'Recovery question â€” demonstrate understanding.',
+      recoveryMsg: 'Recovery question &mdash; demonstrate understanding.',
       correctMsgs: ['Correct.', 'That\'s right.', 'Correct answer.', 'Well done.'],
       wrongMsgs: ['Incorrect. Explanation:', 'Not quite. Here\'s why:', 'Wrong answer. Here\'s the reasoning:'],
       streakMsg: (n) => n >= 3 ? `Correct. ${n}-question streak.` : 'Correct.',
@@ -2285,7 +2396,7 @@
     const grid  = document.getElementById('topic-grid');
     const label = document.getElementById('topicGridLabel');
     const t     = getTheme();
-    label.textContent = `${data.label} â€” ${t.topicLabel}`;
+    label.textContent = `${data.label} &mdash; ${t.topicLabel}`;
 
     let html = '';
     for (const [cat, topics] of Object.entries(data.categories)) {
@@ -2382,7 +2493,7 @@ Requirements:
 - Each question has exactly 4 answer choices labeled A, B, C, D
 - Exactly one correct answer per question
 - Clear explanation of why the correct answer is right
-- Include a brief "concept" field (1-2 sentences) â€” the key idea being tested
+- Include a brief "concept" field (1-2 sentences) &mdash; the key idea being tested
 - Appropriate difficulty for ${grade} students
 - NEVER use emojis, emoji characters, or unicode symbols in questions or answers. Use plain text only.
 - Vary question types across the 5 questions
@@ -2406,9 +2517,9 @@ Return ONLY this JSON array, no markdown, no backticks:
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
+          model: 'claude-sonnet-4-20250514',
           max_tokens: 2000,
-          system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON â€” no markdown, no backticks, no preamble.',
+          system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON &mdash; no markdown, no backticks, no preamble.',
           messages: [{ role: 'user', content: prompt }]
         })
       });
@@ -2422,7 +2533,7 @@ Return ONLY this JSON array, no markdown, no backticks:
     generating = false;
   }
 
-  // â”€â”€ RENDER QUESTION (base â€” overridden by FR system below) â”€â”€
+  // â”€â”€ RENDER QUESTION (base &mdash; overridden by FR system below) â”€â”€
   function _baseRenderNextQuestion_unused() {
     if (questionBuffer.length < 2 && !generating) fetchQuestionBatch();
     if (!questionBuffer.length) { setTimeout(renderNextQuestion, 600); return; }
@@ -2652,9 +2763,9 @@ Return ONLY this JSON array, no markdown, no backticks:
       if (currentTheme === '35') {
         frLabel.textContent = 'Write Your Answer';
       } else if (currentTheme === '912') {
-        frLabel.textContent = 'Free Response â€” Type your complete answer';
+        frLabel.textContent = 'Free Response &mdash; Type your complete answer';
       } else {
-        frLabel.textContent = 'Mastery Mode â€” Write Your Answer';
+        frLabel.textContent = 'Mastery Mode &mdash; Write Your Answer';
       }
 
       // Focus the textarea
@@ -2699,7 +2810,7 @@ Topic: ${currentTopic.name}
 
 Question: ${q.question}
 
-Correct Answer: ${q.correct} â€” ${q.choices.find(c => c.startsWith(q.correct))}
+Correct Answer: ${q.correct} &mdash; ${q.choices.find(c => c.startsWith(q.correct))}
 Full Explanation: ${q.explanation}
 
 Student's Answer: "${studentAnswer}"
@@ -2713,7 +2824,7 @@ Respond ONLY with this JSON:
 {
   "grade": "CORRECT" or "PARTIAL" or "INCORRECT",
   "score_delta": number between -8 and 12,
-  "feedback": "2-3 sentence feedback specific to what the student wrote â€” what was right, what was missing or wrong, and what to remember",
+  "feedback": "2-3 sentence feedback specific to what the student wrote &mdash; what was right, what was missing or wrong, and what to remember",
   "correct_answer_summary": "A clear 1-sentence summary of the correct answer in plain language"
 }`;
 
@@ -2721,7 +2832,7 @@ Respond ONLY with this JSON:
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model:      'claude-sonnet-4-6',
+          model:      'claude-sonnet-4-20250514',
           max_tokens: 400,
           system:     'You are a K-12 grading assistant. Respond ONLY with valid JSON.',
           messages:   [{ role: 'user', content: gradingPrompt }]
@@ -2915,7 +3026,140 @@ Respond ONLY with this JSON:
   window.showPage = function(pageId) {
     _origShowPageLb(pageId);
     if(pageId==='leaderboard') loadLeaderboards();
+    if(pageId==='homework') loadHomework();
   };
+
+  // ══════════════════════════════════════════
+  // HOMEWORK SYSTEM
+  // ══════════════════════════════════════════
+
+  async function loadHomework() {
+    const user = auth.currentUser;
+    const listEl = document.getElementById('hwList');
+    if (!listEl) return;
+
+    if (!user) {
+      listEl.innerHTML = '<div class="hw-empty"><div class="hw-empty-title">Sign in to view your homework.</div></div>';
+      return;
+    }
+
+    listEl.innerHTML = '<div class="hw-empty"><div class="hw-empty-title">Loading...</div></div>';
+
+    try {
+      // Query by studentEmail if set, fall back to studentName match
+      const email = user.email;
+      let hwSnap = await getDocs(query(
+        collection(db, 'homework'),
+        where('studentEmail', '==', email)
+      ));
+
+      // If no email match, try matching by studentName (for manual uploads before account creation)
+      if (hwSnap.empty) {
+        const nameFromEmail = (user.displayName || email.split('@')[0]).split(' ')[0];
+        hwSnap = await getDocs(query(
+          collection(db, 'homework'),
+          where('studentName', '==', nameFromEmail)
+        ));
+      }
+
+      const all = hwSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const now = new Date();
+
+      // Classify
+      const assigned  = all.filter(h => !h.completed);
+      const completed = all.filter(h => h.completed);
+      const overdue   = assigned.filter(h => h.dueDate && new Date(h.dueDate) < now);
+
+      // Update summary cards
+      document.getElementById('hwCountAssigned').textContent  = assigned.length;
+      document.getElementById('hwCountCompleted').textContent = completed.length;
+      document.getElementById('hwCountOverdue').textContent   = overdue.length;
+
+      if (!all.length) {
+        listEl.innerHTML = `
+          <div class="hw-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:48px;margin:0 auto 1rem;display:block;opacity:0.3">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+            <div class="hw-empty-title">No homework assigned yet</div>
+            <div class="hw-empty-sub">Hafeez will assign work here after your sessions. Check back soon!</div>
+          </div>`;
+        return;
+      }
+
+      // Sort: overdue first, then by due date ascending, completed last
+      const sorted = [
+        ...overdue.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)),
+        ...assigned.filter(h => !overdue.includes(h)).sort((a,b) => new Date(a.dueDate||'9999') - new Date(b.dueDate||'9999')),
+        ...completed.sort((a,b) => new Date(b.completedDate||'0') - new Date(a.completedDate||'0'))
+      ];
+
+      listEl.innerHTML = '<div class="hw-grid">' + sorted.map(hw => renderHwCard(hw, now)).join('') + '</div>';
+
+    } catch(e) {
+      console.error('Homework load error:', e);
+      listEl.innerHTML = '<div class="hw-empty"><div class="hw-empty-title">Could not load homework.</div><div class="hw-empty-sub">Please try again or contact Hafeez.</div></div>';
+    }
+  }
+
+  function renderHwCard(hw, now) {
+    const due       = hw.dueDate ? new Date(hw.dueDate) : null;
+    const isOverdue = !hw.completed && due && due < now;
+    const daysUntil = due ? Math.ceil((due - now) / 86400000) : null;
+
+    let dueClass = 'on-track', dueText = '';
+    if (hw.completed) {
+      dueText = 'Completed' + (hw.completedDate ? ' &mdash; ' + new Date(hw.completedDate).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '');
+      dueClass = 'on-track';
+    } else if (isOverdue) {
+      dueText = 'Overdue &mdash; ' + due.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      dueClass = 'overdue';
+    } else if (daysUntil !== null && daysUntil <= 2) {
+      dueText = daysUntil === 0 ? 'Due today' : daysUntil === 1 ? 'Due tomorrow' : 'Due in ' + daysUntil + ' days';
+      dueClass = 'due-soon';
+    } else if (due) {
+      dueText = 'Due &mdash; ' + due.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      dueClass = 'on-track';
+    }
+
+    const statusCls = hw.completed ? 'hw-status-completed' : isOverdue ? 'hw-status-overdue' : 'hw-status-assigned';
+    const statusLabel = hw.completed ? 'Completed' : isOverdue ? 'Overdue' : 'Assigned';
+
+    const total = hw.totalQuestions || (hw.questions ? hw.questions.length : 0);
+    const score = hw.score !== null && hw.score !== undefined ? hw.score : null;
+    const showProgress = total > 0;
+
+    return `
+      <div class="hw-card">
+        <div class="hw-card-header">
+          <div class="hw-subject-badge">${hw.subject || 'Assignment'}</div>
+          <div class="hw-title">${hw.title || 'Homework Assignment'}</div>
+        </div>
+        <div class="hw-card-body">
+          ${hw.description ? `<div class="hw-desc">${hw.description}</div>` : ''}
+          <div class="hw-meta">
+            <div class="hw-due ${dueClass}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              ${dueText}
+            </div>
+            <span class="hw-status-pill ${statusCls}">${statusLabel}</span>
+          </div>
+          ${showProgress ? `
+          <div class="hw-progress-wrap">
+            <div class="hw-progress-label">
+              <span>${total} question${total !== 1 ? 's' : ''}</span>
+              ${score !== null ? `<span style="color:var(--gold);font-weight:700;">${score}%</span>` : ''}
+            </div>
+            <div class="hw-progress-bar">
+              <div class="hw-progress-fill" style="width:${score !== null ? score : (hw.completed ? 100 : 0)}%"></div>
+            </div>
+          </div>` : ''}
+        </div>
+      </div>`;
+  }
 
 
     let prefetchCache = {};
@@ -2965,7 +3209,7 @@ Respond ONLY with this JSON:
       renderNextQuestion();
       fetchQuestionBatch(); // refill buffer silently
     } else {
-      // No prefetch â€” go through normal flow
+      // No prefetch &mdash; go through normal flow
       await _originalSelectTopic(id, name, category, grade);
     }
   };
