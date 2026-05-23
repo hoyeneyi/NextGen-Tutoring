@@ -178,6 +178,34 @@
     .terms-row label { font-size:0.82rem; color:rgba(255,255,255,0.4); line-height:1.5; cursor:pointer; }
     .terms-row label a { color:var(--gold); text-decoration:none; }
 
+    /* ── TRUST PANEL ── */
+    .trust-panel { display:none; }
+    @media (min-width:900px) {
+      .main { gap:4rem; }
+      .trust-panel {
+        display:flex; flex-direction:column; justify-content:center;
+        max-width:300px; flex-shrink:0;
+      }
+    }
+    .trust-heading { font-family:var(--font-display); font-size:1.75rem; font-weight:700; color:var(--white); margin-bottom:0.5rem; line-height:1.2; }
+    .trust-sub { font-size:0.875rem; color:rgba(255,255,255,0.45); margin-bottom:2rem; line-height:1.6; }
+    .trust-features { display:flex; flex-direction:column; gap:1.25rem; margin-bottom:2.5rem; }
+    .trust-feature { display:flex; align-items:flex-start; gap:1rem; }
+    .trust-icon { width:40px; height:40px; border-radius:10px; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .trust-icon svg { width:20px; height:20px; stroke:var(--gold); fill:none; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; }
+    .trust-feature-text h3 { font-size:0.875rem; font-weight:600; color:var(--white); margin-bottom:0.2rem; }
+    .trust-feature-text p { font-size:0.78rem; color:rgba(255,255,255,0.4); line-height:1.55; }
+    .trust-founder { display:flex; align-items:center; gap:0.75rem; padding-top:1.5rem; border-top:1px solid rgba(201,168,76,0.15); }
+    .trust-founder-avatar { width:38px; height:38px; border-radius:50%; background:rgba(201,168,76,0.12); border:1.5px solid rgba(201,168,76,0.35); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:0.85rem; font-weight:700; color:var(--gold); flex-shrink:0; }
+    .trust-founder-info p:first-child { font-size:0.82rem; font-weight:600; color:var(--white); }
+    .trust-founder-info p:last-child { font-size:0.75rem; color:rgba(255,255,255,0.35); }
+
+    /* ── DROPDOWN PAIR ── */
+    .fg-row { display:flex; gap:0.75rem; }
+    .fg-row .fg { flex:1; min-width:0; }
+    select.fi { appearance:none; cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='rgba(255,255,255,0.35)' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; padding-right:2.5rem; }
+    select.fi option { background:var(--navy-dark); color:var(--white); }
+
     @media (max-width:480px) {
       .auth-card { padding:1.75rem; }
       .navbar { padding:0 1.25rem; }
@@ -201,6 +229,49 @@
 
   <!-- MAIN -->
   <main class="main">
+
+    <!-- TRUST PANEL (desktop only) -->
+    <aside class="trust-panel">
+      <h2 class="trust-heading">Learning that moves with you.</h2>
+      <p class="trust-sub">Join students building real skills with NextGen Tutoring's personalized approach.</p>
+      <div class="trust-features">
+        <div class="trust-feature">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="trust-feature-text">
+            <h3>Personalized Homework Help</h3>
+            <p>Step-by-step guidance tailored to your grade level and curriculum.</p>
+          </div>
+        </div>
+        <div class="trust-feature">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="trust-feature-text">
+            <h3>Progress Tracking</h3>
+            <p>See your growth over time with detailed session reports and milestones.</p>
+          </div>
+        </div>
+        <div class="trust-feature">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="trust-feature-text">
+            <h3>AI-Powered Practice</h3>
+            <p>Adaptive exercises that focus on exactly what you need to master next.</p>
+          </div>
+        </div>
+      </div>
+      <div class="trust-founder">
+        <div class="trust-founder-avatar">HO</div>
+        <div class="trust-founder-info">
+          <p>Hafeez Oyeneyin</p>
+          <p>Founder, NextGen Tutoring</p>
+        </div>
+      </div>
+    </aside>
+
     <div class="auth-card">
 
       <!-- TABS -->
@@ -245,7 +316,7 @@
       <!-- SIGNUP PANEL -->
       <div class="panel" id="signupPanel">
         <h1 class="panel-title">Get started.</h1>
-        <p class="panel-sub">Create your free account to access lessons and book sessions.</p>
+        <p class="panel-sub">Create your account. Join NextGen Tutoring and access your personalized student portal.</p>
 
         <form id="signupForm" onsubmit="handleSignup(event)" novalidate>
           <div class="fg">
@@ -269,6 +340,41 @@
               <div class="pw-bar" id="bar4"></div>
             </div>
             <div class="pw-hint" id="pwHint">Minimum 8 characters</div>
+          </div>
+          <div class="fg-row">
+            <div class="fg">
+              <label class="fl" for="signupGrade">Grade Level</label>
+              <select id="signupGrade" class="fi" required>
+                <option value="" disabled selected>Select grade</option>
+                <option>Kindergarten</option>
+                <option>1st Grade</option>
+                <option>2nd Grade</option>
+                <option>3rd Grade</option>
+                <option>4th Grade</option>
+                <option>5th Grade</option>
+                <option>6th Grade</option>
+                <option>7th Grade</option>
+                <option>8th Grade</option>
+                <option>9th Grade</option>
+                <option>10th Grade</option>
+                <option>11th Grade</option>
+                <option>12th Grade</option>
+                <option>Adult Learner</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="fl" for="signupSubject">Primary Subject</label>
+              <select id="signupSubject" class="fi" required>
+                <option value="" disabled selected>Select subject</option>
+                <option>Math</option>
+                <option>Reading</option>
+                <option>Writing</option>
+                <option>SAT/ACT Prep</option>
+                <option>Multiple Subjects</option>
+                <option>Homework Help</option>
+                <option>Other</option>
+              </select>
+            </div>
           </div>
           <div class="terms-row">
             <input type="checkbox" id="termsCheck" required />
@@ -326,7 +432,8 @@
       setPersistence,
       browserLocalPersistence,
       browserSessionPersistence,
-      onAuthStateChanged
+      onAuthStateChanged,
+      updateProfile
     } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -377,23 +484,27 @@
     // ── SIGNUP ──
     window.handleSignup = async function(e) {
       e.preventDefault();
-      const name    = document.getElementById('signupName').value.trim();
-      const email   = document.getElementById('signupEmail').value.trim();
+      const name     = document.getElementById('signupName').value.trim();
+      const email    = document.getElementById('signupEmail').value.trim();
       const password = document.getElementById('signupPassword').value;
-      const terms   = document.getElementById('termsCheck').checked;
-      const btn     = document.getElementById('signupBtn');
+      const grade    = document.getElementById('signupGrade').value;
+      const subject  = document.getElementById('signupSubject').value;
+      const terms    = document.getElementById('termsCheck').checked;
+      const btn      = document.getElementById('signupBtn');
 
       if (!name || !email || !password) return showToast('Please fill in all fields.', 'error');
       if (password.length < 8)          return showToast('Password must be at least 8 characters.', 'error');
-      if (!terms)                        return showToast('Please agree to the terms to continue.', 'error');
+      if (!grade || !subject)           return showToast('Please select your grade level and subject.', 'error');
+      if (!terms)                       return showToast('Please agree to the terms to continue.', 'error');
 
       btn.disabled    = true;
       btn.textContent = 'Creating account...';
 
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(cred.user, { displayName: name });
         await setDoc(doc(db, 'users', cred.user.uid), {
-          name, email,
+          name, email, grade, subject,
           createdAt: serverTimestamp(),
           role: 'student'
         });
