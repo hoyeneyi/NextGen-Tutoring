@@ -134,6 +134,23 @@
     .note-text{font-size:0.85rem;color:var(--text-mid);line-height:1.65;}
     textarea.fi{resize:vertical;min-height:80px;}
 
+    /* HOMEWORK */
+    .hw-card{background:var(--white);border:1px solid rgba(11,31,58,0.07);border-radius:10px;padding:1.5rem;margin-bottom:1rem;}
+    .hw-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.75rem;}
+    .hw-title{font-weight:700;color:var(--navy);font-size:0.9rem;margin-bottom:2px;}
+    .hw-subject{font-size:0.72rem;color:var(--text-light);}
+    .hw-dates{display:flex;gap:1.5rem;margin-bottom:0.65rem;}
+    .hw-date-item{font-size:0.78rem;color:var(--text-mid);}
+    .hw-date-label{font-size:0.62rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:1px;}
+    .hw-score{font-size:0.78rem;color:var(--text-mid);margin-bottom:0.65rem;}
+    .hw-pdfs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(11,31,58,0.06);}
+    .hw-pdf-link{display:inline-flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:600;color:var(--navy-light);border:1px solid rgba(30,73,118,0.2);background:rgba(30,73,118,0.04);border-radius:5px;padding:0.3rem 0.7rem;text-decoration:none;transition:all 0.2s;}
+    .hw-pdf-link:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.06);}
+    .hw-pdf-link svg{width:11px;height:11px;flex-shrink:0;}
+    .badge-assigned{background:rgba(201,168,76,0.1);color:#9A7B2A;}
+    .badge-completed{background:rgba(26,92,56,0.1);color:#1A5C38;}
+    .badge-overdue{background:rgba(192,57,43,0.08);color:#C0392B;}
+
     /* EMPTY STATE */
     .empty{text-align:center;padding:3rem 2rem;color:var(--text-light);}
     .empty-title{font-size:0.9rem;font-weight:600;color:var(--text-mid);margin-bottom:0.4rem;}
@@ -237,6 +254,10 @@
       <div class="nav-item" onclick="showPage('notes')" id="nav-notes">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Session Notes
+      </div>
+      <div class="nav-item" onclick="showPage('homework')" id="nav-homework">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Homework
       </div>
     </nav>
     <div class="sidebar-foot">
@@ -389,6 +410,24 @@
       </div>
     </div>
 
+    <!-- HOMEWORK PAGE -->
+    <div class="page" id="page-homework">
+      <div class="sec-row">
+        <div class="sec-title">Homework</div>
+      </div>
+      <div class="add-card" style="margin-bottom:1.5rem;">
+        <div class="fg" style="margin-bottom:0;">
+          <label class="fl">Select Student</label>
+          <select class="fi" id="hwStudent" onchange="loadHomework()">
+            <option value="">Select a student to view homework</option>
+          </select>
+        </div>
+      </div>
+      <div id="hwList">
+        <div class="empty"><div class="empty-title">Select a student to view their homework</div></div>
+      </div>
+    </div>
+
     <!-- NOTES PAGE -->
     <div class="page" id="page-notes">
       <div class="sec-row">
@@ -422,7 +461,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-  import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, addDoc, serverTimestamp, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
@@ -489,6 +528,7 @@
     renderStudentsTable();
     renderAddPageTable();
     renderNoteStudentSelect();
+    renderHwStudentSelect();
     renderNotes();
     setDefaultDate();
   }
@@ -568,6 +608,66 @@
     const sel = document.getElementById('noteStudent');
     sel.innerHTML = '<option value="">Select student</option>' +
       students.map(s => `<option value="${s.id}">${s.name||s.email}</option>`).join('');
+  }
+
+  function renderHwStudentSelect() {
+    const sel = document.getElementById('hwStudent');
+    const current = sel.value;
+    sel.innerHTML = '<option value="">Select a student to view homework</option>' +
+      students.map(s => `<option value="${s.name||s.email}">${s.name||s.email}</option>`).join('');
+    if (current) sel.value = current;
+  }
+
+  window.loadHomework = async function() {
+    const studentName = document.getElementById('hwStudent').value;
+    const el = document.getElementById('hwList');
+    if (!studentName) {
+      el.innerHTML = '<div class="empty"><div class="empty-title">Select a student to view their homework</div></div>';
+      return;
+    }
+    el.innerHTML = '<div class="empty"><div class="empty-title">Loading...</div></div>';
+    try {
+      const q    = query(collection(db, 'homework'), where('studentName', '==', studentName));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        el.innerHTML = '<div class="empty"><div class="empty-title">No homework found for this student</div></div>';
+        return;
+      }
+      const items = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+        .sort((a,b) => (b.assignedDate||b.assigned||'').localeCompare(a.assignedDate||a.assigned||''));
+      el.innerHTML = items.map(renderHwCard).join('');
+    } catch(e) {
+      el.innerHTML = '<div class="empty"><div class="empty-title">Error loading homework</div></div>';
+      console.error(e);
+    }
+  };
+
+  function renderHwCard(hw) {
+    const statusMap = { Completed:'badge-completed', Overdue:'badge-overdue', Assigned:'badge-assigned' };
+    const statusCls = statusMap[hw.status] || 'badge-assigned';
+    const pdfIcon   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+    const urls      = hw.pdfUrls || {};
+    const pdfSection = (urls.worksheet || urls.answerKey || urls.lessonPlan) ? `
+      <div class="hw-pdfs">
+        ${urls.worksheet  ? `<a class="hw-pdf-link" href="${urls.worksheet}"  target="_blank" rel="noopener">${pdfIcon}Worksheet PDF</a>` : ''}
+        ${urls.answerKey  ? `<a class="hw-pdf-link" href="${urls.answerKey}"  target="_blank" rel="noopener">${pdfIcon}Answer Key</a>`    : ''}
+        ${urls.lessonPlan ? `<a class="hw-pdf-link" href="${urls.lessonPlan}" target="_blank" rel="noopener">${pdfIcon}Lesson Plan</a>`   : ''}
+      </div>` : '';
+    return `<div class="hw-card">
+      <div class="hw-card-header">
+        <div>
+          <div class="hw-title">${hw.title||'Untitled'}</div>
+          <div class="hw-subject">${hw.subject||''}</div>
+        </div>
+        <span class="badge ${statusCls}">${hw.status||'Assigned'}</span>
+      </div>
+      <div class="hw-dates">
+        <div class="hw-date-item"><div class="hw-date-label">Assigned</div>${hw.assignedDate||hw.assigned||'—'}</div>
+        <div class="hw-date-item"><div class="hw-date-label">Due</div>${hw.dueDate||hw.due||'—'}</div>
+      </div>
+      ${hw.score != null ? `<div class="hw-score">Score: <strong>${hw.score}</strong></div>` : ''}
+      ${pdfSection}
+    </div>`;
   }
 
   function renderNotes() {
@@ -724,7 +824,7 @@
     document.getElementById('page-' + pageId).classList.add('active');
     const nav = document.getElementById('nav-' + pageId);
     if (nav) nav.classList.add('active');
-    const titles = { overview:'Overview', students:'All Students', add:'Add Student', notes:'Session Notes' };
+    const titles = { overview:'Overview', students:'All Students', add:'Add Student', notes:'Session Notes', homework:'Homework' };
     document.getElementById('topbarTitle').textContent = titles[pageId] || pageId;
   };
 
