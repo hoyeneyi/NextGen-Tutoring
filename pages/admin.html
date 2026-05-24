@@ -234,6 +234,28 @@
   </div>
 </div>
 
+<!-- NOTE EDIT MODAL -->
+<div class="modal-overlay" id="noteModalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeNoteModal()">✕</button>
+    <div class="modal-title">Edit Session Note</div>
+    <div class="modal-sub" id="noteModalSub"></div>
+    <input type="hidden" id="noteModalId" />
+    <div class="fg">
+      <label class="fl">Date</label>
+      <input type="date" class="fi" id="noteModalDate" />
+    </div>
+    <div class="fg">
+      <label class="fl">Note</label>
+      <textarea class="fi" id="noteModalText" style="min-height:120px;"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-gold" onclick="saveNoteEdit()">Save Changes</button>
+      <button class="btn btn-ghost" onclick="closeNoteModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <!-- HOMEWORK EDIT MODAL -->
 <div class="modal-overlay" id="hwModalOverlay">
   <div class="modal" style="max-width:520px;">
@@ -898,7 +920,10 @@
       return `<div class="note-card">
         <div class="note-header">
           <div class="note-student">${student ? student.name : n.studentId}</div>
-          <div class="note-date">${n.date||''}</div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <div class="note-date">${n.date||''}</div>
+            <button class="action-btn" onclick="openNoteEditModal('${n.id}')">Edit</button>
+          </div>
         </div>
         <div class="note-text">${n.text||''}</div>
       </div>`;
@@ -1113,6 +1138,37 @@
       showToast('Homework deleted.');
       loadHomework();
     } catch(e) { showToast('Error deleting homework.'); console.error(e); }
+  };
+
+  // ── EDIT NOTE ──
+  window.openNoteEditModal = function(id) {
+    const n = notes.find(n => n.id === id);
+    if (!n) return;
+    const student = students.find(s => s.id === n.studentId);
+    document.getElementById('noteModalId').value       = id;
+    document.getElementById('noteModalSub').textContent = student ? student.name : '';
+    document.getElementById('noteModalDate').value     = n.date || '';
+    document.getElementById('noteModalText').value     = n.text || '';
+    document.getElementById('noteModalOverlay').classList.add('open');
+  };
+
+  window.closeNoteModal = function() {
+    document.getElementById('noteModalOverlay').classList.remove('open');
+  };
+
+  window.saveNoteEdit = async function() {
+    const id   = document.getElementById('noteModalId').value;
+    const date = document.getElementById('noteModalDate').value;
+    const text = document.getElementById('noteModalText').value.trim();
+    if (!text) { showToast('Note cannot be empty.'); return; }
+    try {
+      await updateDoc(doc(db, 'sessionNotes', id), { date, text, updatedAt: serverTimestamp() });
+      const n = notes.find(n => n.id === id);
+      if (n) { n.date = date; n.text = text; }
+      closeNoteModal();
+      renderNotes();
+      showToast('Note updated.');
+    } catch(e) { showToast('Error updating note.'); console.error(e); }
   };
 
   // ── ADD NOTE ──
