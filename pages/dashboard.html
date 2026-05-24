@@ -1449,6 +1449,12 @@
           <span class="profile-key">Grade</span>
           <span class="profile-val" id="profileGrade">&mdash;</span>
         </div>
+        <div class="profile-row">
+          <span class="profile-key">Subjects</span>
+          <span class="profile-val" id="profileSubject">&mdash;</span>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
 
@@ -1456,7 +1462,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-  import { getFirestore, collection, query, where, getDocs, orderBy, setDoc, doc, increment, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs, getDoc, orderBy, setDoc, doc, increment, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
@@ -1506,9 +1512,12 @@
         const sessionsEl = document.getElementById('statSessions');
         const gradeEl    = document.getElementById('statGrade');
         const subjectEl  = document.getElementById('statSubject');
+        const subjectDisplay = Array.isArray(studentData.subjects) && studentData.subjects.length
+          ? studentData.subjects.join(', ')
+          : (studentData.subject || '—');
         if (sessionsEl) sessionsEl.textContent = studentData.sessions || 0;
-        if (gradeEl)    gradeEl.textContent    = studentData.grade    || '&mdash;';
-        if (subjectEl)  subjectEl.textContent  = studentData.subject  || '&mdash;';
+        if (gradeEl)    gradeEl.textContent    = studentData.grade    || '—';
+        if (subjectEl)  subjectEl.textContent  = subjectDisplay;
 
         // â”€â”€ PROGRESS BARS â”€â”€
         const math     = studentData.mathProgress     || 0;
@@ -1533,14 +1542,33 @@
         const profileGrade   = document.getElementById('profileGrade');
         const profileSubject = document.getElementById('profileSubject');
         const profileRate    = document.getElementById('profileRate');
-        if (profileGrade)   profileGrade.textContent   = studentData.grade   || '&mdash;';
-        if (profileSubject) profileSubject.textContent = studentData.subject || '&mdash;';
+        if (profileGrade)   profileGrade.textContent   = studentData.grade || '—';
+        if (profileSubject) profileSubject.textContent = subjectDisplay;
         if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : '&mdash;';
         const profileSessions = document.getElementById('profileSessions');
         if (profileSessions) profileSessions.textContent = studentData.sessions || 0;
       }
     } catch(e) {
       console.error('Error loading student data:', e);
+    }
+
+    // Fallback: load grade/subjects from users/{uid} for self-service signups
+    try {
+      const userSnap = await getDoc(doc(db, 'users', user.uid));
+      if (userSnap.exists()) {
+        const ud = userSnap.data();
+        const subjectsFallback = Array.isArray(ud.subjects) && ud.subjects.length
+          ? ud.subjects.join(', ')
+          : (ud.subject || null);
+        const profileGrade   = document.getElementById('profileGrade');
+        const profileSubject = document.getElementById('profileSubject');
+        if (ud.grade && profileGrade && profileGrade.textContent === '—')
+          profileGrade.textContent = ud.grade;
+        if (subjectsFallback && profileSubject && profileSubject.textContent === '—')
+          profileSubject.textContent = subjectsFallback;
+      }
+    } catch(e) {
+      console.error('Error loading user doc:', e);
     }
 
     // Show app
