@@ -205,9 +205,21 @@
     .fg-row .fg { flex:1; min-width:0; }
     select.fi { appearance:none; cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='rgba(255,255,255,0.35)' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 1rem center; padding-right:2.5rem; }
     select.fi option { background:var(--navy-dark); color:var(--white); }
-    select[multiple].fi { appearance:none; background-image:none; padding-right:1rem; min-height:112px; cursor:default; }
-    select[multiple].fi option { padding:0.3rem 0.25rem; }
-    select[multiple].fi option:checked { background:rgba(201,168,76,0.22); color:var(--gold-light); }
+    /* ── SUBJECT CHIP GRID ── */
+    .subject-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; }
+    .subject-chip {
+      display:flex; align-items:center; justify-content:center; gap:5px;
+      padding:0.6rem 0.5rem; border-radius:6px; cursor:pointer;
+      font-family:var(--font-body); font-size:0.82rem; font-weight:500;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.05); color:var(--white);
+      transition:background 0.15s, border-color 0.15s, color 0.15s;
+      user-select:none; text-align:center; line-height:1.3;
+    }
+    .subject-chip:hover:not(.selected) { border-color:rgba(201,168,76,0.4); background:rgba(201,168,76,0.08); }
+    .subject-chip.selected { background:var(--gold); color:var(--navy); border-color:var(--gold); font-weight:600; }
+    .subject-chip.selected .chip-check { display:inline; }
+    .chip-check { display:none; font-style:normal; }
 
     /* ── PW MATCH ERROR ── */
     .pw-match-error { font-size:0.72rem; color:var(--error); margin-top:4px; display:none; }
@@ -359,39 +371,37 @@
             </div>
             <div class="pw-match-error" id="pwMatchError">Passwords do not match</div>
           </div>
-          <div class="fg-row">
-            <div class="fg">
-              <label class="fl" for="signupGrade">Student's Grade</label>
-              <select id="signupGrade" class="fi" required>
-                <option value="" disabled selected>Select grade</option>
-                <option>Kindergarten</option>
-                <option>1st Grade</option>
-                <option>2nd Grade</option>
-                <option>3rd Grade</option>
-                <option>4th Grade</option>
-                <option>5th Grade</option>
-                <option>6th Grade</option>
-                <option>7th Grade</option>
-                <option>8th Grade</option>
-                <option>9th Grade</option>
-                <option>10th Grade</option>
-                <option>11th Grade</option>
-                <option>12th Grade</option>
-                <option>Adult Learner</option>
-              </select>
-            </div>
-            <div class="fg">
-              <label class="fl" for="signupSubject">Subjects (select all that apply)</label>
-              <select id="signupSubject" class="fi" multiple required>
-                <option value="Math">Math</option>
-                <option value="Reading">Reading</option>
-                <option value="Writing">Writing</option>
-                <option value="Science">Science</option>
-                <option value="History">History</option>
-                <option value="SAT/ACT Prep">SAT/ACT Prep</option>
-                <option value="Homework Help">Homework Help</option>
-                <option value="Other">Other</option>
-              </select>
+          <div class="fg">
+            <label class="fl" for="signupGrade">Student's Grade</label>
+            <select id="signupGrade" class="fi" required>
+              <option value="" disabled selected>Select grade</option>
+              <option>Kindergarten</option>
+              <option>1st Grade</option>
+              <option>2nd Grade</option>
+              <option>3rd Grade</option>
+              <option>4th Grade</option>
+              <option>5th Grade</option>
+              <option>6th Grade</option>
+              <option>7th Grade</option>
+              <option>8th Grade</option>
+              <option>9th Grade</option>
+              <option>10th Grade</option>
+              <option>11th Grade</option>
+              <option>12th Grade</option>
+              <option>Adult Learner</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl">Subjects (Select all that apply)</label>
+            <div class="subject-grid" id="subjectGrid">
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'Math')"><i class="chip-check">✓</i>Math</button>
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'Reading')"><i class="chip-check">✓</i>Reading</button>
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'Writing')"><i class="chip-check">✓</i>Writing</button>
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'SAT/ACT Prep')"><i class="chip-check">✓</i>SAT/ACT Prep</button>
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'Science')"><i class="chip-check">✓</i>Science</button>
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'History')"><i class="chip-check">✓</i>History</button>
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'Homework Help')"><i class="chip-check">✓</i>Homework Help</button>
+              <button type="button" class="subject-chip" onclick="toggleSubject(this,'Other')"><i class="chip-check">✓</i>Other</button>
             </div>
           </div>
           <div class="terms-row">
@@ -508,9 +518,8 @@
       const phone           = document.getElementById('signupPhone').value.trim();
       const password        = document.getElementById('signupPassword').value;
       const confirmPassword = document.getElementById('signupConfirmPassword').value;
-      const grade           = document.getElementById('signupGrade').value;
-      const subjectSelect   = document.getElementById('signupSubject');
-      const subjects        = Array.from(subjectSelect.selectedOptions).map(o => o.value);
+      const grade    = document.getElementById('signupGrade').value;
+      const subjects = Array.from(window.signupSubjects);
       const terms           = document.getElementById('termsCheck').checked;
       const btn             = document.getElementById('signupBtn');
 
@@ -632,6 +641,18 @@
       const show  = input.type === 'password';
       input.type  = show ? 'text' : 'password';
       btn.textContent = show ? 'Hide' : 'Show';
+    }
+
+    /* ── SUBJECT CHIPS ── */
+    window.signupSubjects = new Set();
+    function toggleSubject(btn, value) {
+      if (window.signupSubjects.has(value)) {
+        window.signupSubjects.delete(value);
+        btn.classList.remove('selected');
+      } else {
+        window.signupSubjects.add(value);
+        btn.classList.add('selected');
+      }
     }
 
     /* ── CONFIRM PASSWORD VALIDATION ── */
