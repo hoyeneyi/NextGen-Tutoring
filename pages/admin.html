@@ -801,7 +801,10 @@
           <div class="hw-title">${hw.title||'Untitled'}</div>
           <div class="hw-subject">${hw.subject||''}</div>
         </div>
-        <span class="badge ${statusCls}">${hw.status||'Assigned'}</span>
+        <div style="display:flex;align-items:center;gap:0.6rem;flex-shrink:0;">
+          <span class="badge ${statusCls}">${hw.status||'Assigned'}</span>
+          <button class="action-btn btn-danger" onclick="deleteHomework('${hw.id}')">Delete</button>
+        </div>
       </div>
       <div class="hw-dates">
         <div class="hw-date-item"><div class="hw-date-label">Assigned</div>${hw.assignedDate||hw.assigned||'—'}</div>
@@ -942,6 +945,16 @@
       renderAll();
       showToast('Student removed.');
     } catch(e) { showToast('Error removing student.'); }
+  };
+
+  // ── DELETE HOMEWORK ──
+  window.deleteHomework = async function(id) {
+    if (!confirm('Delete this homework assignment? This cannot be undone.')) return;
+    try {
+      await deleteDoc(doc(db, 'homework', id));
+      showToast('Homework deleted.');
+      loadHomework();
+    } catch(e) { showToast('Error deleting homework.'); console.error(e); }
   };
 
   // ── ADD NOTE ──
