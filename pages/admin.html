@@ -151,6 +151,12 @@
     .badge-completed{background:rgba(26,92,56,0.1);color:#1A5C38;}
     .badge-overdue{background:rgba(192,57,43,0.08);color:#C0392B;}
 
+    /* FILE INPUT */
+    input[type="file"].fi{padding:0.6rem 1rem;cursor:pointer;color:var(--text-mid);}
+    input[type="file"].fi::file-selector-button{background:var(--off-white);border:1px solid rgba(11,31,58,0.12);border-radius:4px;padding:0.28rem 0.75rem;font-family:var(--font-body);font-size:0.78rem;font-weight:600;color:var(--navy);cursor:pointer;margin-right:0.75rem;transition:all 0.2s;}
+    input[type="file"].fi::file-selector-button:hover{border-color:var(--gold);color:var(--gold);}
+    .upload-status{font-size:0.78rem;color:var(--text-light);margin-left:0.5rem;}
+
     /* EMPTY STATE */
     .empty{text-align:center;padding:3rem 2rem;color:var(--text-light);}
     .empty-title{font-size:0.9rem;font-weight:600;color:var(--text-mid);margin-bottom:0.4rem;}
@@ -412,12 +418,68 @@
 
     <!-- HOMEWORK PAGE -->
     <div class="page" id="page-homework">
-      <div class="sec-row">
-        <div class="sec-title">Homework</div>
+
+      <!-- UPLOAD FORM -->
+      <div class="sec-title">Assign Homework</div>
+      <div class="add-card" style="margin-bottom:2rem;">
+        <div class="add-grid">
+          <div class="fg">
+            <label class="fl">Student</label>
+            <select class="fi" id="hwUploadStudent">
+              <option value="">Select student</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl">Subject</label>
+            <select class="fi" id="hwUploadSubject">
+              <option value="">Select subject</option>
+              <option>Math</option>
+              <option>Reading &amp; Writing</option>
+              <option>SAT / ACT Prep</option>
+              <option>Science</option>
+              <option>History</option>
+              <option>Homework Help</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl">Assigned Date</label>
+            <input type="date" class="fi" id="hwAssignedDate" />
+          </div>
+          <div class="fg">
+            <label class="fl">Due Date</label>
+            <input type="date" class="fi" id="hwDueDate" />
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">Title</label>
+          <input type="text" class="fi" id="hwTitle" placeholder="e.g. Algebra Practice Set 3" />
+        </div>
+        <div class="add-grid">
+          <div class="fg">
+            <label class="fl">Worksheet PDF <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-light);">(required)</span></label>
+            <input type="file" class="fi" id="hwFileWorksheet" accept=".pdf" />
+          </div>
+          <div class="fg">
+            <label class="fl">Answer Key PDF <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-light);">(optional)</span></label>
+            <input type="file" class="fi" id="hwFileAnswerKey" accept=".pdf" />
+          </div>
+        </div>
+        <div class="fg" style="max-width:calc(50% - 0.5rem);">
+          <label class="fl">Lesson Plan PDF <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-light);">(optional)</span></label>
+          <input type="file" class="fi" id="hwFileLessonPlan" accept=".pdf" />
+        </div>
+        <div style="margin-top:1rem;display:flex;align-items:center;gap:0.75rem;">
+          <button class="btn btn-gold" onclick="uploadHomework()" id="hwUploadBtn">Assign Homework</button>
+          <span class="upload-status" id="hwUploadStatus"></span>
+        </div>
       </div>
-      <div class="add-card" style="margin-bottom:1.5rem;">
+
+      <!-- VIEW SECTION -->
+      <div class="sec-title">View Assignments</div>
+      <div class="add-card" style="margin-bottom:1rem;">
         <div class="fg" style="margin-bottom:0;">
-          <label class="fl">Select Student</label>
+          <label class="fl">Filter by Student</label>
           <select class="fi" id="hwStudent" onchange="loadHomework()">
             <option value="">Select a student to view homework</option>
           </select>
@@ -462,6 +524,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
   import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, addDoc, serverTimestamp, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
@@ -474,9 +537,10 @@
 
   const ADMIN_EMAIL = 'hoyeneyi@umich.edu';
 
-  const app  = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db   = getFirestore(app);
+  const app     = initializeApp(firebaseConfig);
+  const auth    = getAuth(app);
+  const db      = getFirestore(app);
+  const storage = getStorage(app);
 
   const loadingScreen = document.getElementById('loadingScreen');
   const appLayout     = document.getElementById('appLayout');
@@ -611,12 +675,90 @@
   }
 
   function renderHwStudentSelect() {
-    const sel = document.getElementById('hwStudent');
-    const current = sel.value;
-    sel.innerHTML = '<option value="">Select a student to view homework</option>' +
-      students.map(s => `<option value="${s.name||s.email}">${s.name||s.email}</option>`).join('');
-    if (current) sel.value = current;
+    const opts = students.map(s => `<option value="${s.name||s.email}">${s.name||s.email}</option>`).join('');
+
+    const viewSel = document.getElementById('hwStudent');
+    const viewCurrent = viewSel.value;
+    viewSel.innerHTML = '<option value="">Select a student to view homework</option>' + opts;
+    if (viewCurrent) viewSel.value = viewCurrent;
+
+    const uploadSel = document.getElementById('hwUploadStudent');
+    const uploadCurrent = uploadSel.value;
+    uploadSel.innerHTML = '<option value="">Select student</option>' + opts;
+    if (uploadCurrent) uploadSel.value = uploadCurrent;
   }
+
+  window.uploadHomework = async function() {
+    const studentName  = document.getElementById('hwUploadStudent').value;
+    const title        = document.getElementById('hwTitle').value.trim();
+    const subject      = document.getElementById('hwUploadSubject').value;
+    const assignedDate = document.getElementById('hwAssignedDate').value;
+    const dueDate      = document.getElementById('hwDueDate').value;
+    const fileWorksheet  = document.getElementById('hwFileWorksheet').files[0];
+    const fileAnswerKey  = document.getElementById('hwFileAnswerKey').files[0];
+    const fileLessonPlan = document.getElementById('hwFileLessonPlan').files[0];
+
+    if (!studentName || !title || !assignedDate || !dueDate) {
+      showToast('Student, title, and both dates are required.'); return;
+    }
+    if (!fileWorksheet) { showToast('Worksheet PDF is required.'); return; }
+
+    const btn    = document.getElementById('hwUploadBtn');
+    const status = document.getElementById('hwUploadStatus');
+    btn.disabled = true;
+    status.textContent = 'Uploading PDFs…';
+
+    try {
+      const base = `homework/${studentName}/${Date.now()}`;
+
+      async function upload(file, name) {
+        if (!file) return null;
+        const sRef = storageRef(storage, `${base}/${name}`);
+        await uploadBytes(sRef, file);
+        return getDownloadURL(sRef);
+      }
+
+      const [worksheetUrl, answerKeyUrl, lessonPlanUrl] = await Promise.all([
+        upload(fileWorksheet,  'worksheet.pdf'),
+        upload(fileAnswerKey,  'answer-key.pdf'),
+        upload(fileLessonPlan, 'lesson-plan.pdf'),
+      ]);
+
+      status.textContent = 'Saving…';
+
+      const pdfUrls = {};
+      if (worksheetUrl)  pdfUrls.worksheet  = worksheetUrl;
+      if (answerKeyUrl)  pdfUrls.answerKey  = answerKeyUrl;
+      if (lessonPlanUrl) pdfUrls.lessonPlan = lessonPlanUrl;
+
+      await addDoc(collection(db, 'homework'), {
+        studentName, title, subject, assignedDate, dueDate,
+        status: 'Assigned', pdfUrls, createdAt: serverTimestamp()
+      });
+
+      // Reset upload form
+      document.getElementById('hwTitle').value = '';
+      document.getElementById('hwUploadStudent').selectedIndex = 0;
+      document.getElementById('hwUploadSubject').selectedIndex = 0;
+      document.getElementById('hwAssignedDate').value = '';
+      document.getElementById('hwDueDate').value = '';
+      ['hwFileWorksheet','hwFileAnswerKey','hwFileLessonPlan'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+
+      showToast('Homework assigned successfully.');
+      status.textContent = '';
+
+      // Refresh view list if same student is already selected
+      if (document.getElementById('hwStudent').value === studentName) loadHomework();
+    } catch(e) {
+      console.error(e);
+      showToast('Error uploading homework.');
+      status.textContent = '';
+    } finally {
+      btn.disabled = false;
+    }
+  };
 
   window.loadHomework = async function() {
     const studentName = document.getElementById('hwStudent').value;
