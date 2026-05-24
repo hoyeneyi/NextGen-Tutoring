@@ -234,6 +234,77 @@
   </div>
 </div>
 
+<!-- HOMEWORK EDIT MODAL -->
+<div class="modal-overlay" id="hwModalOverlay">
+  <div class="modal" style="max-width:520px;">
+    <button class="modal-close" onclick="closeHwModal()">✕</button>
+    <div class="modal-title">Edit Homework</div>
+    <div class="modal-sub" id="hwModalSub">Update assignment details</div>
+    <input type="hidden" id="hwModalId" />
+    <div class="add-grid" style="margin-bottom:0;">
+      <div class="fg">
+        <label class="fl">Title</label>
+        <input type="text" class="fi" id="hwModalTitle" />
+      </div>
+      <div class="fg">
+        <label class="fl">Subject</label>
+        <select class="fi" id="hwModalSubject">
+          <option value="">Select subject</option>
+          <option>Math</option>
+          <option>Reading &amp; Writing</option>
+          <option>SAT / ACT Prep</option>
+          <option>Science</option>
+          <option>History</option>
+          <option>Homework Help</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Assigned Date</label>
+        <input type="date" class="fi" id="hwModalAssigned" />
+      </div>
+      <div class="fg">
+        <label class="fl">Due Date</label>
+        <input type="date" class="fi" id="hwModalDue" />
+      </div>
+      <div class="fg">
+        <label class="fl">Status</label>
+        <select class="fi" id="hwModalStatus">
+          <option value="Assigned">Assigned</option>
+          <option value="Completed">Completed</option>
+          <option value="Overdue">Overdue</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Score <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-light);">(optional)</span></label>
+        <input type="text" class="fi" id="hwModalScore" placeholder="e.g. 85% or 17/20" />
+      </div>
+    </div>
+    <div style="margin-top:0.25rem;padding-top:0.75rem;border-top:1px solid rgba(11,31,58,0.07);">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.75rem;">Replace PDFs <span style="font-weight:400;text-transform:none;letter-spacing:0;">(leave blank to keep existing)</span></div>
+      <div class="add-grid">
+        <div class="fg">
+          <label class="fl">Worksheet PDF</label>
+          <input type="file" class="fi" id="hwModalFileWorksheet" accept=".pdf" />
+        </div>
+        <div class="fg">
+          <label class="fl">Answer Key PDF</label>
+          <input type="file" class="fi" id="hwModalFileAnswerKey" accept=".pdf" />
+        </div>
+      </div>
+      <div class="fg" style="max-width:calc(50% - 0.5rem);">
+        <label class="fl">Lesson Plan PDF</label>
+        <input type="file" class="fi" id="hwModalFileLessonPlan" accept=".pdf" />
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-gold" onclick="saveHwEdit()" id="hwModalSaveBtn">Save Changes</button>
+      <button class="btn btn-ghost" onclick="closeHwModal()">Cancel</button>
+      <span class="upload-status" id="hwModalStatus"></span>
+    </div>
+  </div>
+</div>
+
 <div class="layout" id="appLayout" style="display:none;">
 
   <!-- SIDEBAR -->
@@ -803,6 +874,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:0.6rem;flex-shrink:0;">
           <span class="badge ${statusCls}">${hw.status||'Assigned'}</span>
+          <button class="action-btn" onclick="openHwEditModal('${hw.id}')">Edit</button>
           <button class="action-btn btn-danger" onclick="deleteHomework('${hw.id}')">Delete</button>
         </div>
       </div>
@@ -945,6 +1017,92 @@
       renderAll();
       showToast('Student removed.');
     } catch(e) { showToast('Error removing student.'); }
+  };
+
+  // ── EDIT HOMEWORK ──
+  let hwEditTarget = null;
+
+  window.openHwEditModal = async function(id) {
+    try {
+      const snap = await getDoc(doc(db, 'homework', id));
+      if (!snap.exists()) { showToast('Assignment not found.'); return; }
+      hwEditTarget = { id, ...snap.data() };
+    } catch(e) { showToast('Error loading assignment.'); console.error(e); return; }
+
+    const hw = hwEditTarget;
+    document.getElementById('hwModalId').value        = id;
+    document.getElementById('hwModalSub').textContent = hw.studentName || '';
+    document.getElementById('hwModalTitle').value     = hw.title        || '';
+    document.getElementById('hwModalSubject').value   = hw.subject      || '';
+    document.getElementById('hwModalAssigned').value  = hw.assignedDate || hw.assigned || '';
+    document.getElementById('hwModalDue').value       = hw.dueDate      || hw.due      || '';
+    document.getElementById('hwModalStatus').value    = hw.status       || 'Assigned';
+    document.getElementById('hwModalScore').value     = hw.score        != null ? hw.score : '';
+    ['hwModalFileWorksheet','hwModalFileAnswerKey','hwModalFileLessonPlan']
+      .forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('hwModalStatus').textContent = '';
+    document.getElementById('hwModalOverlay').classList.add('open');
+  };
+
+  window.closeHwModal = function() {
+    document.getElementById('hwModalOverlay').classList.remove('open');
+    hwEditTarget = null;
+  };
+
+  window.saveHwEdit = async function() {
+    const id     = document.getElementById('hwModalId').value;
+    const title  = document.getElementById('hwModalTitle').value.trim();
+    const subject      = document.getElementById('hwModalSubject').value;
+    const assignedDate = document.getElementById('hwModalAssigned').value;
+    const dueDate      = document.getElementById('hwModalDue').value;
+    const status       = document.getElementById('hwModalStatus').value;
+    const scoreRaw     = document.getElementById('hwModalScore').value.trim();
+    const fileWorksheet  = document.getElementById('hwModalFileWorksheet').files[0];
+    const fileAnswerKey  = document.getElementById('hwModalFileAnswerKey').files[0];
+    const fileLessonPlan = document.getElementById('hwModalFileLessonPlan').files[0];
+
+    if (!title || !assignedDate || !dueDate) {
+      showToast('Title and dates are required.'); return;
+    }
+
+    const btn    = document.getElementById('hwModalSaveBtn');
+    const status_ = document.getElementById('hwModalStatus');
+    btn.disabled = true;
+    status_.textContent = 'Saving…';
+
+    try {
+      const pdfUrls = { ...(hwEditTarget?.pdfUrls || {}) };
+
+      async function maybeUpload(file, key, filename) {
+        if (!file) return;
+        const sRef = storageRef(storage, `homework/${hwEditTarget?.studentName||id}/${Date.now()}/${filename}`);
+        await uploadBytes(sRef, file);
+        pdfUrls[key] = await getDownloadURL(sRef);
+      }
+
+      if (fileWorksheet || fileAnswerKey || fileLessonPlan) {
+        status_.textContent = 'Uploading PDFs…';
+        await Promise.all([
+          maybeUpload(fileWorksheet,  'worksheet',  'worksheet.pdf'),
+          maybeUpload(fileAnswerKey,  'answerKey',  'answer-key.pdf'),
+          maybeUpload(fileLessonPlan, 'lessonPlan', 'lesson-plan.pdf'),
+        ]);
+        status_.textContent = 'Saving…';
+      }
+
+      const updateData = { title, subject, assignedDate, dueDate, status, pdfUrls, updatedAt: serverTimestamp() };
+      if (scoreRaw !== '') updateData.score = scoreRaw;
+
+      await updateDoc(doc(db, 'homework', id), updateData);
+      closeHwModal();
+      showToast('Homework updated.');
+      loadHomework();
+    } catch(e) {
+      console.error(e);
+      showToast('Error saving changes.');
+      status_.textContent = '';
+      btn.disabled = false;
+    }
   };
 
   // ── DELETE HOMEWORK ──
