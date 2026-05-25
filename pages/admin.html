@@ -146,7 +146,6 @@
     .hw-pdfs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(11,31,58,0.06);}
     .hw-pdf-link{display:inline-flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:600;color:var(--navy-light);border:1px solid rgba(30,73,118,0.2);background:rgba(30,73,118,0.04);border-radius:5px;padding:0.3rem 0.7rem;text-decoration:none;transition:all 0.2s;}
     .hw-pdf-link:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.06);}
-    .hw-pdf-link svg{width:11px;height:11px;flex-shrink:0;}
     .badge-assigned{background:rgba(201,168,76,0.1);color:#9A7B2A;}
     .badge-completed{background:rgba(26,92,56,0.1);color:#1A5C38;}
     .badge-overdue{background:rgba(192,57,43,0.08);color:#C0392B;}
@@ -880,13 +879,12 @@
   function renderHwCard(hw) {
     const statusMap = { Completed:'badge-completed', Overdue:'badge-overdue', Assigned:'badge-assigned' };
     const statusCls = statusMap[hw.status] || 'badge-assigned';
-    const pdfIcon   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
     const urls      = hw.pdfUrls || {};
     const pdfSection = (urls.worksheet || urls.answerKey || urls.lessonPlan) ? `
       <div class="hw-pdfs">
-        ${urls.worksheet  ? `<a class="hw-pdf-link" href="${urls.worksheet}"  target="_blank" rel="noopener">${pdfIcon}Worksheet PDF</a>` : ''}
-        ${urls.answerKey  ? `<a class="hw-pdf-link" href="${urls.answerKey}"  target="_blank" rel="noopener">${pdfIcon}Answer Key</a>`    : ''}
-        ${urls.lessonPlan ? `<a class="hw-pdf-link" href="${urls.lessonPlan}" target="_blank" rel="noopener">${pdfIcon}Lesson Plan</a>`   : ''}
+        ${urls.worksheet  ? `<a class="hw-pdf-link" href="${urls.worksheet}"  target="_blank" rel="noopener">Worksheet</a>`  : ''}
+        ${urls.answerKey  ? `<a class="hw-pdf-link" href="${urls.answerKey}"  target="_blank" rel="noopener">Answer Key</a>` : ''}
+        ${urls.lessonPlan ? `<a class="hw-pdf-link" href="${urls.lessonPlan}" target="_blank" rel="noopener">Lesson Plan</a>`: ''}
       </div>` : '';
     return `<div class="hw-card">
       <div class="hw-card-header">
