@@ -653,6 +653,7 @@
     await loadStudents();
     await loadNotes();
     renderAll();
+    window.showPage(localStorage.getItem('admin-last-page') || 'overview');
   });
 
   // ── SIGN OUT ──
@@ -877,14 +878,18 @@
   };
 
   function renderHwCard(hw) {
-    const statusMap = { Completed:'badge-completed', Overdue:'badge-overdue', Assigned:'badge-assigned' };
-    const statusCls = statusMap[hw.status] || 'badge-assigned';
-    const urls      = hw.pdfUrls || {};
-    const pdfSection = (urls.worksheet || urls.answerKey || urls.lessonPlan) ? `
+    console.log('hw card:', hw);
+    const statusMap  = { Completed:'badge-completed', Overdue:'badge-overdue', Assigned:'badge-assigned' };
+    const statusCls  = statusMap[hw.status] || 'badge-assigned';
+    const urls       = hw.pdfUrls || {};
+    const worksheet  = urls.worksheetUrl  || urls.worksheet;
+    const answerKey  = urls.answerKeyUrl  || urls.answerKey;
+    const lessonPlan = urls.lessonPlanUrl || urls.lessonPlan;
+    const pdfSection = (worksheet || answerKey || lessonPlan) ? `
       <div class="hw-pdfs">
-        ${urls.worksheet  ? `<a class="hw-pdf-link" href="${urls.worksheet}"  target="_blank" rel="noopener">Worksheet</a>`  : ''}
-        ${urls.answerKey  ? `<a class="hw-pdf-link" href="${urls.answerKey}"  target="_blank" rel="noopener">Answer Key</a>` : ''}
-        ${urls.lessonPlan ? `<a class="hw-pdf-link" href="${urls.lessonPlan}" target="_blank" rel="noopener">Lesson Plan</a>`: ''}
+        ${worksheet  ? `<a class="hw-pdf-link" href="${worksheet}"  target="_blank" rel="noopener">Worksheet</a>`  : ''}
+        ${answerKey  ? `<a class="hw-pdf-link" href="${answerKey}"  target="_blank" rel="noopener">Answer Key</a>` : ''}
+        ${lessonPlan ? `<a class="hw-pdf-link" href="${lessonPlan}" target="_blank" rel="noopener">Lesson Plan</a>`: ''}
       </div>` : '';
     return `<div class="hw-card">
       <div class="hw-card-header">
@@ -1186,6 +1191,7 @@
 
   // ── NAV ──
   window.showPage = function(pageId) {
+    localStorage.setItem('admin-last-page', pageId);
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + pageId).classList.add('active');

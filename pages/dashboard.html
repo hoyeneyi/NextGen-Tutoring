@@ -1574,6 +1574,7 @@
     // Show app
     loadingScreen.classList.add('hidden');
     appLayout.style.display = 'flex';
+    window.showPage(localStorage.getItem('dashboard-last-page') || 'home');
 
     // Sign out
     document.getElementById('signOutBtn').addEventListener('click', () => {
@@ -1630,6 +1631,7 @@
 
   // Page navigation &mdash; expose globally
   window.showPage = function(pageId) {
+    localStorage.setItem('dashboard-last-page', pageId);
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
