@@ -1654,552 +1654,2623 @@
   // â•â• PRACTICE SYSTEM â•â•
   const PROXY_URL = 'https://nextgen-proxy.nextgentutoringco.workers.dev';
 
-  const CURRICULUM = {
-    math: {
-      'K': { label:'Kindergarten', categories: {
-        'Counting & Numbers': [
-          { id:'count-20',    name:'Counting to 20',        desc:'Count forward and backward from any number within 20' },
-          { id:'count-100',   name:'Counting to 100',       desc:'Count to 100 by ones and by tens' },
-          { id:'compare-k',   name:'Comparing Numbers',     desc:'Greater than, less than, and equal to within 10' },
-        ],
-        'Addition & Subtraction': [
-          { id:'add-k',       name:'Addition within 5',     desc:'Add using objects, fingers, drawings, and equations' },
-          { id:'sub-k',       name:'Subtraction within 5',  desc:'Subtract using objects, fingers, and drawings' },
-        ],
-        'Shapes & Measurement': [
-          { id:'shapes-k',    name:'2D & 3D Shapes',        desc:'Identify squares, circles, triangles, rectangles, cubes, and spheres' },
-          { id:'measure-k',   name:'Comparing Lengths',     desc:'Compare lengths using longer, shorter, and equal' },
-        ],
-      }},
-      '1st': { label:'1st Grade', categories: {
-        'Addition & Subtraction': [
-          { id:'add-20',      name:'Addition within 20',    desc:'Add with strategies &mdash; counting on, making ten, doubles' },
-          { id:'sub-20',      name:'Subtraction within 20', desc:'Subtract within 20 and understand the relationship to addition' },
-          { id:'word-1st',    name:'Word Problems',         desc:'Solve add/subtract word problems using objects and drawings' },
-        ],
-        'Place Value': [
-          { id:'tens-ones',   name:'Tens and Ones',         desc:'Understand two-digit numbers as tens and ones' },
-          { id:'compare-1st', name:'Comparing Two-Digit Numbers', desc:'Use >, =, < to compare two-digit numbers' },
-        ],
-        'Measurement & Data': [
-          { id:'measure-1st', name:'Measuring Length',      desc:'Order objects by length and measure with non-standard units' },
-          { id:'time-1st',    name:'Telling Time',          desc:'Tell time to the hour and half-hour using analog and digital clocks' },
-        ],
-      }},
-      '2nd': { label:'2nd Grade', categories: {
-        'Addition & Subtraction': [
-          { id:'add-100',     name:'Addition within 100',   desc:'Add two-digit numbers with and without regrouping' },
-          { id:'sub-100',     name:'Subtraction within 100',desc:'Subtract two-digit numbers with and without regrouping' },
-          { id:'add-1000',    name:'Addition within 1000',  desc:'Add up to four two-digit numbers and three-digit numbers' },
-        ],
-        'Place Value': [
-          { id:'hundreds',    name:'Hundreds, Tens, Ones',  desc:'Understand three-digit numbers and their place value' },
-          { id:'skip-count',  name:'Skip Counting',         desc:'Skip count by 5s, 10s, and 100s' },
-        ],
-        'Measurement & Geometry': [
-          { id:'measure-2nd', name:'Measuring in Inches & Cm', desc:'Measure lengths using rulers with inches and centimeters' },
-          { id:'time-2nd',    name:'Telling Time to 5 Minutes', desc:'Tell and write time from analog and digital clocks' },
-          { id:'money-2nd',   name:'Money',                 desc:'Count dollar bills, quarters, dimes, nickels, and pennies' },
-          { id:'shapes-2nd',  name:'Shapes & Partitions',   desc:'Partition shapes into halves, thirds, and fourths' },
-        ],
-      }},
-      '3rd': { label:'3rd Grade', categories: {
-        'Multiplication & Division': [
-          { id:'mult-intro',  name:'Intro to Multiplication',desc:'Understand multiplication as equal groups and arrays' },
-          { id:'div-intro',   name:'Intro to Division',     desc:'Understand division as sharing equally and repeated subtraction' },
-          { id:'times-tables',name:'Times Tables (1&ldquo;10)',   desc:'Memorize and apply multiplication facts through 10Ã&mdash;10' },
-          { id:'mult-div-rel',name:'Multiplication & Division Relationship', desc:'Use fact families and inverse operations' },
-        ],
-        'Fractions': [
-          { id:'frac-intro',  name:'Intro to Fractions',    desc:'Equal parts, numerator, denominator &mdash; unit fractions' },
-          { id:'frac-num-line',name:'Fractions on a Number Line', desc:'Place fractions on a number line between 0 and 1' },
-          { id:'frac-compare',name:'Comparing Fractions',   desc:'Compare fractions with same numerator or denominator' },
-        ],
-        'Measurement & Data': [
-          { id:'area-3rd',    name:'Area',                  desc:'Find area by counting unit squares and using multiplication' },
-          { id:'perim-3rd',   name:'Perimeter',             desc:'Find perimeter of polygons by adding side lengths' },
-          { id:'time-3rd',    name:'Time Intervals',        desc:'Tell time and solve elapsed time problems' },
-        ],
-      }},
-      '4th': { label:'4th Grade', categories: {
-        'Multiplication & Division': [
-          { id:'mult-adv',    name:'Multi-Digit Multiplication', desc:'Multiply up to four-digit numbers by one-digit numbers' },
-          { id:'div-adv',     name:'Division with Remainders', desc:'Divide with remainders and check with multiplication' },
-          { id:'factors-mult',name:'Factors & Multiples',   desc:'Find factor pairs, multiples, and identify prime vs composite' },
-        ],
-        'Fractions': [
-          { id:'frac-equiv',  name:'Equivalent Fractions',  desc:'Generate and identify equivalent fractions using models' },
-          { id:'frac-add',    name:'Adding & Subtracting Fractions', desc:'Add and subtract fractions with like denominators' },
-          { id:'mixed-num',   name:'Mixed Numbers',         desc:'Convert between mixed numbers and improper fractions' },
-          { id:'frac-dec',    name:'Fractions & Decimals',  desc:'Connect fractions with denominators 10 and 100 to decimals' },
-        ],
-        'Geometry': [
-          { id:'angles-4th',  name:'Angles',                desc:'Measure and draw angles using a protractor' },
-          { id:'lines-4th',   name:'Lines & Symmetry',      desc:'Parallel, perpendicular, and intersecting lines &mdash; line symmetry' },
-          { id:'shapes-4th',  name:'Classifying Shapes',    desc:'Classify 2D shapes by properties &mdash; sides, angles, symmetry' },
-        ],
-      }},
-      '5th': { label:'5th Grade', categories: {
-        'Operations': [
-          { id:'mult-5th',    name:'Multi-Digit Multiplication', desc:'Multiply multi-digit whole numbers fluently' },
-          { id:'div-5th',     name:'Long Division',         desc:'Divide four-digit dividends by two-digit divisors' },
-          { id:'pemdas-5th',  name:'Order of Operations',   desc:'Evaluate expressions using PEMDAS with whole numbers' },
-        ],
-        'Fractions': [
-          { id:'frac-unlike', name:'Unlike Denominators',   desc:'Add and subtract fractions with unlike denominators' },
-          { id:'frac-mult',   name:'Multiplying Fractions', desc:'Multiply fractions and whole numbers, including mixed numbers' },
-          { id:'frac-div',    name:'Dividing Fractions',    desc:'Divide unit fractions by whole numbers and whole numbers by unit fractions' },
-        ],
-        'Decimals': [
-          { id:'dec-place',   name:'Decimal Place Value',   desc:'Read, write, and compare decimals to thousandths' },
-          { id:'dec-ops',     name:'Decimal Operations',    desc:'Add, subtract, multiply, and divide decimals' },
-        ],
-        'Geometry': [
-          { id:'coord-5th',   name:'Coordinate Plane',      desc:'Plot and interpret points in the first quadrant' },
-          { id:'vol-5th',     name:'Volume',                desc:'Find volume of rectangular prisms using unit cubes and formulas' },
-        ],
-      }},
-      '6th': { label:'6th Grade', categories: {
-        'Number Sense': [
-          { id:'integers-6',  name:'Integers & Negatives',  desc:'Add, subtract, multiply, and divide positive and negative numbers' },
-          { id:'abs-val',     name:'Absolute Value',        desc:'Understand and apply absolute value in real-world contexts' },
-          { id:'ratios-6',    name:'Ratios & Rates',        desc:'Understand ratios, unit rates, and equivalent ratios' },
-          { id:'percent-6',   name:'Percents',              desc:'Find percent of a number, percent of change, and conversions' },
-          { id:'pemdas-6',    name:'Order of Operations',   desc:'PEMDAS with integers, fractions, and decimals' },
-        ],
-        'Algebra': [
-          { id:'expr-6',      name:'Variables & Expressions', desc:'Write and evaluate algebraic expressions' },
-          { id:'eq-6',        name:'One-Step Equations',    desc:'Solve one-step equations using inverse operations' },
-          { id:'ineq-6',      name:'Inequalities',          desc:'Write, solve, and graph one-step inequalities' },
-        ],
-        'Geometry': [
-          { id:'area-6',      name:'Area of Polygons',      desc:'Area of triangles, parallelograms, trapezoids, and composite figures' },
-          { id:'vol-6',       name:'Volume & Surface Area', desc:'Volume of rectangular prisms and surface area using nets' },
-          { id:'coord-6',     name:'Coordinate Plane',      desc:'Plot points in all four quadrants, distance, and reflections' },
-        ],
-        'Statistics': [
-          { id:'stats-6',     name:'Mean, Median, Mode, Range', desc:'Calculate measures of center and spread for data sets' },
-        ],
-      }},
-      '7th': { label:'7th Grade', categories: {
-        'Number Sense': [
-          { id:'rational-7',  name:'Rational Number Operations', desc:'Add, subtract, multiply, divide all rational numbers including negatives' },
-          { id:'percent-7',   name:'Percent Applications',  desc:'Tax, tip, discount, markup, and percent change' },
-          { id:'prop-7',      name:'Proportional Relationships', desc:'Identify and use proportional relationships from tables and graphs' },
-          { id:'scale-7',     name:'Scale & Similar Figures', desc:'Scale factors, scale drawings, and indirect measurement' },
-        ],
-        'Algebra': [
-          { id:'two-step-7',  name:'Two-Step Equations',    desc:'Solve equations requiring two inverse operations' },
-          { id:'ineq-7',      name:'Two-Step Inequalities', desc:'Solve and graph two-step inequalities' },
-          { id:'dist-prop',   name:'Distributive Property', desc:'Expand and factor expressions using the distributive property' },
-          { id:'like-terms',  name:'Combining Like Terms',  desc:'Simplify expressions by combining like terms' },
-        ],
-        'Geometry': [
-          { id:'angles-7',    name:'Angles & Triangles',    desc:'Supplementary, complementary, vertical, and triangle angle sum' },
-          { id:'circles-7',   name:'Circles',               desc:'Circumference and area of circles using pi' },
-          { id:'surface-7',   name:'Surface Area & Volume', desc:'Surface area and volume of prisms and pyramids' },
-        ],
-        'Statistics': [
-          { id:'prob-7',      name:'Probability',           desc:'Simple and compound probability &mdash; theoretical and experimental' },
-          { id:'sample-7',    name:'Sampling & Inference',  desc:'Use random samples to draw inferences about populations' },
-        ],
-      }},
-      '8th': { label:'8th Grade', categories: {
-        'Algebra': [
-          { id:'linear-8',    name:'Linear Equations',      desc:'Solve multi-step equations with variables on both sides' },
-          { id:'systems-8',   name:'Systems of Equations',  desc:'Solve systems by graphing, substitution, and elimination' },
-          { id:'slope-8',     name:'Slope & Rate of Change', desc:'Calculate slope and interpret rate of change in graphs and tables' },
-          { id:'functions-8', name:'Functions',             desc:'Understand, evaluate, and compare functions from tables, graphs, equations' },
-          { id:'linear-fn',   name:'Linear vs Nonlinear',   desc:'Distinguish between linear and nonlinear functions' },
-        ],
-        'Geometry': [
-          { id:'pythagorean', name:'Pythagorean Theorem',   desc:'Apply aÂ² + bÂ² = cÂ² to find missing sides and distances' },
-          { id:'transform-8', name:'Transformations',       desc:'Translations, reflections, rotations, and dilations on the coordinate plane' },
-          { id:'similar-8',   name:'Similar & Congruent Figures', desc:'Angle-Angle similarity, congruence transformations' },
-          { id:'vol-8',       name:'Volume of Cylinders, Cones & Spheres', desc:'Apply volume formulas to 3D figures' },
-        ],
-        'Number Sense': [
-          { id:'exponents-8', name:'Exponents & Scientific Notation', desc:'Laws of exponents and operations in scientific notation' },
-          { id:'square-root', name:'Square & Cube Roots',  desc:'Evaluate perfect squares and cubes, estimate irrational numbers' },
-        ],
-        'Statistics': [
-          { id:'scatter-8',   name:'Scatter Plots',         desc:'Construct, interpret, and write equations for lines of best fit' },
-          { id:'two-way',     name:'Two-Way Tables',        desc:'Construct and interpret two-way frequency tables' },
-        ],
-      }},
-      '9th': { label:'9th Grade (Algebra 1)', categories: {
-        'Linear Relationships': [
-          { id:'linear-9',    name:'Linear Equations & Inequalities', desc:'Solve and graph linear equations and inequalities in one variable' },
-          { id:'systems-9',   name:'Systems of Equations',  desc:'Solve systems graphically, by substitution, and elimination' },
-          { id:'slope-int',   name:'Slope-Intercept Form',  desc:'Write, graph, and interpret y = mx + b' },
-          { id:'std-form',    name:'Standard Form',         desc:'Convert and graph linear equations in standard form Ax + By = C' },
-        ],
-        'Functions': [
-          { id:'fn-9',        name:'Functions & Function Notation', desc:'Identify functions, use f(x) notation, and evaluate' },
-          { id:'fn-transform',name:'Transformations of Functions', desc:'Shifts, reflections, and stretches of parent functions' },
-        ],
-        'Polynomials & Quadratics': [
-          { id:'poly-9',      name:'Polynomials',           desc:'Add, subtract, and multiply polynomials' },
-          { id:'factor-9',    name:'Factoring',             desc:'Factor GCF, trinomials, difference of squares' },
-          { id:'quad-9',      name:'Quadratic Equations',   desc:'Solve by factoring, square root, and quadratic formula' },
-        ],
-        'Statistics': [
-          { id:'stats-9',     name:'Data Analysis',         desc:'Measures of center, spread, and interpreting data displays' },
-        ],
-      }},
-      '10th': { label:'10th Grade (Geometry)', categories: {
-        'Reasoning & Proof': [
-          { id:'proofs-10',   name:'Geometric Proofs',      desc:'Two-column proofs using postulates, theorems, and definitions' },
-          { id:'logic-10',    name:'Conditional Statements', desc:'If-then statements, converses, inverses, and contrapositives' },
-        ],
-        'Triangles & Congruence': [
-          { id:'congruent-10',name:'Triangle Congruence',   desc:'SSS, SAS, ASA, AAS &mdash; prove triangles congruent' },
-          { id:'similar-10',  name:'Triangle Similarity',   desc:'AA, SAS, SSS similarity &mdash; proportions and scale factors' },
-          { id:'trig-10',     name:'Right Triangle Trigonometry', desc:'SOH CAH TOA &mdash; find missing sides and angles' },
-          { id:'pyth-10',     name:'Pythagorean Theorem Applications', desc:'Apply to 2D and 3D problems' },
-        ],
-        'Circles': [
-          { id:'circles-10',  name:'Circle Theorems',       desc:'Arc length, sector area, inscribed angles, and tangent lines' },
-          { id:'circle-eq',   name:'Circle Equations',      desc:'Write and use the equation of a circle (x-h)Â² + (y-k)Â² = rÂ²' },
-        ],
-        'Coordinate Geometry': [
-          { id:'coord-10',    name:'Coordinate Geometry',   desc:'Distance, midpoint, slope, and parallel/perpendicular lines' },
-          { id:'transform-10',name:'Geometric Transformations', desc:'Rigid motions and dilations on the coordinate plane' },
-        ],
-        'Area & Volume': [
-          { id:'area-10',     name:'Area of Polygons & Circles', desc:'Complex area problems including composite figures' },
-          { id:'vol-10',      name:'Volume & Surface Area', desc:'Prisms, pyramids, cylinders, cones, and spheres' },
-        ],
-      }},
-      '11th': { label:'11th Grade (Algebra 2)', categories: {
-        'Functions': [
-          { id:'poly-fn',     name:'Polynomial Functions',  desc:'Graph, factor, and find zeros of polynomial functions' },
-          { id:'rational-fn', name:'Rational Functions',    desc:'Simplify, multiply, divide, add, and subtract rational expressions' },
-          { id:'radical-fn',  name:'Radical Functions',     desc:'Simplify radicals, solve radical equations, rational exponents' },
-          { id:'exp-fn',      name:'Exponential Functions', desc:'Graph and apply exponential growth and decay' },
-          { id:'log-fn',      name:'Logarithmic Functions', desc:'Log properties, solving log equations, natural log' },
-        ],
-        'Quadratics': [
-          { id:'quad-adv',    name:'Advanced Quadratics',   desc:'Complete the square, discriminant, complex roots, vertex form' },
-          { id:'complex',     name:'Complex Numbers',       desc:'Add, subtract, multiply, and divide complex numbers' },
-        ],
-        'Sequences & Series': [
-          { id:'arith-seq',   name:'Arithmetic Sequences & Series', desc:'Find terms and partial sums of arithmetic sequences' },
-          { id:'geo-seq',     name:'Geometric Sequences & Series', desc:'Find terms, partial sums, and infinite geometric series' },
-        ],
-        'Statistics': [
-          { id:'stats-11',    name:'Normal Distribution & Z-Scores', desc:'Standard deviation, z-scores, and the empirical rule' },
-          { id:'regression',  name:'Regression Analysis',   desc:'Linear and exponential regression, correlation coefficients' },
-        ],
-      }},
-      '12th': { label:'12th Grade (Pre-Calculus)', categories: {
-        'Trigonometry': [
-          { id:'unit-circle', name:'Unit Circle',           desc:'Memorize and apply all values on the unit circle in degrees and radians' },
-          { id:'trig-fn',     name:'Trig Functions & Graphs', desc:'Graph sin, cos, tan &mdash; amplitude, period, phase shift' },
-          { id:'trig-id',     name:'Trig Identities',       desc:'Pythagorean, reciprocal, co-function, and double angle identities' },
-          { id:'trig-eq',     name:'Solving Trig Equations', desc:'Solve trig equations over given intervals' },
-        ],
-        'Functions & Analysis': [
-          { id:'composite',   name:'Composite & Inverse Functions', desc:'Form, evaluate, and find inverses of functions' },
-          { id:'limits-intro',name:'Intro to Limits',       desc:'Understand the concept of a limit graphically and numerically' },
-          { id:'conic',       name:'Conic Sections',        desc:'Parabolas, ellipses, hyperbolas &mdash; standard form and graphs' },
-        ],
-        'Vectors & Matrices': [
-          { id:'vectors',     name:'Vectors',               desc:'Magnitude, direction, dot product, and vector operations' },
-          { id:'matrices',    name:'Matrices',              desc:'Matrix operations, determinants, and solving systems with matrices' },
-        ],
-        'Probability & Statistics': [
-          { id:'perm-comb',   name:'Permutations & Combinations', desc:'Counting principles, permutations, combinations, and binomial theorem' },
-          { id:'stats-12',    name:'Statistical Inference', desc:'Confidence intervals, hypothesis testing, and margin of error' },
-        ],
-      }},
-    },
-    reading: {
-      'K': { label:'Kindergarten', categories: {
-        'Phonics': [
-          { id:'letters-k',   name:'Letter Recognition',    desc:'Identify and name all 26 uppercase and lowercase letters' },
-          { id:'phonics-k',   name:'Letter Sounds',         desc:'Match letters to their sounds &mdash; consonants and short vowels' },
-          { id:'rhyming',     name:'Rhyming Words',         desc:'Identify and produce rhyming words' },
-        ],
-        'Comprehension': [
-          { id:'listen-k',    name:'Listening Comprehension', desc:'Retell key details from a story read aloud' },
-          { id:'story-k',     name:'Story Elements',        desc:'Identify characters, setting, and major events' },
-        ],
-      }},
-      '1st': { label:'1st Grade', categories: {
-        'Phonics & Decoding': [
-          { id:'blend-1',     name:'Blends & Digraphs',     desc:'Read words with consonant blends (fl, br) and digraphs (sh, ch, th)' },
-          { id:'vowels-1',    name:'Long & Short Vowels',   desc:'Distinguish long and short vowel sounds in words' },
-          { id:'sight-1',     name:'Sight Words',           desc:'Read the most common high-frequency words automatically' },
-        ],
-        'Comprehension': [
-          { id:'main-idea-1', name:'Main Idea',             desc:'Identify the main topic and key details in a text' },
-          { id:'retell-1',    name:'Retelling Stories',     desc:'Retell stories including characters, setting, and major events' },
-        ],
-      }},
-      '2nd': { label:'2nd Grade', categories: {
-        'Phonics': [
-          { id:'decode-2',    name:'Decoding Multisyllabic Words', desc:'Break words into syllables to decode longer words' },
-          { id:'vocab-2',     name:'Vocabulary in Context', desc:'Determine the meaning of unknown words using context clues' },
-        ],
-        'Comprehension': [
-          { id:'main-2',      name:'Main Idea & Details',   desc:'Identify the main idea and explain how key details support it' },
-          { id:'compare-2',   name:'Comparing Texts',       desc:'Compare and contrast two texts on the same topic' },
-          { id:'purpose-2',   name:"Author's Purpose",      desc:'Identify why an author writes &mdash; to inform, entertain, or persuade' },
-        ],
-      }},
-      '3rd': { label:'3rd Grade', categories: {
-        'Comprehension': [
-          { id:'main-3',      name:'Main Idea & Details',   desc:'Determine the main idea and explain how it is supported' },
-          { id:'infer-3',     name:'Making Inferences',     desc:'Use text evidence and background knowledge to make inferences' },
-          { id:'text-str-3',  name:'Text Structure',        desc:'Identify cause/effect, problem/solution, and compare/contrast structures' },
-          { id:'summarize-3', name:'Summarizing',           desc:'Summarize fiction and nonfiction texts in your own words' },
-        ],
-        'Vocabulary': [
-          { id:'context-3',   name:'Context Clues',         desc:'Determine word meaning using clues in surrounding sentences' },
-          { id:'fig-lang-3',  name:'Figurative Language',   desc:'Identify similes and metaphors in text' },
-        ],
-      }},
-      '4th': { label:'4th Grade', categories: {
-        'Comprehension': [
-          { id:'main-4',      name:'Main Idea & Theme',     desc:'Determine the theme in fiction and main idea in nonfiction' },
-          { id:'infer-4',     name:'Evidence-Based Inference', desc:'Make inferences and cite specific text evidence' },
-          { id:'point-view-4',name:'Point of View',         desc:"Compare narrator's and character's point of view" },
-          { id:'compare-4',   name:'Comparing Accounts',    desc:'Compare a firsthand and secondhand account of the same event' },
-        ],
-        'Vocabulary': [
-          { id:'roots-4',     name:'Roots & Affixes',       desc:'Use prefixes, suffixes, and roots to determine word meaning' },
-          { id:'connotation-4',name:'Word Nuance',          desc:'Distinguish between words with similar meanings &mdash; shades of meaning' },
-        ],
-      }},
-      '5th': { label:'5th Grade', categories: {
-        'Comprehension': [
-          { id:'theme-5',     name:'Theme & Central Idea',  desc:'Determine theme in fiction and central idea in informational text' },
-          { id:'inference-5', name:'Making Inferences',     desc:'Quote accurately when explaining what the text says explicitly and inferentially' },
-          { id:'text-str-5',  name:'Text Structure & Features', desc:'Use text features and structures to locate information' },
-          { id:'compare-5',   name:'Comparing Texts',       desc:'Integrate information from multiple texts on the same topic' },
-        ],
-        'Vocabulary': [
-          { id:'fig-5',       name:'Figurative Language',   desc:'Explain similes, metaphors, idioms, adages, and proverbs' },
-          { id:'greek-latin', name:'Greek & Latin Roots',   desc:'Use Greek and Latin roots to determine meaning of academic words' },
-        ],
-      }},
-      '6th': { label:'6th Grade', categories: {
-        'Comprehension': [
-          { id:'central-6',   name:'Central Idea & Details', desc:'Determine central idea and explain how details develop it' },
-          { id:'inference-6', name:'Inference & Evidence',   desc:'Make evidence-based inferences in literary and informational texts' },
-          { id:'author-6',    name:"Author's Purpose & Craft", desc:"Analyze how author's word choices affect meaning and tone" },
-          { id:'compare-6',   name:'Comparing Texts',        desc:'Compare how two authors write about the same topic differently' },
-        ],
-        'Vocabulary': [
-          { id:'academic-6',  name:'Academic Vocabulary',    desc:'Tier 2 words across multiple content areas' },
-          { id:'connotation-6',name:'Connotation & Denotation',desc:'Distinguish literal and figurative word meanings' },
-        ],
-      }},
-      '7th': { label:'7th Grade', categories: {
-        'Comprehension': [
-          { id:'theme-7',     name:'Theme & Central Idea',   desc:'Analyze how theme develops over the course of a text' },
-          { id:'inference-7', name:'Complex Inference',      desc:'Draw inferences from complex texts using multiple pieces of evidence' },
-          { id:'pov-7',       name:'Point of View & Perspective', desc:"Analyze how an author's perspective influences the text" },
-          { id:'argument-7',  name:'Evaluating Arguments',   desc:'Assess whether evidence supports the claims in an argument' },
-        ],
-        'Vocabulary': [
-          { id:'fig-7',       name:'Figurative Language',    desc:'Analyze alliteration, personification, hyperbole, irony, and allusion' },
-          { id:'vocab-7',     name:'Word Relationships',     desc:'Analogies, synonyms, antonyms, and nuanced meanings' },
-        ],
-      }},
-      '8th': { label:'8th Grade', categories: {
-        'Comprehension': [
-          { id:'argument-8',  name:'Analyzing Arguments',    desc:'Trace an argument, evaluate the evidence, and identify fallacies' },
-          { id:'theme-8',     name:'Theme & Textual Evidence', desc:'Cite strong and thorough textual evidence to support analysis' },
-          { id:'compare-8',   name:'Comparing Multiple Texts', desc:'Compare how similar themes are treated in different texts or media' },
-          { id:'rhetoric-8',  name:'Rhetoric & Word Choice', desc:'Analyze how specific word choices shape meaning and tone' },
-        ],
-      }},
-      '9th': { label:'9th Grade', categories: {
-        'Literary Analysis': [
-          { id:'lit-9',       name:'Literary Analysis',      desc:'Analyze character, conflict, theme, and symbol in complex literature' },
-          { id:'sat-read-9',  name:'SAT-Style Reading',      desc:'Evidence-based reading with complex passages and paired texts' },
-          { id:'nonfiction-9',name:'Informational Text Analysis', desc:'Analyze structure, purpose, and rhetoric in nonfiction' },
-        ],
-      }},
-      '10th': { label:'10th Grade', categories: {
-        'Literary Analysis': [
-          { id:'lit-10',      name:'Advanced Literary Analysis', desc:'Analyze complex themes, irony, satire, and authorial choices' },
-          { id:'rhetoric-10', name:'Rhetorical Analysis',    desc:'Identify and analyze ethos, pathos, and logos in speeches and essays' },
-          { id:'compare-10',  name:'Comparative Analysis',   desc:'Compare works across genres, time periods, and cultures' },
-        ],
-      }},
-      '11th': { label:'11th Grade', categories: {
-        'Advanced Reading': [
-          { id:'ap-lit',      name:'AP Literature Reading',  desc:'Close reading of poetry, fiction, and drama at AP level' },
-          { id:'sat-read-11', name:'SAT Reading Comprehension', desc:'Evidence-based reading &mdash; paired passages, data, complex inference' },
-          { id:'primary-src', name:'Primary Source Analysis',desc:'Analyze historical and founding documents for purpose and argument' },
-        ],
-      }},
-      '12th': { label:'12th Grade', categories: {
-        'Advanced Reading': [
-          { id:'college-read',name:'College-Level Reading',  desc:'Read and analyze complex academic texts across disciplines' },
-          { id:'synthesis',   name:'Synthesis & Research',   desc:'Synthesize information from multiple sources to support a claim' },
-          { id:'critique',    name:'Critical Analysis',      desc:'Evaluate credibility, bias, and reasoning in complex texts' },
-        ],
-      }},
-    },
-    writing: {
-      'K': { label:'Kindergarten', categories: {
-        'Writing Basics': [
-          { id:'write-name',  name:'Writing Your Name',      desc:'Write first and last name with correct capitalization' },
-          { id:'letters-w',   name:'Writing Letters',        desc:'Print all uppercase and lowercase letters legibly' },
-          { id:'sentence-k',  name:'Simple Sentences',       desc:'Write simple sentences with a capital letter and period' },
-        ],
-      }},
-      '1st': { label:'1st Grade', categories: {
-        'Grammar': [
-          { id:'cap-1',       name:'Capitalization',         desc:'Capitalize the first word of sentences and the pronoun I' },
-          { id:'punct-1',     name:'End Punctuation',        desc:'Use periods, question marks, and exclamation marks correctly' },
-          { id:'noun-verb-1', name:'Nouns & Verbs',          desc:'Identify and use common nouns and verbs in sentences' },
-        ],
-        'Writing': [
-          { id:'opinion-1',   name:'Opinion Writing',        desc:'State an opinion and give a reason with a closing statement' },
-          { id:'narrative-1', name:'Narrative Writing',      desc:'Write narratives about real or imagined events with sequence' },
-        ],
-      }},
-      '2nd': { label:'2nd Grade', categories: {
-        'Grammar': [
-          { id:'adj-2',       name:'Adjectives',             desc:'Use adjectives to describe nouns and improve sentences' },
-          { id:'plural-2',    name:'Plural Nouns',           desc:'Form and use regular and irregular plural nouns' },
-          { id:'comma-2',     name:'Commas in Series',       desc:'Use commas in a series of three or more items' },
-        ],
-        'Writing': [
-          { id:'inform-2',    name:'Informative Writing',    desc:'Write to inform with a topic sentence, facts, and closing' },
-          { id:'paragraph-2', name:'Paragraph Structure',    desc:'Write organized paragraphs with topic sentence and details' },
-        ],
-      }},
-      '3rd': { label:'3rd Grade', categories: {
-        'Grammar': [
-          { id:'pos-3',       name:'Parts of Speech',        desc:'Identify nouns, verbs, adjectives, adverbs, and pronouns' },
-          { id:'tense-3',     name:'Verb Tense',             desc:'Use correct verb tense &mdash; past, present, and future consistently' },
-          { id:'poss-3',      name:"Possessive Nouns",       desc:"Form and use singular and plural possessive nouns with apostrophes" },
-        ],
-        'Writing': [
-          { id:'opinion-3',   name:'Opinion Writing',        desc:'Write opinion essays with clear reasons and linking words' },
-          { id:'narrative-3', name:'Narrative Writing',      desc:'Write narratives with dialogue, description, and logical sequence' },
-          { id:'inform-3',    name:'Informative Writing',    desc:'Write to explain or inform with facts, definitions, and details' },
-        ],
-      }},
-      '4th': { label:'4th Grade', categories: {
-        'Grammar': [
-          { id:'clause-4',    name:'Phrases & Clauses',      desc:'Identify relative pronouns, clauses, and prepositional phrases' },
-          { id:'punct-4',     name:'Punctuation',            desc:'Use commas before coordinating conjunctions and quotation marks' },
-          { id:'misc-4',      name:'Commonly Confused Words', desc:'Their/there/they\'re, your/you\'re, its/it\'s, affect/effect' },
-        ],
-        'Writing': [
-          { id:'opinion-4',   name:'Opinion Essay',          desc:'Write multi-paragraph opinion essays with clear structure and transitions' },
-          { id:'research-4',  name:'Research Writing',       desc:'Write informational reports using multiple sources' },
-        ],
-      }},
-      '5th': { label:'5th Grade', categories: {
-        'Grammar': [
-          { id:'conj-5',      name:'Conjunctions',           desc:'Use coordinating and subordinating conjunctions correctly' },
-          { id:'style-5',     name:'Word Choice & Style',    desc:'Use precise language and domain-specific vocabulary' },
-          { id:'punct-5',     name:'Advanced Punctuation',   desc:'Commas after introductory elements, between clauses' },
-        ],
-        'Writing': [
-          { id:'argument-5',  name:'Argumentative Writing',  desc:'Write arguments with claim, reasons, evidence, and counterclaim' },
-          { id:'narrative-5', name:'Narrative Craft',        desc:'Write narratives with dialogue, sensory detail, and pacing' },
-          { id:'inform-5',    name:'Explanatory Writing',    desc:'Explain a concept clearly using facts, definitions, and examples' },
-        ],
-      }},
-      '6th': { label:'6th Grade', categories: {
-        'Grammar': [
-          { id:'gram-6',      name:'Grammar & Usage',        desc:'Pronouns in subjective, objective, possessive case' },
-          { id:'punct-6',     name:'Punctuation & Mechanics', desc:'Commas, dashes, parentheses, and semicolons' },
-          { id:'style-6',     name:'Precise Language',       desc:'Choose words for effect, eliminate wordiness, vary sentences' },
-        ],
-        'Writing': [
-          { id:'argument-6',  name:'Argument Writing',       desc:'Claims, reasons, evidence, counterclaim &mdash; 5-paragraph structure' },
-          { id:'thesis-6',    name:'Thesis Statements',      desc:'Write clear, arguable thesis statements' },
-          { id:'evidence-6',  name:'Using Evidence',         desc:'Introduce, quote, and analyze evidence correctly' },
-        ],
-      }},
-      '7th': { label:'7th Grade', categories: {
-        'Grammar': [
-          { id:'gram-7',      name:'Phrases & Clauses',      desc:'Dependent/independent clauses, phrase types, and sentence structure' },
-          { id:'parallel-7',  name:'Parallel Structure',     desc:'Use parallel structure in lists and paired ideas' },
-          { id:'misc-7',      name:'Misplaced Modifiers',    desc:'Identify and fix dangling and misplaced modifiers' },
-        ],
-        'Writing': [
-          { id:'argument-7w', name:'Argumentative Essay',    desc:'Multi-paragraph essays with sophisticated claims and rebuttals' },
-          { id:'inform-7',    name:'Informative/Explanatory',desc:'Research-based writing with transitions, formatting, and citations' },
-        ],
-      }},
-      '8th': { label:'8th Grade', categories: {
-        'Grammar': [
-          { id:'gram-8',      name:'Advanced Grammar',       desc:'Verbals &mdash; gerunds, participles, infinitives &mdash; and their phrases' },
-          { id:'punct-8',     name:'Advanced Punctuation',   desc:'Semicolons, colons, dashes, hyphens in context' },
-          { id:'style-8',     name:'Style & Voice',          desc:'Develop a distinct voice and appropriate style for audience and purpose' },
-        ],
-        'Writing': [
-          { id:'argument-8w', name:'Argument & Persuasion',  desc:'Write persuasive essays with sophisticated reasoning and rebuttals' },
-          { id:'analysis-8',  name:'Literary Analysis Essay',desc:'Analyze theme, character, or author\'s craft in a structured essay' },
-        ],
-      }},
-      '9th': { label:'9th Grade', categories: {
-        'Writing': [
-          { id:'sat-write-9', name:'SAT Writing & Language', desc:'Grammar, punctuation, sentence structure, and passage revision' },
-          { id:'analysis-9',  name:'Analytical Essay',       desc:'Evidence-based essays analyzing literature and nonfiction' },
-          { id:'research-9',  name:'Research Paper Basics',  desc:'Thesis, source integration, citations, and bibliography' },
-        ],
-      }},
-      '10th': { label:'10th Grade', categories: {
-        'Writing': [
-          { id:'rhetoric-w10',name:'Rhetorical Writing',     desc:'Write speeches and essays using ethos, pathos, and logos effectively' },
-          { id:'sat-write-10',name:'SAT Grammar & Style',    desc:'Advanced grammar, conciseness, and style questions' },
-          { id:'synthesis-10',name:'Synthesis Essay',        desc:'Integrate multiple sources into a coherent, sourced argument' },
-        ],
-      }},
-      '11th': { label:'11th Grade', categories: {
-        'Writing': [
-          { id:'ap-write',    name:'AP-Style Essays',        desc:'Synthesis, rhetorical analysis, and argument &mdash; AP format and scoring' },
-          { id:'sat-write-11',name:'SAT Writing Mastery',    desc:'All SAT writing and language question types at full difficulty' },
-          { id:'college-app', name:'College Application Writing', desc:'Personal statement structure, voice, and storytelling' },
-        ],
-      }},
-      '12th': { label:'12th Grade', categories: {
-        'Writing': [
-          { id:'college-essay',name:'College Essay Craft',   desc:'Develop compelling personal statements and supplemental essays' },
-          { id:'research-12', name:'Research Paper',         desc:'Full research paper with thesis, body, citations, and works cited' },
-          { id:'college-write',name:'College-Level Writing', desc:'Academic writing conventions for college &mdash; argument and analysis' },
-        ],
-      }},
-    },
-    sat: {
-      'SAT': { label:'SAT / ACT', categories: {
-        'SAT Math': [
-          { id:'sat-alg',     name:'Heart of Algebra',       desc:'Linear equations, inequalities, and systems &mdash; the core of SAT math' },
-          { id:'sat-data',    name:'Problem Solving & Data Analysis', desc:'Ratios, percentages, statistics, and data interpretation' },
-          { id:'sat-adv',     name:'Passport to Advanced Math', desc:'Quadratics, polynomials, and complex equations and functions' },
-          { id:'sat-geom',    name:'Additional Topics in Math', desc:'Geometry, trigonometry, and complex numbers' },
-        ],
-        'SAT Reading': [
-          { id:'sat-read',    name:'Evidence-Based Reading', desc:'Complex passages, paired texts, and data graphics' },
-          { id:'sat-vocab',   name:'Words in Context',       desc:'Determine precise word meanings from academic passage context' },
-          { id:'sat-info',    name:'Informational Graphics', desc:'Interpret tables, graphs, and charts alongside passages' },
-        ],
-        'SAT Writing & Language': [
-          { id:'sat-gram',    name:'Grammar & Conventions',  desc:'Punctuation, subject-verb agreement, pronoun case, modifiers' },
-          { id:'sat-style',   name:'Expression of Ideas',    desc:'Conciseness, transitions, relevance, and passage organization' },
-          { id:'sat-rhet',    name:'Rhetorical Skills',      desc:'Purpose, audience, and evidence questions' },
-        ],
-        'ACT': [
-          { id:'act-eng',     name:'ACT English',            desc:'Grammar, punctuation, usage, and rhetorical skills &mdash; 75 questions' },
-          { id:'act-math',    name:'ACT Math',               desc:'Pre-algebra through pre-calculus &mdash; 60 questions in 60 minutes' },
-          { id:'act-read',    name:'ACT Reading',            desc:'Prose fiction, social science, humanities, and natural science passages' },
-          { id:'act-sci',     name:'ACT Science',            desc:'Data representation, research summaries, and conflicting viewpoints' },
-        ],
-      }},
-    },
-  };
+  // AUTO-GENERATED CURRICULUM — DO NOT EDIT MANUALLY
+// Generated by generate_curriculum.js
+// Total topics: 424
+// Run: node generate_curriculum.js > curriculum_output.js
+
+const CURRICULUM = {
+  "Kindergarten": {
+    "Math": [
+      {
+        "id": "math-k-count-to-100",
+        "name": "Count to 100",
+        "desc": "Count to 100 by ones and by tens",
+        "category": "Counting & Cardinality"
+      },
+      {
+        "id": "math-k-count-forward-from-any-number",
+        "name": "Count Forward from Any Number",
+        "desc": "Count forward beginning from a given number within the known sequence",
+        "category": "Counting & Cardinality"
+      },
+      {
+        "id": "math-k-write-numbers-0-20",
+        "name": "Write Numbers 0-20",
+        "desc": "Write numbers from 0 to 20 and represent quantities with numerals",
+        "category": "Counting & Cardinality"
+      },
+      {
+        "id": "math-k-count-objects",
+        "name": "Count Objects",
+        "desc": "Count to answer how many questions about up to 20 objects",
+        "category": "Counting & Cardinality"
+      },
+      {
+        "id": "math-k-compare-groups",
+        "name": "Compare Groups",
+        "desc": "Identify whether the number of objects in one group is greater than, less than, or equal to another",
+        "category": "Counting & Cardinality"
+      },
+      {
+        "id": "math-k-addition-within-10",
+        "name": "Addition Within 10",
+        "desc": "Represent addition with objects, fingers, and equations within 10",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-k-subtraction-within-10",
+        "name": "Subtraction Within 10",
+        "desc": "Represent subtraction with objects, fingers, and equations within 10",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-k-make-10",
+        "name": "Make 10",
+        "desc": "Find the number that makes 10 when added to a given number",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-k-decompose-numbers-to-10",
+        "name": "Decompose Numbers to 10",
+        "desc": "Decompose numbers less than or equal to 10 into pairs",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-k-tens-and-ones",
+        "name": "Tens and Ones",
+        "desc": "Understand that the numbers 11-19 are composed of ten ones and more ones",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-k-compare-and-describe-objects",
+        "name": "Compare and Describe Objects",
+        "desc": "Describe and compare measurable attributes such as length and weight",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-k-sort-and-classify",
+        "name": "Sort and Classify",
+        "desc": "Classify objects into given categories and count objects in each category",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-k-name-2d-shapes",
+        "name": "Name 2D Shapes",
+        "desc": "Correctly name squares, circles, triangles, rectangles, and hexagons",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-k-name-3d-shapes",
+        "name": "Name 3D Shapes",
+        "desc": "Correctly name cubes, cones, cylinders, and spheres",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-k-describe-shapes",
+        "name": "Describe Shapes",
+        "desc": "Describe objects using names of shapes and describe their relative positions",
+        "category": "Geometry"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-k-key-details-in-stories",
+        "name": "Key Details in Stories",
+        "desc": "With prompting, ask and answer questions about key details in a text",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-k-story-retelling",
+        "name": "Story Retelling",
+        "desc": "With prompting, retell familiar stories including key details",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-k-characters-and-settings",
+        "name": "Characters and Settings",
+        "desc": "With prompting, identify characters, settings, and major events in a story",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-k-key-details-in-nonfiction",
+        "name": "Key Details in Nonfiction",
+        "desc": "With prompting, ask and answer questions about key details in an informational text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-k-main-topic",
+        "name": "Main Topic",
+        "desc": "With prompting, identify the main topic and retell key details of a text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-k-phonics",
+        "name": "Phonics",
+        "desc": "Demonstrate understanding of the organization and basic features of print",
+        "category": "Foundational Skills"
+      },
+      {
+        "id": "ela-k-sight-words",
+        "name": "Sight Words",
+        "desc": "Read common high-frequency words by sight",
+        "category": "Foundational Skills"
+      },
+      {
+        "id": "ela-k-opinion-writing",
+        "name": "Opinion Writing",
+        "desc": "Use drawing, dictating, and writing to tell a reader the topic or name of the book and express an opinion",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-k-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Use drawing, dictating, and writing to narrate a single event",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-k-nouns-and-verbs",
+        "name": "Nouns and Verbs",
+        "desc": "Use frequently occurring nouns and verbs in speaking and writing",
+        "category": "Language"
+      },
+      {
+        "id": "ela-k-capitalization-and-punctuation",
+        "name": "Capitalization and Punctuation",
+        "desc": "Capitalize the first word in a sentence and the pronoun I; use end punctuation",
+        "category": "Language"
+      },
+      {
+        "id": "ela-k-context-clues",
+        "name": "Context Clues",
+        "desc": "Identify new meanings for familiar words",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "1st": {
+    "Math": [
+      {
+        "id": "math-1-add-and-subtract-within-20",
+        "name": "Add and Subtract Within 20",
+        "desc": "Add and subtract within 20, demonstrating fluency for addition and subtraction within 10",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-1-word-problems-add-and-subtract",
+        "name": "Word Problems: Add and Subtract",
+        "desc": "Use addition and subtraction within 20 to solve word problems",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-1-properties-of-addition",
+        "name": "Properties of Addition",
+        "desc": "Apply properties of operations as strategies to add",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-1-unknown-numbers-in-equations",
+        "name": "Unknown Numbers in Equations",
+        "desc": "Determine the unknown whole number in an addition or subtraction equation",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-1-count-to-120",
+        "name": "Count to 120",
+        "desc": "Count to 120, starting at any number less than 120",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-1-tens-and-ones",
+        "name": "Tens and Ones",
+        "desc": "Understand that the two digits of a two-digit number represent tens and ones",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-1-compare-two-digit-numbers",
+        "name": "Compare Two-Digit Numbers",
+        "desc": "Compare two-digit numbers based on meanings of tens and ones using > = < symbols",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-1-add-within-100",
+        "name": "Add Within 100",
+        "desc": "Add within 100 using place value understanding",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-1-subtract-multiples-of-10",
+        "name": "Subtract Multiples of 10",
+        "desc": "Subtract multiples of 10 in the range 10-90 using concrete models",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-1-order-by-length",
+        "name": "Order by Length",
+        "desc": "Order three objects by length and compare lengths indirectly",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-1-tell-time-to-hour-and-half-hou",
+        "name": "Tell Time to Hour and Half-Hour",
+        "desc": "Tell and write time in hours and half-hours using analog and digital clocks",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-1-organize-and-interpret-data",
+        "name": "Organize and Interpret Data",
+        "desc": "Organize, represent, and interpret data with up to three categories",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-1-define-shapes",
+        "name": "Define Shapes",
+        "desc": "Distinguish between defining and non-defining attributes of shapes",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-1-build-and-draw-shapes",
+        "name": "Build and Draw Shapes",
+        "desc": "Build and draw shapes that have defining attributes",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-1-halves-and-fourths",
+        "name": "Halves and Fourths",
+        "desc": "Partition circles and rectangles into halves and fourths",
+        "category": "Geometry"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-1-key-details",
+        "name": "Key Details",
+        "desc": "Ask and answer questions about key details in a text",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-1-central-message",
+        "name": "Central Message",
+        "desc": "Identify the central message or lesson of a story",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-1-characters-and-settings",
+        "name": "Characters and Settings",
+        "desc": "Describe characters, settings, and major events in a story",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-1-story-retelling",
+        "name": "Story Retelling",
+        "desc": "Retell stories including key details",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-1-main-topic-and-details",
+        "name": "Main Topic and Details",
+        "desc": "Identify the main topic and retell key details of an informational text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-1-text-features",
+        "name": "Text Features",
+        "desc": "Know and use text features to locate key facts",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-1-authors-purpose",
+        "name": "Author's Purpose",
+        "desc": "Distinguish between information provided by pictures and words",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-1-phonics-and-word-recognition",
+        "name": "Phonics and Word Recognition",
+        "desc": "Know spelling-sound correspondences for common consonant digraphs",
+        "category": "Foundational Skills"
+      },
+      {
+        "id": "ela-1-opinion-writing",
+        "name": "Opinion Writing",
+        "desc": "Write opinion pieces about a topic supplying a reason",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-1-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative pieces naming a topic and supplying facts",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-1-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives recounting two or more events with a sense of closure",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-1-complete-sentences",
+        "name": "Complete Sentences",
+        "desc": "Produce and expand complete simple and compound declarative sentences",
+        "category": "Language"
+      },
+      {
+        "id": "ela-1-punctuation",
+        "name": "Punctuation",
+        "desc": "Use end punctuation for sentences",
+        "category": "Language"
+      },
+      {
+        "id": "ela-1-context-clues",
+        "name": "Context Clues",
+        "desc": "Use sentence-level context as a clue to the meaning of a word or phrase",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-1-antonyms-and-synonyms",
+        "name": "Antonyms and Synonyms",
+        "desc": "Distinguish shades of meaning among verbs and adjectives",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "2nd": {
+    "Math": [
+      {
+        "id": "math-2-add-and-subtract-within-100",
+        "name": "Add and Subtract Within 100",
+        "desc": "Fluently add and subtract within 100 using strategies based on place value",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-2-word-problems-one-and-two-step",
+        "name": "Word Problems: One and Two Steps",
+        "desc": "Use addition and subtraction within 100 to solve one and two step word problems",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-2-odd-and-even-numbers",
+        "name": "Odd and Even Numbers",
+        "desc": "Determine whether a group of objects has an odd or even number",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-2-arrays-and-repeated-addition",
+        "name": "Arrays and Repeated Addition",
+        "desc": "Use addition to find the total number of objects in rectangular arrays",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-2-count-within-1000",
+        "name": "Count Within 1000",
+        "desc": "Count within 1000 by 1s, 5s, 10s, and 100s",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-2-read-and-write-numbers-to-1000",
+        "name": "Read and Write Numbers to 1000",
+        "desc": "Read and write numbers to 1000 using base-ten numerals, number names, and expanded form",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-2-place-value-hundreds-tens-ones",
+        "name": "Place Value: Hundreds Tens Ones",
+        "desc": "Understand that the three digits represent hundreds, tens, and ones",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-2-compare-three-digit-numbers",
+        "name": "Compare Three-Digit Numbers",
+        "desc": "Compare two three-digit numbers using > = < symbols",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-2-add-and-subtract-within-1000",
+        "name": "Add and Subtract Within 1000",
+        "desc": "Add and subtract within 1000 using concrete models and strategies",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-2-measure-lengths",
+        "name": "Measure Lengths",
+        "desc": "Measure the length of an object using appropriate tools",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-2-solve-length-word-problems",
+        "name": "Solve Length Word Problems",
+        "desc": "Use addition and subtraction within 100 to solve word problems involving lengths",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-2-tell-time-to-5-minutes",
+        "name": "Tell Time to 5 Minutes",
+        "desc": "Tell and write time from analog and digital clocks to the nearest five minutes",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-2-money-dollars-and-coins",
+        "name": "Money: Dollars and Coins",
+        "desc": "Solve word problems involving dollar bills, quarters, dimes, nickels, and pennies",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-2-picture-graphs-and-bar-graphs",
+        "name": "Picture Graphs and Bar Graphs",
+        "desc": "Draw a picture graph and bar graph to represent a data set",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-2-line-plots",
+        "name": "Line Plots",
+        "desc": "Generate measurement data and show it on a line plot",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-2-recognize-and-draw-shapes",
+        "name": "Recognize and Draw Shapes",
+        "desc": "Recognize and draw shapes having specified attributes",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-2-partition-into-equal-shares",
+        "name": "Partition Into Equal Shares",
+        "desc": "Partition circles and rectangles into halves, thirds, and fourths",
+        "category": "Geometry"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-2-key-details",
+        "name": "Key Details",
+        "desc": "Ask and answer questions like who, what, where, when, why, and how to demonstrate understanding",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-2-central-message",
+        "name": "Central Message",
+        "desc": "Recount stories and determine their central message, lesson, or moral",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-2-character-response",
+        "name": "Character Response",
+        "desc": "Describe how characters respond to major events and challenges",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-2-story-structure",
+        "name": "Story Structure",
+        "desc": "Describe the overall structure of a story including beginning, middle, and end",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-2-point-of-view",
+        "name": "Point of View",
+        "desc": "Acknowledge differences in the points of view of characters",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-2-main-topic-and-details",
+        "name": "Main Topic and Details",
+        "desc": "Identify the main topic of a multi-paragraph text and the focus of specific paragraphs",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-2-text-structure",
+        "name": "Text Structure",
+        "desc": "Describe the connection between steps in a process or a sequence of events",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-2-authors-purpose",
+        "name": "Author's Purpose",
+        "desc": "Describe how reasons support specific points in a text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-2-text-features",
+        "name": "Text Features",
+        "desc": "Know and use various text features to locate key facts",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-2-opinion-writing",
+        "name": "Opinion Writing",
+        "desc": "Write opinion pieces introducing the topic, stating an opinion, and supplying reasons",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-2-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative pieces introducing a topic, using facts and definitions",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-2-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives describing a short sequence of events in order",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-2-collective-nouns",
+        "name": "Collective Nouns",
+        "desc": "Use collective nouns",
+        "category": "Language"
+      },
+      {
+        "id": "ela-2-irregular-plural-nouns",
+        "name": "Irregular Plural Nouns",
+        "desc": "Form and use frequently occurring irregular plural nouns",
+        "category": "Language"
+      },
+      {
+        "id": "ela-2-commas-in-greetings",
+        "name": "Commas in Greetings",
+        "desc": "Use commas in greetings and closings of letters",
+        "category": "Language"
+      },
+      {
+        "id": "ela-2-context-clues",
+        "name": "Context Clues",
+        "desc": "Use sentence-level context as a clue to word meaning",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-2-compound-words",
+        "name": "Compound Words",
+        "desc": "Determine the meaning of compound words",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-2-synonyms-and-antonyms",
+        "name": "Synonyms and Antonyms",
+        "desc": "Identify real-life connections between words and their use",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "3rd": {
+    "Math": [
+      {
+        "id": "math-3-multiply-within-100",
+        "name": "Multiply Within 100",
+        "desc": "Fluently multiply within 100 using strategies and properties",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-3-divide-within-100",
+        "name": "Divide Within 100",
+        "desc": "Fluently divide within 100 understanding the relationship to multiplication",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-3-word-problems-multiply-and-div",
+        "name": "Word Problems: Multiply and Divide",
+        "desc": "Solve word problems using multiplication and division within 100",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-3-properties-of-multiplication",
+        "name": "Properties of Multiplication",
+        "desc": "Apply commutative, associative, and distributive properties",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-3-arithmetic-patterns",
+        "name": "Arithmetic Patterns",
+        "desc": "Identify arithmetic patterns and explain them using properties of operations",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-3-round-to-10-or-100",
+        "name": "Round to 10 or 100",
+        "desc": "Use place value understanding to round whole numbers to the nearest 10 or 100",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-3-add-and-subtract-within-1000",
+        "name": "Add and Subtract Within 1000",
+        "desc": "Fluently add and subtract within 1000 using strategies and algorithms",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-3-multiply-by-multiples-of-10",
+        "name": "Multiply by Multiples of 10",
+        "desc": "Multiply one-digit numbers by multiples of 10 in the range 10-90",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-3-fractions-as-parts-of-a-whole",
+        "name": "Fractions as Parts of a Whole",
+        "desc": "Understand a fraction as a quantity formed by parts of a whole",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-3-fractions-on-a-number-line",
+        "name": "Fractions on a Number Line",
+        "desc": "Represent fractions on a number line diagram",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-3-equivalent-fractions",
+        "name": "Equivalent Fractions",
+        "desc": "Recognize and generate simple equivalent fractions",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-3-compare-fractions",
+        "name": "Compare Fractions",
+        "desc": "Compare two fractions with the same numerator or denominator",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-3-whole-numbers-as-fractions",
+        "name": "Whole Numbers as Fractions",
+        "desc": "Express whole numbers as fractions and recognize fractions equal to whole numbers",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-3-tell-time-and-elapsed-time",
+        "name": "Tell Time and Elapsed Time",
+        "desc": "Tell and write time to the nearest minute and solve elapsed time problems",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-3-measure-liquid-volume-and-mass",
+        "name": "Measure Liquid Volume and Mass",
+        "desc": "Measure and estimate liquid volumes and masses using standard units",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-3-area-count-unit-squares",
+        "name": "Area: Count Unit Squares",
+        "desc": "Measure areas by counting unit squares",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-3-area-with-multiplication",
+        "name": "Area with Multiplication",
+        "desc": "Relate area to multiplication and addition",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-3-perimeter",
+        "name": "Perimeter",
+        "desc": "Solve real-world problems involving perimeters of polygons",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-3-bar-graphs-and-picture-graphs",
+        "name": "Bar Graphs and Picture Graphs",
+        "desc": "Draw scaled bar graphs and picture graphs to represent data",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-3-quadrilaterals",
+        "name": "Quadrilaterals",
+        "desc": "Understand that shapes in different categories share attributes",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-3-partition-shapes-into-equal-ar",
+        "name": "Partition Shapes into Equal Areas",
+        "desc": "Partition shapes into equal areas and express area as a unit fraction",
+        "category": "Geometry"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-3-key-details-and-inference",
+        "name": "Key Details and Inference",
+        "desc": "Ask and answer questions to demonstrate understanding; refer explicitly to the text",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-3-theme-and-central-message",
+        "name": "Theme and Central Message",
+        "desc": "Recount stories and determine the central message, lesson, or moral",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-3-character-traits-and-motivatio",
+        "name": "Character Traits and Motivations",
+        "desc": "Describe characters and explain how their actions contribute to the sequence of events",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-3-story-structure",
+        "name": "Story Structure",
+        "desc": "Describe stories using beginning, middle, and end; chapters and scenes",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-3-point-of-view",
+        "name": "Point of View",
+        "desc": "Distinguish own point of view from the narrator or characters",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-3-figurative-language",
+        "name": "Figurative Language",
+        "desc": "Distinguish literal from nonliteral language",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-3-main-idea-and-details",
+        "name": "Main Idea and Details",
+        "desc": "Determine the main idea of a text; recount key details",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-3-text-structure-sequence",
+        "name": "Text Structure: Sequence",
+        "desc": "Describe the relationship between a series of historical events or steps in a process",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-3-text-structure-cause-and-effec",
+        "name": "Text Structure: Cause and Effect",
+        "desc": "Use cause and effect to understand the connection between events",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-3-authors-purpose",
+        "name": "Author's Purpose",
+        "desc": "Describe the logical connection between sentences and paragraphs",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-3-text-features",
+        "name": "Text Features",
+        "desc": "Use text features and search tools to locate information",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-3-opinion-writing",
+        "name": "Opinion Writing",
+        "desc": "Write opinion pieces supporting a point of view with reasons",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-3-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative pieces examining a topic and conveying ideas clearly",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-3-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives using effective technique, descriptive details, and clear event sequences",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-3-nouns-regular-and-irregular-pl",
+        "name": "Nouns: Regular and Irregular Plurals",
+        "desc": "Form and use regular and irregular plural nouns",
+        "category": "Language"
+      },
+      {
+        "id": "ela-3-verbs-tense",
+        "name": "Verbs: Tense",
+        "desc": "Form and use regular and irregular verbs; use simple verb tenses",
+        "category": "Language"
+      },
+      {
+        "id": "ela-3-adjectives-and-adverbs",
+        "name": "Adjectives and Adverbs",
+        "desc": "Use comparative and superlative adjectives and adverbs",
+        "category": "Language"
+      },
+      {
+        "id": "ela-3-comma-rules",
+        "name": "Comma Rules",
+        "desc": "Use commas in addresses and to separate items in a series",
+        "category": "Language"
+      },
+      {
+        "id": "ela-3-context-clues",
+        "name": "Context Clues",
+        "desc": "Determine the meaning of general academic and domain-specific words in context",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-3-prefixes-and-suffixes",
+        "name": "Prefixes and Suffixes",
+        "desc": "Identify and know the meaning of common prefixes and suffixes",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-3-literal-and-figurative-languag",
+        "name": "Literal and Figurative Language",
+        "desc": "Distinguish literal and nonliteral meanings of words and phrases",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "4th": {
+    "Math": [
+      {
+        "id": "math-4-multi-step-word-problems",
+        "name": "Multi-Step Word Problems",
+        "desc": "Use the four operations to solve multi-step word problems with whole numbers",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-4-factors-and-multiples",
+        "name": "Factors and Multiples",
+        "desc": "Find all factor pairs for a whole number; recognize prime and composite numbers",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-4-number-patterns",
+        "name": "Number Patterns",
+        "desc": "Generate and analyze number or shape patterns following a rule",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-4-multi-digit-multiplication",
+        "name": "Multi-Digit Multiplication",
+        "desc": "Multiply a whole number of up to four digits by a one-digit number",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-4-multi-digit-division",
+        "name": "Multi-Digit Division",
+        "desc": "Find whole-number quotients and remainders with up to four-digit dividends",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-4-round-multi-digit-numbers",
+        "name": "Round Multi-Digit Numbers",
+        "desc": "Round multi-digit whole numbers to any place",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-4-add-and-subtract-multi-digit",
+        "name": "Add and Subtract Multi-Digit",
+        "desc": "Fluently add and subtract multi-digit whole numbers using the standard algorithm",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-4-equivalent-fractions",
+        "name": "Equivalent Fractions",
+        "desc": "Explain why fractions are equivalent using visual fraction models",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-4-compare-fractions",
+        "name": "Compare Fractions",
+        "desc": "Compare two fractions with different numerators and denominators",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-4-add-and-subtract-fractions",
+        "name": "Add and Subtract Fractions",
+        "desc": "Understand addition and subtraction of fractions as joining and separating parts",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-4-multiply-fractions-by-whole-nu",
+        "name": "Multiply Fractions by Whole Numbers",
+        "desc": "Understand multiplication of a fraction by a whole number",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-4-decimals-tenths-and-hundredths",
+        "name": "Decimals: Tenths and Hundredths",
+        "desc": "Use decimal notation for fractions with denominators 10 or 100",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-4-compare-decimals",
+        "name": "Compare Decimals",
+        "desc": "Compare two decimals to hundredths by reasoning about their size",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-4-convert-measurement-units",
+        "name": "Convert Measurement Units",
+        "desc": "Know relative sizes of measurement units; convert larger units to smaller units",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-4-area-and-perimeter",
+        "name": "Area and Perimeter",
+        "desc": "Apply formulas for area and perimeter of rectangles in real-world problems",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-4-angles-and-angle-measurement",
+        "name": "Angles and Angle Measurement",
+        "desc": "Recognize angles and measure them in degrees",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-4-add-and-subtract-angle-measure",
+        "name": "Add and Subtract Angle Measures",
+        "desc": "Use addition and subtraction to find unknown angle measures",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-4-lines-parallel-and-perpendicul",
+        "name": "Lines: Parallel and Perpendicular",
+        "desc": "Draw points, lines, line segments, rays, angles, and perpendicular and parallel lines",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-4-classify-2d-shapes",
+        "name": "Classify 2D Shapes",
+        "desc": "Classify two-dimensional figures based on the presence or absence of parallel or perpendicular lines",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-4-lines-of-symmetry",
+        "name": "Lines of Symmetry",
+        "desc": "Recognize a line of symmetry for a two-dimensional figure",
+        "category": "Geometry"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-4-text-evidence",
+        "name": "Text Evidence",
+        "desc": "Refer to details and examples in a text when explaining what the text says",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-4-theme",
+        "name": "Theme",
+        "desc": "Determine a theme from details in the text; summarize the text",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-4-character-motivation",
+        "name": "Character Motivation",
+        "desc": "Describe in depth a character, setting, or event drawing on specific details",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-4-figurative-language",
+        "name": "Figurative Language",
+        "desc": "Explain the meaning of similes and metaphors in context",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-4-point-of-view",
+        "name": "Point of View",
+        "desc": "Compare and contrast the point of view from which different stories are narrated",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-4-poetry-and-structural-elements",
+        "name": "Poetry and Structural Elements",
+        "desc": "Explain major differences between poems, drama, and prose",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-4-main-idea",
+        "name": "Main Idea",
+        "desc": "Determine the main idea and explain how it is supported by key details; summarize",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-4-text-structure-compare-and-con",
+        "name": "Text Structure: Compare and Contrast",
+        "desc": "Describe the overall structure of events, ideas, concepts, or information in a text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-4-text-structure-cause-and-effec",
+        "name": "Text Structure: Cause and Effect",
+        "desc": "Explain events, procedures, ideas, or concepts using cause and effect",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-4-distinguish-fact-from-opinion",
+        "name": "Distinguish Fact from Opinion",
+        "desc": "Explain the difference between firsthand and secondhand accounts",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-4-integrate-information-from-two",
+        "name": "Integrate Information from Two Texts",
+        "desc": "Integrate information from two texts to write or speak about a subject",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-4-opinion-writing",
+        "name": "Opinion Writing",
+        "desc": "Write opinion pieces with an introduction, reasons linked with transitional words, and a conclusion",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-4-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative pieces examining a topic, using facts, definitions, and details",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-4-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives using dialogue, description, and transitional words to show sequence",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-4-relative-pronouns-and-adverbs",
+        "name": "Relative Pronouns and Adverbs",
+        "desc": "Form and use relative pronouns and relative adverbs",
+        "category": "Language"
+      },
+      {
+        "id": "ela-4-progressive-verb-tenses",
+        "name": "Progressive Verb Tenses",
+        "desc": "Form and use progressive verb tenses",
+        "category": "Language"
+      },
+      {
+        "id": "ela-4-comma-usage",
+        "name": "Comma Usage",
+        "desc": "Use a comma before a coordinating conjunction in a compound sentence",
+        "category": "Language"
+      },
+      {
+        "id": "ela-4-punctuation-for-effect",
+        "name": "Punctuation for Effect",
+        "desc": "Use punctuation for effect in writing",
+        "category": "Language"
+      },
+      {
+        "id": "ela-4-greek-and-latin-roots",
+        "name": "Greek and Latin Roots",
+        "desc": "Use common Greek and Latin affixes and roots as clues to word meaning",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-4-simile-and-metaphor",
+        "name": "Simile and Metaphor",
+        "desc": "Explain the meaning of similes and metaphors",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-4-academic-vocabulary",
+        "name": "Academic Vocabulary",
+        "desc": "Acquire and use grade-appropriate academic words",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "5th": {
+    "Math": [
+      {
+        "id": "math-5-order-of-operations",
+        "name": "Order of Operations",
+        "desc": "Write and interpret numerical expressions using parentheses, brackets, or braces",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-5-numerical-patterns",
+        "name": "Numerical Patterns",
+        "desc": "Generate two numerical patterns using two given rules and identify relationships",
+        "category": "Operations & Algebraic Thinking"
+      },
+      {
+        "id": "math-5-powers-of-10",
+        "name": "Powers of 10",
+        "desc": "Explain patterns in the number of zeros when multiplying by powers of 10",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-read-and-write-decimals",
+        "name": "Read and Write Decimals",
+        "desc": "Read, write, and compare decimals to thousandths",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-compare-decimals",
+        "name": "Compare Decimals",
+        "desc": "Compare two decimals to thousandths using >, =, <",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-round-decimals",
+        "name": "Round Decimals",
+        "desc": "Use place value understanding to round decimals to any place",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-multiply-multi-digit-numbers",
+        "name": "Multiply Multi-Digit Numbers",
+        "desc": "Fluently multiply multi-digit whole numbers using the standard algorithm",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-divide-4-digit-by-2-digit",
+        "name": "Divide 4-Digit by 2-Digit",
+        "desc": "Find whole-number quotients with up to four-digit dividends and two-digit divisors",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-add-and-subtract-decimals",
+        "name": "Add and Subtract Decimals",
+        "desc": "Add, subtract, multiply, and divide decimals to hundredths",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-multiply-decimals",
+        "name": "Multiply Decimals",
+        "desc": "Multiply decimals to hundredths using concrete models and strategies",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-divide-decimals",
+        "name": "Divide Decimals",
+        "desc": "Divide decimals to hundredths using concrete models and strategies",
+        "category": "Number & Operations Base Ten"
+      },
+      {
+        "id": "math-5-add-fractions-unlike-denominat",
+        "name": "Add Fractions Unlike Denominators",
+        "desc": "Add and subtract fractions with unlike denominators using equivalent fractions",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-5-subtract-fractions-unlike-deno",
+        "name": "Subtract Fractions Unlike Denominators",
+        "desc": "Subtract fractions with unlike denominators by finding common denominators",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-5-multiply-fractions",
+        "name": "Multiply Fractions",
+        "desc": "Multiply a fraction by a whole number or fraction using visual fraction models",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-5-divide-unit-fractions",
+        "name": "Divide Unit Fractions",
+        "desc": "Divide unit fractions by whole numbers and whole numbers by unit fractions",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-5-fractions-as-division",
+        "name": "Fractions as Division",
+        "desc": "Interpret a fraction as division of the numerator by the denominator",
+        "category": "Number & Operations - Fractions"
+      },
+      {
+        "id": "math-5-convert-measurement-units",
+        "name": "Convert Measurement Units",
+        "desc": "Convert like measurement units within the metric and customary systems",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-5-volume-of-rectangular-prisms",
+        "name": "Volume of Rectangular Prisms",
+        "desc": "Measure volumes by counting unit cubes; apply V = l x w x h",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-5-line-plots-with-fractions",
+        "name": "Line Plots with Fractions",
+        "desc": "Make a line plot to display data sets of measurements in fractions of a unit",
+        "category": "Measurement & Data"
+      },
+      {
+        "id": "math-5-coordinate-plane",
+        "name": "Coordinate Plane",
+        "desc": "Use a pair of perpendicular number lines to define a coordinate system",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-5-graph-points-on-coordinate-pla",
+        "name": "Graph Points on Coordinate Plane",
+        "desc": "Represent real-world problems by graphing points in the first quadrant",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-5-classify-2d-shapes-hierarchy",
+        "name": "Classify 2D Shapes Hierarchy",
+        "desc": "Understand that attributes belonging to a category also belong to subcategories",
+        "category": "Geometry"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-5-text-evidence-and-inference",
+        "name": "Text Evidence and Inference",
+        "desc": "Quote accurately from a text when explaining what the text says explicitly and when drawing inferences",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-5-theme",
+        "name": "Theme",
+        "desc": "Determine a theme of a story, drama, or poem from details in the text",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-5-character-motivation-and-devel",
+        "name": "Character Motivation and Development",
+        "desc": "Compare and contrast two or more characters, settings, or events",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-5-figurative-language",
+        "name": "Figurative Language",
+        "desc": "Explain how a series of chapters, scenes, or stanzas fits together",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-5-point-of-view-first-and-third-",
+        "name": "Point of View: First and Third Person",
+        "desc": "Describe how a narrator or speaker's point of view influences description of events",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-5-compare-and-contrast-stories",
+        "name": "Compare and Contrast Stories",
+        "desc": "Compare and contrast stories in the same genre on their approaches to themes",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-5-main-idea-and-summary",
+        "name": "Main Idea and Summary",
+        "desc": "Determine two or more main ideas and explain how they are supported by key details",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-5-text-structure-problem-and-sol",
+        "name": "Text Structure: Problem and Solution",
+        "desc": "Explain the relationships between events using problem and solution structure",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-5-text-structure-cause-and-effec",
+        "name": "Text Structure: Cause and Effect",
+        "desc": "Explain the relationships between concepts using cause and effect",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-5-authors-purpose-and-perspectiv",
+        "name": "Author's Purpose and Perspective",
+        "desc": "Analyze multiple accounts of the same event noting similarities and differences",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-5-integrate-information-from-mul",
+        "name": "Integrate Information from Multiple Texts",
+        "desc": "Integrate information from several texts on the same topic",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-5-opinion-writing",
+        "name": "Opinion Writing",
+        "desc": "Write opinion pieces on topics supporting a point of view with logically ordered reasons",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-5-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative pieces examining a topic, conveying ideas and information clearly",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-5-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives using technique, descriptive details, and clear event sequences",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-5-research-and-citing-sources",
+        "name": "Research and Citing Sources",
+        "desc": "Recall or gather relevant information from print and digital sources; cite sources",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-5-perfect-verb-tenses",
+        "name": "Perfect Verb Tenses",
+        "desc": "Form and use the perfect verb tenses",
+        "category": "Language"
+      },
+      {
+        "id": "ela-5-correlative-conjunctions",
+        "name": "Correlative Conjunctions",
+        "desc": "Use correlative conjunctions such as either/or and neither/nor",
+        "category": "Language"
+      },
+      {
+        "id": "ela-5-punctuation-commas-and-dashes",
+        "name": "Punctuation: Commas and Dashes",
+        "desc": "Use punctuation to separate items in a series and to indicate a pause or break",
+        "category": "Language"
+      },
+      {
+        "id": "ela-5-complete-sentences-and-fragmen",
+        "name": "Complete Sentences and Fragments",
+        "desc": "Recognize and correct inappropriate fragments and run-on sentences",
+        "category": "Language"
+      },
+      {
+        "id": "ela-5-context-clues",
+        "name": "Context Clues",
+        "desc": "Use context as a clue to the meaning of a word or phrase",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-5-greek-and-latin-roots",
+        "name": "Greek and Latin Roots",
+        "desc": "Use common Greek and Latin affixes and roots as clues to word meaning",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-5-figurative-language-simile-and",
+        "name": "Figurative Language: Simile and Metaphor",
+        "desc": "Interpret figurative language including similes and metaphors in context",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-5-idioms-and-proverbs",
+        "name": "Idioms and Proverbs",
+        "desc": "Recognize and explain the meaning of common idioms, adages, and proverbs",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "6th": {
+    "Math": [
+      {
+        "id": "math-6-ratios-and-ratio-language",
+        "name": "Ratios and Ratio Language",
+        "desc": "Understand the concept of a ratio and use ratio language to describe a relationship",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-6-unit-rates",
+        "name": "Unit Rates",
+        "desc": "Understand the concept of a unit rate associated with a ratio",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-6-percent",
+        "name": "Percent",
+        "desc": "Use ratio reasoning to convert measurement units and find percents",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-6-ratio-tables",
+        "name": "Ratio Tables",
+        "desc": "Solve unit rate problems using ratio tables and tape diagrams",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-6-divide-fractions-by-fractions",
+        "name": "Divide Fractions by Fractions",
+        "desc": "Interpret and compute quotients of fractions to solve word problems",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-multiply-and-divide-multi-digi",
+        "name": "Multiply and Divide Multi-Digit Decimals",
+        "desc": "Fluently multiply and divide multi-digit decimals using standard algorithm",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-greatest-common-factor",
+        "name": "Greatest Common Factor",
+        "desc": "Find the GCF of two whole numbers less than or equal to 100",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-least-common-multiple",
+        "name": "Least Common Multiple",
+        "desc": "Find the LCM of two whole numbers less than or equal to 12",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-positive-and-negative-numbers",
+        "name": "Positive and Negative Numbers",
+        "desc": "Understand that positive and negative numbers describe quantities having opposite directions",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-absolute-value",
+        "name": "Absolute Value",
+        "desc": "Understand the absolute value of a rational number as its distance from 0",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-order-rational-numbers",
+        "name": "Order Rational Numbers",
+        "desc": "Write, interpret, and explain statements of order for rational numbers",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-coordinate-plane-all-4-quadran",
+        "name": "Coordinate Plane All 4 Quadrants",
+        "desc": "Solve real-world problems by graphing points in all four quadrants",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-6-write-and-evaluate-expressions",
+        "name": "Write and Evaluate Expressions",
+        "desc": "Write and evaluate numerical expressions involving whole-number exponents",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-6-order-of-operations-with-expon",
+        "name": "Order of Operations with Exponents",
+        "desc": "Apply order of operations including exponents",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-6-equivalent-expressions",
+        "name": "Equivalent Expressions",
+        "desc": "Apply properties of operations to generate equivalent expressions",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-6-solve-one-step-equations",
+        "name": "Solve One-Step Equations",
+        "desc": "Solve real-world problems by writing and solving equations",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-6-write-and-solve-inequalities",
+        "name": "Write and Solve Inequalities",
+        "desc": "Write an inequality of the form x > c or x < c and represent on a number line",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-6-area-of-triangles",
+        "name": "Area of Triangles",
+        "desc": "Find areas of right triangles and other triangles",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-6-area-of-quadrilaterals",
+        "name": "Area of Quadrilaterals",
+        "desc": "Find areas of special quadrilaterals by composing into rectangles",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-6-surface-area-using-nets",
+        "name": "Surface Area Using Nets",
+        "desc": "Represent three-dimensional figures using nets and find surface area",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-6-volume-of-rectangular-prism",
+        "name": "Volume of Rectangular Prism",
+        "desc": "Find the volume of a right rectangular prism with fractional edge lengths",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-6-statistical-questions",
+        "name": "Statistical Questions",
+        "desc": "Recognize statistical questions as those that anticipate variability in data",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-6-mean-median-mode-range",
+        "name": "Mean Median Mode Range",
+        "desc": "Display numerical data in plots on a number line; find mean, median, and mode",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-6-mean-absolute-deviation",
+        "name": "Mean Absolute Deviation",
+        "desc": "Calculate and interpret mean absolute deviation",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-6-box-plots",
+        "name": "Box Plots",
+        "desc": "Display data using box plots and interpret the five-number summary",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-6-histograms",
+        "name": "Histograms",
+        "desc": "Display data using histograms and interpret the data distribution",
+        "category": "Statistics & Probability"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-6-textual-evidence",
+        "name": "Textual Evidence",
+        "desc": "Cite textual evidence to support analysis of what the text says explicitly and inferences drawn",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-6-theme-and-summary",
+        "name": "Theme and Summary",
+        "desc": "Determine a theme and how it is conveyed through details; provide a summary",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-6-character-analysis",
+        "name": "Character Analysis",
+        "desc": "Describe how a plot unfolds and how characters respond or change as the plot moves toward resolution",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-6-point-of-view",
+        "name": "Point of View",
+        "desc": "Explain how an author develops the point of view of the narrator",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-6-figurative-language",
+        "name": "Figurative Language",
+        "desc": "Determine the meaning of words and phrases including figurative and connotative meanings",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-6-main-idea-and-supporting-detai",
+        "name": "Main Idea and Supporting Details",
+        "desc": "Determine a central idea of a text and how it is conveyed through details; provide summary",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-6-text-structure-compare-and-con",
+        "name": "Text Structure: Compare and Contrast",
+        "desc": "Analyze how a particular sentence, paragraph, or section fits into the overall text structure",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-6-authors-point-of-view-and-purp",
+        "name": "Author's Point of View and Purpose",
+        "desc": "Determine an author's point of view or purpose and explain how it is conveyed in the text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-6-arguments-and-claims",
+        "name": "Arguments and Claims",
+        "desc": "Trace and evaluate the argument and specific claims in a text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-6-argument-writing",
+        "name": "Argument Writing",
+        "desc": "Write arguments to support claims with clear reasons and relevant evidence",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-6-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative explanatory texts to examine a topic and convey ideas clearly",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-6-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives to develop real or imagined experiences using effective technique",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-6-research-writing",
+        "name": "Research Writing",
+        "desc": "Conduct short research projects to answer a question drawing on several sources",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-6-subjective-objective-possessiv",
+        "name": "Subjective Objective Possessive Pronouns",
+        "desc": "Ensure that pronouns are in the proper case",
+        "category": "Language"
+      },
+      {
+        "id": "ela-6-pronoun-antecedent-agreement",
+        "name": "Pronoun-Antecedent Agreement",
+        "desc": "Recognize and correct inappropriate shifts in pronoun number and person",
+        "category": "Language"
+      },
+      {
+        "id": "ela-6-punctuation-commas-parentheses",
+        "name": "Punctuation: Commas Parentheses Dashes",
+        "desc": "Use punctuation including commas, parentheses, and dashes to set off nonrestrictive elements",
+        "category": "Language"
+      },
+      {
+        "id": "ela-6-spelling",
+        "name": "Spelling",
+        "desc": "Spell correctly using references as needed",
+        "category": "Language"
+      },
+      {
+        "id": "ela-6-context-clues",
+        "name": "Context Clues",
+        "desc": "Determine or clarify the meaning of unknown and multiple-meaning words using context clues",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-6-greek-and-latin-affixes-and-ro",
+        "name": "Greek and Latin Affixes and Roots",
+        "desc": "Use common Greek or Latin affixes and roots as clues to word meaning",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-6-figurative-language-connotatio",
+        "name": "Figurative Language: Connotation",
+        "desc": "Distinguish among the connotations of words with similar denotations",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "7th": {
+    "Math": [
+      {
+        "id": "math-7-proportional-relationships",
+        "name": "Proportional Relationships",
+        "desc": "Compute unit rates associated with ratios of fractions",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-7-unit-rates-with-complex-fracti",
+        "name": "Unit Rates with Complex Fractions",
+        "desc": "Recognize and represent proportional relationships between quantities",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-7-percent-problems",
+        "name": "Percent Problems",
+        "desc": "Use proportional relationships to solve multistep ratio and percent problems",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-7-tax-tip-markup-discount",
+        "name": "Tax Tip Markup Discount",
+        "desc": "Solve real-world problems involving tax, tip, markup, markdown, and commission",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-7-simple-interest",
+        "name": "Simple Interest",
+        "desc": "Solve problems involving simple interest",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-7-scale-drawings",
+        "name": "Scale Drawings",
+        "desc": "Solve problems involving scale drawings of geometric figures",
+        "category": "Ratios & Proportional Relationships"
+      },
+      {
+        "id": "math-7-add-rational-numbers",
+        "name": "Add Rational Numbers",
+        "desc": "Apply properties to add rational numbers; interpret sums using a number line",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-7-subtract-rational-numbers",
+        "name": "Subtract Rational Numbers",
+        "desc": "Apply properties to subtract rational numbers and show on a number line",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-7-multiply-rational-numbers",
+        "name": "Multiply Rational Numbers",
+        "desc": "Apply properties to multiply rational numbers explaining products",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-7-divide-rational-numbers",
+        "name": "Divide Rational Numbers",
+        "desc": "Apply properties to divide rational numbers; convert rational numbers to decimals",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-7-properties-of-operations",
+        "name": "Properties of Operations",
+        "desc": "Apply properties of operations as strategies to add, subtract, factor, and expand",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-7-add-and-subtract-linear-expres",
+        "name": "Add and Subtract Linear Expressions",
+        "desc": "Add, subtract, factor, and expand linear expressions with rational coefficients",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-7-solve-multi-step-real-life-pro",
+        "name": "Solve Multi-Step Real-Life Problems",
+        "desc": "Solve multi-step real-life problems posed with positive and negative rational numbers",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-7-solve-two-step-equations",
+        "name": "Solve Two-Step Equations",
+        "desc": "Solve two-step equations of the form px + q = r and p(x + q) = r",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-7-solve-two-step-inequalities",
+        "name": "Solve Two-Step Inequalities",
+        "desc": "Solve two-step inequalities and graph the solution set on a number line",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-7-area-and-circumference-of-circ",
+        "name": "Area and Circumference of Circles",
+        "desc": "Know the formulas for area and circumference of a circle",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-7-angle-relationships",
+        "name": "Angle Relationships",
+        "desc": "Use facts about supplementary, complementary, vertical, and adjacent angles",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-7-surface-area-of-3d-figures",
+        "name": "Surface Area of 3D Figures",
+        "desc": "Solve problems involving surface area of two- and three-dimensional figures",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-7-volume-of-3d-figures",
+        "name": "Volume of 3D Figures",
+        "desc": "Solve real-world problems involving volume of three-dimensional figures",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-7-simple-probability",
+        "name": "Simple Probability",
+        "desc": "Understand that the probability of a chance event is a number between 0 and 1",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-7-experimental-vs-theoretical-pr",
+        "name": "Experimental vs Theoretical Probability",
+        "desc": "Approximate the probability of a chance event by collecting data",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-7-compound-events",
+        "name": "Compound Events",
+        "desc": "Find probabilities of compound events using organized lists, tables, and tree diagrams",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-7-compare-data-distributions",
+        "name": "Compare Data Distributions",
+        "desc": "Use measures of center and variability to compare two populations",
+        "category": "Statistics & Probability"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-7-textual-evidence-and-inference",
+        "name": "Textual Evidence and Inference",
+        "desc": "Cite several pieces of textual evidence to support analysis of what the text says",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-7-theme-analysis",
+        "name": "Theme Analysis",
+        "desc": "Determine a theme and analyze its development over the course of the text",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-7-character-analysis",
+        "name": "Character Analysis",
+        "desc": "Analyze how elements of a story interact such as how setting shapes the characters",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-7-point-of-view",
+        "name": "Point of View",
+        "desc": "Analyze how an author develops and contrasts the points of view of different characters",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-7-figurative-and-connotative-lan",
+        "name": "Figurative and Connotative Language",
+        "desc": "Determine the meaning of words and phrases including figurative and connotative meanings",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-7-central-idea",
+        "name": "Central Idea",
+        "desc": "Determine two or more central ideas in a text and analyze their development",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-7-text-structure-analysis",
+        "name": "Text Structure Analysis",
+        "desc": "Analyze the structure an author uses to organize a text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-7-authors-purpose-and-point-of-v",
+        "name": "Author's Purpose and Point of View",
+        "desc": "Determine an author's point of view or purpose and analyze how the author distinguishes their position",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-7-argument-analysis",
+        "name": "Argument Analysis",
+        "desc": "Trace and evaluate the argument and specific claims in a text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-7-argument-writing",
+        "name": "Argument Writing",
+        "desc": "Write arguments to support claims with clear reasons and relevant evidence",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-7-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative explanatory texts examining a topic and conveying ideas through careful selection of content",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-7-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives to develop real or imagined experiences using effective technique and descriptive details",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-7-phrases-and-clauses",
+        "name": "Phrases and Clauses",
+        "desc": "Explain the function of phrases and clauses in general and their function in specific sentences",
+        "category": "Language"
+      },
+      {
+        "id": "ela-7-simple-compound-complex-senten",
+        "name": "Simple Compound Complex Sentences",
+        "desc": "Choose among simple, compound, complex, and compound-complex sentences",
+        "category": "Language"
+      },
+      {
+        "id": "ela-7-misplaced-and-dangling-modifie",
+        "name": "Misplaced and Dangling Modifiers",
+        "desc": "Place phrases and clauses within a sentence, recognizing and correcting misplaced and dangling modifiers",
+        "category": "Language"
+      },
+      {
+        "id": "ela-7-context-clues",
+        "name": "Context Clues",
+        "desc": "Determine or clarify the meaning of unknown words using context clues",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-7-greek-and-latin-roots",
+        "name": "Greek and Latin Roots",
+        "desc": "Use common Greek or Latin affixes and roots as clues to word meaning",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-7-figurative-language",
+        "name": "Figurative Language",
+        "desc": "Interpret figures of speech in context",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "8th": {
+    "Math": [
+      {
+        "id": "math-8-irrational-numbers",
+        "name": "Irrational Numbers",
+        "desc": "Know that numbers that are not rational are called irrational",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-8-approximate-irrational-numbers",
+        "name": "Approximate Irrational Numbers",
+        "desc": "Use rational approximations of irrational numbers to compare their size",
+        "category": "The Number System"
+      },
+      {
+        "id": "math-8-integer-exponents",
+        "name": "Integer Exponents",
+        "desc": "Know and apply the properties of integer exponents to generate equivalent numerical expressions",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-8-scientific-notation",
+        "name": "Scientific Notation",
+        "desc": "Use numbers expressed in the form of a single digit times an integer power of 10",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-8-slope-of-a-line",
+        "name": "Slope of a Line",
+        "desc": "Graph proportional relationships interpreting the unit rate as the slope",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-8-linear-equations-in-one-variab",
+        "name": "Linear Equations in One Variable",
+        "desc": "Solve linear equations in one variable including equations with rational number coefficients",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-8-systems-of-linear-equations",
+        "name": "Systems of Linear Equations",
+        "desc": "Analyze and solve pairs of simultaneous linear equations",
+        "category": "Expressions & Equations"
+      },
+      {
+        "id": "math-8-define-functions",
+        "name": "Define Functions",
+        "desc": "Understand that a function is a rule that assigns each input exactly one output",
+        "category": "Functions"
+      },
+      {
+        "id": "math-8-compare-functions",
+        "name": "Compare Functions",
+        "desc": "Compare properties of two functions each represented in a different way",
+        "category": "Functions"
+      },
+      {
+        "id": "math-8-linear-vs-nonlinear-functions",
+        "name": "Linear vs Nonlinear Functions",
+        "desc": "Interpret the equation y = mx + b as defining a linear function",
+        "category": "Functions"
+      },
+      {
+        "id": "math-8-functional-relationships-from-",
+        "name": "Functional Relationships from Graphs",
+        "desc": "Describe qualitatively the functional relationship between two quantities from a graph",
+        "category": "Functions"
+      },
+      {
+        "id": "math-8-translations-rotations-reflect",
+        "name": "Translations Rotations Reflections",
+        "desc": "Verify experimentally properties of rotations, reflections, and translations",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-8-dilations-and-similarity",
+        "name": "Dilations and Similarity",
+        "desc": "Understand that a two-dimensional figure is similar to another if the second can be obtained from the first by a sequence of transformations",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-8-pythagorean-theorem",
+        "name": "Pythagorean Theorem",
+        "desc": "Explain a proof of the Pythagorean Theorem and its converse",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-8-pythagorean-theorem-applicatio",
+        "name": "Pythagorean Theorem Applications",
+        "desc": "Apply the Pythagorean Theorem to determine unknown side lengths in right triangles",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-8-distance-in-coordinate-plane",
+        "name": "Distance in Coordinate Plane",
+        "desc": "Apply the Pythagorean Theorem to find distances between two points",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-8-volume-cylinders-cones-spheres",
+        "name": "Volume: Cylinders Cones Spheres",
+        "desc": "Know the formulas for volumes of cones, cylinders, and spheres and solve problems",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-8-scatter-plots",
+        "name": "Scatter Plots",
+        "desc": "Construct and interpret scatter plots for bivariate measurement data",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-8-line-of-best-fit",
+        "name": "Line of Best Fit",
+        "desc": "Use the equation of a linear model to solve problems in the context of bivariate data",
+        "category": "Statistics & Probability"
+      },
+      {
+        "id": "math-8-two-way-tables",
+        "name": "Two-Way Tables",
+        "desc": "Understand patterns of association in bivariate categorical data using two-way tables",
+        "category": "Statistics & Probability"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-8-textual-evidence",
+        "name": "Textual Evidence",
+        "desc": "Cite the textual evidence that most strongly supports an analysis",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-8-theme-analysis",
+        "name": "Theme Analysis",
+        "desc": "Determine a theme and analyze its development including its relationship to characters, setting, and plot",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-8-dialogue-and-incidents",
+        "name": "Dialogue and Incidents",
+        "desc": "Analyze how differences in the points of view of the characters and the audience create effects",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-8-figurative-language",
+        "name": "Figurative Language",
+        "desc": "Determine the meaning of words and phrases including figurative and connotative meanings; analyze impact of word choices",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-8-compare-and-contrast-texts",
+        "name": "Compare and Contrast Texts",
+        "desc": "Analyze how a modern work of fiction draws on themes, patterns of events, or character types from myths",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-8-central-idea-and-summary",
+        "name": "Central Idea and Summary",
+        "desc": "Determine a central idea of a text and analyze its development; provide an objective summary",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-8-text-structure-and-purpose",
+        "name": "Text Structure and Purpose",
+        "desc": "Analyze in detail the structure of a specific paragraph in a text including the role of sentences in developing key concepts",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-8-authors-purpose-and-point-of-v",
+        "name": "Author's Purpose and Point of View",
+        "desc": "Determine an author's point of view or purpose and analyze how the author acknowledges and responds to conflicting evidence",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-8-argument-evaluation",
+        "name": "Argument Evaluation",
+        "desc": "Delineate and evaluate the argument and specific claims in a text",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-8-argument-writing",
+        "name": "Argument Writing",
+        "desc": "Write arguments to support claims with clear reasons and relevant evidence using credible sources",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-8-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative explanatory texts examining a topic and conveying ideas through careful selection of content",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-8-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives to develop real or imagined experiences using effective technique, relevant descriptive details, and well-structured event sequences",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-8-research-writing",
+        "name": "Research Writing",
+        "desc": "Conduct short research projects to answer a question drawing on several sources and generating additional questions",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-8-verbals-gerunds-participles-in",
+        "name": "Verbals: Gerunds Participles Infinitives",
+        "desc": "Explain the function of verbals in general and their function in particular sentences",
+        "category": "Language"
+      },
+      {
+        "id": "ela-8-active-and-passive-voice",
+        "name": "Active and Passive Voice",
+        "desc": "Form and use verbs in active and passive voice",
+        "category": "Language"
+      },
+      {
+        "id": "ela-8-mood-conditional-and-subjuncti",
+        "name": "Mood: Conditional and Subjunctive",
+        "desc": "Use verbs in the conditional and subjunctive mood",
+        "category": "Language"
+      },
+      {
+        "id": "ela-8-context-clues",
+        "name": "Context Clues",
+        "desc": "Determine or clarify the meaning of unknown words using context clues and Greek and Latin roots",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-8-figurative-language-symbolism",
+        "name": "Figurative Language: Symbolism",
+        "desc": "Interpret figures of speech in context and analyze their role in the text",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-8-word-relationships",
+        "name": "Word Relationships",
+        "desc": "Distinguish among the connotations of words with similar denotations",
+        "category": "Vocabulary"
+      }
+    ]
+  },
+  "High School": {
+    "Math": [
+      {
+        "id": "math-hs-solving-linear-equations",
+        "name": "Solving Linear Equations",
+        "desc": "Solve linear equations and inequalities in one variable",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-solving-linear-inequalities",
+        "name": "Solving Linear Inequalities",
+        "desc": "Solve and graph linear inequalities; interpret solutions in context",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-systems-of-equations-substitut",
+        "name": "Systems of Equations: Substitution",
+        "desc": "Solve systems of linear equations by substitution",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-systems-of-equations-eliminati",
+        "name": "Systems of Equations: Elimination",
+        "desc": "Solve systems of linear equations by elimination",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-graphing-linear-functions",
+        "name": "Graphing Linear Functions",
+        "desc": "Graph linear functions and show intercepts, maxima, and minima",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-slope-and-intercepts",
+        "name": "Slope and Intercepts",
+        "desc": "Calculate and interpret slope and y-intercept of linear functions",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-writing-linear-equations",
+        "name": "Writing Linear Equations",
+        "desc": "Write the equation of a line given slope and a point or two points",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-exponential-growth-and-decay",
+        "name": "Exponential Growth and Decay",
+        "desc": "Distinguish between situations that can be modeled with linear or exponential functions",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-polynomial-operations",
+        "name": "Polynomial Operations",
+        "desc": "Add, subtract, and multiply polynomials",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-factoring-quadratics",
+        "name": "Factoring Quadratics",
+        "desc": "Factor quadratic expressions of the form ax^2 + bx + c",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-solving-quadratics-by-factorin",
+        "name": "Solving Quadratics by Factoring",
+        "desc": "Solve quadratic equations by factoring",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-quadratic-formula",
+        "name": "Quadratic Formula",
+        "desc": "Solve quadratic equations using the quadratic formula",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-graphing-quadratic-functions",
+        "name": "Graphing Quadratic Functions",
+        "desc": "Graph quadratic functions and identify vertex, axis of symmetry, zeros",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-arithmetic-sequences",
+        "name": "Arithmetic Sequences",
+        "desc": "Write arithmetic sequences as linear functions",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-geometric-sequences",
+        "name": "Geometric Sequences",
+        "desc": "Write geometric sequences as exponential functions",
+        "category": "Algebra 1"
+      },
+      {
+        "id": "math-hs-mean-median-mode",
+        "name": "Mean Median Mode",
+        "desc": "Calculate and interpret measures of center for data sets",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-standard-deviation",
+        "name": "Standard Deviation",
+        "desc": "Calculate and interpret standard deviation as a measure of spread",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-normal-distribution",
+        "name": "Normal Distribution",
+        "desc": "Use the empirical rule to analyze data in a normal distribution",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-z-scores",
+        "name": "Z-Scores",
+        "desc": "Calculate and interpret z-scores; find percentiles",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-scatter-plots-and-correlation",
+        "name": "Scatter Plots and Correlation",
+        "desc": "Construct scatter plots and describe correlation",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-line-of-best-fit",
+        "name": "Line of Best Fit",
+        "desc": "Use linear regression to find a line of best fit and make predictions",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-permutations",
+        "name": "Permutations",
+        "desc": "Calculate the number of permutations of n objects taken r at a time",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-combinations",
+        "name": "Combinations",
+        "desc": "Calculate the number of combinations of n objects taken r at a time",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-basic-probability",
+        "name": "Basic Probability",
+        "desc": "Calculate the probability of simple and compound events",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-conditional-probability",
+        "name": "Conditional Probability",
+        "desc": "Understand and calculate conditional probability",
+        "category": "Statistics"
+      },
+      {
+        "id": "math-hs-triangle-congruence-sss-sas-as",
+        "name": "Triangle Congruence SSS SAS ASA",
+        "desc": "Prove triangle congruence using SSS, SAS, ASA, and AAS criteria",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-hs-triangle-similarity",
+        "name": "Triangle Similarity",
+        "desc": "Prove triangle similarity using AA, SAS, and SSS criteria",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-hs-pythagorean-theorem-proof",
+        "name": "Pythagorean Theorem Proof",
+        "desc": "Prove the Pythagorean Theorem using triangle similarity",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-hs-trigonometry-soh-cah-toa",
+        "name": "Trigonometry: SOH CAH TOA",
+        "desc": "Define trigonometric ratios and solve problems involving right triangles",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-hs-circles-arcs-and-sectors",
+        "name": "Circles: Arcs and Sectors",
+        "desc": "Find arc lengths and areas of sectors of circles",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-hs-area-and-volume-formulas",
+        "name": "Area and Volume Formulas",
+        "desc": "Use area and volume formulas for two- and three-dimensional figures",
+        "category": "Geometry"
+      },
+      {
+        "id": "math-hs-exponential-and-logarithmic-fu",
+        "name": "Exponential and Logarithmic Functions",
+        "desc": "Understand the relationship between exponential and logarithmic functions",
+        "category": "Algebra 2"
+      },
+      {
+        "id": "math-hs-logarithm-properties",
+        "name": "Logarithm Properties",
+        "desc": "Apply properties of logarithms to simplify and solve equations",
+        "category": "Algebra 2"
+      },
+      {
+        "id": "math-hs-rational-functions",
+        "name": "Rational Functions",
+        "desc": "Graph rational functions and identify asymptotes",
+        "category": "Algebra 2"
+      },
+      {
+        "id": "math-hs-complex-numbers",
+        "name": "Complex Numbers",
+        "desc": "Perform arithmetic operations with complex numbers",
+        "category": "Algebra 2"
+      },
+      {
+        "id": "math-hs-sequences-and-series",
+        "name": "Sequences and Series",
+        "desc": "Understand and use arithmetic and geometric series formulas",
+        "category": "Algebra 2"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-hs-textual-evidence-and-analysis",
+        "name": "Textual Evidence and Analysis",
+        "desc": "Cite strong and thorough textual evidence to support complex inferences",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-hs-theme-and-complexity",
+        "name": "Theme and Complexity",
+        "desc": "Determine two or more themes and analyze their development over the course of the text",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-hs-character-development",
+        "name": "Character Development",
+        "desc": "Analyze the impact of the author's choices regarding the development of complex characters",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-hs-figurative-language-and-rhetor",
+        "name": "Figurative Language and Rhetoric",
+        "desc": "Determine the meaning of words and phrases including figurative and connotative meanings; analyze impact of specific word choices",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-hs-authors-craft-and-structure",
+        "name": "Author's Craft and Structure",
+        "desc": "Analyze how an author's choices concerning how to structure a text create effects",
+        "category": "Reading Literature"
+      },
+      {
+        "id": "ela-hs-central-idea-and-synthesis",
+        "name": "Central Idea and Synthesis",
+        "desc": "Determine two or more central ideas of a text and analyze their development including how they interact and build",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-hs-argument-analysis",
+        "name": "Argument Analysis",
+        "desc": "Delineate and evaluate the reasoning in seminal US texts and the premises, purposes, and arguments in works of public advocacy",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-hs-authors-perspective-and-rhetor",
+        "name": "Author's Perspective and Rhetoric",
+        "desc": "Determine an author's point of view or purpose in a text in which the rhetoric is particularly effective",
+        "category": "Reading Informational"
+      },
+      {
+        "id": "ela-hs-argument-writing",
+        "name": "Argument Writing",
+        "desc": "Write arguments to support claims in an analysis of substantive topics using valid reasoning and relevant evidence",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-hs-informative-writing",
+        "name": "Informative Writing",
+        "desc": "Write informative explanatory texts to examine complex ideas and convey information through the effective selection of content",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-hs-narrative-writing",
+        "name": "Narrative Writing",
+        "desc": "Write narratives to develop real or imagined experiences using effective technique, well-chosen details, and well-structured sequences",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-hs-research-and-synthesis",
+        "name": "Research and Synthesis",
+        "desc": "Conduct sustained research projects to answer questions and synthesize multiple authoritative print and digital sources",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-hs-parallel-structure",
+        "name": "Parallel Structure",
+        "desc": "Use parallel structure in writing for clarity and emphasis",
+        "category": "Language"
+      },
+      {
+        "id": "ela-hs-syntax-and-style",
+        "name": "Syntax and Style",
+        "desc": "Vary syntax for effect and apply an understanding of syntax to study complex texts",
+        "category": "Language"
+      },
+      {
+        "id": "ela-hs-context-clues-and-nuance",
+        "name": "Context Clues and Nuance",
+        "desc": "Determine or clarify the meaning of unknown and multiple-meaning words using context, etymology, and reference materials",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-hs-figurative-language-analysis",
+        "name": "Figurative Language Analysis",
+        "desc": "Interpret figures of speech in context and analyze their role in the text",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-hs-academic-vocabulary",
+        "name": "Academic Vocabulary",
+        "desc": "Acquire and use accurately general academic and domain-specific words and phrases",
+        "category": "Vocabulary"
+      },
+      {
+        "id": "ela-hs-sat-reading-evidence-based",
+        "name": "SAT Reading: Evidence-Based",
+        "desc": "Identify and cite evidence from texts to support claims in SAT reading passages",
+        "category": "SAT Prep"
+      },
+      {
+        "id": "ela-hs-sat-reading-paired-passages",
+        "name": "SAT Reading: Paired Passages",
+        "desc": "Analyze relationships between paired passages in SAT reading section",
+        "category": "SAT Prep"
+      },
+      {
+        "id": "ela-hs-sat-writing-grammar-convention",
+        "name": "SAT Writing: Grammar Conventions",
+        "desc": "Apply standard English conventions to improve sentences in SAT writing section",
+        "category": "SAT Prep"
+      },
+      {
+        "id": "ela-hs-sat-writing-expression-of-idea",
+        "name": "SAT Writing: Expression of Ideas",
+        "desc": "Improve development, organization, and effective language use in SAT writing",
+        "category": "SAT Prep"
+      }
+    ]
+  },
+  "Adult": {
+    "Math": [
+      {
+        "id": "math-adult-whole-number-operations",
+        "name": "Whole Number Operations",
+        "desc": "Add, subtract, multiply, and divide whole numbers fluently",
+        "category": "Foundational Math"
+      },
+      {
+        "id": "math-adult-fractions-decimals-percents",
+        "name": "Fractions Decimals Percents",
+        "desc": "Work fluently with fractions, decimals, and percentages in real-world contexts",
+        "category": "Foundational Math"
+      },
+      {
+        "id": "math-adult-ratios-and-proportions",
+        "name": "Ratios and Proportions",
+        "desc": "Solve real-world problems using ratios and proportional reasoning",
+        "category": "Foundational Math"
+      },
+      {
+        "id": "math-adult-basic-algebra",
+        "name": "Basic Algebra",
+        "desc": "Solve linear equations and apply algebraic thinking to real-world problems",
+        "category": "Foundational Math"
+      },
+      {
+        "id": "math-adult-measurement-and-geometry",
+        "name": "Measurement and Geometry",
+        "desc": "Apply measurement concepts and basic geometry to practical situations",
+        "category": "Foundational Math"
+      },
+      {
+        "id": "math-adult-data-and-statistics",
+        "name": "Data and Statistics",
+        "desc": "Read, interpret, and draw conclusions from charts, graphs, and tables",
+        "category": "Foundational Math"
+      },
+      {
+        "id": "math-adult-mcoles-math-arithmetic",
+        "name": "MCOLES Math: Arithmetic",
+        "desc": "Solve arithmetic problems as they appear on the MCOLES reading and math exam",
+        "category": "MCOLES Prep"
+      },
+      {
+        "id": "math-adult-mcoles-math-fractions-and-perc",
+        "name": "MCOLES Math: Fractions and Percentages",
+        "desc": "Solve fraction and percentage problems representative of MCOLES test format",
+        "category": "MCOLES Prep"
+      },
+      {
+        "id": "math-adult-mcoles-math-word-problems",
+        "name": "MCOLES Math: Word Problems",
+        "desc": "Solve multi-step word problems similar to those on the MCOLES entrance exam",
+        "category": "MCOLES Prep"
+      }
+    ],
+    "ELA": [
+      {
+        "id": "ela-adult-main-idea-and-details",
+        "name": "Main Idea and Details",
+        "desc": "Identify the main idea and supporting details in reading passages",
+        "category": "Reading Comprehension"
+      },
+      {
+        "id": "ela-adult-drawing-inferences",
+        "name": "Drawing Inferences",
+        "desc": "Draw logical inferences from texts based on evidence",
+        "category": "Reading Comprehension"
+      },
+      {
+        "id": "ela-adult-vocabulary-in-context",
+        "name": "Vocabulary in Context",
+        "desc": "Determine the meaning of unknown words and phrases from context",
+        "category": "Reading Comprehension"
+      },
+      {
+        "id": "ela-adult-authors-purpose",
+        "name": "Author's Purpose",
+        "desc": "Identify the author's purpose and main argument in informational texts",
+        "category": "Reading Comprehension"
+      },
+      {
+        "id": "ela-adult-report-writing",
+        "name": "Report Writing",
+        "desc": "Write clear, organized, and factual reports for professional contexts",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-adult-grammar-and-conventions",
+        "name": "Grammar and Conventions",
+        "desc": "Apply standard grammar and usage conventions in professional writing",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-adult-clarity-and-conciseness",
+        "name": "Clarity and Conciseness",
+        "desc": "Revise writing for clarity, conciseness, and appropriate tone",
+        "category": "Writing"
+      },
+      {
+        "id": "ela-adult-mcoles-reading-comprehension-p",
+        "name": "MCOLES Reading: Comprehension Passages",
+        "desc": "Read and answer questions about passages representative of MCOLES reading section",
+        "category": "MCOLES Prep"
+      },
+      {
+        "id": "ela-adult-mcoles-reading-main-idea",
+        "name": "MCOLES Reading: Main Idea",
+        "desc": "Identify the main idea quickly and accurately as practiced on MCOLES",
+        "category": "MCOLES Prep"
+      },
+      {
+        "id": "ela-adult-mcoles-reading-inference-quest",
+        "name": "MCOLES Reading: Inference Questions",
+        "desc": "Answer inference questions from law enforcement scenario passages",
+        "category": "MCOLES Prep"
+      },
+      {
+        "id": "ela-adult-mcoles-writing-report-writing",
+        "name": "MCOLES Writing: Report Writing",
+        "desc": "Practice writing clear factual incident reports in MCOLES format",
+        "category": "MCOLES Prep"
+      },
+      {
+        "id": "ela-adult-mcoles-writing-grammar",
+        "name": "MCOLES Writing: Grammar",
+        "desc": "Apply grammar rules tested on the MCOLES written communication section",
+        "category": "MCOLES Prep"
+      }
+    ]
+  }
+};
 
 
   // â”€â”€ AGE THEMES â”€â”€
