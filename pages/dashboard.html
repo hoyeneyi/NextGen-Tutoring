@@ -4693,6 +4693,7 @@ Return ONLY this JSON array, no markdown, no backticks:
         })
       });
       const data2 = await res.json();
+      if (!res.ok || !data2.content?.[0]?.text) throw new Error(data2.error?.message || data2.type || `HTTP ${res.status}`);
       const raw   = data2.content[0].text.trim().replace(/```json|```/g,'').trim();
       const batch = JSON.parse(raw);
       questionBuffer.push(...batch);
@@ -5009,6 +5010,7 @@ Respond ONLY with this JSON:
       });
 
       const data  = await res.json();
+      if (!res.ok || !data.content?.[0]?.text) throw new Error(data.error?.message || data.type || `HTTP ${res.status}`);
       const raw   = data.content[0].text.trim().replace(/```json|```/g,'').trim();
       frGradeResult = JSON.parse(raw);
 
