@@ -4281,9 +4281,6 @@ const CURRICULUM = {
     const GRADE_LABEL = { 'K':'Kindergarten', '1st':'1st Grade', '2nd':'2nd Grade', '3rd':'3rd Grade', '4th':'4th Grade', '5th':'5th Grade', '6th':'6th Grade', '7th':'7th Grade', '8th':'8th Grade' };
     const READING_CATS = new Set(['Reading Literature','Reading Informational','Foundational Skills','Vocabulary']);
     const WRITING_CATS = new Set(['Writing','Language']);
-    const HS_9TH  = new Set(['Algebra 1']);
-    const HS_10TH = new Set(['Geometry']);
-
     const map = { math:{}, reading:{}, writing:{}, sat:{} };
 
     function push(subj, key, label, topic) {
@@ -4298,14 +4295,15 @@ const CURRICULUM = {
 
       if (gradeName === 'High School') {
         for (const t of (subjects['Math'] || [])) {
-          const key = HS_9TH.has(t.category) ? '9th' : HS_10TH.has(t.category) ? '10th' : '11th';
-          const lbl = key === '9th' ? '9th Grade (Algebra 1)' : key === '10th' ? '10th Grade (Geometry)' : '11th Grade (Algebra 2 & Statistics)';
-          push('math', key, lbl, t);
+          if      (t.category === 'Algebra 1')  push('math', 'Algebra 1',  'Algebra 1',  t);
+          else if (t.category === 'Geometry')   push('math', 'Geometry',   'Geometry',   t);
+          else if (t.category === 'Algebra 2')  push('math', 'Algebra 2',  'Algebra 2',  t);
+          else if (t.category === 'Statistics') push('math', 'Statistics', 'Statistics', t);
         }
         for (const t of (subjects['ELA'] || [])) {
-          if (t.category === 'SAT Prep')         push('sat',     'SAT', 'SAT Prep',               t);
-          else if (READING_CATS.has(t.category)) push('reading', '9th', '9th Grade (High School)', t);
-          else if (WRITING_CATS.has(t.category)) push('writing', '9th', '9th Grade (High School)', t);
+          if (t.category === 'SAT Prep')         push('sat',     'SAT',        'SAT Prep',   t);
+          else if (READING_CATS.has(t.category)) push('reading', 'HS English', 'HS English', t);
+          else if (WRITING_CATS.has(t.category)) push('writing', 'HS English', 'HS English', t);
         }
         continue;
       }
@@ -4320,19 +4318,19 @@ const CURRICULUM = {
       }
     }
 
-    // 12th Grade: same content as 11th math, same HS ELA as 9th reading/writing
-    if (map.math['11th'])   map.math['12th']    = { label: '12th Grade', categories: map.math['11th'].categories };
-    if (map.reading['9th']) map.reading['12th'] = { label: '12th Grade (High School)', categories: map.reading['9th'].categories };
-    if (map.writing['9th']) map.writing['12th'] = { label: '12th Grade (High School)', categories: map.writing['9th'].categories };
+    // Pre-Calculus and AP Calculus share Algebra 2 + Statistics content
+    const mergedCats = { ...(map.math['Algebra 2']?.categories || {}), ...(map.math['Statistics']?.categories || {}) };
+    map.math['Pre-Calculus'] = { label: 'Pre-Calculus', categories: mergedCats };
+    map.math['AP Calculus']  = { label: 'AP Calculus',  categories: mergedCats };
 
-    // Enforce correct grade display order (JS object key insertion order drives tab order)
+    // Enforce correct display order (JS object insertion order drives tab rendering)
     function reorder(subjMap, order) {
       const out = {};
       for (const k of order) if (subjMap[k]) out[k] = subjMap[k];
       return out;
     }
-    const MATH_ORDER = ['K','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
-    const ELA_ORDER  = ['K','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','12th'];
+    const MATH_ORDER = ['K','1st','2nd','3rd','4th','5th','6th','7th','8th','Algebra 1','Geometry','Algebra 2','Statistics','Pre-Calculus','AP Calculus'];
+    const ELA_ORDER  = ['K','1st','2nd','3rd','4th','5th','6th','7th','8th','HS English'];
     return {
       math:    reorder(map.math,    MATH_ORDER),
       reading: reorder(map.reading, ELA_ORDER),
@@ -4347,8 +4345,9 @@ const CURRICULUM = {
     'K':   'k2', '1st': 'k2', '2nd': 'k2',
     '3rd': '35', '4th': '35', '5th': '35',
     '6th': '68', '7th': '68', '8th': '68',
-    '9th': '912','10th':'912','11th':'912','12th':'912',
-    'SAT': '912',
+    'Algebra 1': '912', 'Geometry':     '912', 'Algebra 2':   '912',
+    'Statistics': '912', 'Pre-Calculus': '912', 'AP Calculus': '912',
+    'HS English': '912', 'SAT':          '912',
   };
 
   const THEME_COPY = {
@@ -4566,7 +4565,7 @@ const CURRICULUM = {
     const grid  = document.getElementById('topic-grid');
     const label = document.getElementById('topicGridLabel');
     const t     = getTheme();
-    label.textContent = `${data.label} &mdash; ${t.topicLabel}`;
+    label.innerHTML = `${data.label} &mdash; ${t.topicLabel}`;
 
     let html = '';
     for (const [cat, topics] of Object.entries(data.categories)) {
