@@ -4633,7 +4633,7 @@ const CURRICULUM = {
   // â”€â”€ FETCH QUESTIONS â”€â”€
   async function fetchQuestionBatch(recoveryContext) {
     generating = true;
-    const data  = CURRICULUM_MAP[currentSubject][currentTopic.band];
+    const data  = CURRICULUM_MAP[currentSubject][currentBand];
     const grade = data.label;
     const t     = getTheme();
     const isYoung = currentTheme === 'k2';
@@ -4686,7 +4686,7 @@ Return ONLY this JSON array, no markdown, no backticks:
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-5-20251001',
           max_tokens: 2000,
           system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON &mdash; no markdown, no backticks, no preamble.',
           messages: [{ role: 'user', content: prompt }]
@@ -4975,7 +4975,7 @@ Return ONLY this JSON array, no markdown, no backticks:
     try {
       const gradingPrompt = `You are grading a student's free response answer for a ${currentSubject} question.
 
-Grade Level: ${currentTopic.band} (${CURRICULUM_MAP[currentSubject][currentTopic.band]?.label || currentTopic.band})
+Grade Level: ${currentBand} (${CURRICULUM_MAP[currentSubject][currentBand]?.label || currentBand})
 Topic: ${currentTopic.name}
 
 Question: ${q.question}

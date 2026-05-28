@@ -3,7 +3,7 @@
  * Enables PWA install, offline shell, and fast repeat loads
  */
 
-const CACHE_NAME    = 'nextgen-v1';
+const CACHE_NAME    = 'nextgen-v2';
 const SHELL_ASSETS  = [
   '/',
   '/index.html',
