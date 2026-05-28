@@ -4319,7 +4319,26 @@ const CURRICULUM = {
         else if (WRITING_CATS.has(t.category)) push('writing', key, label, t);
       }
     }
-    return map;
+
+    // 12th Grade: same content as 11th math, same HS ELA as 9th reading/writing
+    if (map.math['11th'])   map.math['12th']    = { label: '12th Grade', categories: map.math['11th'].categories };
+    if (map.reading['9th']) map.reading['12th'] = { label: '12th Grade (High School)', categories: map.reading['9th'].categories };
+    if (map.writing['9th']) map.writing['12th'] = { label: '12th Grade (High School)', categories: map.writing['9th'].categories };
+
+    // Enforce correct grade display order (JS object key insertion order drives tab order)
+    function reorder(subjMap, order) {
+      const out = {};
+      for (const k of order) if (subjMap[k]) out[k] = subjMap[k];
+      return out;
+    }
+    const MATH_ORDER = ['K','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'];
+    const ELA_ORDER  = ['K','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','12th'];
+    return {
+      math:    reorder(map.math,    MATH_ORDER),
+      reading: reorder(map.reading, ELA_ORDER),
+      writing: reorder(map.writing, ELA_ORDER),
+      sat:     map.sat,
+    };
   }
   const CURRICULUM_MAP = buildSubjectMap(CURRICULUM);
 
