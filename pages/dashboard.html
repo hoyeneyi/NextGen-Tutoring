@@ -4273,6 +4273,56 @@ const CURRICULUM = {
 };
 
 
+
+  // -- CURRICULUM TRANSFORMER --
+  // Converts raw {grade:{Math:[],ELA:[]}} -> {subject:{grade:{label,categories:{cat:[{id,name,desc}]}}}}
+  function buildSubjectMap(raw) {
+    const GRADE_KEY   = { 'Kindergarten':'K', '1st':'1st', '2nd':'2nd', '3rd':'3rd', '4th':'4th', '5th':'5th', '6th':'6th', '7th':'7th', '8th':'8th' };
+    const GRADE_LABEL = { 'K':'Kindergarten', '1st':'1st Grade', '2nd':'2nd Grade', '3rd':'3rd Grade', '4th':'4th Grade', '5th':'5th Grade', '6th':'6th Grade', '7th':'7th Grade', '8th':'8th Grade' };
+    const READING_CATS = new Set(['Reading Literature','Reading Informational','Foundational Skills','Vocabulary']);
+    const WRITING_CATS = new Set(['Writing','Language']);
+    const HS_9TH  = new Set(['Algebra 1']);
+    const HS_10TH = new Set(['Geometry']);
+
+    const map = { math:{}, reading:{}, writing:{}, sat:{} };
+
+    function push(subj, key, label, topic) {
+      if (!map[subj][key]) map[subj][key] = { label, categories: {} };
+      const { id, name, desc, category } = topic;
+      if (!map[subj][key].categories[category]) map[subj][key].categories[category] = [];
+      map[subj][key].categories[category].push({ id, name, desc });
+    }
+
+    for (const [gradeName, subjects] of Object.entries(raw)) {
+      if (gradeName === 'Adult') continue;
+
+      if (gradeName === 'High School') {
+        for (const t of (subjects['Math'] || [])) {
+          const key = HS_9TH.has(t.category) ? '9th' : HS_10TH.has(t.category) ? '10th' : '11th';
+          const lbl = key === '9th' ? '9th Grade (Algebra 1)' : key === '10th' ? '10th Grade (Geometry)' : '11th Grade (Algebra 2 & Statistics)';
+          push('math', key, lbl, t);
+        }
+        for (const t of (subjects['ELA'] || [])) {
+          if (t.category === 'SAT Prep')         push('sat',     'SAT', 'SAT Prep',               t);
+          else if (READING_CATS.has(t.category)) push('reading', '9th', '9th Grade (High School)', t);
+          else if (WRITING_CATS.has(t.category)) push('writing', '9th', '9th Grade (High School)', t);
+        }
+        continue;
+      }
+
+      const key = GRADE_KEY[gradeName];
+      if (!key) continue;
+      const label = GRADE_LABEL[key];
+      for (const t of (subjects['Math'] || [])) push('math', key, label, t);
+      for (const t of (subjects['ELA']  || [])) {
+        if      (READING_CATS.has(t.category)) push('reading', key, label, t);
+        else if (WRITING_CATS.has(t.category)) push('writing', key, label, t);
+      }
+    }
+    return map;
+  }
+  const CURRICULUM_MAP = buildSubjectMap(CURRICULUM);
+
   // â”€â”€ AGE THEMES â”€â”€
   const AGE_THEMES = {
     'K':   'k2', '1st': 'k2', '2nd': 'k2',
@@ -4439,7 +4489,7 @@ const CURRICULUM = {
     const subjectNames = { math:'Mathematics', reading:'Reading', writing:'Writing', sat:'SAT / ACT Prep' };
     document.getElementById('selectorTitle').textContent = subjectNames[subject] || subject;
 
-    const data   = CURRICULUM[subject];
+    const data   = CURRICULUM_MAP[subject];
     const grades = Object.keys(data);
 
     // Build grade tabs
@@ -4480,8 +4530,8 @@ const CURRICULUM = {
 
     // Prefetch top 3 topics for this grade silently in background
     setTimeout(() => {
-      if (!CURRICULUM[currentSubject] || !CURRICULUM[currentSubject][grade]) return;
-      const gradeData = CURRICULUM[currentSubject][grade];
+      if (!CURRICULUM_MAP[currentSubject] || !CURRICULUM_MAP[currentSubject][grade]) return;
+      const gradeData = CURRICULUM_MAP[currentSubject][grade];
       const catKeys   = Object.keys(gradeData.categories);
       const allTopics = [];
       for (const key of catKeys) {
@@ -4493,7 +4543,7 @@ const CURRICULUM = {
   };
 
   function renderTopicGrid(grade) {
-    const data  = CURRICULUM[currentSubject][grade];
+    const data  = CURRICULUM_MAP[currentSubject][grade];
     const grid  = document.getElementById('topic-grid');
     const label = document.getElementById('topicGridLabel');
     const t     = getTheme();
@@ -4565,7 +4615,7 @@ const CURRICULUM = {
   // â”€â”€ FETCH QUESTIONS â”€â”€
   async function fetchQuestionBatch(recoveryContext) {
     generating = true;
-    const data  = CURRICULUM[currentSubject][currentTopic.band];
+    const data  = CURRICULUM_MAP[currentSubject][currentTopic.band];
     const grade = data.label;
     const t     = getTheme();
     const isYoung = currentTheme === 'k2';
@@ -4906,7 +4956,7 @@ Return ONLY this JSON array, no markdown, no backticks:
     try {
       const gradingPrompt = `You are grading a student's free response answer for a ${currentSubject} question.
 
-Grade Level: ${currentTopic.band} (${CURRICULUM[currentSubject][currentTopic.band]?.label || currentTopic.band})
+Grade Level: ${currentTopic.band} (${CURRICULUM_MAP[currentSubject][currentTopic.band]?.label || currentTopic.band})
 Topic: ${currentTopic.name}
 
 Question: ${q.question}
