@@ -469,6 +469,14 @@
     .topic-name { font-weight:700; color:var(--pt-text, var(--navy)); font-size:0.9rem; margin-bottom:0.3rem; }
     .topic-desc { font-size:0.75rem; color:var(--pt-subtext, var(--text-light)); line-height:1.5; }
 
+    /* ── Topic Progress Indicators ── */
+    .topic-name-row { display:flex; align-items:center; justify-content:space-between; gap:0.4rem; margin-bottom:0.3rem; }
+    .topic-name-row .topic-name { margin-bottom:0; }
+    .tpi-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; display:inline-block; }
+    .tpi-orange { background:#FF9800; }
+    .tpi-green  { background:#4CAF50; }
+    .tpi-star   { color:#C9A84C; font-size:1rem; line-height:1; flex-shrink:0; }
+
     /* â”€â”€ Pre-load Bar â”€â”€ */
     .preload-bar { height:3px; background:rgba(0,0,0,0.08); border-radius:100px; margin-top:0.75rem; overflow:hidden; }
     .preload-fill { height:100%; background:var(--pt-primary, var(--gold)); border-radius:100px; width:0%; transition:width 0.8s ease; }
@@ -4528,9 +4536,10 @@ const CURRICULUM = {
   let milestonePassed90 = false;
   let questionBuffer    = [];
   let generating        = false;
-  let currentTheme      = '68';
-  let currentGradeKey   = null;
-  let preloadProgress   = 0;
+  let currentTheme          = '68';
+  let currentGradeKey       = null;
+  let preloadProgress       = 0;
+  let practiceProgressCache = {};
 
   function getTheme() { return THEME_COPY[currentTheme] || THEME_COPY['68']; }
 
@@ -4617,6 +4626,14 @@ const CURRICULUM = {
     }, 500);
   };
 
+  function topicProgressIndicator(topicId) {
+    const p = practiceProgressCache[topicId];
+    if (!p || !p.attempts) return '';
+    if (p.mastered)          return '<span class="tpi-star" title="Mastered">&#9733;</span>';
+    if (p.bestScore >= 70)   return '<span class="tpi-dot tpi-green" title="Passed"></span>';
+    return '<span class="tpi-dot tpi-orange" title="In progress"></span>';
+  }
+
   function renderTopicGrid(grade) {
     const data  = CURRICULUM_MAP[currentSubject][grade];
     const grid  = document.getElementById('topic-grid');
@@ -4628,9 +4645,10 @@ const CURRICULUM = {
     for (const [cat, topics] of Object.entries(data.categories)) {
       html += `<div style="grid-column:1/-1;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--pt-subtext, var(--text-light));margin-top:0.75rem;margin-bottom:0.25rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(0,0,0,0.07);">${cat}</div>`;
       topics.forEach(topic => {
+        const indicator = topicProgressIndicator(topic.id);
         html += `<button class="topic-card" onclick="selectTopic('${topic.id}','${topic.name.replace(/'/g,"\\'")}','${cat.replace(/'/g,"\\'")}','${grade}')">
           <div class="topic-cat">${cat}</div>
-          <div class="topic-name">${topic.name}</div>
+          <div class="topic-name-row"><span class="topic-name">${topic.name}</span>${indicator}</div>
           <div class="topic-desc">${topic.desc}</div>
         </button>`;
       });
@@ -4903,6 +4921,7 @@ Return ONLY this JSON array, nothing else:
 
   // â”€â”€ MILESTONES â”€â”€
   function showPassMilestone() {
+    savePracticeSession();
     const t = getTheme();
     document.getElementById('practice-quiz').style.display      = 'none';
     document.getElementById('practice-milestone').style.display = 'block';
@@ -4913,6 +4932,7 @@ Return ONLY this JSON array, nothing else:
   }
 
   function showMastery() {
+    savePracticeSession();
     const t = getTheme();
     document.getElementById('practice-quiz').style.display      = 'none';
     document.getElementById('practice-milestone').style.display = 'block';
@@ -4942,6 +4962,8 @@ Return ONLY this JSON array, nothing else:
 
   // â”€â”€ EXIT â”€â”€
   window.exitPractice = function() {
+    // Save on early exit (no milestone reached) if they answered at least one question
+    if (!milestonePassed70 && !milestonePassed90 && totalAnswered > 0) savePracticeSession();
     ['practice-quiz','practice-preloading','practice-milestone'].forEach(id => {
       document.getElementById(id).style.display = 'none';
     });
@@ -5211,6 +5233,52 @@ Respond ONLY with this JSON:
   }
   window.awardPracticePoints = awardPracticePoints;
 
+  // ── PRACTICE PROGRESS SAVING ──────────────────────────────────────────
+  async function loadPracticeProgress() {
+    const user = auth.currentUser;
+    if (!user) return;
+    try {
+      const snaps = await getDocs(collection(db, 'practice_results', user.uid, 'summary'));
+      practiceProgressCache = {};
+      snaps.forEach(d => { practiceProgressCache[d.id] = d.data(); });
+    } catch(e) { console.error('Progress load error:', e); }
+  }
+
+  async function savePracticeSession() {
+    const user = auth.currentUser;
+    if (!user || !currentTopic) return;
+    const score = Math.round(smartScore);
+    try {
+      // Session record
+      await setDoc(doc(collection(db, 'practice_results', user.uid, 'sessions')), {
+        topicId:        currentTopic.id,
+        topicName:      currentTopic.name,
+        grade:          currentBand,
+        subject:        currentSubject,
+        score,
+        totalQuestions: totalAnswered,
+        datestamp:      serverTimestamp(),
+        difficultyBand: currentTheme
+      });
+      // Summary: read → compute best → write
+      const summaryRef  = doc(db, 'practice_results', user.uid, 'summary', currentTopic.id);
+      const prevSnap    = await getDoc(summaryRef);
+      const prev        = prevSnap.exists() ? prevSnap.data() : {};
+      const newSummary  = {
+        topicId:     currentTopic.id,
+        topicName:   currentTopic.name,
+        grade:       currentBand,
+        subject:     currentSubject,
+        bestScore:   Math.max(score, prev.bestScore || 0),
+        attempts:    (prev.attempts  || 0) + 1,
+        mastered:    score >= 90 || (prev.mastered  || false),
+        lastAttempt: serverTimestamp()
+      };
+      await setDoc(summaryRef, newSummary);
+      practiceProgressCache[currentTopic.id] = newSummary;
+    } catch(e) { console.error('Session save error:', e); }
+  }
+
   async function loadLeaderboards() {
     try {
       const user = auth.currentUser;
@@ -5277,7 +5345,8 @@ Respond ONLY with this JSON:
   window.showPage = function(pageId) {
     _origShowPageLb(pageId);
     if(pageId==='leaderboard') loadLeaderboards();
-    if(pageId==='homework') loadHomework();
+    if(pageId==='homework')    loadHomework();
+    if(pageId==='practice')    loadPracticeProgress();
   };
 
   // ══════════════════════════════════════════
