@@ -4445,7 +4445,7 @@ const CURRICULUM = {
     '35': {
       homeTitle: 'Practice Center',
       homeSub: 'Pick a subject, choose your grade, and start earning your score!',
-      mathName: 'Mathematics', mathDesc: 'Multiplication, fractions, decimals, and more &mdash; 3rd through 5th grade',
+      mathName: 'Mathematics', mathDesc: 'Multiplication, fractions, decimals, and more',
       readingName: 'Reading', readingDesc: 'Comprehension, vocabulary, and analysis',
       writingName: 'Writing', writingDesc: 'Grammar, paragraphs, and essays',
       selectorSub: 'Select your grade level',
@@ -4471,7 +4471,7 @@ const CURRICULUM = {
     '68': {
       homeTitle: 'Practice',
       homeSub: 'Choose a subject, pick your grade, and start building mastery. Questions are unlimited and AI-generated.',
-      mathName: 'Mathematics', mathDesc: 'Integers through functions &mdash; 6th through 8th grade',
+      mathName: 'Mathematics', mathDesc: 'Ratios, equations, geometry, and functions',
       readingName: 'Reading', readingDesc: 'Comprehension, inference, and analysis',
       writingName: 'Writing', writingDesc: 'Grammar, mechanics, and essay structure',
       selectorSub: 'Select your grade level',
@@ -4694,7 +4694,7 @@ const CURRICULUM = {
     document.getElementById('practice-preloading').style.display = 'none';
     document.getElementById('practice-quiz').style.display       = 'block';
 
-    document.getElementById('quizTopicLabel').textContent = `${name} Â· ${category}`;
+    document.getElementById('quizTopicLabel').textContent = `${name} · ${category}`;
     updateScoreDisplay();
     renderNextQuestion();
   };
@@ -5524,7 +5524,7 @@ Respond ONLY with this JSON:
       document.getElementById('practice-preloading').style.display = 'none';
       document.getElementById('practice-quiz').style.display       = 'block';
       document.getElementById('practice-milestone').style.display  = 'none';
-      document.getElementById('quizTopicLabel').textContent        = `${name} Â· ${category}`;
+      document.getElementById('quizTopicLabel').textContent        = `${name} · ${category}`;
       updateScoreDisplay();
       renderNextQuestion();
       fetchQuestionBatch(); // refill buffer silently
