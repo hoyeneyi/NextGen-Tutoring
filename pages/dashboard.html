@@ -1067,7 +1067,7 @@
         </div>
         <div class="announce-item">
           <div class="announce-dot"></div>
-          <div><div class="announce-title">Pricing</div><div class="announce-text">$50/session Â· 5-pack $225 Â· 10-pack $400 Â· Multiple children $75/session</div></div>
+          <div><div class="announce-title">Pricing</div><div class="announce-text">$50/session &middot; 5-pack $225 &middot; 10-pack $400 &middot; Multiple children $75/session</div></div>
         </div>
         <div class="announce-item">
           <div class="announce-dot"></div>
@@ -1552,7 +1552,7 @@
         const profileRate    = document.getElementById('profileRate');
         if (profileGrade)   profileGrade.textContent   = studentData.grade || '—';
         if (profileSubject) profileSubject.textContent = subjectDisplay;
-        if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : '&mdash;';
+        if (profileRate)    profileRate.textContent    = studentData.rate ? `$${studentData.rate}/session` : '—';
         const profileSessions = document.getElementById('profileSessions');
         if (profileSessions) profileSessions.textContent = studentData.sessions || 0;
       }
@@ -4444,9 +4444,9 @@ const CURRICULUM = {
       masterLabel: 'Master at 90!',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Remember This!',
-      recoveryMsg: 'Let\'s try a similar one &mdash; you\'ve got this!',
+      recoveryMsg: 'Let\'s try a similar one — you\'ve got this!',
       correctMsgs: ['Amazing job!', 'You got it!', 'Awesome!', 'Way to go!', 'Incredible!'],
-      wrongMsgs: ['Good try! Here\'s a hint:', 'Not quite &mdash; let\'s learn this one:', 'Almost! Here\'s why:'],
+      wrongMsgs: ['Good try! Here\'s a hint:', 'Not quite — let\'s learn this one:', 'Almost! Here\'s why:'],
       streakMsg: (n) => n >= 3 ? `${n} in a row! You\'re on fire!` : 'Correct!',
       pass70Title: 'Great Job!',
       pass70Msg: (score) => `Your score is ${score} out of 100! Keep going to become a master at 90!`,
@@ -4470,13 +4470,13 @@ const CURRICULUM = {
       masterLabel: 'Master at 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Key Concept',
-      recoveryMsg: 'Try a similar question &mdash; prove you\'ve got it!',
+      recoveryMsg: 'Try a similar question — prove you\'ve got it!',
       correctMsgs: ['Correct! Nice work!', 'That\'s right!', 'Well done!', 'Great answer!'],
-      wrongMsgs: ['Not quite &mdash; here\'s why:', 'Good try! Here\'s the explanation:', 'Close! Here\'s what to remember:'],
-      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row &mdash; keep it up!` : 'Correct!',
+      wrongMsgs: ['Not quite — here\'s why:', 'Good try! Here\'s the explanation:', 'Close! Here\'s what to remember:'],
+      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row — keep it up!` : 'Correct!',
       pass70Title: 'Topic Passed!',
-      pass70Msg: (score) => `Your SmartScore is ${score}/100 &mdash; you passed! Keep going to reach Mastery at 90.`,
-      pass70Btn: 'Keep Going &mdash; Get to 90!',
+      pass70Msg: (score) => `Your SmartScore is ${score}/100 — you passed! Keep going to reach Mastery at 90.`,
+      pass70Btn: 'Keep Going — Get to 90!',
       master90Title: 'Mastery Achieved!',
       master90Msg: (topic, score) => `Excellent work! You mastered ${topic} with a SmartScore of ${score}/100. Pick a new topic to keep building!`,
       master90Btn: 'Practice This Topic More',
@@ -4496,13 +4496,13 @@ const CURRICULUM = {
       masterLabel: 'Master: 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Concept Reminder',
-      recoveryMsg: 'Similar question &mdash; show me you\'ve got it this time.',
+      recoveryMsg: 'Similar question — show me you\'ve got it this time.',
       correctMsgs: ['Correct!', 'That\'s right.', 'Well done.', 'Correct.'],
-      wrongMsgs: ['Not quite &mdash; here\'s why:', 'Incorrect. Here\'s the explanation:', 'Not this time. Here\'s what to know:'],
-      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row &mdash; keep it up.` : 'Correct!',
+      wrongMsgs: ['Not quite — here\'s why:', 'Incorrect. Here\'s the explanation:', 'Not this time. Here\'s what to know:'],
+      streakMsg: (n) => n >= 3 ? `Correct! ${n} in a row — keep it up.` : 'Correct!',
       pass70Title: 'Topic Passed!',
       pass70Msg: (score) => `Your SmartScore is ${score}/100. You\'ve passed this topic. Keep going to hit Mastery at 90.`,
-      pass70Btn: 'Keep Going &mdash; Reach Mastery',
+      pass70Btn: 'Keep Going — Reach Mastery',
       master90Title: 'Mastery Achieved!',
       master90Msg: (topic, score) => `Your SmartScore is ${score}/100. You have mastered ${topic}. Pick a new topic and keep building.`,
       master90Btn: 'Continue Practicing',
@@ -4522,7 +4522,7 @@ const CURRICULUM = {
       masterLabel: 'Master: 90',
       scoreNeed: 'need 70 to pass',
       conceptLabel: 'Concept',
-      recoveryMsg: 'Recovery question &mdash; demonstrate understanding.',
+      recoveryMsg: 'Recovery question — demonstrate understanding.',
       correctMsgs: ['Correct.', 'That\'s right.', 'Correct answer.', 'Well done.'],
       wrongMsgs: ['Incorrect. Explanation:', 'Not quite. Here\'s why:', 'Wrong answer. Here\'s the reasoning:'],
       streakMsg: (n) => n >= 3 ? `Correct. ${n}-question streak.` : 'Correct.',
@@ -4800,7 +4800,7 @@ Return ONLY this JSON array, nothing else:
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
           max_tokens: 2000,
-          system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON &mdash; no markdown, no backticks, no preamble.',
+          system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON — no markdown, no backticks, no preamble.',
           messages: [{ role: 'user', content: prompt }]
         })
       });
@@ -5049,9 +5049,9 @@ Return ONLY this JSON array, nothing else:
       if (currentTheme === '35') {
         frLabel.textContent = 'Write Your Answer';
       } else if (currentTheme === '912') {
-        frLabel.textContent = 'Free Response &mdash; Type your complete answer';
+        frLabel.textContent = 'Free Response — Type your complete answer';
       } else {
-        frLabel.textContent = 'Mastery Mode &mdash; Write Your Answer';
+        frLabel.textContent = 'Mastery Mode — Write Your Answer';
       }
 
       // Focus the textarea
@@ -5096,7 +5096,7 @@ Topic: ${currentTopic.name}
 
 Question: ${q.question}
 
-Correct Answer: ${q.correct} &mdash; ${q.choices.find(c => c.startsWith(q.correct))}
+Correct Answer: ${q.correct} — ${q.choices.find(c => c.startsWith(q.correct))}
 Full Explanation: ${q.explanation}
 
 Student's Answer: "${studentAnswer}"
@@ -5110,7 +5110,7 @@ Respond ONLY with this JSON:
 {
   "grade": "CORRECT" or "PARTIAL" or "INCORRECT",
   "score_delta": number between -8 and 12,
-  "feedback": "2-3 sentence feedback specific to what the student wrote &mdash; what was right, what was missing or wrong, and what to remember",
+  "feedback": "2-3 sentence feedback specific to what the student wrote — what was right, what was missing or wrong, and what to remember",
   "correct_answer_summary": "A clear 1-sentence summary of the correct answer in plain language"
 }`;
 
@@ -5320,7 +5320,7 @@ Respond ONLY with this JSON:
       const now=new Date(), next=new Date(now.getFullYear(),now.getMonth()+1,1);
       const days=Math.ceil((next-now)/864e5);
       const el=document.getElementById('lb-private-reset');
-      if(el) el.textContent=`Resets in ${days} day${days!==1?'s':''} &mdash; ${next.toLocaleDateString('en-US',{month:'long',day:'numeric'})}`;
+      if(el) el.textContent=`Resets in ${days} day${days!==1?'s':''} — ${next.toLocaleDateString('en-US',{month:'long',day:'numeric'})}`;
     } catch(e) { console.error('LB load error:',e); }
   }
 
