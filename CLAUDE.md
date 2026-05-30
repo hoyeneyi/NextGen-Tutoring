@@ -184,6 +184,29 @@ The practice system lives inside `pages/dashboard.html`.
 
 ---
 
+## QUESTION DESIGN PRINCIPLES
+
+These apply permanently to every grade, every session, every topic.
+
+1. **Template-based generation only.** The AI fills variables into structured question types (Type A–E defined in `buildPrompt()`). It never freely invents question format. This prevents lazy, generic, or pattern-based questions.
+
+2. **Wrong answers must reflect real student misconceptions**, not random nearby numbers. Examples:
+   - Counting: off-by-one errors (skipping a count, double-counting)
+   - Addition: adding only one operand, reversing the operation
+   - Reading: visually similar letters, character/event confusion, wrong meaning in context
+
+3. **Never generate a sequence in the question stem.** Do not write "3, 4, 5, ___" and ask what comes next. Ask about the concept directly: "What number comes after 5?"
+
+4. **Every question must require genuine thinking.** A student cannot answer correctly by reading the stem for context clues or by scanning the choices for obvious patterns.
+
+5. **The derivability test.** Before finalizing any question, apply this check: *"Could a student answer this correctly without understanding the concept?"* If yes — regenerate the question.
+
+6. **Variety is required.** No two questions in the same session may use the same template type AND the same scenario. Rotate types (A, B, C, D, E) across the 5 questions.
+
+7. **Reference standard: IXL and Khan Academy.** Questions must meet the specificity bar set by those platforms — skill-targeted, clearly worded, genuinely challenging at grade level. If a question would feel at home on either platform, it passes. If it feels like a lazy placeholder, regenerate it.
+
+---
+
 ## CURRICULUM STANDARD
 
 **All curriculum is aligned to Common Core State Standards (CCSS).**
@@ -271,6 +294,7 @@ This platform should stay ahead of the curve. When building features, consider:
 - Topic progress indicators refresh on grid re-render after session
 
 ### Broken / Needs Work:
+- Firestore rules must be deployed via Firebase Console or `firebase deploy --only firestore:rules` — file is created, not yet live
 - No difficulty bands per topic
 - No spaced repetition
 - No parent portal

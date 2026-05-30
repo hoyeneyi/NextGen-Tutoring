@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── USER PROFILES ──
+    // Each authenticated user reads and writes only their own document.
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ── STUDENTS ──
+    // Dashboard queries this collection by email to find the student record.
+    // Authenticated users may read; admin portal (also client-side) may write.
+    match /students/{studentId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // ── TUTORING SESSIONS ──
+    match /sessions/{sessionId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // ── SESSION NOTES ──
+    // Hafeez writes notes after each session; students read their own.
+    match /sessionNotes/{noteId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // ── HOMEWORK ──
+    // Admin creates homework; students read assignments matched by email.
+    match /homework/{hwId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // ── LEADERBOARD ──
+    // All authenticated users can read the full leaderboard.
+    // Each user may only write to their own leaderboard entry.
+    match /leaderboard/{uid} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ── PRACTICE RESULTS ──
+    // Users can only read and write their own practice data.
+    // Covers both subcollections:
+    //   practice_results/{uid}/sessions/{sessionId}
+    //   practice_results/{uid}/summary/{topicId}
+    match /practice_results/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /practice_results/{uid}/{subcollection}/{docId} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}
