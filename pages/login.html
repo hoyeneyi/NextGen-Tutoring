@@ -224,6 +224,23 @@
     /* ── PW MATCH ERROR ── */
     .pw-match-error { font-size:0.72rem; color:var(--error); margin-top:4px; display:none; }
 
+    /* ── GOOGLE BUTTON ── */
+    .google-btn {
+      width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      font-family: var(--font-body); font-size: 0.9rem; font-weight: 600;
+      color: var(--white); cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .google-btn:hover { background: rgba(255,255,255,0.09); border-color: rgba(201,168,76,0.45); transform: translateY(-1px); }
+    .google-btn:active { transform: translateY(0); }
+    .google-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .google-btn svg { flex-shrink: 0; }
+
     @media (max-width:480px) {
       .auth-card { padding:1.75rem; }
       .navbar { padding:0 1.25rem; }
@@ -303,6 +320,17 @@
         <h1 class="panel-title">Welcome back.</h1>
         <p class="panel-sub">Sign in to access your dashboard, lessons, and sessions.</p>
 
+        <button type="button" class="google-btn" id="googleLoginBtn" onclick="handleGoogleAuth()">
+          <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M16.51 8.15H9.18v3.4h4.19c-.18 1.02-.76 1.89-1.6 2.47v2.06h2.6c1.52-1.4 2.4-3.47 2.4-5.93 0-.55-.05-1.08-.26-1.99z" fill="#4285F4"/>
+            <path d="M9.18 17.5c2.19 0 4.02-.72 5.36-1.96l-2.6-2.06c-.72.48-1.64.77-2.76.77-2.12 0-3.91-1.43-4.55-3.35H2v2.13C3.33 15.79 6.05 17.5 9.18 17.5z" fill="#34A853"/>
+            <path d="M4.63 10.89c-.16-.48-.25-.99-.25-1.52s.09-1.04.25-1.52V5.72H2C1.36 7.01 1 8.46 1 10.01s.36 3 1 4.29l2.63-3.41z" fill="#FBBC04"/>
+            <path d="M9.18 4.14c1.19 0 2.26.41 3.1 1.21l2.32-2.32C13.2 1.68 11.37.87 9.18.87 6.05.87 3.33 2.58 2 5.72l2.63 2.13c.64-1.92 2.43-3.35 4.55-3.35z" fill="#E94235"/>
+          </svg>
+          Continue with Google
+        </button>
+        <div class="divider">or</div>
+
         <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
           <div class="fg">
             <label class="fl" for="loginEmail">Email Address</label>
@@ -335,6 +363,17 @@
       <div class="panel" id="signupPanel">
         <h1 class="panel-title">Get started.</h1>
         <p class="panel-sub">Create your account. Join NextGen Tutoring and access your personalized student portal.</p>
+
+        <button type="button" class="google-btn" id="googleSignupBtn" onclick="handleGoogleAuth()">
+          <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M16.51 8.15H9.18v3.4h4.19c-.18 1.02-.76 1.89-1.6 2.47v2.06h2.6c1.52-1.4 2.4-3.47 2.4-5.93 0-.55-.05-1.08-.26-1.99z" fill="#4285F4"/>
+            <path d="M9.18 17.5c2.19 0 4.02-.72 5.36-1.96l-2.6-2.06c-.72.48-1.64.77-2.76.77-2.12 0-3.91-1.43-4.55-3.35H2v2.13C3.33 15.79 6.05 17.5 9.18 17.5z" fill="#34A853"/>
+            <path d="M4.63 10.89c-.16-.48-.25-.99-.25-1.52s.09-1.04.25-1.52V5.72H2C1.36 7.01 1 8.46 1 10.01s.36 3 1 4.29l2.63-3.41z" fill="#FBBC04"/>
+            <path d="M9.18 4.14c1.19 0 2.26.41 3.1 1.21l2.32-2.32C13.2 1.68 11.37.87 9.18.87 6.05.87 3.33 2.58 2 5.72l2.63 2.13c.64-1.92 2.43-3.35 4.55-3.35z" fill="#E94235"/>
+          </svg>
+          Continue with Google
+        </button>
+        <div class="divider">or</div>
 
         <form id="signupForm" onsubmit="handleSignup(event)" novalidate>
           <div class="fg">
@@ -462,7 +501,9 @@
       browserLocalPersistence,
       browserSessionPersistence,
       onAuthStateChanged,
-      updateProfile
+      updateProfile,
+      GoogleAuthProvider,
+      signInWithPopup
     } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -581,17 +622,42 @@
       }
     };
 
+    // ── GOOGLE SIGN IN ──
+    window.handleGoogleAuth = async function() {
+      const btns = document.querySelectorAll('.google-btn');
+      btns.forEach(b => b.disabled = true);
+      try {
+        const provider = new GoogleAuthProvider();
+        const cred = await signInWithPopup(auth, provider);
+        // Create or merge user record (merge: true is safe for returning users)
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          name:      cred.user.displayName || cred.user.email.split('@')[0],
+          email:     cred.user.email,
+          role:      'student',
+          createdAt: serverTimestamp()
+        }, { merge: true });
+        showToast('Welcome!', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 800);
+      } catch (err) {
+        btns.forEach(b => b.disabled = false);
+        if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') return;
+        showToast(friendlyError(err.code), 'error');
+      }
+    };
+
     // ── FRIENDLY ERRORS ──
     function friendlyError(code) {
       const map = {
-        'auth/invalid-email':         'Please enter a valid email address.',
-        'auth/user-not-found':        'No account found with that email.',
-        'auth/wrong-password':        'Incorrect password. Please try again.',
-        'auth/invalid-credential':    'Incorrect email or password.',
-        'auth/email-already-in-use':  'An account with that email already exists.',
-        'auth/weak-password':         'Password must be at least 6 characters.',
-        'auth/too-many-requests':     'Too many attempts. Please try again later.',
-        'auth/network-request-failed':'Network error. Check your connection.',
+        'auth/invalid-email':          'Please enter a valid email address.',
+        'auth/user-not-found':         'No account found with that email.',
+        'auth/wrong-password':         'Incorrect password. Please try again.',
+        'auth/invalid-credential':     'Incorrect email or password.',
+        'auth/email-already-in-use':   'An account with that email already exists.',
+        'auth/weak-password':          'Password must be at least 6 characters.',
+        'auth/too-many-requests':      'Too many attempts. Please try again later.',
+        'auth/network-request-failed': 'Network error. Check your connection.',
+        'auth/popup-blocked':          'Please allow popups to sign in with Google.',
+        'auth/account-exists-with-different-credential': 'An account already exists with that email. Sign in with email/password.',
       };
       return map[code] || 'Something went wrong. Please try again.';
     }

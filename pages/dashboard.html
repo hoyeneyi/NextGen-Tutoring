@@ -4975,14 +4975,18 @@ Return ONLY this JSON array, nothing else:
   }
 
   // â”€â”€ EXIT â”€â”€
-  window.exitPractice = function() {
+  window.exitPractice = async function() {
     // Save on early exit (no milestone reached) if they answered at least one question
-    if (!milestonePassed70 && !milestonePassed90 && totalAnswered > 0) savePracticeSession();
+    if (!milestonePassed70 && !milestonePassed90 && totalAnswered > 0) {
+      await savePracticeSession(); // await so cache is updated before re-render
+    }
     ['practice-quiz','practice-preloading','practice-milestone'].forEach(id => {
       document.getElementById(id).style.display = 'none';
     });
     document.getElementById('practice-selector').style.display = 'block';
     document.getElementById('practice-home').style.display     = 'none';
+    // Re-render grid with updated indicators before clearing topic state
+    if (currentSubject && currentBand) renderTopicGrid(currentBand);
     questionBuffer = []; currentTopic = null;
     smartScore = 0; streak = 0;
   };
@@ -5251,20 +5255,28 @@ Respond ONLY with this JSON:
   async function loadPracticeProgress() {
     const user = auth.currentUser;
     if (!user) return;
+    console.log('[Practice] Loading progress from Firestore for uid:', user.uid);
     try {
       const snaps = await getDocs(collection(db, 'practice_results', user.uid, 'summary'));
       practiceProgressCache = {};
       snaps.forEach(d => { practiceProgressCache[d.id] = d.data(); });
-    } catch(e) { console.error('Progress load error:', e); }
+      console.log('[Practice] Loaded', Object.keys(practiceProgressCache).length, 'topic records:', Object.keys(practiceProgressCache));
+      // Re-render the topic grid if it's currently visible so indicators appear
+      if (currentSubject && currentBand && document.getElementById('practice-selector').style.display !== 'none') {
+        renderTopicGrid(currentBand);
+      }
+    } catch(e) { console.error('[Practice] Progress load error:', e); }
   }
 
   async function savePracticeSession() {
     const user = auth.currentUser;
     if (!user || !currentTopic) return;
     const score = Math.round(smartScore);
+    console.log('[Practice] Saving session — topic:', currentTopic.id, '| score:', score, '| questions:', totalAnswered);
     try {
-      // Session record
-      await setDoc(doc(collection(db, 'practice_results', user.uid, 'sessions')), {
+      // Session record (auto-ID document)
+      const sessionRef = doc(collection(db, 'practice_results', user.uid, 'sessions'));
+      await setDoc(sessionRef, {
         topicId:        currentTopic.id,
         topicName:      currentTopic.name,
         grade:          currentBand,
@@ -5274,23 +5286,28 @@ Respond ONLY with this JSON:
         datestamp:      serverTimestamp(),
         difficultyBand: currentTheme
       });
+      console.log('[Practice] Session record written to Firestore:', sessionRef.path);
+
       // Summary: read → compute best → write
-      const summaryRef  = doc(db, 'practice_results', user.uid, 'summary', currentTopic.id);
-      const prevSnap    = await getDoc(summaryRef);
-      const prev        = prevSnap.exists() ? prevSnap.data() : {};
-      const newSummary  = {
+      const summaryRef = doc(db, 'practice_results', user.uid, 'summary', currentTopic.id);
+      const prevSnap   = await getDoc(summaryRef);
+      const prev       = prevSnap.exists() ? prevSnap.data() : {};
+      const newSummary = {
         topicId:     currentTopic.id,
         topicName:   currentTopic.name,
         grade:       currentBand,
         subject:     currentSubject,
         bestScore:   Math.max(score, prev.bestScore || 0),
-        attempts:    (prev.attempts  || 0) + 1,
+        attempts:    (prev.attempts || 0) + 1,
         mastered:    score >= 90 || (prev.mastered  || false),
         lastAttempt: serverTimestamp()
       };
       await setDoc(summaryRef, newSummary);
+      console.log('[Practice] Summary written to Firestore:', summaryRef.path, '| bestScore:', newSummary.bestScore, '| mastered:', newSummary.mastered, '| attempts:', newSummary.attempts);
+
+      // Update in-memory cache immediately so indicators refresh on next render
       practiceProgressCache[currentTopic.id] = newSummary;
-    } catch(e) { console.error('Session save error:', e); }
+    } catch(e) { console.error('[Practice] Session save error:', e); }
   }
 
   async function loadLeaderboards() {

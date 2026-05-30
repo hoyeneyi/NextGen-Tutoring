@@ -260,14 +260,15 @@ This platform should stay ahead of the curve. When building features, consider:
 ## CURRENT STATUS (May 2026)
 
 ### Working:
-- Login/auth (Firebase)
+- Login/auth (Firebase) — email/password + Google Sign In
 - Student dashboard shell
 - Homework loop (PDF gen → GitHub Pages → Firestore)
 - Admin portal
 - Cloudflare Worker proxy (healthy, 0 errors)
 - Kindergarten CCSS curriculum (QA complete — K.CC, K.OA, K.NBT, K.MD, K.G, K.RF, K.RI, K.RL, K.W)
-- 1st grade CCSS curriculum (built, needs QA)
-- Practice session results saved to Firestore with topic progress
+- 1st grade CCSS curriculum (17 Math + 15 ELA topics, QA in progress)
+- Practice session results saved to Firestore with topic progress indicators
+- Topic progress indicators refresh on grid re-render after session
 
 ### Broken / Needs Work:
 - No difficulty bands per topic
