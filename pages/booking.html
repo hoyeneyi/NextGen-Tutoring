@@ -876,6 +876,9 @@
       const [sh, sm] = sched.start;
       const tutorEnd = sched.end[0] * 60 + sched.end[1];
 
+      // Name of the location being requested, used for location-aware buffer comparison
+      const locName = LOCATIONS[locId]?.name || locId;
+
       // Effective window end (library hours may tighten it)
       const libClose = LIBRARY_CLOSES[locId]?.[dow];
       if (libClose === 'CLOSED') return [];
@@ -888,27 +891,37 @@
                        date.getDate()     === now.getDate());
       const minStartMins = isToday ? (now.getHours() * 60 + now.getMinutes() + 120) : 0;
 
-      // Build map of existing confirmed booking start-times (minutes) → locationId
-      const existingMap = {}; // startMins → locId
+      // Build map of existing confirmed booking start-times (minutes) → location name
+      const existingMap = {}; // startMins → location name
       for (const b of confirmedBookings) {
-        if (b.requestedTime && b.location && b.location.id) {
-          existingMap[timeToMins(b.requestedTime)] = b.location.id;
+        if (b.requestedTime && b.location && b.location.name) {
+          existingMap[timeToMins(b.requestedTime)] = b.location.name;
         }
       }
 
       // Build set of slot start-times blocked by Google Calendar events.
-      // A slot at T overlaps an event [evtStart, evtEnd) when T < evtEnd AND T+60 > evtStart.
+      // Gcal events have no Firestore location → treated as "different location" (conservative).
+      // Blocks: (a) direct overlap, (b) slot ending exactly when gcal starts, (c) slot starting
+      // exactly when gcal ends — same adjacency rule as different-location Firestore bookings.
       const gcalBlocked = new Set();
       for (const evt of calendarEvents) {
         const isAllDay   = !evt.start || /^\d{4}-\d{2}-\d{2}$/.test(evt.start);
         const evtStart   = isAllDay ? 0       : calEvtMins(evt.start);
         const evtEnd     = isAllDay ? 24 * 60 : calEvtMins(evt.end);
-        for (let t = sh * 60 + sm; t + 60 <= effectiveEnd; t += 60) {
-          if (t < evtEnd && t + 60 > evtStart) gcalBlocked.add(t);
+        const schedStart = sh * 60 + sm;
+        for (let t = schedStart; t + 60 <= effectiveEnd; t += 60) {
+          if (t < evtEnd && t + 60 > evtStart) { gcalBlocked.add(t); continue; } // direct overlap
+          if (t + 60 === evtStart)              { gcalBlocked.add(t); continue; } // slot ends when gcal starts
+          if (t === evtEnd)                     { gcalBlocked.add(t); }            // slot starts when gcal ends
         }
         // Also check the off-sequence final slot
         const fs = effectiveEnd - 60;
-        if (fs >= (sh * 60 + sm) && fs < evtEnd && fs + 60 > evtStart) gcalBlocked.add(fs);
+        if (fs >= schedStart &&
+            ((fs < evtEnd && fs + 60 > evtStart) ||
+              fs + 60 === evtStart ||
+              fs === evtEnd)) {
+          gcalBlocked.add(fs);
+        }
       }
 
       // Generate all possible slots
@@ -924,8 +937,8 @@
         const before = existingMap[cur - 60]; // booking ending at cur
         const after  = existingMap[cur + 60]; // booking starting right after
 
-        const blockedByBefore = before !== undefined && needsBuffer(locId, before);
-        const blockedByAfter  = after  !== undefined && needsBuffer(locId, after);
+        const blockedByBefore = before !== undefined && needsBuffer(locName, before);
+        const blockedByAfter  = after  !== undefined && needsBuffer(locName, after);
 
         if (!blockedByBefore && !blockedByAfter) {
           slots.push(minsToTimeStr(cur));
@@ -944,8 +957,8 @@
           !gcalBlocked.has(finalSlotStart)) {
         const fBefore = existingMap[finalSlotStart - 60];
         const fAfter  = existingMap[finalSlotStart + 60];
-        if (!(fBefore !== undefined && needsBuffer(locId, fBefore)) &&
-            !(fAfter  !== undefined && needsBuffer(locId, fAfter))) {
+        if (!(fBefore !== undefined && needsBuffer(locName, fBefore)) &&
+            !(fAfter  !== undefined && needsBuffer(locName, fAfter))) {
           slots.push(minsToTimeStr(finalSlotStart));
         }
       }
@@ -953,10 +966,11 @@
       return slots;
     }
 
-    // Buffer needed between two sessions at different physical locations
-    function needsBuffer(locA, locB) {
-      if (locA === 'virtual' || locB === 'virtual') return false;
-      return locA !== locB;
+    // Buffer needed between sessions at different physical locations.
+    // Compares location names; "Virtual Session" = no buffer regardless of direction.
+    function needsBuffer(locNameA, locNameB) {
+      if (locNameA.startsWith('Virtual') || locNameB.startsWith('Virtual')) return false;
+      return locNameA !== locNameB;
     }
 
     function renderSlots(slots) {
