@@ -166,6 +166,13 @@
     .slots-loading-dot:nth-child(2) { animation-delay: 0.2s; }
     .slots-loading-dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes pulse { 0%,80%,100% { opacity:0.2; transform:scale(0.8); } 40% { opacity:1; transform:scale(1); } }
+    .gcal-sync-badge {
+      display: none; align-items: center; gap: 5px;
+      font-size: 0.7rem; font-weight: 600; color: #1A5C38;
+      background: rgba(26,92,56,0.07); border: 1px solid rgba(26,92,56,0.18);
+      padding: 0.22rem 0.7rem; border-radius: 100px; margin-top: 0.85rem;
+    }
+    .gcal-sync-badge svg { width: 11px; height: 11px; flex-shrink: 0; }
 
     /* ── SELECTION SUMMARY TAGS ── */
     .bk-selection-summary { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
@@ -407,6 +414,11 @@
           <div class="slots-loading-dot"></div>
           Checking availability...
         </div>
+      </div>
+      <!-- Shown when Google Calendar events were successfully fetched -->
+      <div class="gcal-sync-badge" id="gcalSyncBadge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Synced with Google Calendar
       </div>
     </div>
 
@@ -817,13 +829,18 @@
       // Fetch confirmed Firestore bookings (buffer logic) + Google Calendar events
       // in parallel. Calendar check fails gracefully if worker is not yet deployed.
       const dateStr = toDateStr(selectedDate);
+      let calendarSynced = false;
       const [confirmed, calendarEvents] = await Promise.all([
         window.loadConfirmedForDate ? window.loadConfirmedForDate(dateStr) : Promise.resolve([]),
         fetch(`${CALENDAR_WORKER_URL}/events?date=${dateStr}`)
-          .then(r => r.ok ? r.json() : { events: [] })
+          .then(r => { if (r.ok) calendarSynced = true; return r.ok ? r.json() : { events: [] }; })
           .then(d => d.events || [])
           .catch(() => []),  // never fail the booking page if the worker is down
       ]);
+
+      // Show the "Synced with Google Calendar" badge only when the worker responded
+      const badge = document.getElementById('gcalSyncBadge');
+      if (badge) badge.style.display = calendarSynced ? 'flex' : 'none';
 
       renderSlots(computeSlots(selectedDate, selectedLocation.id, confirmed, calendarEvents));
     };
@@ -833,6 +850,8 @@
       renderCalendar();
       document.getElementById('slotsCard').style.display = 'none';
       document.getElementById('formCard').style.display  = 'none';
+      const badge = document.getElementById('gcalSyncBadge');
+      if (badge) badge.style.display = 'none';
     };
 
     // Convert a Google Calendar event datetime string to minutes from midnight (local time).

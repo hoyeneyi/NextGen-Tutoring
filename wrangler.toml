@@ -1,0 +1,8 @@
+name = "nextgen-calendar-worker"
+main = "nextgen-calendar-worker.js"
+compatibility_date = "2024-01-01"
+
+# Secrets are set separately via `wrangler secret put` — never put them here.
+# Required secrets:
+#   GOOGLE_SERVICE_ACCOUNT_KEY  (full JSON string of the service account key file)
+#   CALENDAR_ID                 (e.g. hoyeneyi@umich.edu)

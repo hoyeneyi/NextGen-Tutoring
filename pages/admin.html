@@ -1422,8 +1422,8 @@
       setTimeout(() => { const m = buildConfirmMailto(b); if (m) window.open(m, '_blank'); }, 400);
 
       showToast(workerSuccess
-        ? 'Booking confirmed. Event created in Google Calendar.'
-        : 'Booking confirmed. Calendar template + email opened.');
+        ? 'Booking confirmed. Event added to Google Calendar.'
+        : 'Booking confirmed. Could not sync to Google Calendar — template link used instead.');
     } catch(e) {
       showToast('Error confirming booking.');
       console.error(e);
