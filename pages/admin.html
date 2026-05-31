@@ -1435,7 +1435,7 @@
       text:     `NextGen Tutoring Session with ${b.name || 'Student'}`,
       dates:    `${start}/${end}`,
       details,
-      location: 'NextGen Tutoring — Metro Detroit / Virtual'
+      location: (b.location && b.location.address) ? `${b.location.name} — ${b.location.address}` : 'NextGen Tutoring — Metro Detroit / Virtual'
     });
 
     return `https://calendar.google.com/calendar/render?${params.toString()}`;

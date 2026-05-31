@@ -102,7 +102,7 @@ const firebaseConfig = {
 - `sessions/{id}` — tutoring session records
 - `homework/{id}` — generated PDF URLs per student
 - `practice/{uid}/results` — practice session scores and history
-- `bookings/{id}` — booking requests (name, email, phone, grade, subject, sessionType, message, requestedDate, requestedTime, status, createdAt, confirmedAt, googleCalendarLink)
+- `bookings/{id}` — booking requests (name, email, phone, grade, subject, sessionType, message, requestedDate, requestedTime, location:{id,name,address}, frequency, isRecurring, recurringGroup, sessionIndex, totalSessions, recurringOngoing, status, createdAt, confirmedAt, googleCalendarLink)
 
 ---
 
@@ -293,7 +293,7 @@ This platform should stay ahead of the curve. When building features, consider:
 - 1st grade CCSS curriculum (17 Math + 15 ELA topics, QA in progress)
 - Practice session results saved to Firestore with topic progress indicators
 - Topic progress indicators refresh on grid re-render after session
-- Native booking system (pages/booking.html) — calendar UI, time slots, form, Firestore save
+- Native booking system (pages/booking.html) — location selector (5 libraries + virtual + other), calendar (location-aware, Dearborn Sundays blocked), time slots (library hours + async buffer logic from Firestore), recurring sessions (weekly/bi-weekly, 4/8/12/ongoing, schedule preview), Firestore save
 - Admin booking management — pending/confirmed/declined, Google Calendar link generation, confirmation email (pre-filled mailto)
 - All "Book a Session" buttons across index.html and dashboard.html link to native booking page
 

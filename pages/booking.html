@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Book a Session — NextGen Tutoring</title>
-  <meta name="description" content="Book a tutoring session with NextGen Tutoring. Select a date and time, fill out the form, and we'll confirm within 24 hours." />
+  <meta name="description" content="Book a tutoring session with NextGen Tutoring. Choose a location, date, and time — Hafeez will confirm within 24 hours." />
   <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,6 +26,8 @@
       --text-light: #7A8A9E;
       --success:    #1A5C38;
       --error:      #C0392B;
+      --warn:       #92600A;
+      --warn-bg:    rgba(201,168,76,0.08);
       --font-display: 'Playfair Display', Georgia, serif;
       --font-body:    'DM Sans', sans-serif;
     }
@@ -50,34 +52,22 @@
 
     /* ── HERO ── */
     .bk-hero {
-      background: var(--navy);
-      padding: 2.5rem 2rem 3rem;
-      text-align: center;
-      position: relative; overflow: hidden;
+      background: var(--navy); padding: 2.5rem 2rem 3rem;
+      text-align: center; position: relative; overflow: hidden;
     }
     .bk-hero::after {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
+      content: ''; position: absolute; inset: 0; pointer-events: none;
       background: radial-gradient(circle at 50% 80%, rgba(201,168,76,0.08) 0%, transparent 55%);
     }
-    .bk-hero-tag {
-      display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
-    }
+    .bk-hero-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
     .bk-hero h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; color: var(--white); margin-bottom: 0.75rem; line-height: 1.15; }
     .bk-hero p { font-size: 0.95rem; color: rgba(255,255,255,0.55); max-width: 480px; margin: 0 auto; line-height: 1.75; }
-    .bk-info-pills {
-      display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem;
-    }
-    .bk-info-pill {
-      display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;
-      color: var(--gold); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
-      padding: 0.35rem 0.85rem; border-radius: 100px;
-    }
+    .bk-info-pills { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .bk-info-pill { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--gold); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); padding: 0.35rem 0.85rem; border-radius: 100px; }
     .bk-info-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
 
     /* ── PAGE BODY ── */
-    .bk-body { max-width: 640px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .bk-body { max-width: 680px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
     /* ── CARDS ── */
     .bk-card {
@@ -88,37 +78,54 @@
       animation: cardIn 0.3s ease both;
     }
     @keyframes cardIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-    .bk-card-title {
-      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy);
-      margin-bottom: 0.25rem;
-    }
+    .bk-card-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
     .bk-card-sub { font-size: 0.82rem; color: var(--text-light); margin-bottom: 1.5rem; }
-    .bk-step-tag {
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.35rem;
+    .bk-step-tag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; }
+
+    /* ── LOCATION CARDS ── */
+    .loc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .loc-card {
+      border: 1.5px solid rgba(11,31,58,0.1); border-radius: 10px;
+      padding: 1rem; cursor: pointer; transition: all 0.18s;
+      background: var(--white); text-align: left;
     }
+    .loc-card:hover { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.03); }
+    .loc-card.selected { border-color: var(--gold); background: var(--gold-pale); }
+    .loc-card-icon { width: 32px; height: 32px; background: var(--off-white); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.6rem; color: var(--text-mid); }
+    .loc-card.selected .loc-card-icon { background: rgba(201,168,76,0.15); color: var(--gold); }
+    .loc-card-icon svg { width: 16px; height: 16px; }
+    .loc-card-name { font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; line-height: 1.3; }
+    .loc-card-address { font-size: 0.72rem; color: var(--text-light); line-height: 1.45; }
+    .loc-card-badge {
+      display: inline-block; margin-top: 6px; font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.18rem 0.55rem; border-radius: 4px;
+    }
+    .loc-badge-warn { background: rgba(201,168,76,0.15); color: var(--warn); }
+    .loc-badge-virtual { background: rgba(30,73,118,0.1); color: var(--navy-light); }
+    /* Other / Home Visit — full row */
+    .loc-card-full { grid-column: 1 / -1; }
+    .loc-other-warn {
+      display: none; margin-top: 1rem;
+      background: var(--warn-bg); border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 8px; padding: 0.875rem 1rem;
+      font-size: 0.82rem; color: var(--warn); line-height: 1.65;
+    }
+    .loc-address-wrap { display: none; margin-top: 0.75rem; }
 
     /* ── CALENDAR ── */
-    .cal-nav {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.25rem;
-    }
+    .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
     .cal-label { font-size: 1rem; font-weight: 700; color: var(--navy); }
     .cal-arrow {
       background: none; border: 1.5px solid rgba(11,31,58,0.12); border-radius: 8px;
       width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: all 0.2s; color: var(--text-mid);
     }
-    .cal-arrow:hover { border-color: var(--gold); color: var(--gold); }
+    .cal-arrow:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+    .cal-arrow:disabled { opacity: 0.35; cursor: default; }
     .cal-arrow svg { width: 14px; height: 14px; }
-    .cal-weekdays {
-      display: grid; grid-template-columns: repeat(7, 1fr);
-      margin-bottom: 0.5rem;
-    }
-    .cal-weekday {
-      text-align: center; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--text-light); padding: 0.35rem 0;
-    }
+    .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 0.5rem; }
+    .cal-weekday { text-align: center; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-light); padding: 0.35rem 0; }
     .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
     .cal-day {
       aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center;
@@ -126,34 +133,22 @@
       cursor: pointer; transition: all 0.15s; position: relative;
       color: var(--navy); background: transparent;
     }
-    .cal-day:hover:not(.cal-past):not(.cal-empty) {
-      background: rgba(201,168,76,0.12); color: var(--navy);
-    }
-    .cal-day.cal-past { color: var(--text-light); cursor: default; opacity: 0.4; }
+    .cal-day:hover:not(.cal-past):not(.cal-empty):not(.cal-blocked) { background: rgba(201,168,76,0.12); }
+    .cal-day.cal-past  { color: var(--text-light); cursor: default; opacity: 0.4; }
     .cal-day.cal-empty { cursor: default; }
-    .cal-day.cal-today { font-weight: 700; }
-    .cal-day.cal-today::after {
-      content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
-      width: 4px; height: 4px; background: var(--gold); border-radius: 50%;
-    }
-    .cal-day.cal-selected {
-      background: var(--navy); color: var(--white); font-weight: 700;
-    }
+    .cal-day.cal-blocked { color: var(--text-light); cursor: default; opacity: 0.35; background: rgba(11,31,58,0.04); }
+    .cal-day.cal-today  { font-weight: 700; }
+    .cal-day.cal-today::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+    .cal-day.cal-selected { background: var(--navy); color: var(--white); font-weight: 700; }
     .cal-day.cal-selected::after { display: none; }
-    @media (max-width: 480px) {
-      .cal-day { font-size: 0.82rem; border-radius: 6px; }
-    }
+    @media (max-width: 480px) { .cal-day { font-size: 0.82rem; border-radius: 6px; } }
 
-    /* ── SELECTED DATE SUMMARY ── */
-    .bk-date-summary {
-      display: flex; align-items: center; gap: 0.75rem;
-      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1.25rem;
-    }
+    /* ── DATE SUMMARY BAR ── */
+    .bk-date-summary { display: flex; align-items: center; gap: 0.75rem; background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; }
     .bk-date-icon { color: var(--gold); flex-shrink: 0; }
     .bk-date-icon svg { width: 18px; height: 18px; }
     .bk-date-text { font-weight: 600; color: var(--navy); font-size: 0.9rem; }
-    .bk-date-change { margin-left: auto; font-size: 0.78rem; color: var(--gold); cursor: pointer; font-weight: 600; text-decoration: none; background: none; border: none; font-family: var(--font-body); }
+    .bk-date-change { margin-left: auto; font-size: 0.78rem; color: var(--gold); cursor: pointer; font-weight: 600; background: none; border: none; font-family: var(--font-body); }
     .bk-date-change:hover { text-decoration: underline; }
 
     /* ── TIME SLOTS ── */
@@ -161,42 +156,35 @@
     .slot-btn {
       padding: 0.55rem 1.1rem; border-radius: 100px; border: 1.5px solid rgba(11,31,58,0.15);
       background: var(--white); font-family: var(--font-body); font-size: 0.875rem;
-      font-weight: 600; color: var(--text-mid); cursor: pointer; transition: all 0.18s;
-      white-space: nowrap;
+      font-weight: 600; color: var(--text-mid); cursor: pointer; transition: all 0.18s; white-space: nowrap;
     }
     .slot-btn:hover { border-color: var(--gold); color: var(--navy); background: rgba(201,168,76,0.06); }
     .slot-btn.selected { background: var(--gold); color: var(--navy); border-color: var(--gold); }
     .slot-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .slots-loading { font-size: 0.875rem; color: var(--text-light); display: flex; align-items: center; gap: 8px; }
+    .slots-loading-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 1.2s ease infinite; }
+    .slots-loading-dot:nth-child(2) { animation-delay: 0.2s; }
+    .slots-loading-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes pulse { 0%,80%,100% { opacity:0.2; transform:scale(0.8); } 40% { opacity:1; transform:scale(1); } }
 
-    /* ── BOOKING SUMMARY TAG ── */
-    .bk-selection-summary {
-      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;
-    }
-    .bk-tag {
-      display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600;
-      color: var(--navy); background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3);
-      padding: 0.3rem 0.85rem; border-radius: 100px;
-    }
+    /* ── SELECTION SUMMARY TAGS ── */
+    .bk-selection-summary { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .bk-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; color: var(--navy); background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3); padding: 0.3rem 0.85rem; border-radius: 100px; }
     .bk-tag svg { width: 12px; height: 12px; color: var(--gold); }
 
-    /* ── FORM ── */
+    /* ── FORM FIELDS ── */
     .bk-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .bk-form-grid .bk-fg-full { grid-column: 1 / -1; }
     .bk-fg { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.25rem; }
-    .bk-label {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--text-light);
-    }
+    .bk-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-light); }
     .bk-input, .bk-select, .bk-textarea {
       width: 100%; padding: 0.8rem 1rem; border: 1.5px solid rgba(11,31,58,0.12);
       border-radius: 8px; font-family: var(--font-body); font-size: 0.9rem;
       color: var(--text-dark); background: var(--white); outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .bk-input:focus, .bk-select:focus, .bk-textarea:focus {
-      border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
-    }
-    .bk-input.error { border-color: var(--error); }
+    .bk-input:focus, .bk-select:focus, .bk-textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
+    .bk-input.error, .bk-select.error { border-color: var(--error); }
     .bk-select {
       appearance: none; cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(11,31,58,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -205,6 +193,21 @@
     .bk-select option { background: var(--white); color: var(--text-dark); }
     .bk-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
     .bk-optional { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.7rem; color: var(--text-light); margin-left: 4px; }
+    .bk-form-divider { height: 1px; background: rgba(11,31,58,0.07); margin: 1.25rem 0; }
+
+    /* ── RECURRING SECTION ── */
+    .recurring-sessions-wrap { display: none; }
+    .recurring-preview {
+      margin-top: 0.75rem; background: rgba(11,31,58,0.03); border: 1px solid rgba(11,31,58,0.09);
+      border-radius: 8px; padding: 1rem;
+    }
+    .recurring-preview-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.65rem; }
+    .recurring-preview-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .recurring-preview-item { font-size: 0.82rem; color: var(--text-mid); display: flex; align-items: center; gap: 8px; }
+    .recurring-preview-item::before { content: ''; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+    .recurring-preview-note { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; }
+
+    /* ── SUBMIT BUTTON ── */
     .bk-submit {
       width: 100%; background: var(--navy); color: var(--white); font-weight: 700;
       font-size: 1rem; padding: 1rem; border: none; border-radius: 8px; cursor: pointer;
@@ -218,34 +221,22 @@
     @media (max-width: 520px) {
       .bk-form-grid { grid-template-columns: 1fr; }
       .bk-form-grid .bk-fg-full { grid-column: 1; }
+      .loc-grid { grid-template-columns: 1fr; }
+      .loc-card-full { grid-column: 1; }
     }
 
     /* ── CONFIRMATION ── */
-    .bk-confirm {
-      text-align: center; padding: 1rem 0;
-    }
-    .bk-confirm-icon {
-      width: 72px; height: 72px; background: rgba(26,92,56,0.1); border: 2px solid rgba(26,92,56,0.2);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.5rem; color: var(--success);
-    }
+    .bk-confirm { text-align: center; padding: 1rem 0; }
+    .bk-confirm-icon { width: 72px; height: 72px; background: rgba(26,92,56,0.1); border: 2px solid rgba(26,92,56,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--success); }
     .bk-confirm-icon svg { width: 32px; height: 32px; }
     .bk-confirm h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem; }
     .bk-confirm p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; max-width: 420px; margin: 0 auto 1.5rem; }
-    .bk-confirm-detail {
-      background: var(--off-white); border-radius: 10px; padding: 1.25rem;
-      text-align: left; margin-bottom: 1.5rem;
-    }
-    .bk-confirm-row { display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid rgba(11,31,58,0.07); font-size: 0.875rem; }
+    .bk-confirm-detail { background: var(--off-white); border-radius: 10px; padding: 1.25rem; text-align: left; margin-bottom: 1.5rem; }
+    .bk-confirm-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.55rem 0; border-bottom: 1px solid rgba(11,31,58,0.07); font-size: 0.875rem; gap: 1rem; }
     .bk-confirm-row:last-child { border-bottom: none; }
-    .bk-confirm-key { color: var(--text-light); font-weight: 600; }
+    .bk-confirm-key { color: var(--text-light); font-weight: 600; flex-shrink: 0; }
     .bk-confirm-val { color: var(--navy); font-weight: 600; text-align: right; }
-    .bk-home-btn {
-      display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy);
-      font-weight: 700; font-size: 0.9rem; padding: 0.85rem 1.75rem; border-radius: 8px;
-      text-decoration: none; transition: background 0.2s; border: none; cursor: pointer;
-      font-family: var(--font-body);
-    }
+    .bk-home-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); font-weight: 700; font-size: 0.9rem; padding: 0.85rem 1.75rem; border-radius: 8px; text-decoration: none; transition: background 0.2s; border: none; cursor: pointer; font-family: var(--font-body); }
     .bk-home-btn:hover { background: var(--gold-light); }
 
     /* ── TOAST ── */
@@ -283,18 +274,18 @@
   <div class="bk-hero">
     <div class="bk-hero-tag">Schedule a Session</div>
     <h1>Book Your Tutoring Session</h1>
-    <p>Select a date and time that works for you. Fill out the short form and Hafeez will confirm within 24 hours.</p>
+    <p>Choose a location, pick a date and time. Hafeez will confirm within 24 hours.</p>
     <div class="bk-info-pills">
       <span class="bk-info-pill">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         1-Hour Sessions
       </span>
       <span class="bk-info-pill">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        In-Person &amp; Virtual
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Metro Detroit Libraries
       </span>
       <span class="bk-info-pill">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         Confirmed Within 24 hrs
       </span>
     </div>
@@ -303,11 +294,79 @@
   <!-- BOOKING BODY -->
   <div class="bk-body">
 
-    <!-- STEP 1: CALENDAR -->
-    <div class="bk-card" id="calCard">
-      <div class="bk-step-tag">Step 1 of 3</div>
+    <!-- STEP 1: LOCATION -->
+    <div class="bk-card" id="locCard">
+      <div class="bk-step-tag">Step 1 of 4</div>
+      <div class="bk-card-title">Choose a Location</div>
+      <div class="bk-card-sub">Select where you'd like your session to take place.</div>
+
+      <div class="loc-grid" id="locGrid">
+
+        <button class="loc-card" data-loc="westland" onclick="selectLocation('westland')">
+          <div class="loc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="loc-card-name">Westland Public Library</div>
+          <div class="loc-card-address">6123 Central City Pkwy, Westland, MI 48185</div>
+        </button>
+
+        <button class="loc-card" data-loc="canton" onclick="selectLocation('canton')">
+          <div class="loc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="loc-card-name">Canton Public Library</div>
+          <div class="loc-card-address">1200 Canton Center Rd, Canton, MI 48188</div>
+        </button>
+
+        <button class="loc-card" data-loc="southfield" onclick="selectLocation('southfield')">
+          <div class="loc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="loc-card-name">Southfield Public Library</div>
+          <div class="loc-card-address">26300 Evergreen Rd, Southfield, MI 48076</div>
+        </button>
+
+        <button class="loc-card" data-loc="dearborn" onclick="selectLocation('dearborn')">
+          <div class="loc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="loc-card-name">Dearborn Public Library</div>
+          <div class="loc-card-address">16301 Michigan Ave, Dearborn, MI 48126</div>
+          <span class="loc-card-badge loc-badge-warn">Closed Sundays</span>
+        </button>
+
+        <button class="loc-card" data-loc="novi" onclick="selectLocation('novi')">
+          <div class="loc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="loc-card-name">Novi Public Library</div>
+          <div class="loc-card-address">45255 W 10 Mile Rd, Novi, MI 48375</div>
+        </button>
+
+        <button class="loc-card" data-loc="virtual" onclick="selectLocation('virtual')">
+          <div class="loc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+          <div class="loc-card-name">Virtual Session</div>
+          <div class="loc-card-address">Google Meet or Zoom — no travel required</div>
+          <span class="loc-card-badge loc-badge-virtual">Online</span>
+        </button>
+
+        <button class="loc-card loc-card-full" data-loc="other" onclick="selectLocation('other')">
+          <div class="loc-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <div class="loc-card-name">Other / Home Visit</div>
+          <div class="loc-card-address">Another location or home visit</div>
+        </button>
+
+      </div>
+
+      <!-- Warning shown when "Other" is selected -->
+      <div class="loc-other-warn" id="otherWarn">
+        Home visits and other locations are considered on a case-by-case basis. I travel within approximately 30 minutes of Westland, MI. If your location is outside this range, your request may not be confirmed. Please include your address or city in the notes field below.
+      </div>
+      <!-- Address field shown when "Other" is selected -->
+      <div class="loc-address-wrap" id="otherAddressWrap" style="margin-top:0.75rem;">
+        <div class="bk-fg">
+          <label class="bk-label" for="bkOtherAddress">Your Address or City <span style="color:var(--error);margin-left:2px;">*</span></label>
+          <input type="text" id="bkOtherAddress" class="bk-input" placeholder="e.g. 123 Main St, Dearborn, MI or just your city" />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STEP 2: CALENDAR -->
+    <div class="bk-card" id="calCard" style="display:none;">
+      <div class="bk-step-tag">Step 2 of 4</div>
       <div class="bk-card-title">Choose a Date</div>
-      <div class="bk-card-sub">Available days are shown in the calendar below.</div>
+      <div class="bk-card-sub" id="calCardSub">Available days are highlighted.</div>
 
       <div class="cal-nav">
         <button class="cal-arrow" id="calPrev" aria-label="Previous month">
@@ -318,26 +377,22 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
-
       <div class="cal-weekdays">
-        <div class="cal-weekday">Sun</div>
-        <div class="cal-weekday">Mon</div>
-        <div class="cal-weekday">Tue</div>
-        <div class="cal-weekday">Wed</div>
-        <div class="cal-weekday">Thu</div>
-        <div class="cal-weekday">Fri</div>
+        <div class="cal-weekday">Sun</div><div class="cal-weekday">Mon</div>
+        <div class="cal-weekday">Tue</div><div class="cal-weekday">Wed</div>
+        <div class="cal-weekday">Thu</div><div class="cal-weekday">Fri</div>
         <div class="cal-weekday">Sat</div>
       </div>
       <div class="cal-grid" id="calGrid"></div>
     </div>
 
-    <!-- STEP 2: TIME SLOTS -->
+    <!-- STEP 3: TIME SLOTS -->
     <div class="bk-card" id="slotsCard" style="display:none;">
-      <div class="bk-step-tag">Step 2 of 3</div>
+      <div class="bk-step-tag">Step 3 of 4</div>
       <div class="bk-card-title">Choose a Time</div>
-      <div class="bk-card-sub">All times are Eastern Time.</div>
+      <div class="bk-card-sub">All times Eastern Time. Slots account for travel between locations.</div>
 
-      <div class="bk-date-summary" id="dateSummary">
+      <div class="bk-date-summary">
         <div class="bk-date-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
@@ -345,19 +400,27 @@
         <button class="bk-date-change" onclick="clearDate()">Change</button>
       </div>
 
-      <div class="bk-slots" id="slotsContainer"></div>
+      <div class="bk-slots" id="slotsContainer">
+        <div class="slots-loading">
+          <div class="slots-loading-dot"></div>
+          <div class="slots-loading-dot"></div>
+          <div class="slots-loading-dot"></div>
+          Checking availability...
+        </div>
+      </div>
     </div>
 
-    <!-- STEP 3: FORM -->
+    <!-- STEP 4: FORM -->
     <div class="bk-card" id="formCard" style="display:none;">
-      <div class="bk-step-tag">Step 3 of 3</div>
+      <div class="bk-step-tag">Step 4 of 4</div>
       <div class="bk-card-title">Your Information</div>
-      <div class="bk-card-sub">Tell us about your student so we can prepare the right session.</div>
+      <div class="bk-card-sub">Tell us about your student so Hafeez can prepare.</div>
 
       <div class="bk-selection-summary" id="selectionSummary"></div>
 
       <form id="bkForm" novalidate>
         <div class="bk-form-grid">
+
           <div class="bk-fg">
             <label class="bk-label" for="bkName">Full Name</label>
             <input type="text" id="bkName" class="bk-input" placeholder="Parent or student name" required autocomplete="name" />
@@ -375,18 +438,10 @@
             <select id="bkGrade" class="bk-select" required>
               <option value="" disabled selected>Select grade</option>
               <option>Kindergarten</option>
-              <option>1st Grade</option>
-              <option>2nd Grade</option>
-              <option>3rd Grade</option>
-              <option>4th Grade</option>
-              <option>5th Grade</option>
-              <option>6th Grade</option>
-              <option>7th Grade</option>
-              <option>8th Grade</option>
-              <option>9th Grade</option>
-              <option>10th Grade</option>
-              <option>11th Grade</option>
-              <option>12th Grade</option>
+              <option>1st Grade</option><option>2nd Grade</option><option>3rd Grade</option>
+              <option>4th Grade</option><option>5th Grade</option><option>6th Grade</option>
+              <option>7th Grade</option><option>8th Grade</option><option>9th Grade</option>
+              <option>10th Grade</option><option>11th Grade</option><option>12th Grade</option>
               <option>College / Adult</option>
             </select>
           </div>
@@ -394,14 +449,9 @@
             <label class="bk-label" for="bkSubject">Subject</label>
             <select id="bkSubject" class="bk-select" required>
               <option value="" disabled selected>Select subject</option>
-              <option>Math</option>
-              <option>ELA / Reading</option>
-              <option>Writing</option>
-              <option>SAT / ACT Prep</option>
-              <option>MCOLES Prep</option>
-              <option>Science</option>
-              <option>Multiple Subjects</option>
-              <option>Other / Not Sure</option>
+              <option>Math</option><option>ELA / Reading</option><option>Writing</option>
+              <option>SAT / ACT Prep</option><option>MCOLES Prep</option>
+              <option>Science</option><option>Multiple Subjects</option><option>Other / Not Sure</option>
             </select>
           </div>
           <div class="bk-fg">
@@ -413,9 +463,41 @@
               <option>Parent Inquiry</option>
             </select>
           </div>
+
+        </div>
+
+        <div class="bk-form-divider"></div>
+
+        <!-- RECURRING OPTIONS -->
+        <div class="bk-form-grid">
+          <div class="bk-fg">
+            <label class="bk-label" for="bkFrequency">Session Frequency</label>
+            <select id="bkFrequency" class="bk-select" onchange="onFrequencyChange()">
+              <option value="once">One-time session</option>
+              <option value="weekly">Weekly (same day &amp; time)</option>
+              <option value="biweekly">Bi-weekly (every 2 weeks)</option>
+            </select>
+          </div>
+          <div class="bk-fg recurring-sessions-wrap" id="sessionCountWrap">
+            <label class="bk-label" for="bkSessionCount">Number of Sessions</label>
+            <select id="bkSessionCount" class="bk-select" onchange="renderRecurringPreview()">
+              <option value="4">4 sessions</option>
+              <option value="8">8 sessions</option>
+              <option value="12">12 sessions</option>
+              <option value="ongoing">Ongoing</option>
+            </select>
+          </div>
+          <div class="bk-fg bk-fg-full recurring-sessions-wrap" id="recurringPreviewWrap">
+            <div class="recurring-preview" id="recurringPreview"></div>
+          </div>
+        </div>
+
+        <div class="bk-form-divider"></div>
+
+        <div class="bk-form-grid">
           <div class="bk-fg bk-fg-full">
             <label class="bk-label" for="bkMessage">Message / Notes <span class="bk-optional">(optional)</span></label>
-            <textarea id="bkMessage" class="bk-textarea" placeholder="Tell us about your student, what they need help with, any specific goals..."></textarea>
+            <textarea id="bkMessage" class="bk-textarea" placeholder="Tell us about your student, goals, anything we should know..."></textarea>
           </div>
         </div>
 
@@ -426,14 +508,14 @@
       </form>
     </div>
 
-    <!-- STEP 4: CONFIRMATION -->
+    <!-- STEP 5: CONFIRMATION -->
     <div class="bk-card" id="confirmCard" style="display:none;">
       <div class="bk-confirm">
         <div class="bk-confirm-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <h2>Request Received!</h2>
-        <p>Your booking request has been received. Hafeez will review it and send you a confirmation email within 24 hours.</p>
+        <p>Your booking request has been received. Hafeez will review it and send a confirmation email within 24 hours.</p>
         <div class="bk-confirm-detail" id="confirmDetail"></div>
         <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:1.5rem;">Questions? Call or text: <a href="tel:7345525832" style="color:var(--gold);font-weight:600;">734-552-5832</a></p>
         <a href="../index.html" class="bk-home-btn">Back to Home</a>
@@ -445,10 +527,13 @@
   <!-- TOAST -->
   <div class="bk-toast" id="bkToast"></div>
 
-  <!-- FIREBASE -->
+  <!-- FIREBASE MODULE ─────────────────────────────────────────────────────── -->
   <script type="module">
-    import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, serverTimestamp,
+      getDocs, query, where
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey:            "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
@@ -461,9 +546,8 @@
 
     const app = initializeApp(firebaseConfig);
     const db  = getFirestore(app);
-    window.__bkDb = db;
 
-    // Expose saveBooking globally so the non-module script can call it
+    // Save a single booking document
     window.saveBookingToFirestore = async function(data) {
       return addDoc(collection(db, 'bookings'), {
         ...data,
@@ -471,44 +555,126 @@
         createdAt: serverTimestamp()
       });
     };
+
+    // Save multiple booking documents (recurring group)
+    window.saveRecurringBookings = async function(sessionsArray) {
+      const promises = sessionsArray.map(s =>
+        addDoc(collection(db, 'bookings'), {
+          ...s,
+          status:    'pending',
+          createdAt: serverTimestamp()
+        })
+      );
+      return Promise.all(promises);
+    };
+
+    // Fetch confirmed bookings for a specific date (for buffer logic)
+    window.loadConfirmedForDate = async function(dateStr) {
+      try {
+        const snap = await getDocs(query(
+          collection(db, 'bookings'),
+          where('requestedDate', '==', dateStr),
+          where('status', '==', 'confirmed')
+        ));
+        return snap.docs.map(d => d.data());
+      } catch(e) {
+        console.warn('Buffer check skipped (likely no bookings yet):', e.message);
+        return [];
+      }
+    };
   </script>
 
+  <!-- MAIN LOGIC ───────────────────────────────────────────────────────────── -->
   <script>
-    // ── FORMSPREE ENDPOINT ──────────────────────────────────────────────────
-    // TODO: Replace with your actual Formspree form ID.
-    // Create a form at formspree.io, add both email recipients in Notifications:
-    //   hoyeneyi@umich.edu  and  nextgentutoringco@gmail.com
-    // Then paste the form ID below.
+    // ── FORMSPREE ──────────────────────────────────────────────────────────
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqkzkrq';
 
-    // ── AVAILABILITY SCHEDULE ───────────────────────────────────────────────
-    // Key: 0=Sunday ... 6=Saturday
-    // [startHour, startMin], [endHour, endMin]
+    // ── TUTOR AVAILABILITY SCHEDULE (DOW: 0=Sun … 6=Sat) ──────────────────
+    // [startHour, startMin], [endHour, endMin] — tutor's own hours only
     const SCHEDULE = {
-      0: { start: [14, 30], end: [22, 0] },   // Sunday 2:30pm – 10pm
-      1: { start: [16, 30], end: [22, 0] },   // Monday 4:30pm – 10pm
+      0: { start: [14, 30], end: [22, 0] },   // Sunday 2:30 pm – 10 pm
+      1: { start: [16, 30], end: [22, 0] },   // Mon–Fri 4:30 pm – 10 pm
       2: { start: [16, 30], end: [22, 0] },
       3: { start: [16, 30], end: [22, 0] },
       4: { start: [16, 30], end: [22, 0] },
-      5: { start: [16, 30], end: [22, 0] },   // Friday 4:30pm – 10pm
-      6: { start: [9,  0],  end: [22, 0] },   // Saturday 9am – 10pm
+      5: { start: [16, 30], end: [22, 0] },
+      6: { start: [9,   0], end: [22, 0] },   // Saturday 9 am – 10 pm
     };
 
+    // ── LIBRARY CLOSING TIMES (minutes from midnight, per DOW) ────────────
+    // null = library is open (no restriction on that day for that location)
+    // 'CLOSED' = library is closed all day
+    const LIBRARY_CLOSES = {
+      //           Sun        Mon   Tue   Wed   Thu   Fri    Sat
+      westland:  [ 17*60,     null, null, null, null, 17*60, 17*60 ],
+      canton:    [ 18*60,     null, null, null, null, 18*60, 18*60 ],
+      southfield:[ 17*60,     null, null, null, null, 17*60, 17*60 ],
+      dearborn:  [ 'CLOSED',  null, null, null, null, 17*60+30, 17*60+30 ],
+      novi:      [ 18*60,     null, null, null, null, 18*60, 18*60 ],
+      virtual:   [ null, null, null, null, null, null, null ],
+      other:     [ null, null, null, null, null, null, null ],
+    };
+
+    // ── LOCATION DATA ──────────────────────────────────────────────────────
+    const LOCATIONS = {
+      westland:   { id:'westland',   name:'Westland Public Library',                  address:'6123 Central City Pkwy, Westland, MI 48185' },
+      canton:     { id:'canton',     name:'Canton Public Library',                    address:'1200 Canton Center Rd, Canton, MI 48188' },
+      southfield: { id:'southfield', name:'Southfield Public Library',               address:'26300 Evergreen Rd, Southfield, MI 48076' },
+      dearborn:   { id:'dearborn',   name:'Dearborn Public Library (Henry Ford Centennial)', address:'16301 Michigan Ave, Dearborn, MI 48126' },
+      novi:       { id:'novi',       name:'Novi Public Library',                      address:'45255 W 10 Mile Rd, Novi, MI 48375' },
+      virtual:    { id:'virtual',    name:'Virtual Session (Google Meet / Zoom)',     address:'' },
+      other:      { id:'other',      name:'Other / Home Visit',                       address:'' },
+    };
+
+    // ── STATE ──────────────────────────────────────────────────────────────
     const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const DAY_NAMES   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-    // ── STATE ───────────────────────────────────────────────────────────────
-    let calYear   = new Date().getFullYear();
-    let calMonth  = new Date().getMonth();
-    let selectedDate = null;   // Date object
-    let selectedTime = null;   // string like "4:30 PM"
+    let calYear        = new Date().getFullYear();
+    let calMonth       = new Date().getMonth();
+    let selectedLocation = null;   // location object from LOCATIONS
+    let selectedDate     = null;   // Date object
+    let selectedTime     = null;   // e.g. "4:30 PM"
 
-    // ── CALENDAR ────────────────────────────────────────────────────────────
+    // ── LOCATION SELECTION ─────────────────────────────────────────────────
+    window.selectLocation = function(locId) {
+      selectedLocation = LOCATIONS[locId];
+      selectedDate     = null;
+      selectedTime     = null;
+
+      // Highlight selected card
+      document.querySelectorAll('.loc-card').forEach(c => {
+        c.classList.toggle('selected', c.dataset.loc === locId);
+      });
+
+      // Show/hide Other-specific elements
+      document.getElementById('otherWarn').style.display        = locId === 'other' ? 'block' : 'none';
+      document.getElementById('otherAddressWrap').style.display = locId === 'other' ? 'block' : 'none';
+
+      // Show calendar and update its subtitle
+      const calCard = document.getElementById('calCard');
+      calCard.style.display = 'block';
+
+      const sub = locId === 'dearborn'
+        ? 'Sundays unavailable at this location.'
+        : `Showing availability for ${selectedLocation.name}.`;
+      document.getElementById('calCardSub').textContent = sub;
+
+      // Reset downstream
+      document.getElementById('slotsCard').style.display = 'none';
+      document.getElementById('formCard').style.display  = 'none';
+
+      renderCalendar();
+      calCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    // ── CALENDAR ───────────────────────────────────────────────────────────
     function renderCalendar() {
       document.getElementById('calLabel').textContent = MONTH_NAMES[calMonth] + ' ' + calYear;
 
       const today = new Date();
       today.setHours(0, 0, 0, 0);
+      const isDearborn = selectedLocation && selectedLocation.id === 'dearborn';
 
       const firstDow    = new Date(calYear, calMonth, 1).getDay();
       const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
@@ -518,133 +684,184 @@
       for (let i = 0; i < totalCells; i++) {
         const dayNum = i - firstDow + 1;
         if (dayNum < 1 || dayNum > daysInMonth) {
-          html += '<div class="cal-day cal-empty"></div>';
-          continue;
+          html += '<div class="cal-day cal-empty"></div>'; continue;
         }
 
-        const d   = new Date(calYear, calMonth, dayNum);
-        const past = d < today;
+        const d      = new Date(calYear, calMonth, dayNum);
+        const dow    = d.getDay();
+        const isPast = d < today;
+        // Dearborn: block Sundays. Also block if library is 'CLOSED' that DOW.
+        const locClose = selectedLocation ? LIBRARY_CLOSES[selectedLocation.id]?.[dow] : null;
+        const isLocBlocked = locClose === 'CLOSED' || (isDearborn && dow === 0);
+
         const isToday = d.getTime() === today.getTime();
         const isSel   = selectedDate &&
           d.getFullYear() === selectedDate.getFullYear() &&
           d.getMonth()    === selectedDate.getMonth() &&
           d.getDate()     === selectedDate.getDate();
 
-        const cls = past   ? 'cal-day cal-past'
-                  : isSel  ? 'cal-day cal-selected'
-                  : 'cal-day cal-available';
-        const todayCls = isToday ? ' cal-today' : '';
-        const click    = past ? '' : `onclick="pickDate(${calYear},${calMonth},${dayNum})"`;
+        let cls, click = '';
+        if (isPast) {
+          cls = 'cal-day cal-past';
+        } else if (isLocBlocked) {
+          cls = 'cal-day cal-blocked';
+        } else if (isSel) {
+          cls = 'cal-day cal-selected';
+          click = `onclick="pickDate(${calYear},${calMonth},${dayNum})"`;
+        } else {
+          cls = 'cal-day cal-available';
+          click = `onclick="pickDate(${calYear},${calMonth},${dayNum})"`;
+        }
 
-        html += `<div class="${cls}${todayCls}" ${click} title="${DAY_NAMES[d.getDay()]}, ${MONTH_NAMES[calMonth]} ${dayNum}">${dayNum}</div>`;
+        const todayCls = isToday ? ' cal-today' : '';
+        const titleAttr = `title="${DAY_NAMES[dow]}, ${MONTH_NAMES[calMonth]} ${dayNum}${isLocBlocked ? ' — Location closed' : ''}"`;
+        html += `<div class="${cls}${todayCls}" ${click} ${titleAttr}>${dayNum}</div>`;
       }
 
       document.getElementById('calGrid').innerHTML = html;
 
-      // Disable prev arrow if current month is this month
       const now = new Date();
       document.getElementById('calPrev').disabled =
         calYear === now.getFullYear() && calMonth === now.getMonth();
     }
 
     document.getElementById('calPrev').addEventListener('click', () => {
-      calMonth--;
-      if (calMonth < 0) { calMonth = 11; calYear--; }
-      renderCalendar();
+      calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar();
     });
     document.getElementById('calNext').addEventListener('click', () => {
-      calMonth++;
-      if (calMonth > 11) { calMonth = 0; calYear++; }
-      renderCalendar();
+      calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar();
     });
 
-    // ── DATE SELECTION ───────────────────────────────────────────────────────
-    window.pickDate = function(year, month, day) {
+    // ── DATE PICK ──────────────────────────────────────────────────────────
+    window.pickDate = async function(year, month, day) {
+      if (!selectedLocation) {
+        showToast('Please choose a location first.', 'error'); return;
+      }
       selectedDate = new Date(year, month, day);
       selectedTime = null;
 
       renderCalendar();
-      showSlots();
+
+      const card = document.getElementById('slotsCard');
+      card.style.display = 'block';
+      document.getElementById('formCard').style.display = 'none';
+
+      const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+      document.getElementById('dateSummaryText').textContent =
+        selectedDate.toLocaleDateString('en-US', opts);
+
+      // Show loading indicator while fetching buffer data
+      document.getElementById('slotsContainer').innerHTML = `
+        <div class="slots-loading">
+          <div class="slots-loading-dot"></div>
+          <div class="slots-loading-dot"></div>
+          <div class="slots-loading-dot"></div>
+          Checking availability...
+        </div>`;
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Fetch existing confirmed bookings for buffer calculation
+      const dateStr = toDateStr(selectedDate);
+      const confirmed = await (window.loadConfirmedForDate
+        ? window.loadConfirmedForDate(dateStr)
+        : Promise.resolve([]));
+
+      renderSlots(computeSlots(selectedDate, selectedLocation.id, confirmed));
     };
 
     window.clearDate = function() {
-      selectedDate = null;
-      selectedTime = null;
+      selectedDate = null; selectedTime = null;
       renderCalendar();
       document.getElementById('slotsCard').style.display = 'none';
       document.getElementById('formCard').style.display  = 'none';
     };
 
-    // ── TIME SLOTS ───────────────────────────────────────────────────────────
-    function getSlots(date) {
+    // ── SLOT COMPUTATION ───────────────────────────────────────────────────
+    // Returns array of available time strings considering:
+    //   1. Tutor base schedule
+    //   2. Library closing time for the location + DOW
+    //   3. 30-min buffer from adjacent confirmed bookings at different locations
+    function computeSlots(date, locId, confirmedBookings) {
       const dow   = date.getDay();
       const sched = SCHEDULE[dow];
       if (!sched) return [];
 
       const [sh, sm] = sched.start;
-      const [eh, em] = sched.end;
-      const endMins  = eh * 60 + em;
+      const tutorEnd = sched.end[0] * 60 + sched.end[1];
 
+      // Effective window end (library hours may tighten it)
+      const libClose = LIBRARY_CLOSES[locId]?.[dow];
+      if (libClose === 'CLOSED') return [];
+      const effectiveEnd = (libClose != null) ? Math.min(tutorEnd, libClose) : tutorEnd;
+
+      // Build map of existing confirmed booking start-times (minutes) → locationId
+      const existingMap = {}; // startMins → locId
+      for (const b of confirmedBookings) {
+        if (b.requestedTime && b.location && b.location.id) {
+          existingMap[timeToMins(b.requestedTime)] = b.location.id;
+        }
+      }
+
+      // Generate all possible slots
       const slots = [];
       let cur = sh * 60 + sm;
-      while (cur + 60 <= endMins) {
-        const h   = Math.floor(cur / 60);
-        const m   = cur % 60;
-        const ap  = h >= 12 ? 'PM' : 'AM';
-        const dh  = h > 12 ? h - 12 : (h === 0 ? 12 : h);
-        const dm  = m === 0 ? '00' : String(m).padStart(2, '0');
-        slots.push(`${dh}:${dm} ${ap}`);
+      while (cur + 60 <= effectiveEnd) {
+        // Buffer check: slot at `cur` is blocked if adjacent booking is at a different physical location
+        const before = existingMap[cur - 60]; // booking ending at cur
+        const after  = existingMap[cur + 60]; // booking starting right after
+
+        const blockedByBefore = before !== undefined && needsBuffer(locId, before);
+        const blockedByAfter  = after  !== undefined && needsBuffer(locId, after);
+
+        if (!blockedByBefore && !blockedByAfter) {
+          slots.push(minsToTimeStr(cur));
+        }
         cur += 60;
       }
       return slots;
     }
 
-    function showSlots() {
-      const card = document.getElementById('slotsCard');
-      card.style.display = 'block';
-
-      // Date summary line
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('dateSummaryText').textContent =
-        selectedDate.toLocaleDateString('en-US', options);
-
-      const slots = getSlots(selectedDate);
-      const container = document.getElementById('slotsContainer');
-
-      if (!slots.length) {
-        container.innerHTML = '<p style="color:var(--text-light);font-size:0.875rem;">No available slots for this day.</p>';
-        return;
-      }
-
-      container.innerHTML = slots.map(slot => {
-        const isSelected = slot === selectedTime;
-        return `<button class="slot-btn${isSelected ? ' selected' : ''}" onclick="pickTime('${slot}')">${slot}</button>`;
-      }).join('');
-
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Buffer needed between two sessions at different physical locations
+    function needsBuffer(locA, locB) {
+      if (locA === 'virtual' || locB === 'virtual') return false;
+      return locA !== locB;
     }
 
-    // ── TIME SELECTION ────────────────────────────────────────────────────────
+    function renderSlots(slots) {
+      const container = document.getElementById('slotsContainer');
+      if (!slots.length) {
+        container.innerHTML = '<p style="color:var(--text-light);font-size:0.875rem;">No available slots for this date and location. Please try a different day.</p>';
+        return;
+      }
+      container.innerHTML = slots.map(slot => {
+        const isSel = slot === selectedTime;
+        return `<button class="slot-btn${isSel ? ' selected' : ''}" onclick="pickTime('${slot}')">${slot}</button>`;
+      }).join('');
+    }
+
+    // ── TIME SELECTION ─────────────────────────────────────────────────────
     window.pickTime = function(time) {
       selectedTime = time;
-
-      // Re-render slots to show selection
-      document.querySelectorAll('.slot-btn').forEach(btn => {
-        btn.classList.toggle('selected', btn.textContent.trim() === time);
-      });
-
+      document.querySelectorAll('.slot-btn').forEach(btn =>
+        btn.classList.toggle('selected', btn.textContent.trim() === time));
       showForm();
     };
 
-    // ── FORM REVEAL ───────────────────────────────────────────────────────────
+    // ── FORM REVEAL ────────────────────────────────────────────────────────
     function showForm() {
       const card = document.getElementById('formCard');
       card.style.display = 'block';
 
-      // Update summary tags
-      const options = { weekday: 'short', month: 'short', day: 'numeric' };
-      const dateStr = selectedDate.toLocaleDateString('en-US', options);
+      // Build selection summary tags
+      const opts    = { weekday:'short', month:'short', day:'numeric' };
+      const dateStr = selectedDate.toLocaleDateString('en-US', opts);
+      const locName = selectedLocation ? selectedLocation.name.split('(')[0].trim() : '';
+
       document.getElementById('selectionSummary').innerHTML = `
+        <span class="bk-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          ${locName}
+        </span>
         <span class="bk-tag">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           ${dateStr}
@@ -652,19 +869,69 @@
         <span class="bk-tag">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           ${selectedTime}
-        </span>
-      `;
+        </span>`;
 
+      // Reset recurring preview in case a new time was picked
+      renderRecurringPreview();
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    // ── FORM SUBMIT ───────────────────────────────────────────────────────────
+    // ── RECURRING PREVIEW ──────────────────────────────────────────────────
+    window.onFrequencyChange = function() {
+      const freq = document.getElementById('bkFrequency').value;
+      const isRecurring = freq !== 'once';
+      document.querySelectorAll('.recurring-sessions-wrap').forEach(el => {
+        el.style.display = isRecurring ? 'flex' : 'none';
+      });
+      if (isRecurring) renderRecurringPreview();
+    };
+
+    window.renderRecurringPreview = function() {
+      if (!selectedDate || !selectedTime) return;
+      const freq  = document.getElementById('bkFrequency').value;
+      if (freq === 'once') return;
+
+      const countVal = document.getElementById('bkSessionCount').value;
+      const locName  = selectedLocation ? selectedLocation.name.split('(')[0].trim() : '';
+      const previewEl = document.getElementById('recurringPreview');
+
+      if (countVal === 'ongoing') {
+        previewEl.innerHTML = `
+          <div class="recurring-preview-title">Recurring Schedule</div>
+          <p class="recurring-preview-note">
+            Sessions will repeat <strong>${freq === 'weekly' ? 'every week' : 'every two weeks'}</strong>
+            starting <strong>${selectedDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</strong>
+            at <strong>${selectedTime}</strong> — ${locName}.<br/>
+            Hafeez will confirm the full ongoing schedule with you directly.
+          </p>`;
+        return;
+      }
+
+      const count    = parseInt(countVal);
+      const interval = freq === 'weekly' ? 7 : 14; // days
+      const dates    = [];
+      for (let i = 0; i < count; i++) {
+        const d = new Date(selectedDate);
+        d.setDate(d.getDate() + i * interval);
+        dates.push(d);
+      }
+
+      const items = dates.map(d => {
+        const label = d.toLocaleDateString('en-US', { weekday:'short', month:'long', day:'numeric', year:'numeric' });
+        return `<div class="recurring-preview-item">${label} at ${selectedTime} — ${locName}</div>`;
+      }).join('');
+
+      previewEl.innerHTML = `
+        <div class="recurring-preview-title">Your ${count} Sessions</div>
+        <div class="recurring-preview-list">${items}</div>`;
+    };
+
+    // ── FORM SUBMIT ────────────────────────────────────────────────────────
     document.getElementById('bkForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      if (!selectedDate || !selectedTime) {
-        showToast('Please select a date and time first.', 'error');
-        return;
+      if (!selectedLocation || !selectedDate || !selectedTime) {
+        showToast('Please complete all steps first.', 'error'); return;
       }
 
       const name        = document.getElementById('bkName').value.trim();
@@ -674,122 +941,175 @@
       const subject     = document.getElementById('bkSubject').value;
       const sessionType = document.getElementById('bkSessionType').value;
       const message     = document.getElementById('bkMessage').value.trim();
+      const frequency   = document.getElementById('bkFrequency').value;
+      const sessionCount = document.getElementById('bkSessionCount').value;
+      const otherAddress = document.getElementById('bkOtherAddress').value.trim();
 
-      // Validation
-      if (!name)  { markError('bkName',  'Full name is required.'); return; }
-      if (!email) { markError('bkEmail', 'Email is required.');     return; }
-      if (!grade) { markError('bkGrade', 'Please select a grade.'); return; }
-      if (!subject)     { markError('bkSubject',     'Please select a subject.');       return; }
-      if (!sessionType) { markError('bkSessionType', 'Please select a session type.'); return; }
+      if (!name)        { markError('bkName',        'Full name is required.');           return; }
+      if (!email)       { markError('bkEmail',       'Email is required.');               return; }
+      if (!grade)       { markError('bkGrade',       'Please select a grade.');           return; }
+      if (!subject)     { markError('bkSubject',     'Please select a subject.');         return; }
+      if (!sessionType) { markError('bkSessionType', 'Please select a session type.');   return; }
+      if (selectedLocation.id === 'other' && !otherAddress) {
+        markError('bkOtherAddress', 'Please provide your address or city.'); return;
+      }
 
       const btn = document.getElementById('bkSubmitBtn');
       btn.disabled = true;
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Submitting...';
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Submitting...`;
 
-      // Format the date for storage and display
-      const requestedDate = selectedDate.toISOString().split('T')[0]; // YYYY-MM-DD
-      const requestedTime = selectedTime;
-
-      const bookingData = {
+      // Shared booking fields
+      const commonData = {
         name, email, phone, grade, subject, sessionType, message,
-        requestedDate, requestedTime,
-        confirmedAt: null, googleCalendarLink: ''
+        requestedTime: selectedTime,
+        location: { id: selectedLocation.id, name: selectedLocation.name, address: selectedLocation.address },
+        frequency,
+        confirmedAt: null, googleCalendarLink: '',
+        ...(selectedLocation.id === 'other' && { otherAddress }),
       };
 
       try {
-        // 1. Save to Firestore
-        await window.saveBookingToFirestore(bookingData);
+        let savedDates = [];
 
-        // 2. Notify via Formspree (non-blocking — don't fail the booking if this fails)
-        if (!FORMSPREE_ENDPOINT.includes('YOUR_FORMSPREE_ID')) {
-          fetch(FORMSPREE_ENDPOINT, {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({
-              _subject: `New Booking Request — ${name} (${subject}, ${requestedDate} @ ${requestedTime})`,
-              name, email, phone, grade, subject, sessionType,
-              date: requestedDate, time: requestedTime, message: message || '(none)'
-            })
-          }).catch(() => {}); // silently swallow Formspree errors
+        if (frequency === 'once') {
+          // Single booking
+          const requestedDate = toDateStr(selectedDate);
+          await window.saveBookingToFirestore({ ...commonData, requestedDate, isRecurring: false });
+          savedDates = [selectedDate];
+        } else {
+          // Recurring bookings
+          const interval = frequency === 'weekly' ? 7 : 14;
+          const groupId  = 'grp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+          const count    = sessionCount === 'ongoing' ? 1 : parseInt(sessionCount);
+
+          const sessions = [];
+          for (let i = 0; i < count; i++) {
+            const d = new Date(selectedDate);
+            d.setDate(d.getDate() + i * interval);
+            savedDates.push(d);
+            sessions.push({
+              ...commonData,
+              requestedDate: toDateStr(d),
+              isRecurring:   true,
+              recurringGroup: groupId,
+              frequency,
+              recurringOngoing: sessionCount === 'ongoing',
+              sessionIndex: i + 1,
+              totalSessions: sessionCount === 'ongoing' ? null : count,
+            });
+          }
+          await window.saveRecurringBookings(sessions);
         }
 
-        // 3. Show confirmation
-        showConfirmation(bookingData);
+        // Non-blocking Formspree notification
+        fetch(FORMSPREE_ENDPOINT, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `New Booking — ${name} | ${subject} | ${toDateStr(selectedDate)} @ ${selectedTime}`,
+            name, email, phone, grade, subject, sessionType, frequency,
+            location: selectedLocation.name,
+            date: toDateStr(selectedDate), time: selectedTime,
+            message: message || '(none)',
+            ...(selectedLocation.id === 'other' && { otherAddress }),
+            ...(frequency !== 'once' && { sessionCount }),
+          })
+        }).catch(() => {});
+
+        showConfirmation({ name, email, grade, subject, frequency, sessionCount }, savedDates);
 
       } catch(err) {
         console.error('Booking error:', err);
         btn.disabled = false;
-        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg> Request This Session';
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg> Request This Session`;
         showToast('Something went wrong. Please try again or call 734-552-5832.', 'error');
       }
     });
 
+    // ── CONFIRMATION SCREEN ────────────────────────────────────────────────
+    function showConfirmation(data, dates) {
+      ['locCard','calCard','slotsCard','formCard'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+
+      const card = document.getElementById('confirmCard');
+      card.style.display = 'block';
+
+      const primaryDate = dates[0].toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+      const isRecurring = data.frequency !== 'once';
+      const locLine     = selectedLocation ? selectedLocation.name : '';
+
+      let sessionsLine = '';
+      if (isRecurring && data.sessionCount !== 'ongoing' && dates.length > 1) {
+        sessionsLine = dates.map(d =>
+          d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+        ).join(', ');
+      } else if (isRecurring && data.sessionCount === 'ongoing') {
+        sessionsLine = `Ongoing — starting ${primaryDate}`;
+      }
+
+      document.getElementById('confirmDetail').innerHTML = `
+        <div class="bk-confirm-row"><span class="bk-confirm-key">Name</span><span class="bk-confirm-val">${escHtml(data.name)}</span></div>
+        <div class="bk-confirm-row"><span class="bk-confirm-key">Location</span><span class="bk-confirm-val">${escHtml(locLine)}</span></div>
+        <div class="bk-confirm-row"><span class="bk-confirm-key">First Session</span><span class="bk-confirm-val">${primaryDate}</span></div>
+        <div class="bk-confirm-row"><span class="bk-confirm-key">Time</span><span class="bk-confirm-val">${selectedTime} ET</span></div>
+        ${isRecurring ? `<div class="bk-confirm-row"><span class="bk-confirm-key">Frequency</span><span class="bk-confirm-val">${data.frequency === 'weekly' ? 'Weekly' : 'Bi-weekly'}${data.sessionCount === 'ongoing' ? ' — Ongoing' : ' — ' + data.sessionCount + ' sessions'}</span></div>` : ''}
+        ${sessionsLine && data.sessionCount !== 'ongoing' ? `<div class="bk-confirm-row"><span class="bk-confirm-key">All Dates</span><span class="bk-confirm-val" style="font-size:0.78rem;">${escHtml(sessionsLine)}</span></div>` : ''}
+        <div class="bk-confirm-row"><span class="bk-confirm-key">Subject</span><span class="bk-confirm-val">${escHtml(data.subject)}</span></div>
+        <div class="bk-confirm-row"><span class="bk-confirm-key">Confirmation to</span><span class="bk-confirm-val">${escHtml(data.email)}</span></div>
+      `;
+
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── HELPERS ────────────────────────────────────────────────────────────
+    function toDateStr(d) {
+      // Local YYYY-MM-DD (avoids UTC shift from toISOString())
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function timeToMins(str) {
+      // "4:30 PM" → minutes from midnight
+      const [t, ap] = str.trim().split(' ');
+      let [h, m] = t.split(':').map(Number);
+      if (ap === 'PM' && h !== 12) h += 12;
+      if (ap === 'AM' && h === 12) h = 0;
+      return h * 60 + m;
+    }
+
+    function minsToTimeStr(mins) {
+      const h  = Math.floor(mins / 60);
+      const m  = mins % 60;
+      const ap = h >= 12 ? 'PM' : 'AM';
+      const dh = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+      const dm = m === 0 ? '00' : String(m).padStart(2, '0');
+      return `${dh}:${dm} ${ap}`;
+    }
+
+    function escHtml(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
     function markError(id, msg) {
       const el = document.getElementById(id);
+      if (!el) return;
       el.classList.add('error');
       el.focus();
       showToast(msg, 'error');
       el.addEventListener('input', () => el.classList.remove('error'), { once: true });
     }
 
-    // ── CONFIRMATION SCREEN ───────────────────────────────────────────────────
-    function showConfirmation(data) {
-      document.getElementById('calCard').style.display  = 'none';
-      document.getElementById('slotsCard').style.display = 'none';
-      document.getElementById('formCard').style.display  = 'none';
-
-      const card = document.getElementById('confirmCard');
-      card.style.display = 'block';
-
-      const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const friendlyDate = selectedDate.toLocaleDateString('en-US', dateOptions);
-
-      document.getElementById('confirmDetail').innerHTML = `
-        <div class="bk-confirm-row">
-          <span class="bk-confirm-key">Name</span>
-          <span class="bk-confirm-val">${escHtml(data.name)}</span>
-        </div>
-        <div class="bk-confirm-row">
-          <span class="bk-confirm-key">Date Requested</span>
-          <span class="bk-confirm-val">${friendlyDate}</span>
-        </div>
-        <div class="bk-confirm-row">
-          <span class="bk-confirm-key">Time Requested</span>
-          <span class="bk-confirm-val">${data.requestedTime} ET</span>
-        </div>
-        <div class="bk-confirm-row">
-          <span class="bk-confirm-key">Subject</span>
-          <span class="bk-confirm-val">${escHtml(data.subject)}</span>
-        </div>
-        <div class="bk-confirm-row">
-          <span class="bk-confirm-key">Grade</span>
-          <span class="bk-confirm-val">${escHtml(data.grade)}</span>
-        </div>
-        <div class="bk-confirm-row">
-          <span class="bk-confirm-key">Confirmation to</span>
-          <span class="bk-confirm-val">${escHtml(data.email)}</span>
-        </div>
-      `;
-
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // ── HELPERS ───────────────────────────────────────────────────────────────
-    function escHtml(str) {
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
     let toastTimer;
     function showToast(msg, type = '') {
       const t = document.getElementById('bkToast');
       t.textContent = msg;
-      t.className = 'bk-toast show' + (type === 'error' ? ' error' : '');
+      t.className   = 'bk-toast show' + (type === 'error' ? ' error' : '');
       clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 4500);
     }
-
-    // ── INIT ──────────────────────────────────────────────────────────────────
-    renderCalendar();
   </script>
 
 </body>
