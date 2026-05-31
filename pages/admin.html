@@ -1424,6 +1424,27 @@
       showToast(workerSuccess
         ? 'Booking confirmed. Event added to Google Calendar.'
         : 'Booking confirmed. Could not sync to Google Calendar — template link used instead.');
+
+      // Automated confirmation email to student
+      if (b.email) {
+        const confirmedDateLabel = b.requestedDate
+          ? new Date(b.requestedDate + 'T12:00:00').toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' })
+          : b.requestedDate || '';
+        const confirmedLocLine = b.location
+          ? b.location.name + (b.location.address ? ' — ' + b.location.address : '')
+          : 'TBD';
+        fetch(FORMSPREE_ENDPOINT, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: 'NextGen Tutoring — Session Confirmed!',
+            _replyto: b.email,
+            email: b.email,
+            name: b.name || '',
+            message: `Hi ${b.name || 'there'}, your tutoring session is confirmed!\n\nDate: ${confirmedDateLabel}\nTime: ${b.requestedTime} ET\nLocation: ${confirmedLocLine}\nSubject: ${b.subject}\n\nSee you then! If you need to reschedule, reply to this email.\n\n— Hafeez, NextGen Tutoring`,
+          })
+        }).catch(() => {});
+      }
     } catch(e) {
       showToast('Error confirming booking.');
       console.error(e);
@@ -1432,13 +1453,28 @@
 
   window.declineBooking = async function(id) {
     if (!confirm('Decline this booking request?')) return;
+    const b = bookings.find(x => x.id === id);
     try {
       await updateDoc(doc(db, 'bookings', id), { status: 'declined' });
-      const b = bookings.find(x => x.id === id);
       if (b) b.status = 'declined';
       renderBookings();
       updateBookingStats();
       showToast('Booking declined.');
+
+      // Automated decline notification to student
+      if (b && b.email) {
+        fetch(FORMSPREE_ENDPOINT, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: 'NextGen Tutoring — Session Request Update',
+            _replyto: b.email,
+            email: b.email,
+            name: b.name || '',
+            message: `Hi ${b.name || 'there'}, unfortunately that time slot is no longer available. Please visit nextgentutoring.org/pages/booking.html to request a different time. Sorry for the inconvenience!\n\n— Hafeez, NextGen Tutoring`,
+          })
+        }).catch(() => {});
+      }
     } catch(e) {
       showToast('Error declining booking.');
       console.error(e);
@@ -1446,7 +1482,8 @@
   };
 
   // ── CALENDAR WORKER ──────────────────────────────────────────────────────
-  const CALENDAR_WORKER_URL = 'https://nextgen-calendar-worker.nextgentutoringco.workers.dev';
+  const CALENDAR_WORKER_URL  = 'https://nextgen-calendar-worker.nextgentutoringco.workers.dev';
+  const FORMSPREE_ENDPOINT   = 'https://formspree.io/f/xaqkzkrq';
 
   // Build ISO local datetime strings for the calendar worker (no offset — worker
   // passes timeZone:'America/Detroit' to the Google Calendar API).
