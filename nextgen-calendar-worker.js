@@ -8,8 +8,8 @@
  *   CALENDAR_ID                 — calendar to read/write (e.g. hoyeneyi@umich.edu)
  *
  * Routes:
- *   POST /create-event         — creates an event in Google Calendar
- *   POST /check-availability   — checks if a time window is free
+ *   POST /create-event           — creates an event in Google Calendar
+ *   POST /check-availability     — checks if a time window is free
  *   GET  /events?date=YYYY-MM-DD — returns events for a given date
  */
 
@@ -25,7 +25,7 @@ const GCAL_BASE = 'https://www.googleapis.com/calendar/v3';
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const SCOPE     = 'https://www.googleapis.com/auth/calendar';
 
-// ── CORS ─────────────────────────────────────────────────────────────────────
+// ── CORS ──────────────────────────────────────────────────────────────────────
 
 function corsHeaders(origin) {
   const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
@@ -50,7 +50,7 @@ function base64urlEncode(str) {
   return base64url(new TextEncoder().encode(str));
 }
 
-// ── GOOGLE OAUTH2 — SERVICE ACCOUNT JWT ───────────────────────────────────────
+// ── GOOGLE OAUTH2 — SERVICE ACCOUNT JWT ──────────────────────────────────────
 
 async function getAccessToken(serviceAccountKey) {
   const now = Math.floor(Date.now() / 1000);
@@ -59,14 +59,14 @@ async function getAccessToken(serviceAccountKey) {
   const payload = {
     iss:   serviceAccountKey.client_email,
     scope: SCOPE,
-    aud:   TOKEN_URL,
+    aud:   TOKEN_URL,   // must be exactly the token endpoint URL
     iat:   now,
     exp:   now + 3600,
   };
 
   const sigInput = `${base64urlEncode(JSON.stringify(header))}.${base64urlEncode(JSON.stringify(payload))}`;
 
-  // Import the PKCS#8 private key from the PEM string
+  // Import the PKCS#8 private key from the service account PEM string
   const pemBody = serviceAccountKey.private_key
     .replace(/-----BEGIN PRIVATE KEY-----/g, '')
     .replace(/-----END PRIVATE KEY-----/g, '')
@@ -89,7 +89,7 @@ async function getAccessToken(serviceAccountKey) {
 
   const jwt = `${sigInput}.${base64url(signatureBuffer)}`;
 
-  // Exchange JWT for OAuth2 access token
+  // Exchange signed JWT for an OAuth2 access token
   const tokenRes = await fetch(TOKEN_URL, {
     method:  'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -97,26 +97,55 @@ async function getAccessToken(serviceAccountKey) {
   });
 
   if (!tokenRes.ok) {
-    const msg = await tokenRes.text();
-    throw new Error(`Token exchange failed (${tokenRes.status}): ${msg}`);
+    const raw = await tokenRes.text();
+    console.error('[calendar-worker] token exchange failed', tokenRes.status, raw);
+    throw new Error(`Token exchange failed (${tokenRes.status}): ${raw}`);
   }
 
   const { access_token } = await tokenRes.json();
   return access_token;
 }
 
+// ── HELPER: call Google Calendar API and surface errors clearly ───────────────
+
+async function gcalFetch(url, options = {}) {
+  console.log('[calendar-worker] gcalFetch →', url.toString ? url.toString() : url);
+
+  const res = await fetch(url, options);
+
+  if (!res.ok) {
+    const rawText = await res.text();
+    let parsedError;
+    try { parsedError = JSON.parse(rawText); }
+    catch (_) { parsedError = { raw: rawText }; }
+
+    console.error('[calendar-worker] Google API error', {
+      status:  res.status,
+      url:     url.toString ? url.toString() : url,
+      body:    parsedError,
+    });
+
+    // Throw an error that carries the full Google error payload
+    const err = new Error(`Google Calendar API error (${res.status})`);
+    err.status      = res.status;
+    err.googleError = parsedError;
+    throw err;
+  }
+
+  return res.json();
+}
+
 // ── DST-AWARE EASTERN TIME OFFSET ─────────────────────────────────────────────
-// Returns '-04:00' (EDT) or '-05:00' (EST) for a given date string (YYYY-MM-DD).
 
 function easternOffset(dateStr) {
   const d    = new Date(dateStr + 'T12:00:00Z');
   const year = d.getUTCFullYear();
 
-  // DST start: 2nd Sunday of March at 02:00 local
-  const mar1   = new Date(Date.UTC(year, 2, 1));
+  // DST start: 2nd Sunday of March
+  const mar1     = new Date(Date.UTC(year, 2, 1));
   const dstStart = new Date(Date.UTC(year, 2, 8 + (7 - mar1.getUTCDay()) % 7));
 
-  // DST end: 1st Sunday of November at 02:00 local
+  // DST end: 1st Sunday of November
   const nov1   = new Date(Date.UTC(year, 10, 1));
   const dstEnd = new Date(Date.UTC(year, 10, 1 + (7 - nov1.getUTCDay()) % 7));
 
@@ -131,9 +160,12 @@ async function handleCreateEvent(request, env) {
     return { error: 'summary, startDateTime, and endDateTime are required' };
   }
 
-  const saKey     = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY);
-  const token     = await getAccessToken(saKey);
-  const calId     = env.CALENDAR_ID;
+  const saKey = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY);
+  const token = await getAccessToken(saKey);
+  // Trim whitespace/newlines that can sneak in when setting secrets
+  const calId = (env.CALENDAR_ID || '').trim();
+
+  console.log('[calendar-worker] create-event calId:', calId);
 
   const event = {
     summary,
@@ -144,21 +176,15 @@ async function handleCreateEvent(request, env) {
     reminders: { useDefault: true },
   };
 
-  const res = await fetch(
-    `${GCAL_BASE}/calendars/${encodeURIComponent(calId)}/events`,
-    {
-      method:  'POST',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body:    JSON.stringify(event),
-    }
-  );
+  const url = `${GCAL_BASE}/calendars/${encodeURIComponent(calId)}/events`;
+  console.log('[calendar-worker] create-event URL:', url);
 
-  if (!res.ok) {
-    const msg = await res.text();
-    throw new Error(`Google Calendar create failed (${res.status}): ${msg}`);
-  }
+  const created = await gcalFetch(url, {
+    method:  'POST',
+    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body:    JSON.stringify(event),
+  });
 
-  const created = await res.json();
   return { success: true, eventId: created.id, htmlLink: created.htmlLink };
 }
 
@@ -170,23 +196,20 @@ async function handleCheckAvailability(request, env) {
 
   const saKey = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY);
   const token = await getAccessToken(saKey);
-  const calId = env.CALENDAR_ID;
+  const calId = (env.CALENDAR_ID || '').trim();
 
-  const url = new URL(`${GCAL_BASE}/calendars/${encodeURIComponent(calId)}/events`);
-  url.searchParams.set('timeMin',      startDateTime);
-  url.searchParams.set('timeMax',      endDateTime);
-  url.searchParams.set('singleEvents', 'true');
+  console.log('[calendar-worker] check-availability calId:', calId);
 
-  const res = await fetch(url.toString(), {
+  const apiUrl = new URL(`${GCAL_BASE}/calendars/${encodeURIComponent(calId)}/events`);
+  apiUrl.searchParams.set('timeMin',      startDateTime);
+  apiUrl.searchParams.set('timeMax',      endDateTime);
+  apiUrl.searchParams.set('singleEvents', 'true');
+
+  console.log('[calendar-worker] check-availability URL:', apiUrl.toString());
+
+  const data      = await gcalFetch(apiUrl.toString(), {
     headers: { 'Authorization': `Bearer ${token}` },
   });
-
-  if (!res.ok) {
-    const msg = await res.text();
-    throw new Error(`Google Calendar list failed (${res.status}): ${msg}`);
-  }
-
-  const data      = await res.json();
   const conflicts = (data.items || []).map(e => ({
     summary: e.summary || 'Busy',
     start:   e.start.dateTime || e.start.date,
@@ -197,18 +220,21 @@ async function handleCheckAvailability(request, env) {
 }
 
 async function handleGetEvents(request, env) {
-  const url    = new URL(request.url);
-  const date   = url.searchParams.get('date'); // YYYY-MM-DD
+  const reqUrl = new URL(request.url);
+  const date   = reqUrl.searchParams.get('date');
   if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return { error: 'Missing or invalid date parameter (expected YYYY-MM-DD)' };
   }
 
   const saKey  = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY);
   const token  = await getAccessToken(saKey);
-  const calId  = env.CALENDAR_ID;
+  // Trim whitespace/newlines — the most common cause of 404 from pasted secrets
+  const calId  = (env.CALENDAR_ID || '').trim();
   const offset = easternOffset(date);
 
-  // Query the full calendar day in Eastern time
+  console.log('[calendar-worker] get-events calId repr:', JSON.stringify(calId));
+  console.log('[calendar-worker] get-events calId encoded:', encodeURIComponent(calId));
+
   const timeMin = `${date}T00:00:00${offset}`;
   const timeMax = `${date}T23:59:59${offset}`;
 
@@ -219,23 +245,18 @@ async function handleGetEvents(request, env) {
   apiUrl.searchParams.set('orderBy',      'startTime');
   apiUrl.searchParams.set('fields',       'items(id,summary,start,end)');
 
-  const res = await fetch(apiUrl.toString(), {
+  console.log('[calendar-worker] get-events full URL:', apiUrl.toString());
+
+  const data   = await gcalFetch(apiUrl.toString(), {
     headers: { 'Authorization': `Bearer ${token}` },
   });
-
-  if (!res.ok) {
-    const msg = await res.text();
-    throw new Error(`Google Calendar list failed (${res.status}): ${msg}`);
-  }
-
-  const data   = await res.json();
   const events = (data.items || []).map(e => ({
     summary: e.summary || 'Busy',
     start:   e.start.dateTime || e.start.date,
     end:     e.end.dateTime   || e.end.date,
   }));
 
-  return { events };
+  return { events, _debug: { calId, date, timeMin, timeMax } };
 }
 
 // ── MAIN FETCH HANDLER ────────────────────────────────────────────────────────
@@ -269,8 +290,12 @@ export default {
       }
       return json({ error: 'Not found' }, 404);
     } catch (err) {
-      console.error('[calendar-worker]', err.message);
-      return json({ error: err.message }, 500);
+      console.error('[calendar-worker] unhandled error:', err.message, err.googleError || '');
+      // Surface the full Google API error body in the response for debugging
+      return json({
+        error:       err.message,
+        googleError: err.googleError || null,
+      }, err.status || 500);
     }
   },
 };
