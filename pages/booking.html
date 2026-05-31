@@ -900,27 +900,35 @@
       }
 
       // Build set of slot start-times blocked by Google Calendar events.
-      // Gcal events have no Firestore location → treated as "different location" (conservative).
-      // Blocks: (a) direct overlap, (b) slot ending exactly when gcal starts, (c) slot starting
-      // exactly when gcal ends — same adjacency rule as different-location Firestore bookings.
+      // Buffer rule: if evt.summary contains the selected location name, or either side is virtual
+      // → 0 buffer (same location, no travel). Otherwise → 30-min buffer (block adjacent slots).
       const gcalBlocked = new Set();
+      const selectedIsVirtual = locName.startsWith('Virtual');
       for (const evt of calendarEvents) {
         const isAllDay   = !evt.start || /^\d{4}-\d{2}-\d{2}$/.test(evt.start);
         const evtStart   = isAllDay ? 0       : calEvtMins(evt.start);
         const evtEnd     = isAllDay ? 24 * 60 : calEvtMins(evt.end);
         const schedStart = sh * 60 + sm;
+
+        // No buffer when: selected location is virtual, OR summary includes selected location
+        // name, OR summary indicates a virtual event.
+        const evtSummary     = (evt.summary || '').toLowerCase();
+        const gcalNeedsBuffer = !selectedIsVirtual &&
+                                !evtSummary.includes(locName.toLowerCase()) &&
+                                !evtSummary.includes('virtual');
+
         for (let t = schedStart; t + 60 <= effectiveEnd; t += 60) {
           if (t < evtEnd && t + 60 > evtStart) { gcalBlocked.add(t); continue; } // direct overlap
-          if (t + 60 === evtStart)              { gcalBlocked.add(t); continue; } // slot ends when gcal starts
-          if (t === evtEnd)                     { gcalBlocked.add(t); }            // slot starts when gcal ends
+          if (gcalNeedsBuffer) {
+            if (t + 60 === evtStart) { gcalBlocked.add(t); continue; } // slot ends when gcal starts
+            if (t === evtEnd)         { gcalBlocked.add(t); }            // slot starts when gcal ends
+          }
         }
         // Also check the off-sequence final slot
         const fs = effectiveEnd - 60;
-        if (fs >= schedStart &&
-            ((fs < evtEnd && fs + 60 > evtStart) ||
-              fs + 60 === evtStart ||
-              fs === evtEnd)) {
-          gcalBlocked.add(fs);
+        if (fs >= schedStart) {
+          if (fs < evtEnd && fs + 60 > evtStart) { gcalBlocked.add(fs); }
+          else if (gcalNeedsBuffer && (fs + 60 === evtStart || fs === evtEnd)) { gcalBlocked.add(fs); }
         }
       }
 
@@ -1147,7 +1155,7 @@
           await window.saveRecurringBookings(sessions);
         }
 
-        // Non-blocking Formspree notification
+        // Non-blocking Formspree notification to Hafeez
         fetch(FORMSPREE_ENDPOINT, {
           method:  'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -1159,6 +1167,19 @@
             message: message || '(none)',
             ...(selectedLocation.id === 'other' && { otherAddress }),
             ...(frequency !== 'once' && { sessionCount }),
+          })
+        }).catch(() => {});
+
+        // Auto-reply to student confirming receipt
+        fetch(FORMSPREE_ENDPOINT, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: 'NextGen Tutoring — Session Request Received',
+            _replyto: email,
+            email,
+            name,
+            message: `Hi ${name}, your session request has been received.\n\nDetails: ${toDateStr(selectedDate)}, ${selectedTime}, ${selectedLocation.name}, ${subject}.\n\nHafeez will confirm your session within 24 hours. You will receive another email once confirmed.\n\n— NextGen Tutoring`,
           })
         }).catch(() => {});
 
