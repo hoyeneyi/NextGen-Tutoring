@@ -605,12 +605,14 @@
     // null = library is open (no restriction on that day for that location)
     // 'CLOSED' = library is closed all day
     const LIBRARY_CLOSES = {
-      //           Sun        Mon   Tue   Wed   Thu   Fri    Sat
-      westland:  [ 17*60,     null, null, null, null, 17*60, 17*60 ],
-      canton:    [ 18*60,     null, null, null, null, 18*60, 18*60 ],
-      southfield:[ 17*60,     null, null, null, null, 17*60, 17*60 ],
-      dearborn:  [ 'CLOSED',  null, null, null, null, 17*60+30, 17*60+30 ],
-      novi:      [ 18*60,     null, null, null, null, 18*60, 18*60 ],
+      //           Sun       Mon   Tue   Wed   Thu   Fri       Sat
+      // Sun = null for non-Dearborn: libraries are open late enough that
+      // the tutor's own 10 PM end time is the binding constraint on Sundays.
+      westland:  [ null,    null, null, null, null, 17*60,    17*60    ],
+      canton:    [ null,    null, null, null, null, 18*60,    18*60    ],
+      southfield:[ null,    null, null, null, null, 17*60,    17*60    ],
+      dearborn:  [ 'CLOSED',null, null, null, null, 17*60+30, 17*60+30 ],
+      novi:      [ null,    null, null, null, null, 18*60,    18*60    ],
       virtual:   [ null, null, null, null, null, null, null ],
       other:     [ null, null, null, null, null, null, null ],
     };
@@ -635,6 +637,48 @@
     let selectedLocation = null;   // location object from LOCATIONS
     let selectedDate     = null;   // Date object
     let selectedTime     = null;   // e.g. "4:30 PM"
+
+    // ── MONTH BOOKABILITY CHECK ────────────────────────────────────────────
+    // Returns true if year/month contains at least one day that can be booked
+    // at the given location (not past, not library-blocked, and for today: has
+    // at least one slot meeting the 2-hour advance notice rule).
+    function monthHasBookableDays(year, month, locId) {
+      const now   = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const nowMins     = now.getHours() * 60 + now.getMinutes();
+      const isDearborn  = locId === 'dearborn';
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const d = new Date(year, month, day);
+        if (d < today) continue; // strictly in the past
+
+        const dow      = d.getDay();
+        const locClose = LIBRARY_CLOSES[locId]?.[dow];
+        const isBlocked = locClose === 'CLOSED' || (isDearborn && dow === 0);
+        if (isBlocked) continue;
+
+        const sched = SCHEDULE[dow];
+        if (!sched) continue;
+
+        // Future day (not today) — any non-blocked day with a schedule is bookable
+        if (d > today) return true;
+
+        // Today: check whether any slot meets the 2-hour advance rule
+        const [sh, sm] = sched.start;
+        const tutorEnd = sched.end[0] * 60 + sched.end[1];
+        const effectiveEnd = (locClose != null) ? Math.min(tutorEnd, locClose) : tutorEnd;
+        const minStart = nowMins + 120;
+
+        let cur = sh * 60 + sm;
+        while (cur + 60 <= effectiveEnd) {
+          if (cur >= minStart) return true;
+          cur += 60;
+        }
+        // Today has no valid slots — continue to check remaining days
+      }
+      return false;
+    }
 
     // ── LOCATION SELECTION ─────────────────────────────────────────────────
     window.selectLocation = function(locId) {
@@ -663,6 +707,13 @@
       // Reset downstream
       document.getElementById('slotsCard').style.display = 'none';
       document.getElementById('formCard').style.display  = 'none';
+
+      // Auto-advance to next month if the current month has no bookable days
+      // (e.g. it's the last day of the month, or today's slots are all past the 2-hr cutoff)
+      if (!monthHasBookableDays(calYear, calMonth, locId)) {
+        calMonth++;
+        if (calMonth > 11) { calMonth = 0; calYear++; }
+      }
 
       renderCalendar();
       calCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -794,6 +845,13 @@
       if (libClose === 'CLOSED') return [];
       const effectiveEnd = (libClose != null) ? Math.min(tutorEnd, libClose) : tutorEnd;
 
+      // 2-hour advance notice: for today only, slots must start ≥ 2 hrs from now
+      const now = new Date();
+      const isToday = (date.getFullYear() === now.getFullYear() &&
+                       date.getMonth()    === now.getMonth() &&
+                       date.getDate()     === now.getDate());
+      const minStartMins = isToday ? (now.getHours() * 60 + now.getMinutes() + 120) : 0;
+
       // Build map of existing confirmed booking start-times (minutes) → locationId
       const existingMap = {}; // startMins → locId
       for (const b of confirmedBookings) {
@@ -806,6 +864,9 @@
       const slots = [];
       let cur = sh * 60 + sm;
       while (cur + 60 <= effectiveEnd) {
+        // Skip slots within 2 hours of now when booking same-day
+        if (cur < minStartMins) { cur += 60; continue; }
+
         // Buffer check: slot at `cur` is blocked if adjacent booking is at a different physical location
         const before = existingMap[cur - 60]; // booking ending at cur
         const after  = existingMap[cur + 60]; // booking starting right after
