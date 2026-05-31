@@ -44,6 +44,15 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.uid == uid;
     }
 
+    // ── BOOKINGS ──
+    // Anyone can submit a booking request (public page, no auth required).
+    // Only authenticated users (admin) can read and update booking status.
+    match /bookings/{bookingId} {
+      allow create: if true;
+      allow read, update: if request.auth != null;
+      allow delete: if false;
+    }
+
     // ── PRACTICE RESULTS ──
     // Users can only read and write their own practice data.
     // Covers both subcollections:

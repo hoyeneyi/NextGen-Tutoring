@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Session — NextGen Tutoring</title>
+  <meta name="description" content="Book a tutoring session with NextGen Tutoring. Select a date and time, fill out the form, and we'll confirm within 24 hours." />
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy:       #112240;
+      --navy-mid:   #1a3a5c;
+      --navy-light: #1e4976;
+      --navy-dark:  #0a1628;
+      --gold:       #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale:  #FBF3DC;
+      --white:      #FFFFFF;
+      --off-white:  #F8F6F0;
+      --text-dark:  #0B1F3A;
+      --text-mid:   #3A4A60;
+      --text-light: #7A8A9E;
+      --success:    #1A5C38;
+      --error:      #C0392B;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--off-white); color: var(--text-dark); -webkit-font-smoothing: antialiased; }
+
+    /* ── NAV ── */
+    .bk-nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 68px; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .bk-logo { text-decoration: none; }
+    .bk-logo-text { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--white); }
+    .bk-logo-text span { color: var(--gold); }
+    .bk-back { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .bk-back:hover { color: var(--gold); }
+    .bk-back svg { width: 14px; height: 14px; }
+
+    /* ── HERO ── */
+    .bk-hero {
+      background: var(--navy);
+      padding: 2.5rem 2rem 3rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .bk-hero::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 50% 80%, rgba(201,168,76,0.08) 0%, transparent 55%);
+    }
+    .bk-hero-tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .bk-hero h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; color: var(--white); margin-bottom: 0.75rem; line-height: 1.15; }
+    .bk-hero p { font-size: 0.95rem; color: rgba(255,255,255,0.55); max-width: 480px; margin: 0 auto; line-height: 1.75; }
+    .bk-info-pills {
+      display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem;
+    }
+    .bk-info-pill {
+      display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;
+      color: var(--gold); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+      padding: 0.35rem 0.85rem; border-radius: 100px;
+    }
+    .bk-info-pill svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* ── PAGE BODY ── */
+    .bk-body { max-width: 640px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+    /* ── CARDS ── */
+    .bk-card {
+      background: var(--white); border-radius: 14px;
+      border: 1px solid rgba(11,31,58,0.08);
+      box-shadow: 0 2px 12px rgba(11,31,58,0.06);
+      padding: 1.75rem; margin-bottom: 1.25rem;
+      animation: cardIn 0.3s ease both;
+    }
+    @keyframes cardIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .bk-card-title {
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 0.25rem;
+    }
+    .bk-card-sub { font-size: 0.82rem; color: var(--text-light); margin-bottom: 1.5rem; }
+    .bk-step-tag {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.35rem;
+    }
+
+    /* ── CALENDAR ── */
+    .cal-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .cal-label { font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .cal-arrow {
+      background: none; border: 1.5px solid rgba(11,31,58,0.12); border-radius: 8px;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; color: var(--text-mid);
+    }
+    .cal-arrow:hover { border-color: var(--gold); color: var(--gold); }
+    .cal-arrow svg { width: 14px; height: 14px; }
+    .cal-weekdays {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 0.5rem;
+    }
+    .cal-weekday {
+      text-align: center; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text-light); padding: 0.35rem 0;
+    }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .cal-day {
+      aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.875rem; font-weight: 500;
+      cursor: pointer; transition: all 0.15s; position: relative;
+      color: var(--navy); background: transparent;
+    }
+    .cal-day:hover:not(.cal-past):not(.cal-empty) {
+      background: rgba(201,168,76,0.12); color: var(--navy);
+    }
+    .cal-day.cal-past { color: var(--text-light); cursor: default; opacity: 0.4; }
+    .cal-day.cal-empty { cursor: default; }
+    .cal-day.cal-today { font-weight: 700; }
+    .cal-day.cal-today::after {
+      content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 4px; background: var(--gold); border-radius: 50%;
+    }
+    .cal-day.cal-selected {
+      background: var(--navy); color: var(--white); font-weight: 700;
+    }
+    .cal-day.cal-selected::after { display: none; }
+    @media (max-width: 480px) {
+      .cal-day { font-size: 0.82rem; border-radius: 6px; }
+    }
+
+    /* ── SELECTED DATE SUMMARY ── */
+    .bk-date-summary {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1.25rem;
+    }
+    .bk-date-icon { color: var(--gold); flex-shrink: 0; }
+    .bk-date-icon svg { width: 18px; height: 18px; }
+    .bk-date-text { font-weight: 600; color: var(--navy); font-size: 0.9rem; }
+    .bk-date-change { margin-left: auto; font-size: 0.78rem; color: var(--gold); cursor: pointer; font-weight: 600; text-decoration: none; background: none; border: none; font-family: var(--font-body); }
+    .bk-date-change:hover { text-decoration: underline; }
+
+    /* ── TIME SLOTS ── */
+    .bk-slots { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .slot-btn {
+      padding: 0.55rem 1.1rem; border-radius: 100px; border: 1.5px solid rgba(11,31,58,0.15);
+      background: var(--white); font-family: var(--font-body); font-size: 0.875rem;
+      font-weight: 600; color: var(--text-mid); cursor: pointer; transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .slot-btn:hover { border-color: var(--gold); color: var(--navy); background: rgba(201,168,76,0.06); }
+    .slot-btn.selected { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+    .slot-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    /* ── BOOKING SUMMARY TAG ── */
+    .bk-selection-summary {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+    }
+    .bk-tag {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600;
+      color: var(--navy); background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3);
+      padding: 0.3rem 0.85rem; border-radius: 100px;
+    }
+    .bk-tag svg { width: 12px; height: 12px; color: var(--gold); }
+
+    /* ── FORM ── */
+    .bk-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .bk-form-grid .bk-fg-full { grid-column: 1 / -1; }
+    .bk-fg { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.25rem; }
+    .bk-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-light);
+    }
+    .bk-input, .bk-select, .bk-textarea {
+      width: 100%; padding: 0.8rem 1rem; border: 1.5px solid rgba(11,31,58,0.12);
+      border-radius: 8px; font-family: var(--font-body); font-size: 0.9rem;
+      color: var(--text-dark); background: var(--white); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .bk-input:focus, .bk-select:focus, .bk-textarea:focus {
+      border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+    }
+    .bk-input.error { border-color: var(--error); }
+    .bk-select {
+      appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(11,31,58,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem;
+    }
+    .bk-select option { background: var(--white); color: var(--text-dark); }
+    .bk-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .bk-optional { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.7rem; color: var(--text-light); margin-left: 4px; }
+    .bk-submit {
+      width: 100%; background: var(--navy); color: var(--white); font-weight: 700;
+      font-size: 1rem; padding: 1rem; border: none; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); transition: background 0.2s, transform 0.15s;
+      margin-top: 1.25rem; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .bk-submit:hover { background: var(--navy-mid); transform: translateY(-1px); }
+    .bk-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .bk-submit svg { width: 16px; height: 16px; }
+
+    @media (max-width: 520px) {
+      .bk-form-grid { grid-template-columns: 1fr; }
+      .bk-form-grid .bk-fg-full { grid-column: 1; }
+    }
+
+    /* ── CONFIRMATION ── */
+    .bk-confirm {
+      text-align: center; padding: 1rem 0;
+    }
+    .bk-confirm-icon {
+      width: 72px; height: 72px; background: rgba(26,92,56,0.1); border: 2px solid rgba(26,92,56,0.2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem; color: var(--success);
+    }
+    .bk-confirm-icon svg { width: 32px; height: 32px; }
+    .bk-confirm h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem; }
+    .bk-confirm p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; max-width: 420px; margin: 0 auto 1.5rem; }
+    .bk-confirm-detail {
+      background: var(--off-white); border-radius: 10px; padding: 1.25rem;
+      text-align: left; margin-bottom: 1.5rem;
+    }
+    .bk-confirm-row { display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid rgba(11,31,58,0.07); font-size: 0.875rem; }
+    .bk-confirm-row:last-child { border-bottom: none; }
+    .bk-confirm-key { color: var(--text-light); font-weight: 600; }
+    .bk-confirm-val { color: var(--navy); font-weight: 600; text-align: right; }
+    .bk-home-btn {
+      display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy);
+      font-weight: 700; font-size: 0.9rem; padding: 0.85rem 1.75rem; border-radius: 8px;
+      text-decoration: none; transition: background 0.2s; border: none; cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .bk-home-btn:hover { background: var(--gold-light); }
+
+    /* ── TOAST ── */
+    .bk-toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--navy); color: var(--white); padding: 0.85rem 1.5rem; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 500; z-index: 999; opacity: 0;
+      transition: all 0.3s; white-space: nowrap; border-left: 3px solid var(--gold);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .bk-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .bk-toast.error { border-left-color: var(--error); }
+
+    @media (max-width: 640px) {
+      .bk-hero { padding: 2rem 1.25rem 2.5rem; }
+      .bk-body { padding: 1.25rem 1rem 3rem; }
+      .bk-card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="bk-nav">
+    <a href="../index.html" class="bk-logo">
+      <span class="bk-logo-text">Next<span>Gen</span> Tutoring</span>
+    </a>
+    <a href="../index.html" class="bk-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to site
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="bk-hero">
+    <div class="bk-hero-tag">Schedule a Session</div>
+    <h1>Book Your Tutoring Session</h1>
+    <p>Select a date and time that works for you. Fill out the short form and Hafeez will confirm within 24 hours.</p>
+    <div class="bk-info-pills">
+      <span class="bk-info-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        1-Hour Sessions
+      </span>
+      <span class="bk-info-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        In-Person &amp; Virtual
+      </span>
+      <span class="bk-info-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Confirmed Within 24 hrs
+      </span>
+    </div>
+  </div>
+
+  <!-- BOOKING BODY -->
+  <div class="bk-body">
+
+    <!-- STEP 1: CALENDAR -->
+    <div class="bk-card" id="calCard">
+      <div class="bk-step-tag">Step 1 of 3</div>
+      <div class="bk-card-title">Choose a Date</div>
+      <div class="bk-card-sub">Available days are shown in the calendar below.</div>
+
+      <div class="cal-nav">
+        <button class="cal-arrow" id="calPrev" aria-label="Previous month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span class="cal-label" id="calLabel"></span>
+        <button class="cal-arrow" id="calNext" aria-label="Next month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div class="cal-weekdays">
+        <div class="cal-weekday">Sun</div>
+        <div class="cal-weekday">Mon</div>
+        <div class="cal-weekday">Tue</div>
+        <div class="cal-weekday">Wed</div>
+        <div class="cal-weekday">Thu</div>
+        <div class="cal-weekday">Fri</div>
+        <div class="cal-weekday">Sat</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <!-- STEP 2: TIME SLOTS -->
+    <div class="bk-card" id="slotsCard" style="display:none;">
+      <div class="bk-step-tag">Step 2 of 3</div>
+      <div class="bk-card-title">Choose a Time</div>
+      <div class="bk-card-sub">All times are Eastern Time.</div>
+
+      <div class="bk-date-summary" id="dateSummary">
+        <div class="bk-date-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <span class="bk-date-text" id="dateSummaryText"></span>
+        <button class="bk-date-change" onclick="clearDate()">Change</button>
+      </div>
+
+      <div class="bk-slots" id="slotsContainer"></div>
+    </div>
+
+    <!-- STEP 3: FORM -->
+    <div class="bk-card" id="formCard" style="display:none;">
+      <div class="bk-step-tag">Step 3 of 3</div>
+      <div class="bk-card-title">Your Information</div>
+      <div class="bk-card-sub">Tell us about your student so we can prepare the right session.</div>
+
+      <div class="bk-selection-summary" id="selectionSummary"></div>
+
+      <form id="bkForm" novalidate>
+        <div class="bk-form-grid">
+          <div class="bk-fg">
+            <label class="bk-label" for="bkName">Full Name</label>
+            <input type="text" id="bkName" class="bk-input" placeholder="Parent or student name" required autocomplete="name" />
+          </div>
+          <div class="bk-fg">
+            <label class="bk-label" for="bkEmail">Email Address</label>
+            <input type="email" id="bkEmail" class="bk-input" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+          <div class="bk-fg">
+            <label class="bk-label" for="bkPhone">Phone Number</label>
+            <input type="tel" id="bkPhone" class="bk-input" placeholder="(555) 555-5555" autocomplete="tel" />
+          </div>
+          <div class="bk-fg">
+            <label class="bk-label" for="bkGrade">Student's Grade Level</label>
+            <select id="bkGrade" class="bk-select" required>
+              <option value="" disabled selected>Select grade</option>
+              <option>Kindergarten</option>
+              <option>1st Grade</option>
+              <option>2nd Grade</option>
+              <option>3rd Grade</option>
+              <option>4th Grade</option>
+              <option>5th Grade</option>
+              <option>6th Grade</option>
+              <option>7th Grade</option>
+              <option>8th Grade</option>
+              <option>9th Grade</option>
+              <option>10th Grade</option>
+              <option>11th Grade</option>
+              <option>12th Grade</option>
+              <option>College / Adult</option>
+            </select>
+          </div>
+          <div class="bk-fg">
+            <label class="bk-label" for="bkSubject">Subject</label>
+            <select id="bkSubject" class="bk-select" required>
+              <option value="" disabled selected>Select subject</option>
+              <option>Math</option>
+              <option>ELA / Reading</option>
+              <option>Writing</option>
+              <option>SAT / ACT Prep</option>
+              <option>MCOLES Prep</option>
+              <option>Science</option>
+              <option>Multiple Subjects</option>
+              <option>Other / Not Sure</option>
+            </select>
+          </div>
+          <div class="bk-fg">
+            <label class="bk-label" for="bkSessionType">Session Type</label>
+            <select id="bkSessionType" class="bk-select" required>
+              <option value="" disabled selected>Select type</option>
+              <option>First Time Student</option>
+              <option>Returning Student</option>
+              <option>Parent Inquiry</option>
+            </select>
+          </div>
+          <div class="bk-fg bk-fg-full">
+            <label class="bk-label" for="bkMessage">Message / Notes <span class="bk-optional">(optional)</span></label>
+            <textarea id="bkMessage" class="bk-textarea" placeholder="Tell us about your student, what they need help with, any specific goals..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="bk-submit" id="bkSubmitBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Request This Session
+        </button>
+      </form>
+    </div>
+
+    <!-- STEP 4: CONFIRMATION -->
+    <div class="bk-card" id="confirmCard" style="display:none;">
+      <div class="bk-confirm">
+        <div class="bk-confirm-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Request Received!</h2>
+        <p>Your booking request has been received. Hafeez will review it and send you a confirmation email within 24 hours.</p>
+        <div class="bk-confirm-detail" id="confirmDetail"></div>
+        <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:1.5rem;">Questions? Call or text: <a href="tel:7345525832" style="color:var(--gold);font-weight:600;">734-552-5832</a></p>
+        <a href="../index.html" class="bk-home-btn">Back to Home</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div class="bk-toast" id="bkToast"></div>
+
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
+      authDomain:        "nextgen-tutoring.firebaseapp.com",
+      projectId:         "nextgen-tutoring",
+      storageBucket:     "nextgen-tutoring.appspot.com",
+      messagingSenderId: "1064020614361",
+      appId:             "1:1064020614361:web:4a88beaf6765b23c59f2c8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+    window.__bkDb = db;
+
+    // Expose saveBooking globally so the non-module script can call it
+    window.saveBookingToFirestore = async function(data) {
+      return addDoc(collection(db, 'bookings'), {
+        ...data,
+        status:    'pending',
+        createdAt: serverTimestamp()
+      });
+    };
+  </script>
+
+  <script>
+    // ── FORMSPREE ENDPOINT ──────────────────────────────────────────────────
+    // TODO: Replace with your actual Formspree form ID.
+    // Create a form at formspree.io, add both email recipients in Notifications:
+    //   hoyeneyi@umich.edu  and  nextgentutoringco@gmail.com
+    // Then paste the form ID below.
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
+
+    // ── AVAILABILITY SCHEDULE ───────────────────────────────────────────────
+    // Key: 0=Sunday ... 6=Saturday
+    // [startHour, startMin], [endHour, endMin]
+    const SCHEDULE = {
+      0: { start: [14, 30], end: [22, 0] },   // Sunday 2:30pm – 10pm
+      1: { start: [16, 30], end: [22, 0] },   // Monday 4:30pm – 10pm
+      2: { start: [16, 30], end: [22, 0] },
+      3: { start: [16, 30], end: [22, 0] },
+      4: { start: [16, 30], end: [22, 0] },
+      5: { start: [16, 30], end: [22, 0] },   // Friday 4:30pm – 10pm
+      6: { start: [9,  0],  end: [22, 0] },   // Saturday 9am – 10pm
+    };
+
+    const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const DAY_NAMES   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    // ── STATE ───────────────────────────────────────────────────────────────
+    let calYear   = new Date().getFullYear();
+    let calMonth  = new Date().getMonth();
+    let selectedDate = null;   // Date object
+    let selectedTime = null;   // string like "4:30 PM"
+
+    // ── CALENDAR ────────────────────────────────────────────────────────────
+    function renderCalendar() {
+      document.getElementById('calLabel').textContent = MONTH_NAMES[calMonth] + ' ' + calYear;
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const firstDow    = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+      const totalCells  = Math.ceil((firstDow + daysInMonth) / 7) * 7;
+
+      let html = '';
+      for (let i = 0; i < totalCells; i++) {
+        const dayNum = i - firstDow + 1;
+        if (dayNum < 1 || dayNum > daysInMonth) {
+          html += '<div class="cal-day cal-empty"></div>';
+          continue;
+        }
+
+        const d   = new Date(calYear, calMonth, dayNum);
+        const past = d < today;
+        const isToday = d.getTime() === today.getTime();
+        const isSel   = selectedDate &&
+          d.getFullYear() === selectedDate.getFullYear() &&
+          d.getMonth()    === selectedDate.getMonth() &&
+          d.getDate()     === selectedDate.getDate();
+
+        const cls = past   ? 'cal-day cal-past'
+                  : isSel  ? 'cal-day cal-selected'
+                  : 'cal-day cal-available';
+        const todayCls = isToday ? ' cal-today' : '';
+        const click    = past ? '' : `onclick="pickDate(${calYear},${calMonth},${dayNum})"`;
+
+        html += `<div class="${cls}${todayCls}" ${click} title="${DAY_NAMES[d.getDay()]}, ${MONTH_NAMES[calMonth]} ${dayNum}">${dayNum}</div>`;
+      }
+
+      document.getElementById('calGrid').innerHTML = html;
+
+      // Disable prev arrow if current month is this month
+      const now = new Date();
+      document.getElementById('calPrev').disabled =
+        calYear === now.getFullYear() && calMonth === now.getMonth();
+    }
+
+    document.getElementById('calPrev').addEventListener('click', () => {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    });
+    document.getElementById('calNext').addEventListener('click', () => {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCalendar();
+    });
+
+    // ── DATE SELECTION ───────────────────────────────────────────────────────
+    window.pickDate = function(year, month, day) {
+      selectedDate = new Date(year, month, day);
+      selectedTime = null;
+
+      renderCalendar();
+      showSlots();
+    };
+
+    window.clearDate = function() {
+      selectedDate = null;
+      selectedTime = null;
+      renderCalendar();
+      document.getElementById('slotsCard').style.display = 'none';
+      document.getElementById('formCard').style.display  = 'none';
+    };
+
+    // ── TIME SLOTS ───────────────────────────────────────────────────────────
+    function getSlots(date) {
+      const dow   = date.getDay();
+      const sched = SCHEDULE[dow];
+      if (!sched) return [];
+
+      const [sh, sm] = sched.start;
+      const [eh, em] = sched.end;
+      const endMins  = eh * 60 + em;
+
+      const slots = [];
+      let cur = sh * 60 + sm;
+      while (cur + 60 <= endMins) {
+        const h   = Math.floor(cur / 60);
+        const m   = cur % 60;
+        const ap  = h >= 12 ? 'PM' : 'AM';
+        const dh  = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+        const dm  = m === 0 ? '00' : String(m).padStart(2, '0');
+        slots.push(`${dh}:${dm} ${ap}`);
+        cur += 60;
+      }
+      return slots;
+    }
+
+    function showSlots() {
+      const card = document.getElementById('slotsCard');
+      card.style.display = 'block';
+
+      // Date summary line
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('dateSummaryText').textContent =
+        selectedDate.toLocaleDateString('en-US', options);
+
+      const slots = getSlots(selectedDate);
+      const container = document.getElementById('slotsContainer');
+
+      if (!slots.length) {
+        container.innerHTML = '<p style="color:var(--text-light);font-size:0.875rem;">No available slots for this day.</p>';
+        return;
+      }
+
+      container.innerHTML = slots.map(slot => {
+        const isSelected = slot === selectedTime;
+        return `<button class="slot-btn${isSelected ? ' selected' : ''}" onclick="pickTime('${slot}')">${slot}</button>`;
+      }).join('');
+
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ── TIME SELECTION ────────────────────────────────────────────────────────
+    window.pickTime = function(time) {
+      selectedTime = time;
+
+      // Re-render slots to show selection
+      document.querySelectorAll('.slot-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.textContent.trim() === time);
+      });
+
+      showForm();
+    };
+
+    // ── FORM REVEAL ───────────────────────────────────────────────────────────
+    function showForm() {
+      const card = document.getElementById('formCard');
+      card.style.display = 'block';
+
+      // Update summary tags
+      const options = { weekday: 'short', month: 'short', day: 'numeric' };
+      const dateStr = selectedDate.toLocaleDateString('en-US', options);
+      document.getElementById('selectionSummary').innerHTML = `
+        <span class="bk-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          ${dateStr}
+        </span>
+        <span class="bk-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ${selectedTime}
+        </span>
+      `;
+
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ── FORM SUBMIT ───────────────────────────────────────────────────────────
+    document.getElementById('bkForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      if (!selectedDate || !selectedTime) {
+        showToast('Please select a date and time first.', 'error');
+        return;
+      }
+
+      const name        = document.getElementById('bkName').value.trim();
+      const email       = document.getElementById('bkEmail').value.trim();
+      const phone       = document.getElementById('bkPhone').value.trim();
+      const grade       = document.getElementById('bkGrade').value;
+      const subject     = document.getElementById('bkSubject').value;
+      const sessionType = document.getElementById('bkSessionType').value;
+      const message     = document.getElementById('bkMessage').value.trim();
+
+      // Validation
+      if (!name)  { markError('bkName',  'Full name is required.'); return; }
+      if (!email) { markError('bkEmail', 'Email is required.');     return; }
+      if (!grade) { markError('bkGrade', 'Please select a grade.'); return; }
+      if (!subject)     { markError('bkSubject',     'Please select a subject.');       return; }
+      if (!sessionType) { markError('bkSessionType', 'Please select a session type.'); return; }
+
+      const btn = document.getElementById('bkSubmitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Submitting...';
+
+      // Format the date for storage and display
+      const requestedDate = selectedDate.toISOString().split('T')[0]; // YYYY-MM-DD
+      const requestedTime = selectedTime;
+
+      const bookingData = {
+        name, email, phone, grade, subject, sessionType, message,
+        requestedDate, requestedTime,
+        confirmedAt: null, googleCalendarLink: ''
+      };
+
+      try {
+        // 1. Save to Firestore
+        await window.saveBookingToFirestore(bookingData);
+
+        // 2. Notify via Formspree (non-blocking — don't fail the booking if this fails)
+        if (!FORMSPREE_ENDPOINT.includes('YOUR_FORMSPREE_ID')) {
+          fetch(FORMSPREE_ENDPOINT, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              _subject: `New Booking Request — ${name} (${subject}, ${requestedDate} @ ${requestedTime})`,
+              name, email, phone, grade, subject, sessionType,
+              date: requestedDate, time: requestedTime, message: message || '(none)'
+            })
+          }).catch(() => {}); // silently swallow Formspree errors
+        }
+
+        // 3. Show confirmation
+        showConfirmation(bookingData);
+
+      } catch(err) {
+        console.error('Booking error:', err);
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg> Request This Session';
+        showToast('Something went wrong. Please try again or call 734-552-5832.', 'error');
+      }
+    });
+
+    function markError(id, msg) {
+      const el = document.getElementById(id);
+      el.classList.add('error');
+      el.focus();
+      showToast(msg, 'error');
+      el.addEventListener('input', () => el.classList.remove('error'), { once: true });
+    }
+
+    // ── CONFIRMATION SCREEN ───────────────────────────────────────────────────
+    function showConfirmation(data) {
+      document.getElementById('calCard').style.display  = 'none';
+      document.getElementById('slotsCard').style.display = 'none';
+      document.getElementById('formCard').style.display  = 'none';
+
+      const card = document.getElementById('confirmCard');
+      card.style.display = 'block';
+
+      const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const friendlyDate = selectedDate.toLocaleDateString('en-US', dateOptions);
+
+      document.getElementById('confirmDetail').innerHTML = `
+        <div class="bk-confirm-row">
+          <span class="bk-confirm-key">Name</span>
+          <span class="bk-confirm-val">${escHtml(data.name)}</span>
+        </div>
+        <div class="bk-confirm-row">
+          <span class="bk-confirm-key">Date Requested</span>
+          <span class="bk-confirm-val">${friendlyDate}</span>
+        </div>
+        <div class="bk-confirm-row">
+          <span class="bk-confirm-key">Time Requested</span>
+          <span class="bk-confirm-val">${data.requestedTime} ET</span>
+        </div>
+        <div class="bk-confirm-row">
+          <span class="bk-confirm-key">Subject</span>
+          <span class="bk-confirm-val">${escHtml(data.subject)}</span>
+        </div>
+        <div class="bk-confirm-row">
+          <span class="bk-confirm-key">Grade</span>
+          <span class="bk-confirm-val">${escHtml(data.grade)}</span>
+        </div>
+        <div class="bk-confirm-row">
+          <span class="bk-confirm-key">Confirmation to</span>
+          <span class="bk-confirm-val">${escHtml(data.email)}</span>
+        </div>
+      `;
+
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── HELPERS ───────────────────────────────────────────────────────────────
+    function escHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    let toastTimer;
+    function showToast(msg, type = '') {
+      const t = document.getElementById('bkToast');
+      t.textContent = msg;
+      t.className = 'bk-toast show' + (type === 'error' ? ' error' : '');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
+    }
+
+    // ── INIT ──────────────────────────────────────────────────────────────────
+    renderCalendar();
+  </script>
+
+</body>
+</html>

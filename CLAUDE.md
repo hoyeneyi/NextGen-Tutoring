@@ -102,6 +102,7 @@ const firebaseConfig = {
 - `sessions/{id}` — tutoring session records
 - `homework/{id}` — generated PDF URLs per student
 - `practice/{uid}/results` — practice session scores and history
+- `bookings/{id}` — booking requests (name, email, phone, grade, subject, sessionType, message, requestedDate, requestedTime, status, createdAt, confirmedAt, googleCalendarLink)
 
 ---
 
@@ -286,15 +287,19 @@ This platform should stay ahead of the curve. When building features, consider:
 - Login/auth (Firebase) — email/password + Google Sign In
 - Student dashboard shell
 - Homework loop (PDF gen → GitHub Pages → Firestore)
-- Admin portal
+- Admin portal (overview, students, notes, homework, bookings)
 - Cloudflare Worker proxy (healthy, 0 errors)
 - Kindergarten CCSS curriculum (QA complete — K.CC, K.OA, K.NBT, K.MD, K.G, K.RF, K.RI, K.RL, K.W)
 - 1st grade CCSS curriculum (17 Math + 15 ELA topics, QA in progress)
 - Practice session results saved to Firestore with topic progress indicators
 - Topic progress indicators refresh on grid re-render after session
+- Native booking system (pages/booking.html) — calendar UI, time slots, form, Firestore save
+- Admin booking management — pending/confirmed/declined, Google Calendar link generation, confirmation email (pre-filled mailto)
+- All "Book a Session" buttons across index.html and dashboard.html link to native booking page
 
 ### Broken / Needs Work:
-- Firestore rules must be deployed via Firebase Console or `firebase deploy --only firestore:rules` — file is created, not yet live
+- Firestore rules must be deployed — REMINDER: run `firebase deploy --only firestore:rules` or paste into Firebase Console. Now includes bookings collection rules.
+- Formspree endpoint in booking.html needs a real form ID (placeholder: YOUR_FORMSPREE_ID)
 - No difficulty bands per topic
 - No spaced repetition
 - No parent portal
