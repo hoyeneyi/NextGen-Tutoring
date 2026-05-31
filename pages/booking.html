@@ -589,6 +589,9 @@
     // ── FORMSPREE ──────────────────────────────────────────────────────────
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqkzkrq';
 
+    // ── CALENDAR WORKER ────────────────────────────────────────────────────
+    const CALENDAR_WORKER_URL = 'https://nextgen-calendar-worker.nextgentutoringco.workers.dev';
+
     // ── TUTOR AVAILABILITY SCHEDULE (DOW: 0=Sun … 6=Sat) ──────────────────
     // [startHour, startMin], [endHour, endMin] — tutor's own hours only
     const SCHEDULE = {
@@ -811,13 +814,18 @@
         </div>`;
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-      // Fetch existing confirmed bookings for buffer calculation
+      // Fetch confirmed Firestore bookings (buffer logic) + Google Calendar events
+      // in parallel. Calendar check fails gracefully if worker is not yet deployed.
       const dateStr = toDateStr(selectedDate);
-      const confirmed = await (window.loadConfirmedForDate
-        ? window.loadConfirmedForDate(dateStr)
-        : Promise.resolve([]));
+      const [confirmed, calendarEvents] = await Promise.all([
+        window.loadConfirmedForDate ? window.loadConfirmedForDate(dateStr) : Promise.resolve([]),
+        fetch(`${CALENDAR_WORKER_URL}/events?date=${dateStr}`)
+          .then(r => r.ok ? r.json() : { events: [] })
+          .then(d => d.events || [])
+          .catch(() => []),  // never fail the booking page if the worker is down
+      ]);
 
-      renderSlots(computeSlots(selectedDate, selectedLocation.id, confirmed));
+      renderSlots(computeSlots(selectedDate, selectedLocation.id, confirmed, calendarEvents));
     };
 
     window.clearDate = function() {
@@ -827,12 +835,21 @@
       document.getElementById('formCard').style.display  = 'none';
     };
 
+    // Convert a Google Calendar event datetime string to minutes from midnight (local time).
+    // All-day events (date-only string) return null — handled as full-day block.
+    function calEvtMins(dtStr) {
+      if (!dtStr) return 0;
+      const d = new Date(dtStr);
+      return d.getHours() * 60 + d.getMinutes();
+    }
+
     // ── SLOT COMPUTATION ───────────────────────────────────────────────────
     // Returns array of available time strings considering:
     //   1. Tutor base schedule
     //   2. Library closing time for the location + DOW
     //   3. 30-min buffer from adjacent confirmed bookings at different locations
-    function computeSlots(date, locId, confirmedBookings) {
+    //   4. Google Calendar events fetched from the calendar worker
+    function computeSlots(date, locId, confirmedBookings, calendarEvents = []) {
       const dow   = date.getDay();
       const sched = SCHEDULE[dow];
       if (!sched) return [];
@@ -860,12 +877,29 @@
         }
       }
 
+      // Build set of slot start-times blocked by Google Calendar events.
+      // A slot at T overlaps an event [evtStart, evtEnd) when T < evtEnd AND T+60 > evtStart.
+      const gcalBlocked = new Set();
+      for (const evt of calendarEvents) {
+        const isAllDay   = !evt.start || /^\d{4}-\d{2}-\d{2}$/.test(evt.start);
+        const evtStart   = isAllDay ? 0       : calEvtMins(evt.start);
+        const evtEnd     = isAllDay ? 24 * 60 : calEvtMins(evt.end);
+        for (let t = sh * 60 + sm; t + 60 <= effectiveEnd; t += 60) {
+          if (t < evtEnd && t + 60 > evtStart) gcalBlocked.add(t);
+        }
+        // Also check the off-sequence final slot
+        const fs = effectiveEnd - 60;
+        if (fs >= (sh * 60 + sm) && fs < evtEnd && fs + 60 > evtStart) gcalBlocked.add(fs);
+      }
+
       // Generate all possible slots
       const slots = [];
       let cur = sh * 60 + sm;
       while (cur + 60 <= effectiveEnd) {
         // Skip slots within 2 hours of now when booking same-day
-        if (cur < minStartMins) { cur += 60; continue; }
+        if (cur < minStartMins)     { cur += 60; continue; }
+        // Skip slots blocked by Google Calendar events
+        if (gcalBlocked.has(cur))   { cur += 60; continue; }
 
         // Buffer check: slot at `cur` is blocked if adjacent booking is at a different physical location
         const before = existingMap[cur - 60]; // booking ending at cur
@@ -887,7 +921,8 @@
       const lastGenerated  = slots.length > 0 ? timeToMins(slots[slots.length - 1]) : -1;
       if (finalSlotStart > lastGenerated &&
           finalSlotStart >= (sh * 60 + sm) &&
-          finalSlotStart >= minStartMins) {
+          finalSlotStart >= minStartMins &&
+          !gcalBlocked.has(finalSlotStart)) {
         const fBefore = existingMap[finalSlotStart - 60];
         const fAfter  = existingMap[finalSlotStart + 60];
         if (!(fBefore !== undefined && needsBuffer(locId, fBefore)) &&

@@ -22,6 +22,7 @@ It is NOT a side project. It is a scaling EdTech platform with real students, re
 | Hosting | GitHub Pages (`hoyeneyi/NextGen-Tutoring`) |
 | Auth + DB | Firebase (Firestore + Firebase Auth) |
 | AI Proxy | Cloudflare Worker (`nextgen-proxy.nextgentutoringco.workers.dev`) |
+| Calendar Sync | Cloudflare Worker (`nextgen-calendar-worker.nextgentutoringco.workers.dev`) |
 | AI Model | `claude-haiku-4-5-20251001` via Anthropic API |
 | PDF Generation | Claude Code → GitHub Pages → Firestore URL sync |
 | Forms | Formspree |
@@ -137,6 +138,29 @@ const response = await fetch('https://nextgen-proxy.nextgentutoringco.workers.de
 ```
 
 **Always handle errors gracefully — never show raw error text to students.**
+
+---
+
+## CLOUDFLARE WORKER (GOOGLE CALENDAR SYNC)
+
+**File:** `nextgen-calendar-worker.js` (deploy separately via Wrangler)
+**URL:** `https://nextgen-calendar-worker.nextgentutoringco.workers.dev`
+**Status:** Source committed, not yet deployed
+
+**Required secrets (set via `wrangler secret put`):**
+- `GOOGLE_SERVICE_ACCOUNT_KEY` — full JSON string of the Google service account key
+- `CALENDAR_ID` — target calendar (hoyeneyi@umich.edu)
+
+**Routes:**
+- `POST /create-event` — creates a real Google Calendar event; returns `{ eventId, htmlLink }`
+- `POST /check-availability` — checks if a window is free; returns `{ available, conflicts }`
+- `GET /events?date=YYYY-MM-DD` — returns events for a date (used by booking page to block slots)
+
+**Auth:** RS256 JWT signed with the service account private key, exchanged for a Google OAuth2 access token. Scope: `https://www.googleapis.com/auth/calendar`
+
+**Integration points:**
+- `booking.html` — `pickDate()` calls `GET /events?date=…` to block calendar-occupied slots. Fails gracefully if worker is down.
+- `admin.html` — `confirmBooking()` calls `POST /create-event` to create the real event; falls back to the template URL if the worker is unavailable. Stores the returned `htmlLink` in Firestore.
 
 ---
 
@@ -294,11 +318,12 @@ This platform should stay ahead of the curve. When building features, consider:
 - Practice session results saved to Firestore with topic progress indicators
 - Topic progress indicators refresh on grid re-render after session
 - Native booking system (pages/booking.html) — location selector (5 libraries + virtual + other), calendar (location-aware, Dearborn Sundays blocked), time slots (library hours + async buffer logic from Firestore), recurring sessions (weekly/bi-weekly, 4/8/12/ongoing, schedule preview), Firestore save
-- Admin booking management — pending/confirmed/declined, Google Calendar link generation, confirmation email (pre-filled mailto)
+- Admin booking management — pending/confirmed/declined, Google Calendar event creation via worker (falls back to template URL), confirmation email (pre-filled mailto)
 - All "Book a Session" buttons across index.html and dashboard.html link to native booking page
 
 ### Broken / Needs Work:
 - Firestore rules must be deployed — REMINDER: run `firebase deploy --only firestore:rules` or paste into Firebase Console. Now includes bookings collection rules.
+- Calendar worker (`nextgen-calendar-worker.js`) must be deployed via `wrangler deploy` and secrets set (`GOOGLE_SERVICE_ACCOUNT_KEY`, `CALENDAR_ID`). Booking page and admin degrade gracefully until deployed.
 - Formspree endpoint in booking.html needs a real form ID (placeholder: YOUR_FORMSPREE_ID)
 - No difficulty bands per topic
 - No spaced repetition

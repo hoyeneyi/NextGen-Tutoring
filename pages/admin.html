@@ -1362,27 +1362,68 @@
     const b = bookings.find(x => x.id === id);
     if (!b) return;
 
-    const gcalLink = buildGCalLink(b);
+    // 1. Try to create the real Google Calendar event via the worker.
+    //    If the worker is unavailable, fall back to the template URL.
+    let calLink        = '';
+    let workerSuccess  = false;
 
     try {
+      const { startDateTime, endDateTime } = buildEventDateTimes(b.requestedDate, b.requestedTime);
+      const details = [
+        `Subject: ${b.subject || ''}`,
+        `Grade: ${b.grade || ''}`,
+        `Email: ${b.email || ''}`,
+        `Phone: ${b.phone || ''}`,
+        `Session Type: ${b.sessionType || ''}`,
+        b.message ? `Notes: ${b.message}` : ''
+      ].filter(Boolean).join('\n');
+
+      const calRes = await fetch(`${CALENDAR_WORKER_URL}/create-event`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          summary:       `NextGen Tutoring — ${b.name || 'Student'}`,
+          description:   details,
+          startDateTime,
+          endDateTime,
+          location: (b.location && b.location.address)
+            ? `${b.location.name} — ${b.location.address}`
+            : 'NextGen Tutoring — Metro Detroit / Virtual',
+        }),
+      });
+
+      if (calRes.ok) {
+        const calData = await calRes.json();
+        if (calData.htmlLink) { calLink = calData.htmlLink; workerSuccess = true; }
+      }
+    } catch(e) {
+      console.warn('[admin] Calendar worker unavailable, using template link:', e.message);
+    }
+
+    // Fall back to the "Add Event" template URL
+    if (!calLink) calLink = buildGCalLink(b);
+
+    // 2. Persist to Firestore
+    try {
       await updateDoc(doc(db, 'bookings', id), {
-        status: 'confirmed',
-        confirmedAt: serverTimestamp(),
-        googleCalendarLink: gcalLink
+        status:              'confirmed',
+        confirmedAt:         serverTimestamp(),
+        googleCalendarLink:  calLink,
       });
 
       b.status = 'confirmed';
-      b.googleCalendarLink = gcalLink;
+      b.googleCalendarLink = calLink;
       renderBookings();
       updateBookingStats();
 
-      // Open Google Calendar link in new tab
-      window.open(gcalLink, '_blank');
+      // Open the calendar link (real event or template)
+      if (calLink) window.open(calLink, '_blank');
+      // Open pre-filled confirmation email to the student
+      setTimeout(() => { const m = buildConfirmMailto(b); if (m) window.open(m, '_blank'); }, 400);
 
-      // Open pre-filled confirmation email
-      setTimeout(() => window.open(buildConfirmMailto(b), '_blank'), 400);
-
-      showToast('Booking confirmed. Calendar + email opened.');
+      showToast(workerSuccess
+        ? 'Booking confirmed. Event created in Google Calendar.'
+        : 'Booking confirmed. Calendar template + email opened.');
     } catch(e) {
       showToast('Error confirming booking.');
       console.error(e);
@@ -1403,6 +1444,27 @@
       console.error(e);
     }
   };
+
+  // ── CALENDAR WORKER ──────────────────────────────────────────────────────
+  const CALENDAR_WORKER_URL = 'https://nextgen-calendar-worker.nextgentutoringco.workers.dev';
+
+  // Build ISO local datetime strings for the calendar worker (no offset — worker
+  // passes timeZone:'America/Detroit' to the Google Calendar API).
+  function buildEventDateTimes(requestedDate, requestedTime) {
+    if (!requestedDate || !requestedTime) return { startDateTime: '', endDateTime: '' };
+    const m = requestedTime.match(/^(\d+):(\d+)\s*(AM|PM)$/i);
+    if (!m) return { startDateTime: '', endDateTime: '' };
+    let h = parseInt(m[1]);
+    const min = parseInt(m[2]);
+    const ap  = m[3].toUpperCase();
+    if (ap === 'PM' && h !== 12) h += 12;
+    if (ap === 'AM' && h === 12) h = 0;
+    const pad = n => String(n).padStart(2, '0');
+    return {
+      startDateTime: `${requestedDate}T${pad(h)}:${pad(min)}:00`,
+      endDateTime:   `${requestedDate}T${pad(h + 1)}:${pad(min)}:00`,
+    };
+  }
 
   // Build Google Calendar "Add Event" URL
   function buildGCalLink(b) {
