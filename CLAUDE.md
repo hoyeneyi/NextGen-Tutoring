@@ -143,13 +143,13 @@ const response = await fetch('https://nextgen-proxy.nextgentutoringco.workers.de
 
 ## CLOUDFLARE WORKER (GOOGLE CALENDAR SYNC)
 
-**File:** `nextgen-calendar-worker.js` (deploy separately via Wrangler)
+**File:** `nextgen-calendar-worker.js`
 **URL:** `https://nextgen-calendar-worker.nextgentutoringco.workers.dev`
-**Status:** Source committed, not yet deployed
+**Status:** Deployed, operational — confirmed returning real calendar events
 
-**Required secrets (set via `wrangler secret put`):**
+**Secrets set in Cloudflare dashboard:**
 - `GOOGLE_SERVICE_ACCOUNT_KEY` — full JSON string of the Google service account key
-- `CALENDAR_ID` — target calendar (hoyeneyi@umich.edu)
+- `CALENDAR_ID` — `nextgentutoringco@gmail.com`
 
 **Routes:**
 - `POST /create-event` — creates a real Google Calendar event; returns `{ eventId, htmlLink }`
@@ -320,10 +320,10 @@ This platform should stay ahead of the curve. When building features, consider:
 - Native booking system (pages/booking.html) — location selector (5 libraries + virtual + other), calendar (location-aware, Dearborn Sundays blocked), time slots (library hours + async buffer logic from Firestore), recurring sessions (weekly/bi-weekly, 4/8/12/ongoing, schedule preview), Firestore save
 - Admin booking management — pending/confirmed/declined, Google Calendar event creation via worker (falls back to template URL), confirmation email (pre-filled mailto)
 - All "Book a Session" buttons across index.html and dashboard.html link to native booking page
+- Google Calendar sync (nextgen-calendar-worker) — deployed, operational, calendar ID: nextgentutoringco@gmail.com
 
 ### Broken / Needs Work:
 - Firestore rules must be deployed — REMINDER: run `firebase deploy --only firestore:rules` or paste into Firebase Console. Now includes bookings collection rules.
-- Calendar worker (`nextgen-calendar-worker.js`) must be deployed via `wrangler deploy` and secrets set (`GOOGLE_SERVICE_ACCOUNT_KEY`, `CALENDAR_ID`). Booking page and admin degrade gracefully until deployed.
 - Formspree endpoint in booking.html needs a real form ID (placeholder: YOUR_FORMSPREE_ID)
 - No difficulty bands per topic
 - No spaced repetition
