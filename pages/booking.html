@@ -879,6 +879,23 @@
         }
         cur += 60;
       }
+
+      // When the schedule starts on a :30-minute offset (e.g. 2:30 PM, 4:30 PM),
+      // the 60-minute sequence never lands on the even-hour final slot
+      // (e.g. 9:00 PM = effectiveEnd−60). Append it explicitly if missing.
+      const finalSlotStart = effectiveEnd - 60;
+      const lastGenerated  = slots.length > 0 ? timeToMins(slots[slots.length - 1]) : -1;
+      if (finalSlotStart > lastGenerated &&
+          finalSlotStart >= (sh * 60 + sm) &&
+          finalSlotStart >= minStartMins) {
+        const fBefore = existingMap[finalSlotStart - 60];
+        const fAfter  = existingMap[finalSlotStart + 60];
+        if (!(fBefore !== undefined && needsBuffer(locId, fBefore)) &&
+            !(fAfter  !== undefined && needsBuffer(locId, fAfter))) {
+          slots.push(minsToTimeStr(finalSlotStart));
+        }
+      }
+
       return slots;
     }
 
