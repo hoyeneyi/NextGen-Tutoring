@@ -571,8 +571,50 @@
     .back-btn:hover { border-color:var(--pt-primary); color:var(--pt-primary); }
     .theme-912 .back-btn { border-color:rgba(255,255,255,0.15); color:rgba(255,255,255,0.4); }
 
+    /* ── theme-912: full dark focus mode ───────────────────────────────────── */
 
-    /* â”€â”€ MOBILE OPTIMIZATIONS â”€â”€ */
+    /* 1. Wrapper background — removes the cream frame around the dark quiz area */
+    .practice-wrapper.theme-912 { background: #0D1117; }
+
+    /* 2. Practice-error view inherits the dark stage */
+    #practice-error { background: var(--pt-bg, var(--off-white)); border-radius: 12px; }
+
+    /* 3. Selector/home screens get the card surface so content reads on dark */
+    .practice-wrapper.theme-912 #practice-home,
+    .practice-wrapper.theme-912 #practice-selector { background: #161B22; border-radius: 12px; }
+
+    /* 4. Subject + topic cards — dark tinted surface, white-on-dark borders */
+    .practice-wrapper.theme-912 #practice-home .subject-card,
+    .practice-wrapper.theme-912 #practice-selector .topic-card {
+      background: rgba(255,255,255,0.03) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+    }
+    .practice-wrapper.theme-912 #practice-home .subject-name  { color: #E6EDF3 !important; }
+    .practice-wrapper.theme-912 #practice-home .subject-desc  { color: #8B949E !important; }
+    .practice-wrapper.theme-912 #practice-selector .topic-name { color: #E6EDF3 !important; }
+    .practice-wrapper.theme-912 #practice-selector .topic-desc { color: #8B949E !important; }
+    .practice-wrapper.theme-912 #practice-selector .grade-tab {
+      background: rgba(255,255,255,0.03) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+      color: #8B949E !important;
+    }
+
+    /* 5. Card and header borders — flip rgba(black) to rgba(white) on dark */
+    .theme-912 .question-card { border-color: rgba(255,255,255,0.06); }
+    .theme-912 .quiz-header   { border-color: rgba(255,255,255,0.06); }
+
+    /* 6. SmartScore bar track — needs white-on-dark to be visible */
+    .theme-912 .smart-bar-bg { background: rgba(255,255,255,0.07); }
+
+    /* 7. Choice buttons — approved contrast fixes */
+    .theme-912 .choice-btn { border-color: rgba(255,255,255,0.12); color: #E6EDF3; }
+    .theme-912 .choice-letter { background: rgba(255,255,255,0.08); color: #C9A84C; }
+    .theme-912 .choice-btn:hover:not(:disabled) { background: rgba(201,168,76,0.12); color: #E6EDF3; }
+    .theme-912 .choice-btn.correct   { background: rgba(63,185,80,0.15); }
+    .theme-912 .choice-btn.incorrect { background: rgba(248,81,73,0.15); }
+
+
+    /* ── MOBILE OPTIMIZATIONS ── */
     @media (max-width: 768px) {
       /* Practice wrapper full width */
       .practice-wrapper { padding: 0.25rem; }
@@ -5099,8 +5141,13 @@ Produce exactly 5 questions. Output ONLY this JSON array:
     // Feedback
     const box = document.getElementById('feedbackBox');
     box.style.display   = 'block';
-    box.style.background = isRight ? 'rgba(76,175,80,0.07)' : 'rgba(244,67,54,0.06)';
-    box.style.border     = `1.5px solid ${isRight ? 'rgba(76,175,80,0.3)' : 'rgba(244,67,54,0.25)'}`;
+    const isDark = currentTheme === '912';
+    box.style.background = isRight
+      ? (isDark ? 'rgba(63,185,80,0.15)'  : 'rgba(76,175,80,0.07)')
+      : (isDark ? 'rgba(248,81,73,0.15)'  : 'rgba(244,67,54,0.06)');
+    box.style.border = isRight
+      ? `1.5px solid ${isDark ? 'rgba(63,185,80,0.40)'  : 'rgba(76,175,80,0.30)'}`
+      : `1.5px solid ${isDark ? 'rgba(248,81,73,0.35)'  : 'rgba(244,67,54,0.25)'}`;
     box.style.borderRadius = 'var(--pt-radius, 10px)';
 
     const titleEl = document.getElementById('feedbackTitle');
