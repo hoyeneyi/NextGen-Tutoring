@@ -149,12 +149,14 @@ const response = await fetch('https://nextgen-proxy.nextgentutoringco.workers.de
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 2000,
+    max_tokens: 3000,   // raised from 2000 — SAT/ELA passages were truncating silently
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userPrompt }]
   })
 });
 ```
+
+**Token budget note:** SAT and HS English topics generate 4–6 sentence passages for each of 5 questions. At `max_tokens: 2000` these truncated silently (HTTP 200, partial JSON, `SyntaxError` swallowed). At 3000, SAT topics use ~1400 tokens with 600 to spare. Do not lower this below 2500 for any subject. The dashboard now checks `stop_reason === 'max_tokens'` before attempting `JSON.parse`, retries up to 3 times on any failure, and shows a friendly error card ("Trouble loading questions — Try Again / Pick Another Topic") rather than a blank quiz screen.
 
 **Always handle errors gracefully — never show raw error text to students.**
 
@@ -185,12 +187,13 @@ const response = await fetch('https://nextgen-proxy.nextgentutoringco.workers.de
 
 ## CLOUDFLARE WORKER (WEEKLY QUALITY TEST)
 
-**File:** `nextgen-quality-test-worker.js`
+**File:** `nextgen-quality-test-worker.js`  **Version:** v2
 **Schedule:** Cron — every Sunday at 6am UTC (1am EST)
-**Trigger also available:** `GET /run-test` for manual runs
+**Trigger also available:** `GET /run-test` (all 30 topics) or `GET /run-test?limit=N` (first N topics — use for calibration checks without hitting Cloudflare's 50-subrequest HTTP limit)
 
-Tests AI-generated question quality across 30 representative topics spanning all grades and
-subjects. Saves results to Google Sheets and emails a report via Resend.
+Tests AI-generated question quality across 30 real curriculum topic IDs spanning all grades and
+subjects. Uses the exact same `buildQuestionPrompt()` + `getQuestionTemplates()` logic as the
+dashboard — not a simplified proxy. Saves results to Google Sheets and emails a report via Resend.
 
 **Required secrets (set in Cloudflare Worker settings):**
 - `ANTHROPIC_API_KEY` — sk-ant- key (calls Anthropic directly, not via the proxy)
@@ -200,9 +203,33 @@ subjects. Saves results to Google Sheets and emails a report via Resend.
 
 **Report delivered to:** `nextgentutoringco@gmail.com`
 
-**Scoring:** Each topic scored 0–100 across 8 checks (valid JSON, all fields present, 4 choices,
-correct field is A/B/C/D, no emojis, question length, distinct choices, explanation quality).
-Pass ≥ 80, Warning 60–79, Fail < 60.
+**Two-stage scoring (v2):**
+
+Stage 1 — Format (JS, fast): valid JSON, all required fields, 4 choices, correct field is A/B/C/D,
+no emojis (note: K-2 topics intentionally use emojis — this check will always fail for them),
+question length, distinct choices, substantive explanation. Score 0–100.
+
+Stage 2 — Correctness (claude-opus-4-8, per-topic batch): standard match (25pt), answer correct
+(30pt), unique answer (20pt), explanation accuracy (15pt), distractor grounding (10pt). Averaged
+across 5 questions. Score 0–100.
+
+Combined status: PASS requires both format ≥ 80 AND correctness ≥ 80. The lower score drives status.
+Google Sheets columns A:N (14 cols) — added correctnessScore, correctnessStatus, correctnessIssues,
+graderError in columns K–N.
+
+**Baseline (June 22, 2026 — 30 topics):**
+- Avg format: 97/100 (for the 23 topics that generated successfully; 7 failed on infra issues)
+- Avg correctness: 93/100
+- PASS: 21 | WARN: 2 | FAIL: 7
+
+Known open issues from baseline:
+- 7 topics scored format 0 (generation failure): 4 SAT topics + 2 HS/8th ELA hit Cloudflare's
+  50-subrequest limit on concurrent HTTP runs (cron trigger is unaffected); 1 topic had malformed
+  JSON from the model. These are infrastructure/flakiness issues, not question quality issues.
+- WARN — Statistics/Basic Probability (correctness 79): Q2 has wrong marked answer on an
+  "identify the mistake" question; Q3 has two equivalent correct choices (4/16 = 1/4).
+- WARN — 7th Grade/Argument Writing (correctness 75): 3/5 questions test reading/grammar skills
+  instead of the writing composition skill; Q5 has ambiguous answer due to singular-they usage.
 
 ---
 
@@ -359,6 +386,8 @@ This platform should stay ahead of the curve. When building features, consider:
 - 1st grade CCSS curriculum (17 Math + 15 ELA topics, QA in progress)
 - Practice session results saved to Firestore with topic progress indicators
 - Topic progress indicators refresh on grid re-render after session
+- Practice question generation — `max_tokens: 3000` (raised from 2000 June 22, 2026; SAT/ELA topics were silently truncating and leaving students on a blank quiz screen); now detects `stop_reason === 'max_tokens'` before JSON.parse, retries up to 3×, shows friendly error card on persistent failure
+- Weekly quality test worker v2 — generates questions via exact dashboard prompt logic, grades with claude-opus-4-8 on 5 correctness dimensions; baseline June 22, 2026: format 97/100, correctness 93/100 across 23 successfully generated topics
 - Native booking system (pages/booking.html) — location selector (5 libraries + virtual + other), calendar (location-aware, Dearborn Sundays blocked), time slots (library hours + async buffer logic from Firestore), recurring sessions (weekly/bi-weekly, 4/8/12/ongoing, schedule preview), Firestore save — **end-to-end confirmed working June 21, 2026** (was silently broken: Firestore rules had never been deployed to the live project, causing permission-denied on every submit)
 - Admin booking management — pending/confirmed/declined, Google Calendar event creation via worker (falls back to template URL), automated confirmation + decline emails to student via Formspree (endpoint: xaqkzkrq)
 - All "Book a Session" buttons across index.html and dashboard.html link to native booking page
