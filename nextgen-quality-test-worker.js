@@ -480,6 +480,7 @@ async function testTopic(topic, env) {
     // Legacy / convenience
     overallScore: formatScore,
     issues:       formatIssues,
+    questions,                          // all 5 generated questions
     sampleQuestion: questions[0] || null,
     parseError,
   };
