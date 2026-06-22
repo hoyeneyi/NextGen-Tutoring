@@ -23,7 +23,7 @@ It is NOT a side project. It is a scaling EdTech platform with real students, re
 | Auth + DB | Firebase (Firestore + Firebase Auth) |
 | AI Proxy | Cloudflare Worker (`nextgen-proxy.nextgentutoringco.workers.dev`) |
 | Calendar Sync | Cloudflare Worker (`nextgen-calendar-worker.nextgentutoringco.workers.dev`) |
-| AI Model | `claude-haiku-4-5-20251001` via Anthropic API |
+| AI Model | `claude-haiku-4-5-20251001` (question gen) + `claude-sonnet-4-20250514` (FR grading) — both proxied via Cloudflare Worker. **⚠ sonnet ID is outdated — migrate to `claude-sonnet-4-6`** |
 | PDF Generation | Claude Code → GitHub Pages → Firestore URL sync |
 | Forms | Formspree |
 | Scheduling | Calendly |
@@ -40,24 +40,39 @@ Vanilla JS, HTML, CSS only. Keep it deployable via GitHub Pages without a build 
 
 ```
 NextGen-Tutoring/
-├── index.html                    # Homepage (public marketing site)
+├── index.html                         # Homepage (public marketing site)
+├── manifest.json                      # PWA manifest
+├── sitemap.xml
+├── README.md
+├── CNAME                              # nextgentutoring.org
+├── CLAUDE.md                          # This file
+├── firebase.json                      # Firestore rules pointer (hosting section unused — GitHub Pages handles hosting)
+├── firestore.rules                    # Security rules — deployed 2026-06-21
+├── sw.js                              # Service worker
+├── wrangler.toml                      # Cloudflare config for calendar worker
+├── wrangler.jsonc                     # Cloudflare config for proxy worker
+├── nextgen-proxy-worker.js            # AI proxy Worker (deploy separately via Cloudflare)
+├── nextgen-calendar-worker.js         # Google Calendar Worker (deploy separately)
+├── nextgen-quality-test-worker.js     # Weekly quality test Worker (deploy separately)
 ├── pages/
-│   ├── dashboard.html            # Student dashboard — CORE FILE
-│   ├── login.html                # Auth page
-│   ├── signup.html               # Registration
+│   ├── dashboard.html                 # Student dashboard — CORE FILE
+│   ├── admin.html                     # Admin portal — CORE FILE
+│   ├── booking.html                   # Public booking flow
+│   ├── login.html                     # Auth page
+│   ├── signup.html                    # Registration
+│   ├── lessons.html
 │   ├── about.html
-│   └── contact.html
+│   ├── contact.html
+│   ├── privacy.html
+│   ├── terms.html
+│   └── 404.html
 ├── assets/
 │   └── images/
-├── components/                   # Shared HTML components
-├── scripts/                      # JS modules
-├── styles/                       # CSS
-├── pdfs/                         # Generated student PDFs (committed by Claude Code)
-├── nextgen-proxy-worker.js       # Cloudflare Worker source (deploy separately)
-├── sw.js                         # Service worker
-├── firebase.json
-├── CNAME                         # nextgentutoring.org
-└── CLAUDE.md                     # This file
+├── components/                        # Shared HTML components
+├── scripts/                           # JS modules
+├── styles/                            # CSS
+├── lessons/                           # Empty scaffold dirs (Algebra1, Algebra2, Geometry, Pre-Algebra)
+└── pdfs/                              # Claude Code-generated student PDFs (committed to repo)
 ```
 
 ---
@@ -87,30 +102,34 @@ NextGen-Tutoring/
 
 ## FIREBASE SETUP
 
-```javascript
-const firebaseConfig = {
-  apiKey: "AIzaSyDcE_rQ_Q6PnsA9uSlkOytVz70-t_ZzQNA",
-  authDomain: "nextgen-tutoring.firebaseapp.com",
-  projectId: "nextgen-tutoring",
-  storageBucket: "nextgen-tutoring.appspot.com",
-  messagingSenderId: "1064020614361",
-  appId: "1:1064020614361:web:4a88beaf6765b23c59f2c8"
-};
-```
+Firebase config is inlined in each page that uses it (booking.html, dashboard.html, admin.html,
+login.html). Project ID: `nextgen-tutoring`. Do not paste the live config block into this file —
+it gets shared and copied.
+
+**⚠ Project ownership fragility:** The live Firebase project is currently owned by a personal/school
+Google account, not `nextgentutoringco@gmail.com`. Add the business account as a project Owner in
+Firebase Console → IAM before the personal account becomes inaccessible. Not urgent, but high risk
+if ignored long-term.
 
 **Firestore Collections:**
 - `users/{uid}` — student profile, grade, subjects
 - `sessions/{id}` — tutoring session records
-- `homework/{id}` — generated PDF URLs per student
-- `practice/{uid}/results` — practice session scores and history
-- `bookings/{id}` — booking requests (name, email, phone, grade, subject, sessionType, message, requestedDate, requestedTime, location:{id,name,address}, frequency, isRecurring, recurringGroup, sessionIndex, totalSessions, recurringOngoing, status, createdAt, confirmedAt, googleCalendarLink)
+- `homework/{id}` — PDF assignment records. Two storage paths:
+  - Claude Code-generated: committed to `pdfs/`, served via GitHub Pages
+  - Admin-uploaded: Firebase Storage at `homework/{studentName}/{timestamp}/worksheet.pdf` (download URL stored in this doc)
+- `practice_results/{uid}/sessions/{sessionId}` — individual practice session records
+- `practice_results/{uid}/summary/{topicId}` — per-topic SmartScore and attempt history
+- `bookings/{id}` — booking requests. Fields: name, email, phone, grade, subject, sessionType,
+  message, requestedDate, requestedTime, location:{id,name,address}, frequency, isRecurring,
+  recurringGroup, sessionIndex, totalSessions, recurringOngoing, status, createdAt, confirmedAt,
+  googleCalendarLink. Rules: `allow create: if true` (public submit), read/update require auth.
 
 ---
 
 ## CLOUDFLARE WORKER (AI PROXY)
 
 **URL:** `https://nextgen-proxy.nextgentutoringco.workers.dev`
-**Model:** `claude-haiku-4-5-20251001`
+**Model:** `claude-haiku-4-5-20251001` (question gen) / `claude-sonnet-4-20250514` (FR grading)
 **Status:** Deployed, healthy, 0 errors
 
 The Worker passes the request body straight through to Anthropic.
@@ -161,6 +180,29 @@ const response = await fetch('https://nextgen-proxy.nextgentutoringco.workers.de
 **Integration points:**
 - `booking.html` — `pickDate()` calls `GET /events?date=…` to block calendar-occupied slots. Fails gracefully if worker is down.
 - `admin.html` — `confirmBooking()` calls `POST /create-event` to create the real event; falls back to the template URL if the worker is unavailable. Stores the returned `htmlLink` in Firestore.
+
+---
+
+## CLOUDFLARE WORKER (WEEKLY QUALITY TEST)
+
+**File:** `nextgen-quality-test-worker.js`
+**Schedule:** Cron — every Sunday at 6am UTC (1am EST)
+**Trigger also available:** `GET /run-test` for manual runs
+
+Tests AI-generated question quality across 30 representative topics spanning all grades and
+subjects. Saves results to Google Sheets and emails a report via Resend.
+
+**Required secrets (set in Cloudflare Worker settings):**
+- `ANTHROPIC_API_KEY` — sk-ant- key (calls Anthropic directly, not via the proxy)
+- `RESEND_API_KEY` — from resend.com
+- `SHEETS_SERVICE_ACCOUNT` — full JSON string of a Google service account with Sheets write access
+- `SHEETS_ID` — Google Sheet ID (from the sheet URL)
+
+**Report delivered to:** `nextgentutoringco@gmail.com`
+
+**Scoring:** Each topic scored 0–100 across 8 checks (valid JSON, all fields present, 4 choices,
+correct field is A/B/C/D, no emojis, question length, distinct choices, explanation quality).
+Pass ≥ 80, Warning 60–79, Fail < 60.
 
 ---
 
@@ -305,26 +347,24 @@ This platform should stay ahead of the curve. When building features, consider:
 
 ---
 
-## CURRENT STATUS (May 2026)
+## CURRENT STATUS (June 2026)
 
 ### Working:
 - Login/auth (Firebase) — email/password + Google Sign In
 - Student dashboard shell
 - Homework loop (PDF gen → GitHub Pages → Firestore)
 - Admin portal (overview, students, notes, homework, bookings)
-- Cloudflare Worker proxy (healthy, 0 errors)
+- Cloudflare Worker proxy (source code verified clean — runtime health/error rate not independently confirmed, check Cloudflare dashboard)
 - Kindergarten CCSS curriculum (QA complete — K.CC, K.OA, K.NBT, K.MD, K.G, K.RF, K.RI, K.RL, K.W)
 - 1st grade CCSS curriculum (17 Math + 15 ELA topics, QA in progress)
 - Practice session results saved to Firestore with topic progress indicators
 - Topic progress indicators refresh on grid re-render after session
-- Native booking system (pages/booking.html) — location selector (5 libraries + virtual + other), calendar (location-aware, Dearborn Sundays blocked), time slots (library hours + async buffer logic from Firestore), recurring sessions (weekly/bi-weekly, 4/8/12/ongoing, schedule preview), Firestore save
-- Admin booking management — pending/confirmed/declined, Google Calendar event creation via worker (falls back to template URL), confirmation email (pre-filled mailto)
+- Native booking system (pages/booking.html) — location selector (5 libraries + virtual + other), calendar (location-aware, Dearborn Sundays blocked), time slots (library hours + async buffer logic from Firestore), recurring sessions (weekly/bi-weekly, 4/8/12/ongoing, schedule preview), Firestore save — **end-to-end confirmed working June 21, 2026** (was silently broken: Firestore rules had never been deployed to the live project, causing permission-denied on every submit)
+- Admin booking management — pending/confirmed/declined, Google Calendar event creation via worker (falls back to template URL), automated confirmation + decline emails to student via Formspree (endpoint: xaqkzkrq)
 - All "Book a Session" buttons across index.html and dashboard.html link to native booking page
 - Google Calendar sync (nextgen-calendar-worker) — deployed, operational, calendar ID: nextgentutoringco@gmail.com
 
 ### Broken / Needs Work:
-- Firestore rules must be deployed — REMINDER: run `firebase deploy --only firestore:rules` or paste into Firebase Console. Now includes bookings collection rules.
-- Formspree endpoint in booking.html needs a real form ID (placeholder: YOUR_FORMSPREE_ID)
 - No difficulty bands per topic
 - No spaced repetition
 - No parent portal
