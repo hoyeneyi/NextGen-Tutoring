@@ -430,7 +430,7 @@ async function testTopic(topic, env) {
       },
       body: JSON.stringify({
         model:      'claude-sonnet-4-6',
-        max_tokens: 2000,
+        max_tokens: 3000,
         system:     'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON — no markdown, no backticks, no preamble.',
         messages:   [{ role: 'user', content: userPrompt }],
       }),

@@ -1183,6 +1183,17 @@
         </div>
       </div>
 
+      <!-- ERROR VIEW (shown when question generation fails after all retries) -->
+      <div id="practice-error" style="display:none;padding:3rem 2rem;text-align:center;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--pt-subtext,var(--text-light));margin-bottom:1.25rem;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div style="font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--pt-text,var(--navy));margin-bottom:0.75rem;">Trouble loading questions</div>
+        <p style="font-size:0.9rem;color:var(--pt-subtext,var(--text-light));max-width:320px;margin:0 auto 2rem;line-height:1.6;">We couldn't generate questions for this topic right now. This is usually a temporary glitch — try again or pick a different topic.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <button onclick="retryPractice()" style="background:var(--pt-primary,var(--navy));color:#fff;font-weight:700;font-size:0.9rem;padding:0.75rem 1.5rem;border:none;border-radius:8px;cursor:pointer;font-family:var(--font-body);transition:opacity 0.15s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Try Again</button>
+          <button onclick="backToSubjects()" style="background:transparent;color:var(--pt-text,var(--navy));font-weight:600;font-size:0.9rem;padding:0.75rem 1.5rem;border:2px solid rgba(0,0,0,0.12);border-radius:8px;cursor:pointer;font-family:var(--font-body);">Pick Another Topic</button>
+        </div>
+      </div>
+
       <!-- QUIZ VIEW -->
       <div id="practice-quiz" style="display:none;">
         <div class="quiz-header">
@@ -4550,6 +4561,7 @@ const CURRICULUM = {
   let milestonePassed90 = false;
   let questionBuffer    = [];
   let generating        = false;
+  let generationFailed  = false;
   let currentTheme          = '68';
   let currentGradeKey       = null;
   let preloadProgress       = 0;
@@ -4676,6 +4688,7 @@ const CURRICULUM = {
     isRecovery        = false; recoveryAttempted = false;
     milestonePassed70 = false; milestonePassed90 = false;
     questionBuffer    = [];
+    generationFailed  = false;
 
     const t = getTheme();
 
@@ -4701,12 +4714,19 @@ const CURRICULUM = {
 
     clearInterval(timer);
     fill.style.width = '100%';
-    lbl.textContent  = 'Ready!';
 
     await new Promise(r => setTimeout(r, 300));
 
     document.getElementById('practice-preloading').style.display = 'none';
-    document.getElementById('practice-quiz').style.display       = 'block';
+
+    if (!questionBuffer.length) {
+      // All retry attempts failed — show the error state instead of a blank quiz screen.
+      showGenerationError();
+      return;
+    }
+
+    lbl.textContent = 'Ready!';
+    document.getElementById('practice-quiz').style.display = 'block';
 
     document.getElementById('quizTopicLabel').textContent = `${name} · ${category}`;
     updateScoreDisplay();
@@ -4714,8 +4734,10 @@ const CURRICULUM = {
   };
 
   window.backToSubjects = function() {
+    document.getElementById('practice-error').style.display    = 'none';
     document.getElementById('practice-selector').style.display = 'none';
     document.getElementById('practice-home').style.display     = 'block';
+    generationFailed = false;
     applyTheme('68'); // Reset theme
   };
 
@@ -4975,25 +4997,42 @@ Produce exactly 5 questions. Output ONLY this JSON array:
   }
 ]`;
 
-    try {
-      const res  = await fetch(PROXY_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2000,
-          system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON — no markdown, no backticks, no preamble.',
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-      const data2 = await res.json();
-      if (!res.ok || !data2.content?.[0]?.text) throw new Error(data2.error?.message || data2.type || `HTTP ${res.status}`);
-      const raw   = data2.content[0].text.trim().replace(/```json|```/g,'').trim();
-      const batch = JSON.parse(raw);
-      questionBuffer.push(...batch);
-    } catch(e) {
-      console.error('Error fetching questions:', e);
+    const MAX_ATTEMPTS = 3;
+    let lastError = null;
+
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      try {
+        const res  = await fetch(PROXY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 3000,
+            system: 'You are an expert K-12 curriculum designer. Respond ONLY with valid JSON — no markdown, no backticks, no preamble.',
+            messages: [{ role: 'user', content: prompt }]
+          })
+        });
+        const data2 = await res.json();
+        if (!res.ok || !data2.content?.[0]?.text)
+          throw new Error(data2.error?.message || data2.type || `HTTP ${res.status}`);
+        // Catch truncation before attempting JSON.parse — a partial JSON string causes a
+        // SyntaxError that is indistinguishable from a model formatting error without this check.
+        if (data2.stop_reason === 'max_tokens')
+          throw new Error(`Response truncated at token limit (${data2.usage?.output_tokens ?? '?'} tokens)`);
+        const raw   = data2.content[0].text.trim().replace(/```json|```/g,'').trim();
+        const batch = JSON.parse(raw);
+        questionBuffer.push(...batch);
+        generating = false;
+        return; // success
+      } catch(e) {
+        lastError = e;
+        console.warn(`[practice] Generation attempt ${attempt}/${MAX_ATTEMPTS} failed:`, e.message);
+        if (attempt < MAX_ATTEMPTS) await new Promise(r => setTimeout(r, 1000 * attempt));
+      }
     }
+
+    console.error('[practice] All generation attempts exhausted:', lastError?.message);
+    generationFailed = true;
     generating = false;
   }
 
@@ -5156,15 +5195,31 @@ Produce exactly 5 questions. Output ONLY this JSON array:
     else                  el.style.color = 'var(--pt-text, var(--navy))';
   }
 
-  // â”€â”€ EXIT â”€â”€
+  // ── GENERATION ERROR STATE ───────────────────────────────────────────────
+  function showGenerationError() {
+    ['practice-preloading', 'practice-quiz', 'practice-milestone'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    document.getElementById('practice-error').style.display = 'block';
+  }
+
+  window.retryPractice = function() {
+    document.getElementById('practice-error').style.display = 'none';
+    generationFailed = false;
+    if (!currentTopic) { backToSubjects(); return; }
+    selectTopic(currentTopic.id, currentTopic.name, currentTopic.category, currentTopic.band);
+  };
+
+  // ── EXIT ─────────────────────────────────────────────────────────────────
   window.exitPractice = async function() {
     // Save on early exit (no milestone reached) if they answered at least one question
     if (!milestonePassed70 && !milestonePassed90 && totalAnswered > 0) {
       await savePracticeSession(); // await so cache is updated before re-render
     }
-    ['practice-quiz','practice-preloading','practice-milestone'].forEach(id => {
+    ['practice-quiz','practice-preloading','practice-milestone','practice-error'].forEach(id => {
       document.getElementById(id).style.display = 'none';
     });
+    generationFailed = false;
     document.getElementById('practice-selector').style.display = 'block';
     document.getElementById('practice-home').style.display     = 'none';
     // Re-render grid with updated indicators before clearing topic state
@@ -5198,12 +5253,18 @@ Produce exactly 5 questions. Output ONLY this JSON array:
 
   function renderNextQuestion() {
     if (!currentQuestion) {
-      if (questionBuffer.length < 2 && !generating) fetchQuestionBatch();
-      if (!questionBuffer.length) { setTimeout(renderNextQuestion, 600); return; }
+      if (questionBuffer.length < 2 && !generating && !generationFailed) fetchQuestionBatch();
+      if (!questionBuffer.length) {
+        if (generationFailed) { showGenerationError(); return; }
+        setTimeout(renderNextQuestion, 600); return;
+      }
       currentQuestion = questionBuffer.shift();
     } else {
-      if (questionBuffer.length < 2 && !generating) fetchQuestionBatch();
-      if (!questionBuffer.length) { setTimeout(renderNextQuestion, 600); return; }
+      if (questionBuffer.length < 2 && !generating && !generationFailed) fetchQuestionBatch();
+      if (!questionBuffer.length) {
+        if (generationFailed) { showGenerationError(); return; }
+        setTimeout(renderNextQuestion, 600); return;
+      }
       currentQuestion = questionBuffer.shift();
     }
 
