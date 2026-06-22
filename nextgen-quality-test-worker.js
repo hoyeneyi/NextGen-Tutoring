@@ -366,20 +366,25 @@ async function runQualityTest(env, limit = null) {
   let totalCorrectnessScore  = 0;
   let correctnessCount       = 0;
 
-  console.log(`[quality-test] Starting v2 test for ${topics.length} topics…`);
+  // Run in concurrent batches of 6 — keeps the HTTP wall-clock under 60s for
+  // all 30 topics while staying comfortably within Anthropic rate limits.
+  const BATCH = 6;
+  console.log(`[quality-test] Starting v2 test — ${topics.length} topics in batches of ${BATCH}`);
 
-  for (const topic of topics) {
-    console.log(`[quality-test] ${topic.gradeLabel} / ${topic.subject} / ${topic.name}`);
-    const result = await testTopic(topic, env);
-    results.push(result);
+  for (let i = 0; i < topics.length; i += BATCH) {
+    const batch = topics.slice(i, i + BATCH);
+    console.log(`[quality-test] Batch ${Math.floor(i/BATCH)+1}: ${batch.map(t=>t.name).join(', ')}`);
+    const batchResults = await Promise.all(batch.map(t => testTopic(t, env)));
+    results.push(...batchResults);
+    if (i + BATCH < topics.length) await sleep(400);
+  }
 
+  for (const result of results) {
     totalFormatScore += result.formatScore;
     if (result.correctnessScore !== null) {
       totalCorrectnessScore += result.correctnessScore;
       correctnessCount++;
     }
-
-    await sleep(900);
   }
 
   const avgFormatScore       = Math.round(totalFormatScore / results.length);
@@ -446,7 +451,6 @@ async function testTopic(topic, env) {
   // Stage 3 — correctness grading (skip if generation failed)
   let correctness = { score: null, perQuestion: [], issues: [], graderMs: 0, error: null };
   if (questions.length > 0) {
-    await sleep(600);
     correctness = await gradeCorrectness(questions, topic, env);
   }
 
@@ -538,7 +542,9 @@ For each wrong choice: is it traceable to a specific, nameable student error (of
 Mark false if ANY wrong choice appears to be a random plausible number with no clear misconception path. If the explanation cannot account for how a student would arrive at that choice, treat it as ungrounded.
 ────────────────────────────────────────────────────────────────────────
 
-Return ONLY this JSON array. Exactly 5 objects, q=0 first. Notes: empty string if passed, one specific sentence if failed.
+CRITICAL REQUIREMENT FOR NOTES: If you mark any check false, you MUST provide a specific, non-empty explanatory note. An empty string on a failed check is a grader error. Explain the exact problem in one sentence — name the specific question content that caused the failure, not just the category of failure.
+
+Return ONLY this JSON array. Exactly 5 objects, q=0 first. Notes: empty string ONLY if the check passed; one specific, non-empty sentence REQUIRED if it failed.
 
 [
   {
